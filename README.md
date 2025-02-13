@@ -1,7 +1,7 @@
-# Periskal academy
-
+# Periskal Academy
 MVP
 Voor Trainees (Schippers & Installateurs):
+
     • Authenticatie en toegang:
         o Inloggen via hardware-dongle.
         o Toegang tot relevante modules.
@@ -16,6 +16,7 @@ Voor Trainees (Schippers & Installateurs):
     • Ondersteuning vragen:
         o Trainees kunnen ondersteuning vragen via de chatfunctie op het platform.
 Voor Fleetmanagers:
+
     • Authenticatie en toegang:
         o Inloggen met e-mail en wachtwoord.
     • Modules toewijzen:
@@ -25,6 +26,7 @@ Voor Fleetmanagers:
     • Ondersteuning vragen:
         o Fleetmanagers kunnen ondersteuning vragen via de chatfunctie op het platform.
 Voor Administrators (Periskal):
+
     • Authenticatie en toegang:
         o Inloggen met e-mail en wachtwoord.
         o Toegang tot Alle modules.
@@ -36,6 +38,7 @@ Voor Administrators (Periskal):
     • Voortgang en prestaties volgen:
         o Overzicht van prestaties en voortgang van alle gebruikers, zoals hun voortgang, examenuitslagen en certificaten.
 Voor Helpdeskmedewerkers:
+
     • Authenticatie en toegang:
         o Inloggen met e-mail en wachtwoord.
         o Toegang tot Alle modules.
@@ -43,6 +46,5 @@ Voor Helpdeskmedewerkers:
         o Modules bekijken die bestaan uit één of meerdere videotrainingen.
     • Ondersteuning bieden:
         o Vragen van gebruikers beantwoorden via de chatfunctie op het platform.
-Blueprint VaarWijzer Pagina 21 van 70
     • Tips & Tricks beheren:
         o Veelgestelde vragen verzamelen en up-to-date houden in de Tips & Tricks pagina
