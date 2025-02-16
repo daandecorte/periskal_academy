@@ -11,7 +11,7 @@ services:
       - ./passwd:/etc/traefik/passwd
       - ./conf.d:/etc/traefik/conf.d
     labels:
-      - "traefik.http.routers.dashboard.rule=Host(`localhost.traefik.me`)"
+      - "traefik.http.routers.dashboard.rule=Host(`142-132-228-124.traefik.me`)"
       - "traefik.http.routers.dashboard.service=api@internal"
       - "traefik.http.routers.dashboard.middlewares=auth"
       - "traefik.http.middlewares.auth.basicauth.usersfile=/etc/traefik/passwd"

@@ -1,0 +1,37 @@
+services:
+  frontend:
+    build: frontend
+#    ports:
+#      - 4200:4200
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`academy-142-132-228-124.traefik.me`)"
+      - "traefik.http.routers.frontend.entrypoints=web"
+      - "traefik.docker.network=traefik"
+#      - "traefik.http.routers.frontend.tls.certresolver=letsencrypt"
+#    depends_on:
+#      - backend
+#  backend:
+#    build: backend
+#    env_file:
+#      - environment/backend.env
+#    depends_on: 
+#      - database
+
+#  database:
+#    image: mysql/mysql-server:8.0.23
+#    ports:
+#      - "3307:3306"
+#    env_file:
+#       - environment/database.env
+#    volumes:
+#      - ./sqlscripts:/docker-entrypoint-initdb.d
+#      - dbdata:/var/lib/mysql
+
+volumes:
+  dbdata:
+
+networks:
+  default:
+    external: true
+    name: traefik
