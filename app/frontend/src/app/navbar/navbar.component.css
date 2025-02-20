@@ -57,19 +57,20 @@
 }
 
 .navbar-links a:hover {
-  background-color: rgb(255, 253, 208);
+  background-color: #fffae5;
 }
 
 .navbar-actions {
   margin-top: auto;
   padding: 15px;
-  border-top: 1px solid #f0f0f0;
 }
 
 .language-selector {
   display: flex;
   padding: 10px 0px;
   background-color: white;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .language-selector select {
@@ -80,32 +81,31 @@
   font-size: 1rem;
   padding: 5px 10px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  cursor: pointer;
 }
 
 .language-selector select:focus {
   outline: none;
 }
 
-/* Hover effect */
 .language-selector:hover {
-  background-color: #f5f5f5;
+  background-color: #fffae5;
 }
-
-/* Rotate Arrow When Clicked */
-/* .language-selector:has(select:focus) {
-  transform: rotate(180deg);
-} */
 
 .logout-button {
   display: flex;
   align-items: center;
   padding: 10px 15px;
-  color: #666;
+  color: #333;
   text-decoration: none;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.logout-button:hover {
+  color: darkred;
+}
+
 .is-active {
-  background-color: rgb(255, 253, 208);
+  background-color: #fffae5;
   border-radius: 15px;
 }
