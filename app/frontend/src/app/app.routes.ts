@@ -4,7 +4,7 @@ import { CertificatesComponent } from './certificates/certificates.component';
 import { TipsAndTricksComponent } from './tips-and-tricks/tips-and-tricks.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserManagementComponent } from './user-management/user-management.component';
-import { SailorsComponent } from './sailors/sailors.component';
+import { SkippersComponent } from './skippers/skippers.component';
 
 
 export const routes: Routes = [
@@ -13,7 +13,7 @@ export const routes: Routes = [
     {path: "certificates", component: CertificatesComponent},
     {path: "tips-and-tricks", component: TipsAndTricksComponent},
     {path: "user-management", component: UserManagementComponent},
-    {path: "sailors", component: SailorsComponent},
+    {path: "skippers", component: SkippersComponent},
     {path: "", redirectTo: "dashboard", pathMatch: 'full'},
     {path: "**", redirectTo: "dashboard", pathMatch: 'full'}
 ];
