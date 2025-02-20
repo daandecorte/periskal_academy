@@ -8,6 +8,6 @@ export class TestService {
 
   constructor(private httpClient: HttpClient) {}
    GetAll() {
-    return this.httpClient.get("http://localhost:8080/api/test");
+    return this.httpClient.get("http://academy-142-132-228-124.traefik.me/api/test");
   }
 }
