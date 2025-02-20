@@ -26,7 +26,7 @@ services:
   database:
     image: mysql/mysql-server:8.0.23
     ports:
-      - "3307:3306"
+      - "3306:3306"
     env_file:
       - environment/database.env
     volumes:
