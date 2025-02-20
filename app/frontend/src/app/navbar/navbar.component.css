@@ -66,3 +66,8 @@
   color: #666;
   text-decoration: none;
 }
+
+.is-active {
+  background-color: rgb(255, 253, 208);
+  border-radius: 15px;
+}
