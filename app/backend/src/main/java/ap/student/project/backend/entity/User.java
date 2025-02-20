@@ -3,22 +3,22 @@ package ap.student.project.backend.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name= "user")
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name="dongle_id")
+    @Column(name = "dongle_id")
     private String dongleId;
-    @Column(name="fleet_manager_id")
+    @Column(name = "fleet_manager_id")
     private int fleetManagerId;
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
-    @Column(name="role")
+    @Column(name = "role")
     private Role role;
-    @Column(name="language")
+    @Column(name = "language")
     private Language language;
 
     public User() {

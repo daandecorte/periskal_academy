@@ -12,21 +12,26 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     public void save(UserDTO userDTO) {
         User user = assembleUser(userDTO);
         userRepository.save(user);
     }
+
     public User findById(Long id) {
         Optional<User> user = userRepository.findById(id);
         return user.orElse(null);
     }
+
     public List<User> findAll() {
         return userRepository.findAll();
     }
+
     public User assembleUser(UserDTO userDTO) {
         return new User(userDTO.dongleId(), userDTO.fleetManagerId(), userDTO.name(), userDTO.email(), userDTO.role(), userDTO.language());
     }

@@ -12,14 +12,17 @@ import java.util.List;
 @RequestMapping("/api/user")
 public class UserController {
     private final UserService userService;
+
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
     @GetMapping
     public List<User> getAll() {
         return userService.findAll();
     }
+
     @PostMapping
     public void create(@RequestBody UserDTO user) {
         this.userService.save(user);
