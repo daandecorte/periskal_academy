@@ -3,7 +3,7 @@ services:
     build: frontend
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.frontend.rule=Host(`academy-142-132-228-124.traefik.me`)" # academy-142-132-228-124.traefik.me
+      - "traefik.http.routers.frontend.rule=Host(`frontend-localhost.traefik.me`)" # academy-142-132-228-124.traefik.me
       - "traefik.http.routers.frontend.entrypoints=web"
       - "traefik.http.services.frontend.loadbalancer.server.port=80"
       - "traefik.docker.network=traefik"
@@ -16,7 +16,7 @@ services:
       - SPRING_PROFILES_ACTIVE=prod
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.backend.rule=Host(`academy-142-132-228-124.traefik.me`) && PathPrefix (`/api/`)" #academy-142-132-228-124.traefik.me
+      - "traefik.http.routers.backend.rule=Host(`backend-localhost.traefik.me`) && PathPrefix (`/api/`)" #academy-142-132-228-124.traefik.me
       - "traefik.http.routers.backend.entrypoints=web"
       - "traefik.http.services.backend.loadbalancer.server.port=8080"
       - "traefik.docker.network=traefik"

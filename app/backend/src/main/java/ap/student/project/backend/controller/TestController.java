@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ap.student.project.backend.entity.TestEntity;
-import ap.student.project.backend.repository.TestRepository;
+import ap.student.project.backend.dao.TestRepository;
 
 @CrossOrigin(origins = "*")
 @RestController

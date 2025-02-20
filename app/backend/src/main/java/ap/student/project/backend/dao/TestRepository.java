@@ -1,4 +1,4 @@
-package ap.student.project.backend.repository;
+package ap.student.project.backend.dao;
 
 import ap.student.project.backend.entity.TestEntity;
 import org.springframework.data.repository.ListCrudRepository;
