@@ -34,10 +34,6 @@
   margin: 0;
 }
 
-.navbar-links li {
-  border-bottom: 1px solid #f0f0f0;
-}
-
 .navbar-links a {
   display: flex;
   align-items: center;
