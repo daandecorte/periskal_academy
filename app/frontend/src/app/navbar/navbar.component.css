@@ -15,6 +15,11 @@
   border-bottom: 1px solid #f0f0f0;
 }
 
+.navbar-logo img {
+  width: 175px;
+  height: auto; /* Maintain aspect ratio */
+}
+
 .navbar-user {
   padding: 15px;
   display: flex;
