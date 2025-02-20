@@ -8,7 +8,7 @@ import ap.student.project.backend.entity.TestEntity;
 import ap.student.project.backend.repository.TestRepository;
 
 @SpringBootApplication
-public class BackendApplication implements CommandLineRunner{
+public class BackendApplication{
 
 	private final TestRepository repo;
 
