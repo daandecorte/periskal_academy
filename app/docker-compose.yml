@@ -1,36 +1,38 @@
 services:
   frontend:
     build: frontend
-#    ports:
-#      - 4200:4200
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.frontend.rule=Host(`academy-142-132-228-124.traefik.me`)"
+      - "traefik.http.routers.frontend.rule=Host(`frontend-localhost.traefik.me`)" # academy-142-132-228-124.traefik.me
       - "traefik.http.routers.frontend.entrypoints=web"
+      - "traefik.http.services.frontend.loadbalancer.server.port=80"
       - "traefik.docker.network=traefik"
-#      - "traefik.http.routers.frontend.tls.certresolver=letsencrypt"
-#    depends_on:
-#      - backend
+
   backend:
     build: backend
     ports:
       - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
-#    env_file:
-#      - environment/backend.env
-#    depends_on: 
-#      - database
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`backend-localhost.traefik.me`) && PathPrefix (`/api/`)" #academy-142-132-228-124.traefik.me
+      - "traefik.http.routers.backend.entrypoints=web"
+      - "traefik.http.services.backend.loadbalancer.server.port=8080"
+      - "traefik.docker.network=traefik"
+    depends_on:
+      - database
 
-#  database:
-#    image: mysql/mysql-server:8.0.23
-#    ports:
-#      - "3307:3306"
-#    env_file:
-#       - environment/database.env
-#    volumes:
-#      - ./sqlscripts:/docker-entrypoint-initdb.d
-#      - dbdata:/var/lib/mysql
+  database:
+    image: mysql/mysql-server:8.0.23
+    ports:
+      - "3307:3306"
+    env_file:
+      - environment/database.env
+    volumes:
+      - ./sqlscripts:/docker-entrypoint-initdb.d
+      - dbdata:/var/lib/mysql
+    restart: unless-stopped
 
 volumes:
   dbdata:
