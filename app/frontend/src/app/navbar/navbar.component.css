@@ -44,7 +44,7 @@
 }
 
 .navbar-links a:hover {
-  background-color: #f9f9f9;
+  background-color: rgb(255, 253, 208);
 }
 
 .navbar-actions {
@@ -66,4 +66,9 @@
   padding: 10px 15px;
   color: #666;
   text-decoration: none;
+}
+
+.is-active {
+  background-color: rgb(255, 253, 208);
+  border-radius: 15px;
 }
