@@ -22,9 +22,7 @@ describe('NavbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      //imports: [NavbarComponent]
       imports: [RouterTestingModule.withRoutes(routes), NavbarComponent, CertificatesComponent, ModulesComponent, SkippersComponent, SupportComponent, TipsAndTricksComponent, UserManagementComponent],
-      //declarations: [NavbarComponent, CertificatesComponent, ModulesComponent, SkippersComponent, SupportComponent, TipsAndTricksComponent, UserManagementComponent]
     })
     .compileComponents();
 
