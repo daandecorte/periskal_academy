@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { TestService } from './test.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +10,14 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'frontend';
+  public informatie: any;
+
+  constructor(private service: TestService) {
+  }
+  
+  async ngOnInit() {
+    let response = await firstValueFrom(this.service.GetAll());
+    this.informatie = await response;
+    console.log(this.informatie);
+  }
 }
