@@ -3,13 +3,16 @@ package ap.student.project.backend.controller;
 import ap.student.project.backend.entity.User;
 import ap.student.project.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api")
 public class UserController {
     private final UserService userService;
 
@@ -18,12 +21,16 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping(value= "/user", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getAll() {
         return userService.findAll();
     }
+    @GetMapping(value="/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public User getUserById(@PathVariable("id") Long id) {
+        return userService.findById(id);
+    }
 
-    @PostMapping
+    @PostMapping(value="/user")
     public void create(@RequestBody UserDTO user) {
         this.userService.save(user);
     }

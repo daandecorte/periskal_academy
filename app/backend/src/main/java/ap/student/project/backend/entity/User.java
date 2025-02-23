@@ -1,5 +1,7 @@
 package ap.student.project.backend.entity;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;
 
 @Entity
@@ -33,7 +35,10 @@ public class User {
         this.role = role;
         this.language = language;
     }
-
+    public String toJSON() throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(this);
+    }
     public int getId() {
         return id;
     }
