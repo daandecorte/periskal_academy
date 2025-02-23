@@ -7,7 +7,8 @@ services:
       - "traefik.http.routers.frontend.entrypoints=web"
       - "traefik.http.services.frontend.loadbalancer.server.port=80"
       - "traefik.docker.network=traefik"
-
+    depends_on:
+      - backend
   backend:
     build: backend
     ports:
