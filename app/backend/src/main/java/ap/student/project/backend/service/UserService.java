@@ -31,8 +31,11 @@ public class UserService {
     public List<User> findAll() {
         return userRepository.findAll();
     }
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
+    }
 
     public User assembleUser(UserDTO userDTO) {
-        return new User(userDTO.dongleId(), userDTO.fleetManagerId(), userDTO.name(), userDTO.email(), userDTO.role(), userDTO.language());
+        return new User(userDTO.dongleId(), userDTO.fleetManagerId(), userDTO.name(), userDTO.email(), userDTO.role(), userDTO.language(), userDTO.userExams(), userDTO.userModules());
     }
 }

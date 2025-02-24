@@ -4,15 +4,14 @@ import ap.student.project.backend.entity.User;
 import ap.student.project.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
 
@@ -21,17 +20,26 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(value= "/user", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getAll() {
         return userService.findAll();
     }
-    @GetMapping(value="/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public User getUserById(@PathVariable("id") Long id) {
         return userService.findById(id);
     }
 
-    @PostMapping(value="/user")
-    public void create(@RequestBody UserDTO user) {
+    @PostMapping(value = "/")
+    public User create(@RequestBody UserDTO user) {
         this.userService.save(user);
+        return userService.assembleUser(user);
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+        this.userService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

@@ -1,10 +1,10 @@
 package ap.student.project.backend.dao;
 
-import ap.student.project.backend.entity.User;
+import ap.student.project.backend.entity.Chat;
+import ap.student.project.backend.entity.Exam;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends ListCrudRepository<User, Long> {
-    User findByName(String name);
+public interface ExamRepository extends ListCrudRepository<Exam, Long> {
 }
