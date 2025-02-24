@@ -2,7 +2,10 @@ package ap.student.project.backend.entity;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -18,22 +21,34 @@ public class User {
     private String name;
     @Column(name = "email")
     private String email;
+    @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;
+    @Enumerated(EnumType.STRING)
     @Column(name = "language")
     private Language language;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_exam")
+    @Nullable
+    private List<UserExam> userExams;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="user_module")
+    @Nullable
+    private List<UserModule> userModules;
 
     public User() {
 
     }
 
-    public User(String dongleId, int fleetManagerId, String name, String email, Role role, Language language) {
+    public User(String dongleId, int fleetManagerId, String name, String email, Role role, Language language, List<UserExam> userExams, List<UserModule> userModules) {
         this.dongleId = dongleId;
         this.fleetManagerId = fleetManagerId;
         this.name = name;
         this.email = email;
         this.role = role;
         this.language = language;
+        this.userExams = userExams;
+        this.userModules = userModules;
     }
     public String toJSON() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
@@ -79,20 +94,38 @@ public class User {
         this.email = email;
     }
 
-    public Role getUserRole() {
-        return role;
-    }
-
-    public void setUserRole(Role role) {
-        this.role = role;
-    }
-
     public Language getLanguage() {
         return language;
     }
 
     public void setLanguage(Language language) {
         this.language = language;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    @Nullable
+    public List<UserExam> getUserExams() {
+        return userExams;
+    }
+
+    public void setUserExams(@Nullable List<UserExam> userExams) {
+        this.userExams = userExams;
+    }
+
+    @Nullable
+    public List<UserModule> getUserModules() {
+        return userModules;
+    }
+
+    public void setUserModules(@Nullable List<UserModule> userModules) {
+        this.userModules = userModules;
     }
 
     @Override
@@ -103,8 +136,10 @@ public class User {
                 ", fleetManagerId=" + fleetManagerId +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", userRole=" + role +
+                ", role=" + role +
                 ", language=" + language +
+                ", userExams=" + userExams +
+                ", userModules=" + userModules +
                 '}';
     }
 }
