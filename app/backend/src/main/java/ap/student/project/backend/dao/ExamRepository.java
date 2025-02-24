@@ -6,5 +6,5 @@ import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ExamRepository extends ListCrudRepository<Exam, Long> {
+public interface ExamRepository extends ListCrudRepository<Exam, Integer> {
 }

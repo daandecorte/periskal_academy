@@ -6,5 +6,5 @@ import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ModuleRepository extends ListCrudRepository<Module, Long> {
+public interface ModuleRepository extends ListCrudRepository<Module, Integer> {
 }
