@@ -11,7 +11,6 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
 
@@ -20,24 +19,24 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<User> getAll() {
         return userService.findAll();
     }
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public User getUserById(@PathVariable("id") Long id) {
+    @GetMapping(value = "/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public User getUserById(@PathVariable("id") int id) {
         return userService.findById(id);
     }
 
-    @PostMapping(value = "/")
+    @PostMapping(value = "/users")
     public User create(@RequestBody UserDTO user) {
         this.userService.save(user);
         return userService.assembleUser(user);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+    @DeleteMapping(value = "/users/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") int id) {
         this.userService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

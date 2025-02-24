@@ -23,7 +23,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User findById(Long id) {
+    public User findById(int id) {
         Optional<User> user = userRepository.findById(id);
         return user.orElse(null);
     }
@@ -31,7 +31,7 @@ public class UserService {
     public List<User> findAll() {
         return userRepository.findAll();
     }
-    public void deleteById(Long id) {
+    public void deleteById(int id) {
         userRepository.deleteById(id);
     }
 
