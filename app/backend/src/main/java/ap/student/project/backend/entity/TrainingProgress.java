@@ -5,20 +5,21 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="training_progress")
+@Table(name = "training_progress")
 public class TrainingProgress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="trainin_id")
+    @JoinColumn(name = "trainin_id")
     private Training training;
-    @Column(name="video_watched")
+    @Column(name = "video_watched")
     private boolean videoWatched;
     @Column(name = "completed_at")
     private LocalDateTime completedAt;
 
-    public TrainingProgress() {}
+    public TrainingProgress() {
+    }
 
     public TrainingProgress(Training training, boolean videoWatched, LocalDateTime completedAt) {
         this.training = training;

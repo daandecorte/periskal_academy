@@ -32,7 +32,7 @@ public class User {
     @Nullable
     private List<UserExam> userExams;
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="user_module")
+    @JoinTable(name = "user_module")
     @Nullable
     private List<UserModule> userModules;
 
@@ -50,10 +50,12 @@ public class User {
         this.userExams = userExams;
         this.userModules = userModules;
     }
+
     public String toJSON() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(this);
     }
+
     public int getId() {
         return id;
     }

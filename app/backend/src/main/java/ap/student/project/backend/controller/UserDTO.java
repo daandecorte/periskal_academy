@@ -1,7 +1,9 @@
 package ap.student.project.backend.controller;
 
-import ap.student.project.backend.entity.*;
-import com.fasterxml.jackson.annotation.JsonCreator;
+import ap.student.project.backend.entity.Language;
+import ap.student.project.backend.entity.Role;
+import ap.student.project.backend.entity.UserExam;
+import ap.student.project.backend.entity.UserModule;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -18,4 +20,5 @@ public record UserDTO(
         @JsonProperty("language") Language language,
         @JsonProperty("user_exams") List<UserExam> userExams,
         @JsonProperty("user_modules") List<UserModule> userModules
-) { }
+) {
+}

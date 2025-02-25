@@ -5,17 +5,18 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="message")
+@Table(name = "message")
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name="date_time")
+    @Column(name = "date_time")
     private LocalDateTime dateTime;
-    @Column(name="text_content")
+    @Column(name = "text_content")
     private String textContent;
 
-    public Message() {}
+    public Message() {
+    }
 
     public Message(LocalDateTime dateTime, String textContent) {
         this.dateTime = dateTime;

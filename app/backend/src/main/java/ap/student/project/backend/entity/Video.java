@@ -11,19 +11,25 @@ public class Video {
     @Column(name = "video_reference")
     private String videoReference;
 
-    public Video() {}
+    public Video() {
+    }
+
     public Video(String videoReference) {
         this.videoReference = videoReference;
     }
+
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
+
     public String getVideoReference() {
         return videoReference;
     }
+
     public void setVideoReference(String videoReference) {
         this.videoReference = videoReference;
     }

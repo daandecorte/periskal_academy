@@ -21,7 +21,8 @@ public class Question {
     @JoinTable(name = "question_option")
     private List<QuestionOption> questionOptions;
 
-    public Question() {}
+    public Question() {
+    }
 
     public Question(Language language, String text, QuestionType questionType, List<QuestionOption> questionOptions) {
         this.language = language;

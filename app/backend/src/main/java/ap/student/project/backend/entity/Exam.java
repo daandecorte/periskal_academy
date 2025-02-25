@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="exam")
+@Table(name = "exam")
 public class Exam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,10 +19,11 @@ public class Exam {
     @Column(name = "question_amount")
     private int questionAmount;
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="question")
+    @JoinTable(name = "question")
     private List<Question> questions;
 
-    public Exam() {}
+    public Exam() {
+    }
 
     public Exam(int passingScore, int maxAttempts, int time, int questionAmount, List<Question> questions) {
         this.passingScore = passingScore;

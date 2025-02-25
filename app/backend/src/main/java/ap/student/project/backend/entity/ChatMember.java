@@ -3,16 +3,17 @@ package ap.student.project.backend.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="chat_member")
+@Table(name = "chat_member")
 public class ChatMember {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
-    public ChatMember() {}
+    public ChatMember() {
+    }
 
     public ChatMember(User user) {
         this.user = user;

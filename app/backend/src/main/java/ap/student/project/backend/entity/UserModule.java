@@ -3,19 +3,20 @@ package ap.student.project.backend.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="user_module")
+@Table(name = "user_module")
 public class UserModule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="module_progress")
+    @JoinColumn(name = "module_progress")
     private ModuleProgress moduleProgress;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="module_id")
+    @JoinColumn(name = "module_id")
     private Module module;
 
-    public UserModule() {}
+    public UserModule() {
+    }
 
     public UserModule(ModuleProgress moduleProgress, Module module) {
         this.moduleProgress = moduleProgress;

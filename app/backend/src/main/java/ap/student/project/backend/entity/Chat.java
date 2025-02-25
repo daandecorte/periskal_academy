@@ -5,22 +5,23 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name="chat")
+@Table(name = "chat")
 public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="chatmember_id")
+    @JoinTable(name = "chatmember_id")
     private Set<ChatMember> chatMembers;
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="message_id")
+    @JoinTable(name = "message_id")
     private Set<Message> messages;
     @Enumerated(EnumType.STRING)
-    @Column(name="chat_status")
+    @Column(name = "chat_status")
     private ChatStatus chatStatus;
 
-    public Chat() {}
+    public Chat() {
+    }
 
     public Chat(Set<ChatMember> chatMembers, Set<Message> messages, ChatStatus chatStatus) {
         this.chatMembers = chatMembers;

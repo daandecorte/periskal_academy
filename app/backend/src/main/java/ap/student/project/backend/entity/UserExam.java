@@ -17,21 +17,26 @@ public class UserExam {
     @JoinTable(name = "exam_attempt")
     private List<ExamAttempt> examAttempts;
 
-    public UserExam() {}
+    public UserExam() {
+    }
 
     public UserExam(Exam exam, List<ExamAttempt> examAttempts) {
         this.exam = exam;
         this.examAttempts = examAttempts;
     }
+
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
+
     public Exam getExam() {
         return exam;
     }
+
     public void setExam(Exam exam) {
         this.exam = exam;
     }

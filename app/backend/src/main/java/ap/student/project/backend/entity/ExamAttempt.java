@@ -20,7 +20,8 @@ public class ExamAttempt {
     @Column
     private int score;
 
-    public ExamAttempt() {}
+    public ExamAttempt() {
+    }
 
     public ExamAttempt(LocalDateTime startDateTime, LocalDateTime endDateTime, ExamStatusType examStatusType, int score) {
         this.startDateTime = startDateTime;

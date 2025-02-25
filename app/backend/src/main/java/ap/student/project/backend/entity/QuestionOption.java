@@ -13,7 +13,8 @@ public class QuestionOption {
     @Column(name = "is_correct")
     private boolean isCorrect;
 
-    public QuestionOption() {}
+    public QuestionOption() {
+    }
 
     public QuestionOption(String text, boolean isCorrect) {
         this.text = text;

@@ -3,7 +3,7 @@ package ap.student.project.backend.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="training")
+@Table(name = "training")
 public class Training {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,8 @@ public class Training {
     @JoinColumn(name = "video_id")
     private Video video;
 
-    public Training() {}
+    public Training() {
+    }
 
     public Training(String title, String description, Language language, Video video) {
         this.title = title;

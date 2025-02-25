@@ -5,28 +5,29 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="module")
+@Table(name = "module")
 public class Module {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name="title")
+    @Column(name = "title")
     private String title;
-    @Column(name="description")
+    @Column(name = "description")
     private String description;
     @Enumerated(EnumType.STRING)
-    @Column(name="language")
+    @Column(name = "language")
     private Language language;
-    @Column(name="is_active")
+    @Column(name = "is_active")
     private boolean isActive = false;
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="training")
+    @JoinTable(name = "training")
     private List<Training> trainings;
     @OneToMany
-    @JoinTable(name="exam")
+    @JoinTable(name = "exam")
     private List<Exam> exams;
 
-    public Module() {}
+    public Module() {
+    }
 
     public Module(String title, String description, Language language, boolean isActive, List<Training> trainings, List<Exam> exams) {
         this.title = title;
