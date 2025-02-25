@@ -1,6 +1,6 @@
 package ap.student.project.backend.service;
 
-import ap.student.project.backend.controller.UserDTO;
+import ap.student.project.backend.dto.UserDTO;
 import ap.student.project.backend.dao.UserRepository;
 import ap.student.project.backend.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
