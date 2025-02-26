@@ -64,20 +64,34 @@
 .navbar-links a {
   display: flex;
   align-items: center;
-  padding: 15px;
+  padding: 12px 17px;
   text-decoration: none;
   color: #333;
   transition: background-color 0.2s;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  border-radius: 8px;
+  margin: 5px 10px;
+  box-sizing: border-box;
 }
 
+.language-selector:hover,
+.logout-button:hover,
 .navbar-links a:hover {
   background-color: #fffae5;
+  border-radius: 8px;
+}
+
+.logout-button:hover {
+  color: darkred;
+}
+
+.is-active {
+  background-color: #fffae5;
+  border-radius: 8px;
 }
 
 .navbar-actions {
   margin-top: auto;
-  padding: 15px;
+  padding: 12px 17px;
 }
 
 .language-selector {
@@ -103,10 +117,6 @@
   outline: none;
 }
 
-.language-selector:hover {
-  background-color: #fffae5;
-}
-
 .logout-button {
   display: flex;
   align-items: center;
@@ -114,14 +124,6 @@
   color: #333;
   text-decoration: none;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-.logout-button:hover {
-  color: darkred;
-}
-
-.is-active {
-  background-color: #fffae5;
 }
 
 /* Icons */
