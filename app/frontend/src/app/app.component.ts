@@ -11,6 +11,8 @@ import { NavbarComponent } from './navbar/navbar.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  title = 'frontend';
+
   public informatie: any;
 
   constructor(private service: TestService) {
