@@ -6,32 +6,69 @@
     />
   </div>
   <div class="navbar-user">
+    <span class="user-icon"
+      ><fa-icon [icon]="faUser" class="yellow-icon"></fa-icon
+    ></span>
     <div class="user-info">
-      <div class="user-name">John Doe</div>
-      <div class="user-role">skipper</div>
+      <div class="user-name">Admin User</div>
+      <div class="user-role">Administrator</div>
     </div>
   </div>
   <ul class="navbar-links">
-    <li><a routerLink="modules" routerLinkActive="is-active">Modules</a></li>
     <li>
-      <a routerLink="certificates" routerLinkActive="is-active">Certificates</a>
+      <a routerLink="modules" routerLinkActive="is-active">
+        <span class="icon-wrapper"
+          ><fa-icon [icon]="faLayerGroup" class="yellow-icon"></fa-icon
+        ></span>
+        Modules
+      </a>
     </li>
     <li>
-      <a routerLink="tips-and-tricks" routerLinkActive="is-active"
-        >Tips and tricks</a
-      >
+      <a routerLink="certificates" routerLinkActive="is-active">
+        <span class="icon-wrapper"
+          ><fa-icon [icon]="faCertificate" class="yellow-icon"></fa-icon
+        ></span>
+        Certificates
+      </a>
     </li>
     <li>
-      <a routerLink="user-management" routerLinkActive="is-active"
-        >User Management</a
-      >
+      <a routerLink="tips-and-tricks" routerLinkActive="is-active">
+        <span class="icon-wrapper"
+          ><fa-icon [icon]="faLightbulb" class="yellow-icon"></fa-icon
+        ></span>
+        Tips and tricks
+      </a>
     </li>
-    <li><a routerLink="skippers" routerLinkActive="is-active">Skippers</a></li>
-    <li><a routerLink="support" routerLinkActive="is-active">Support</a></li>
+    <li>
+      <a routerLink="user-management" routerLinkActive="is-active">
+        <span class="icon-wrapper"
+          ><fa-icon [icon]="faUsers" class="yellow-icon"></fa-icon
+        ></span>
+        User Management
+      </a>
+    </li>
+    <li>
+      <a routerLink="skippers" routerLinkActive="is-active">
+        <span class="icon-wrapper"
+          ><fa-icon [icon]="faUsers" class="yellow-icon"></fa-icon
+        ></span>
+        Skippers
+      </a>
+    </li>
+    <li>
+      <a routerLink="support" routerLinkActive="is-active">
+        <span class="icon-wrapper"
+          ><fa-icon [icon]="faHeadset" class="yellow-icon"></fa-icon
+        ></span>
+        Support
+      </a>
+    </li>
   </ul>
   <div class="navbar-actions">
     <div class="language-selector">
-      <span class="language-icon"></span>
+      <span class="language-icon"
+        ><fa-icon [icon]="faGlobe" class="yellow-icon"></fa-icon
+      ></span>
       <select>
         <option value="en">English</option>
         <option value="fr">French</option>
@@ -40,7 +77,9 @@
       </select>
     </div>
     <a href="#" class="logout-button">
-      <span class="logout-icon"></span>
+      <span class="logout-icon"
+        ><fa-icon [icon]="faSignOutAlt" class="red-icon"></fa-icon
+      ></span>
       Logout
     </a>
   </div>
