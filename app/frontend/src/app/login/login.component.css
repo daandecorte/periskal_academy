@@ -33,7 +33,7 @@ div:nth-child(2) {
 .iconHelp {
   position: relative;
 }
-.iconHelp i {
+.iconHelp fa-icon {
   position: absolute;
   left: 3rem;
   top: 0.78rem;
@@ -67,7 +67,7 @@ select {
   width: 80%;
   height: 2.5rem;
 }
-i {
+fa-icon {
   color: gray;
 }
 #login {
