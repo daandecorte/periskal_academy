@@ -68,8 +68,17 @@ public class UserController {
     @PostMapping(value="/users/{id}/modules", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserModule addUserModule(@PathVariable("id") int id, @RequestParam int moduleId) {
         try {
-            System.out.println(moduleId);
             return this.userService.addUserModule(id, moduleId);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    @PostMapping(value="/users/{id}/exams", produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserExam addUserExam(@PathVariable("id") int id, @RequestParam int examId) {
+        try {
+            return this.userService.addUserExam(id, examId);
         }
         catch (Exception e) {
             e.printStackTrace();
