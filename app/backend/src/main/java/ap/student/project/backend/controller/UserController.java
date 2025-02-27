@@ -1,6 +1,7 @@
 package ap.student.project.backend.controller;
 
 import ap.student.project.backend.dto.UserDTO;
+import ap.student.project.backend.entity.Language;
 import ap.student.project.backend.entity.User;
 import ap.student.project.backend.entity.UserExam;
 import ap.student.project.backend.entity.UserModule;
@@ -36,7 +37,7 @@ public class UserController {
     @PostMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public User create(@RequestBody UserDTO user) {
         this.userService.save(user);
-        return userService.assembleUser(user);
+        return userService.assemble(user);
     }
 
     @DeleteMapping(value = "/users/{id}")
@@ -74,5 +75,12 @@ public class UserController {
             e.printStackTrace();
             return null;
         }
+    }
+    @PutMapping("/users/{id}")
+    public ResponseEntity<User> update(@PathVariable int id ,@RequestBody User user) {
+        User newUser = this.userService.findById(id);
+        newUser.setLanguage(user.getLanguage());
+        this.userService.update(newUser);
+        return ResponseEntity.ok(newUser);
     }
 }

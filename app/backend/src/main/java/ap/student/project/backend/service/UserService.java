@@ -2,7 +2,6 @@ package ap.student.project.backend.service;
 
 import ap.student.project.backend.dao.*;
 import ap.student.project.backend.dto.UserDTO;
-import ap.student.project.backend.dto.UserModuleDTO;
 import ap.student.project.backend.entity.*;
 import ap.student.project.backend.entity.Module;
 import ap.student.project.backend.exceptions.DuplicateException;
@@ -38,7 +37,10 @@ public class UserService {
     }
 
     public void save(UserDTO userDTO) {
-        User user = assembleUser(userDTO);
+        User user = assemble(userDTO);
+        userRepository.save(user);
+    }
+    public void update(User user) {
         userRepository.save(user);
     }
 
@@ -113,7 +115,7 @@ public class UserService {
     }
 
 
-    public User assembleUser(UserDTO userDTO) {
+    public User assemble(UserDTO userDTO) {
         return new User(userDTO.userId(), userDTO.language());
     }
 }

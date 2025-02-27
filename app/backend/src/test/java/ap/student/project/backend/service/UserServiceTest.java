@@ -31,6 +31,6 @@ class UserServiceTest {
     }
 
     @Test
-    void assembleUser() {
+    void assemble() {
     }
 }
