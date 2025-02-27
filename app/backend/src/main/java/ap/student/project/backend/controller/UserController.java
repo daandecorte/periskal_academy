@@ -2,12 +2,15 @@ package ap.student.project.backend.controller;
 
 import ap.student.project.backend.dto.UserDTO;
 import ap.student.project.backend.entity.User;
+import ap.student.project.backend.entity.UserExam;
+import ap.student.project.backend.entity.UserModule;
 import ap.student.project.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @CrossOrigin
@@ -41,5 +44,24 @@ public class UserController {
         this.userService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping(value = "/users/{id}/modules", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<UserModule> getModules(@PathVariable("id") int id) {
+        try {
+            return this.userService.getAllUserModules(id);
+        }
+        catch (Exception e) {
+            return Collections.emptyList();
+        }
 
+    }
+    @GetMapping(value = "/users/{id}/exams", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<UserExam> getExams(@PathVariable("id") int id) {
+        try {
+            return this.userService.getAllUserExams(id);
+        }
+        catch (Exception e) {
+            return Collections.emptyList();
+        }
+
+    }
 }

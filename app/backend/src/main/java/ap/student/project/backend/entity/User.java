@@ -13,8 +13,8 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "dongle_id")
-    private String dongleId;
+    @Column(name = "user_id")
+    private String userId;
     @Column(name = "fleet_manager_id")
     private int fleetManagerId;
     @Column(name = "name")
@@ -40,8 +40,8 @@ public class User {
 
     }
 
-    public User(String dongleId, int fleetManagerId, String name, String email, Role role, Language language, List<UserExam> userExams, List<UserModule> userModules) {
-        this.dongleId = dongleId;
+    public User(String userId, int fleetManagerId, String name, String email, Role role, Language language, List<UserExam> userExams, List<UserModule> userModules) {
+        this.userId = userId;
         this.fleetManagerId = fleetManagerId;
         this.name = name;
         this.email = email;
@@ -64,12 +64,12 @@ public class User {
         this.id = id;
     }
 
-    public String getDongleId() {
-        return dongleId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setDongleId(String dongleId) {
-        this.dongleId = dongleId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public int getFleetManagerId() {
@@ -134,7 +134,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", dongleId='" + dongleId + '\'' +
+                ", dongleId='" + userId + '\'' +
                 ", fleetManagerId=" + fleetManagerId +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +

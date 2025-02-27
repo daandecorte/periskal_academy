@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 public record UserDTO(
-        @JsonProperty("dongle_id") String dongleId,
+        @JsonProperty("user_id") String userId,
         @JsonProperty("fleet_manager_id") int fleetManagerId,
         @JsonProperty("name") String name,
         @JsonProperty("email") String email,
