@@ -10,12 +10,6 @@ import java.util.List;
 
 public record UserDTO(
         @JsonProperty("user_id") String userId,
-        @JsonProperty("fleet_manager_id") int fleetManagerId,
-        @JsonProperty("name") String name,
-        @JsonProperty("email") String email,
-        @JsonProperty("role") Role role,
-        @JsonProperty("language") Language language,
-        @JsonProperty("user_exams") List<UserExam> userExams,
-        @JsonProperty("user_modules") List<UserModule> userModules
+        @JsonProperty("language") Language language
 ) {
 }

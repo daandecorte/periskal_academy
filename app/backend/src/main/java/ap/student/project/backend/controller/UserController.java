@@ -33,7 +33,7 @@ public class UserController {
         return userService.findById(id);
     }
 
-    @PostMapping(value = "/users")
+    @PostMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public User create(@RequestBody UserDTO user) {
         this.userService.save(user);
         return userService.assembleUser(user);
@@ -63,5 +63,16 @@ public class UserController {
             return Collections.emptyList();
         }
 
+    }
+    @PostMapping(value="/users/{id}/modules", produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserModule addUserModule(@PathVariable("id") int id, @RequestParam int moduleId) {
+        try {
+            System.out.println(moduleId);
+            return this.userService.addUserModule(id, moduleId);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
