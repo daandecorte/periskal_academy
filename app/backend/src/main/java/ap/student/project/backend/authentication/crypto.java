@@ -63,5 +63,4 @@ public class crypto {
 
         throw new IllegalArgumentException("Unable to decode the number.");
     }
-
 }
