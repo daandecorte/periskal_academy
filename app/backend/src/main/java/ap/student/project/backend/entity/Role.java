@@ -1,5 +1,5 @@
 package ap.student.project.backend.entity;
 
 public enum Role {
-    ADMIN, HELPDESK, SKIPPER, INSTALLER, FLEET_MANAGER
+    ADMIN, SUPPORT, SKIPPER, INSTALLER, FLEET_MANAGER
 }
