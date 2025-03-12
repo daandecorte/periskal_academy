@@ -3,10 +3,11 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TestService } from './test.service';
 import { firstValueFrom } from 'rxjs';
 import { NavbarComponent } from './navbar/navbar.component';
+import { RoleSwitcherComponent } from './role-switcher/role-switcher.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, NavbarComponent],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, NavbarComponent, RoleSwitcherComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

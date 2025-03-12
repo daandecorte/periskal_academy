@@ -6,25 +6,27 @@
     />
   </div>
   <div class="navbar-user">
-    <span class="user-icon"
-      ><fa-icon [icon]="faUser" class="yellow-icon"></fa-icon
-    ></span>
-    <div class="user-info" *ngIf="currentUser$ | async as user">
+    <span class="user-icon">
+      <fa-icon [icon]="faUser" class="yellow-icon"></fa-icon>
+    </span>
+    @if (currentUser$ | async; as user) {
+    <div class="user-info">
       <div class="user-name">{{ user.username }}</div>
       <div class="user-role">{{ user.role }}</div>
     </div>
+    }
   </div>
   <ul class="navbar-links">
-    <ng-container *ngFor="let link of navLinks">
-      <li *ngIf="isLinkVisible(link)">
-        <a [routerLink]="link.path" routerLinkActive="is-active">
-          <span class="icon-wrapper">
-            <fa-icon [icon]="link.icon" class="yellow-icon"></fa-icon>
-          </span>
-          {{ link.label }}
-        </a>
-      </li>
-    </ng-container>
+    @for (link of navLinks; track link) { @if (isLinkVisible(link)) {
+    <li>
+      <a [routerLink]="link.path" routerLinkActive="is-active">
+        <span class="icon-wrapper">
+          <fa-icon [icon]="link.icon" class="yellow-icon"></fa-icon>
+        </span>
+        {{ link.label }}
+      </a>
+    </li>
+    } }
   </ul>
   <div class="navbar-actions">
     <div class="language-selector">

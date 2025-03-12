@@ -51,4 +51,11 @@ export class AuthService {
     const user = this.currentUserValue;
     return user !== null && roles.includes(user.role);
   }
+
+  // Method for testing - DO NOT USE IN PRODUCTION
+  setCurrentUserForTesting(user: User): void {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    this.currentUserSubject.next(user);
+    console.log('Switched to role:', user.role);
+  }
 }

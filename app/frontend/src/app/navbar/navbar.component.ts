@@ -14,6 +14,7 @@ import {
 import { NgClass } from '@angular/common';
 import { AuthService, Role, User } from '../services/auth.service';
 import { Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 interface NavLink {
   path: string;
@@ -24,7 +25,7 @@ interface NavLink {
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink, RouterLinkActive, FontAwesomeModule, NgClass],
+  imports: [RouterLink, RouterLinkActive, FontAwesomeModule, NgClass, CommonModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
