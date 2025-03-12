@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { TestService } from './test.service';
 import { firstValueFrom } from 'rxjs';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RoleSwitcherComponent } from './role-switcher/role-switcher.component';
@@ -16,12 +15,7 @@ export class AppComponent {
 
   public informatie: any;
 
-  constructor(private service: TestService) {
+  constructor() {
   }
   
-  async ngOnInit() {
-    let response = await firstValueFrom(this.service.GetAll());
-    this.informatie = await response;
-    console.log(this.informatie);
-  }
 }
