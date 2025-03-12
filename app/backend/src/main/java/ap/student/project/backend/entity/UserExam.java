@@ -16,13 +16,17 @@ public class UserExam {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "exam_attempt")
     private List<ExamAttempt> examAttempts;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_id")
+    private User user;
 
     public UserExam() {
     }
 
-    public UserExam(Exam exam, List<ExamAttempt> examAttempts) {
+    public UserExam(Exam exam, List<ExamAttempt> examAttempts, User user) {
         this.exam = exam;
         this.examAttempts = examAttempts;
+        this.user = user;
     }
 
     public int getId() {
@@ -49,12 +53,21 @@ public class UserExam {
         this.examAttempts = examAttempts;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "UserExam{" +
                 "id=" + id +
                 ", exam=" + exam +
                 ", examAttempts=" + examAttempts +
+                ", user=" + user +
                 '}';
     }
 }

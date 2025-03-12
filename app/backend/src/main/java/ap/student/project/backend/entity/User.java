@@ -1,5 +1,6 @@
 package ap.student.project.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Nullable;
@@ -13,42 +14,27 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "dongle_id")
-    private String dongleId;
-    @Column(name = "fleet_manager_id")
-    private int fleetManagerId;
-    @Column(name = "name")
-    private String name;
-    @Column(name = "email")
-    private String email;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role")
-    private Role role;
+    @Column(name = "user_id")
+    private String userId;
     @Enumerated(EnumType.STRING)
     @Column(name = "language")
     private Language language;
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_exam")
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @Nullable
+    @JsonIgnore
     private List<UserExam> userExams;
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_module")
+    @OneToMany( mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @Nullable
+    @JsonIgnore
     private List<UserModule> userModules;
 
     public User() {
 
     }
 
-    public User(String dongleId, int fleetManagerId, String name, String email, Role role, Language language, List<UserExam> userExams, List<UserModule> userModules) {
-        this.dongleId = dongleId;
-        this.fleetManagerId = fleetManagerId;
-        this.name = name;
-        this.email = email;
-        this.role = role;
+    public User(String userId, Language language) {
+        this.userId = userId;
         this.language = language;
-        this.userExams = userExams;
-        this.userModules = userModules;
     }
 
     public String toJSON() throws JsonProcessingException {
@@ -64,36 +50,12 @@ public class User {
         this.id = id;
     }
 
-    public String getDongleId() {
-        return dongleId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setDongleId(String dongleId) {
-        this.dongleId = dongleId;
-    }
-
-    public int getFleetManagerId() {
-        return fleetManagerId;
-    }
-
-    public void setFleetManagerId(int fleetManagerId) {
-        this.fleetManagerId = fleetManagerId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public Language getLanguage() {
@@ -102,14 +64,6 @@ public class User {
 
     public void setLanguage(Language language) {
         this.language = language;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
     @Nullable
@@ -134,11 +88,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", dongleId='" + dongleId + '\'' +
-                ", fleetManagerId=" + fleetManagerId +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", role=" + role +
+                ", userId='" + userId + '\'' +
                 ", language=" + language +
                 ", userExams=" + userExams +
                 ", userModules=" + userModules +

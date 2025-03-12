@@ -1,13 +1,17 @@
 package ap.student.project.backend.controller;
 
 import ap.student.project.backend.dto.UserDTO;
+import ap.student.project.backend.entity.Language;
 import ap.student.project.backend.entity.User;
+import ap.student.project.backend.entity.UserExam;
+import ap.student.project.backend.entity.UserModule;
 import ap.student.project.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @CrossOrigin
@@ -30,10 +34,10 @@ public class UserController {
         return userService.findById(id);
     }
 
-    @PostMapping(value = "/users")
+    @PostMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public User create(@RequestBody UserDTO user) {
         this.userService.save(user);
-        return userService.assembleUser(user);
+        return userService.assemble(user);
     }
 
     @DeleteMapping(value = "/users/{id}")
@@ -41,5 +45,51 @@ public class UserController {
         this.userService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+    @GetMapping(value = "/users/{id}/modules", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<UserModule> getModules(@PathVariable("id") int id) {
+        try {
+            return this.userService.getAllUserModules(id);
+        }
+        catch (Exception e) {
+            return Collections.emptyList();
+        }
 
+    }
+    @GetMapping(value = "/users/{id}/exams", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<UserExam> getExams(@PathVariable("id") int id) {
+        try {
+            return this.userService.getAllUserExams(id);
+        }
+        catch (Exception e) {
+            return Collections.emptyList();
+        }
+
+    }
+    @PostMapping(value="/users/{id}/modules", produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserModule addUserModule(@PathVariable("id") int id, @RequestParam int moduleId) {
+        try {
+            return this.userService.addUserModule(id, moduleId);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    @PostMapping(value="/users/{id}/exams", produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserExam addUserExam(@PathVariable("id") int id, @RequestParam int examId) {
+        try {
+            return this.userService.addUserExam(id, examId);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    @PutMapping("/users/{id}")
+    public ResponseEntity<User> update(@PathVariable int id ,@RequestBody User user) {
+        User newUser = this.userService.findById(id);
+        newUser.setLanguage(user.getLanguage());
+        this.userService.update(newUser);
+        return ResponseEntity.ok(newUser);
+    }
 }

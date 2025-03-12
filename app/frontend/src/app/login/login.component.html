@@ -1,0 +1,39 @@
+<header>
+  <div>
+    <img
+      src="https://bedrijvengids-wuustwezel.be/wp-content/uploads/2020/09/PERISKAL_LOGO-300x272.png"
+      alt="Periskal logo"
+      id="logo"
+      onclick="window.location.href='https://www.periskal.com/';"
+    />
+
+    <div>
+      <h2>Login</h2>
+      <p>Language</p>
+      <div class="iconHelp">
+        <fa-icon [icon]="faGlobe"></fa-icon>
+        <select>
+          <option value="EN" class="extraOption">English</option>
+          <option value="NE">Nederlands</option>
+          <option value="FR">Français</option>
+          <option value="DE">Deutsch</option>
+        </select>
+      </div>
+      <p>Username</p>
+      <div class="iconHelp">
+        <fa-icon [icon]="faUser"></fa-icon>
+        <input type="text" placeholder="Enter your username" name="username" />
+      </div>
+      <p>Password</p>
+      <div class="iconHelp">
+        <fa-icon [icon]="faLock"></fa-icon>
+        <input
+          type="password"
+          placeholder="Enter your password"
+          id="password"
+        />
+      </div>
+      <Button id="login">Login</Button>
+    </div>
+  </div>
+</header>

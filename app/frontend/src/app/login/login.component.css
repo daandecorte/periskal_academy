@@ -1,0 +1,79 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #f3f4f6;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow: auto;
+}
+
+#logo {
+  width: 30%;
+  margin-bottom: 1.5rem;
+}
+
+div:nth-child(1) {
+  width: 20rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+div:nth-child(2) {
+  background-color: white;
+  border-radius: 3%;
+  width: 20rem;
+  box-shadow: 1px 1px 10px lightgray, -1px -1px 10px lightgray;
+}
+.iconHelp {
+  position: relative;
+}
+.iconHelp fa-icon {
+  position: absolute;
+  left: 3rem;
+  top: 0.78rem;
+}
+h2 {
+  text-align: center;
+}
+p,
+select,
+input,
+button {
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+}
+p {
+  font-size: small;
+  margin-bottom: 0.1rem;
+}
+button {
+  display: block;
+}
+select,
+input {
+  width: 65%;
+  height: 2.2rem;
+  border-radius: 10px;
+  border: 1px lightgray solid;
+  padding-left: 2.75rem;
+}
+select {
+  width: 80%;
+  height: 2.5rem;
+}
+fa-icon {
+  color: gray;
+}
+#login {
+  background-color: #ffd100;
+  border: none;
+  border-radius: 10px;
+  width: 80%;
+  height: 2.2rem;
+}
