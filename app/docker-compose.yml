@@ -30,6 +30,8 @@ services:
       - "3306:3306"
     env_file:
       - environment/database.env
+    environment:
+      MYSQL_ROOT_HOST: '%'
     volumes:
       - ./sqlscripts:/docker-entrypoint-initdb.d
       - dbdata:/var/lib/mysql

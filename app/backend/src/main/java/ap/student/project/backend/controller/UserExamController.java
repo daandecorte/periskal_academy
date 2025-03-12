@@ -17,12 +17,12 @@ public class UserExamController {
         this.userExamService = userExamService;
     }
 
-    @GetMapping("/exams")
+    @GetMapping("/userExams")
     public List<UserExam> getExams() {
         return this.userExamService.findAll();
     }
 
-    @PostMapping("/exams")
+    @PostMapping("/userExams")
     public UserExam addModule(@RequestBody UserExamDTO userExamDTO) {
         UserExam userExam = new UserExam();
         BeanUtils.copyProperties(userExamDTO, userExam);
