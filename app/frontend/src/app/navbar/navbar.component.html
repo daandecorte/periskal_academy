@@ -40,10 +40,10 @@
         <option value="de">German</option>
       </select>
     </div>
-    <a href="#" class="logout-button">
-      <span class="logout-icon"
-        ><fa-icon [icon]="faSignOutAlt" class="red-icon"></fa-icon
-      ></span>
+    <a (click)="logout()" class="logout-button" style="cursor: pointer">
+      <span class="logout-icon">
+        <fa-icon [icon]="faSignOutAlt" class="red-icon"></fa-icon>
+      </span>
       Logout
     </a>
   </div>

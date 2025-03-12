@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 export enum Role {
   SKIPPER = 'SKIPPER',
@@ -26,7 +26,7 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     // Check if user is stored in localStorage on service initialization
     // I don't know if this is supposed to be here but I copied it of the internet haha
     const storedUser = localStorage.getItem('currentUser');
@@ -50,6 +50,21 @@ export class AuthService {
   hasAnyRole(roles: Role[]): boolean {
     const user = this.currentUserValue;
     return user !== null && roles.includes(user.role);
+  }
+
+  logout(): void {
+    // Clear user from local storage
+    localStorage.removeItem('currentUser');
+    
+    // Update the BehaviorSubject
+    this.currentUserSubject.next(null);
+    
+    // Log for debugging
+    console.log('User logged out');
+    
+    // Additional logic for logging out here
+
+    this.router.navigate(['/login']);
   }
 
   // Method for testing - DO NOT USE IN PRODUCTION

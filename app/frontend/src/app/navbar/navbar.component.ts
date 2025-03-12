@@ -90,7 +90,7 @@ export class NavbarComponent{
     return link.allowedRoles.includes(user.role);
   }
 
-  /* logout(): void {
+  logout(): void {
     this.authService.logout();
-  } */
+  }
 }
