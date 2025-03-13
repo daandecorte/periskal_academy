@@ -4,6 +4,8 @@ import ap.student.project.backend.dto.UserExamDTO;
 import ap.student.project.backend.entity.UserExam;
 import ap.student.project.backend.service.UserExamService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,12 +19,12 @@ public class UserExamController {
         this.userExamService = userExamService;
     }
 
-    @GetMapping("/userExams")
-    public List<UserExam> getExams() {
-        return this.userExamService.findAll();
+    @GetMapping(value= "/userExams", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getExams() {
+        return ResponseEntity.ok(this.userExamService.findAll());
     }
 
-    @PostMapping("/userExams")
+    @PostMapping(value= "/userExams", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserExam addModule(@RequestBody UserExamDTO userExamDTO) {
         UserExam userExam = new UserExam();
         BeanUtils.copyProperties(userExamDTO, userExam);
