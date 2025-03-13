@@ -1,0 +1,95 @@
+.module-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.module-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.module-title {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.assigned-badge {
+  font-size: 12px;
+  background-color: #e6f7ff;
+  color: #0077cc;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+.module-subtitle {
+  color: #666;
+  font-size: 14px;
+  margin: 4px 0 0 0;
+}
+
+.module-description {
+  color: #444;
+  margin: 10px 0;
+  flex-grow: 1;
+}
+
+.module-info {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0;
+  font-size: 14px;
+}
+
+.training-count,
+.certificate-icon {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 6px;
+  display: flex;
+  align-items: center;
+}
+
+.progress-container {
+  margin-bottom: 15px;
+}
+
+.progress-bar {
+  height: 6px;
+  background-color: #e0e0e0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #ffcc00;
+}
+
+.action-button {
+  background-color: #ffcc00;
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: auto;
+  transition: background-color 0.2s;
+}
+
+.action-button:hover {
+  background-color: #f0c000;
+}

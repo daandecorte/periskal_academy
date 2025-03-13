@@ -1,13 +1,22 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Module, ModuleService } from '../services/module.service';
+import { ModuleCardComponent } from '../module-card/module-card.component';
 
 @Component({
   selector: 'app-modules',
-  imports: [],
+  imports: [CommonModule, ModuleCardComponent],
   templateUrl: './modules.component.html',
   styleUrl: './modules.component.css'
 })
 export class ModulesComponent {
+  modules: Module[] = [];
 
-  // Elke modulekaart bevat een titel, beschrijving, aantal trainingen, voortgangsindicator en een speciaal icoon voor certificeringsmodules
+  constructor(private moduleService: ModuleService) {}
 
+  ngOnInit(): void {
+    this.moduleService.getModules().subscribe(modules => {
+      this.modules = modules;
+    });
+  }
 }

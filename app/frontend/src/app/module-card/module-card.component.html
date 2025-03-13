@@ -1,0 +1,43 @@
+<div class="module-card">
+  <div class="module-header">
+    <div>
+      <h2 class="module-title">
+        {{ module.title }}
+        @if (module.assigned) {
+        <span class="assigned-badge">Assigned</span>
+        }
+      </h2>
+      <p class="module-subtitle">Training Module</p>
+    </div>
+  </div>
+
+  <p class="module-description">{{ module.description }}</p>
+
+  <div class="module-info">
+    <div class="training-count">
+      <span class="icon">
+        <fa-icon [icon]="faLayerGroup"></fa-icon>
+      </span>
+      {{ module.trainingCount }} Trainings
+    </div>
+
+    @if (module.hasCertificate) {
+    <div class="certificate-icon">
+      <span class="icon">
+        <fa-icon [icon]="faCertificate"></fa-icon>
+      </span>
+      Certificate
+    </div>
+    }
+  </div>
+
+  @if (module.progress !== undefined) {
+  <div class="progress-container">
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width.%]="module.progress"></div>
+    </div>
+  </div>
+  }
+
+  <button class="action-button">{{ getButtonText() }}</button>
+</div>

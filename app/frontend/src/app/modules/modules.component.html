@@ -1,1 +1,8 @@
-<p>modules works!</p>
+<div class="modules-container">
+  <h1>All Available Modules</h1>
+  <div class="modules-grid">
+    @for (module of modules; track module.id) {
+    <app-module-card [module]="module"></app-module-card>
+    }
+  </div>
+</div>
