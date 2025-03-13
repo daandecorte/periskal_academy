@@ -11,8 +11,10 @@
     </span>
     @if (currentUser$ | async; as user) {
     <div class="user-info">
-      <div class="user-name">{{ user.username }}</div>
-      <div class="user-role">{{ user.role }}</div>
+      <div class="user-name">{{ user.Firstname }} {{ user.Lastname }}</div>
+      <div [ngClass]="[getRoleClass(), 'user-role']">
+        {{ user.Role.charAt(0).toUpperCase() + user.Role.slice(1) }}
+      </div>
     </div>
     }
   </div>
@@ -33,11 +35,11 @@
       <span class="language-icon"
         ><fa-icon [icon]="faGlobe" class="yellow-icon"></fa-icon
       ></span>
-      <select>
-        <option value="en">English</option>
-        <option value="fr">French</option>
-        <option value="nl">Dutch</option>
-        <option value="de">German</option>
+      <select [(ngModel)]="language" (change)="onLanguageChange()">
+        <option value="ENGLISH">English</option>
+        <option value="DUTCH">Nederlands</option>
+        <option value="FRENCH">Français</option>
+        <option value="GERMAN">Deutsch</option>
       </select>
     </div>
     <a (click)="logout()" class="logout-button" style="cursor: pointer">

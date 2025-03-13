@@ -1,20 +1,23 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { 
-  faLayerGroup, 
-  faCertificate, 
-  faLightbulb, 
-  faUsers, 
-  faHeadset, 
+import {
+  faLayerGroup,
+  faCertificate,
+  faLightbulb,
+  faUsers,
+  faHeadset,
   faSignOutAlt,
   faUser,
-  faGlobe
+  faGlobe,
 } from '@fortawesome/free-solid-svg-icons';
 import { NgClass } from '@angular/common';
-import { AuthService, Role, User } from '../services/auth.service';
+import { AuthService, Role } from '../services/auth.service';
+import { IUser } from '../types/user-info';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { LanguageService } from '../services/language.service';
+import { FormsModule } from '@angular/forms';
 
 interface NavLink {
   path: string;
@@ -25,11 +28,18 @@ interface NavLink {
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink, RouterLinkActive, FontAwesomeModule, NgClass, CommonModule],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    FontAwesomeModule,
+    NgClass,
+    CommonModule,
+    FormsModule,
+  ],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrl: './navbar.component.css',
 })
-export class NavbarComponent{
+export class NavbarComponent {
   faLayerGroup = faLayerGroup;
   faCertificate = faCertificate;
   faLightbulb = faLightbulb;
@@ -39,55 +49,88 @@ export class NavbarComponent{
   faSignOutAlt = faSignOutAlt;
   faUser = faUser;
 
-  currentUser$: Observable<User | null>;
+  currentUser$: Observable<IUser | null>;
+  currentUserRole: string | null = null;
+
+  language: string = 'ENGLISH';
 
   navLinks: NavLink[] = [
     {
       path: 'modules',
       icon: this.faLayerGroup,
       label: 'Modules',
-      allowedRoles: [Role.SKIPPER, Role.INSTALLER, Role.ADMIN, Role.SUPPORT, Role.FLEETMANAGER]
+      allowedRoles: [
+        Role.SKIPPER,
+        Role.INSTALLER,
+        Role.ADMIN,
+        Role.SUPPORT,
+        Role.FLEETMANAGER,
+      ],
     },
     {
       path: 'certificates',
       icon: this.faCertificate,
       label: 'Certificates',
-      allowedRoles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT]
+      allowedRoles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT],
     },
     {
       path: 'tips-and-tricks',
       icon: this.faLightbulb,
       label: 'Tips and tricks',
-      allowedRoles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT, Role.FLEETMANAGER]
+      allowedRoles: [
+        Role.SKIPPER,
+        Role.INSTALLER,
+        Role.SUPPORT,
+        Role.FLEETMANAGER,
+      ],
     },
     {
       path: 'user-management',
       icon: this.faUsers,
       label: 'User Management',
-      allowedRoles: [Role.ADMIN]
+      allowedRoles: [Role.ADMIN],
     },
     {
       path: 'skippers',
       icon: this.faUsers,
       label: 'Skippers',
-      allowedRoles: [Role.FLEETMANAGER]
+      allowedRoles: [Role.FLEETMANAGER],
     },
     {
       path: 'support',
       icon: this.faHeadset,
       label: 'Support',
-      allowedRoles: [Role.SUPPORT]
-    }
+      allowedRoles: [Role.SUPPORT],
+    },
   ];
 
-  constructor(private authService: AuthService) {
+  constructor(
+    private authService: AuthService,
+    private languageService: LanguageService
+  ) {
     this.currentUser$ = this.authService.currentUser$;
+    this.authService.currentUser$.subscribe((user) => {
+      this.currentUserRole = user ? user.Role : null;
+    });
+    this.languageService.currentLanguage$.subscribe((lang) => {
+      this.language = lang;
+    });
+  }
+
+  onLanguageChange() {
+    this.languageService.setLanguage(this.language);
   }
 
   isLinkVisible(link: NavLink): boolean {
     const user = this.authService.currentUserValue;
     if (!user) return false;
-    return link.allowedRoles.includes(user.role);
+    return link.allowedRoles.includes(user.Role.toUpperCase() as Role);
+  }
+
+  getRoleClass(): string {
+    return this.currentUserRole
+      ? `${this.currentUserRole.toLowerCase()}-role`
+      : '';
   }
 
   logout(): void {

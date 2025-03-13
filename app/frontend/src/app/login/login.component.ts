@@ -8,9 +8,9 @@ import {
   faEye,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
-import { UserInfoService } from '../user-info.service';
 import { Router } from '@angular/router';
 import { IUser } from '../types/user-info';
+import { LanguageService } from '../services/language.service';
 
 @Component({
   selector: 'app-login',
@@ -29,9 +29,21 @@ export class LoginComponent {
   password: string = '';
   language: string = 'ENGLISH';
 
-  constructor(private service: UserInfoService, private router: Router) {}
+  constructor(
+    private router: Router,
+    private languageService: LanguageService
+  ) {
+    this.languageService.currentLanguage$.subscribe((lang) => {
+      this.language = lang;
+    });
+  }
 
   ngOnInit() {
+    let storedUser = localStorage.getItem('currentUser');
+    if (storedUser) {
+      this.router.navigate(['/modules']);
+    }
+
     let inputPassword = document.getElementById('password') as HTMLInputElement;
     let eye = document.getElementById('eyeIcon') as HTMLButtonElement;
     eye.addEventListener('click', () => {
@@ -39,6 +51,10 @@ export class LoginComponent {
         ? (inputPassword.type = 'text')
         : (inputPassword.type = 'password');
     });
+  }
+
+  onLanguageChange() {
+    this.languageService.setLanguage(this.language);
   }
 
   async login() {
@@ -70,7 +86,8 @@ export class LoginComponent {
             })
           ),
       };
-      this.service.user = userData;
+
+      localStorage.setItem('currentUser', JSON.stringify(userData));
       this.router.navigate(['/modules']);
     } else {
       let textIncorrect = document.getElementById('textIncorrect');

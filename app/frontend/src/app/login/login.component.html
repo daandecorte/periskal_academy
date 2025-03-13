@@ -12,11 +12,11 @@
       <p>Language</p>
       <div class="iconHelp">
         <fa-icon [icon]="faGlobe"></fa-icon>
-        <select [(ngModel)]="language">
+        <select [(ngModel)]="language" (change)="onLanguageChange()">
           <option value="ENGLISH">English</option>
-          <option value="NEDERLANDS">Nederlands</option>
-          <option value="FRANCAIS">Français</option>
-          <option value="DEUTSCH">Deutsch</option>
+          <option value="DUTCH">Nederlands</option>
+          <option value="FRENCH">Français</option>
+          <option value="GERMAN">Deutsch</option>
         </select>
       </div>
       <p>Username</p>
