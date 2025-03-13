@@ -26,6 +26,13 @@ public class ModuleService {
         }
         moduleRepository.save(module);
     }
+    public Module findById(int id) {
+        Module module = moduleRepository.findById(id).orElse(null);
+        if(module == null) {
+            throw new NotFoundException("module with id " + id + " not found");
+        }
+        return module;
+    }
     public void update(int id, ModuleDTO moduleDTO) {
         Module module = moduleRepository.findById(id).orElse(null);
         if(module == null) {

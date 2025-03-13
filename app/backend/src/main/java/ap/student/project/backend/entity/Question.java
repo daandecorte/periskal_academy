@@ -3,6 +3,7 @@ package ap.student.project.backend.entity;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "question")
@@ -10,10 +11,11 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column
-    private Language language;
-    @Column
-    private String text;
+    @ElementCollection
+    @CollectionTable(name = "question_texts", joinColumns = @JoinColumn(name = "question_id"))
+    @MapKeyColumn(name = "language")
+    @Column(name = "text")
+    private Map<Language, String> text;
     @Enumerated(EnumType.STRING)
     @Column(name = "question_type")
     private QuestionType questionType;
@@ -24,8 +26,7 @@ public class Question {
     public Question() {
     }
 
-    public Question(Language language, String text, QuestionType questionType, List<QuestionOption> questionOptions) {
-        this.language = language;
+    public Question(Map<Language, String> text, QuestionType questionType, List<QuestionOption> questionOptions) {
         this.text = text;
         this.questionType = questionType;
         this.questionOptions = questionOptions;
@@ -39,19 +40,11 @@ public class Question {
         this.id = id;
     }
 
-    public Language getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(Language language) {
-        this.language = language;
-    }
-
-    public String getText() {
+    public Map<Language, String> getText() {
         return text;
     }
 
-    public void setText(String text) {
+    public void setText(Map<Language, String> text) {
         this.text = text;
     }
 
@@ -75,7 +68,6 @@ public class Question {
     public String toString() {
         return "Question{" +
                 "id=" + id +
-                ", language=" + language +
                 ", text='" + text + '\'' +
                 ", questionType=" + questionType +
                 ", questionOptions=" + questionOptions +

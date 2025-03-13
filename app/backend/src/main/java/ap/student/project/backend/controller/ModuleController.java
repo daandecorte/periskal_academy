@@ -30,6 +30,16 @@ public class ModuleController {
     public ResponseEntity getModules() {
         return ResponseEntity.ok(this.moduleService.findAll());
     }
+    @GetMapping(value = "/modules/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getModuleById(@PathVariable Integer id) {
+        try {
+            return ResponseEntity.ok(this.moduleService.findById(id));
+        }
+        catch (NotFoundException e) {
+            logger.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
     @PostMapping(value = "/modules", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addModule(@RequestBody ModuleDTO moduleDTO) {
         try {
