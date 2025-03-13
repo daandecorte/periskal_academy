@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-// This service contains hardcoded modules, modules should later be got from te backend
+// This service contains hardcoded modules, modules should later be pulled from te backend
 
 export interface Module {
   id: number;
