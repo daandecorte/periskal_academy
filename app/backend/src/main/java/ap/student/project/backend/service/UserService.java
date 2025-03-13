@@ -36,17 +36,24 @@ public class UserService {
         this.moduleRepository = moduleRepository;
     }
 
-    public void save(UserDTO userDTO) {
+    public void save(UserDTO userDTO) throws DuplicateException {
         User user = assemble(userDTO);
+        if(userRepository.existsById(user.getId())) {
+            throw new DuplicateException("User with id " + user.getId() + " already exists");
+        }
         userRepository.save(user);
     }
     public void update(User user) {
         userRepository.save(user);
     }
 
-    public User findById(int id) {
-        Optional<User> user = userRepository.findById(id);
-        return user.orElse(null);
+    public User findById(int id) throws NotFoundException {
+        Optional<User> optionalUser = userRepository.findById(id);
+        User user = optionalUser.orElse(null);
+        if(user == null) {
+            throw new NotFoundException("User with id " + id + " not found");
+        }
+        return user;
     }
 
     public List<User> findAll() {
