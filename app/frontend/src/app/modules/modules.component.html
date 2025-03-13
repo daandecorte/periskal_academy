@@ -1,23 +1,37 @@
 <div class="modules-container">
-  <div class="search-bar">
-    <input type="text" placeholder="Search modules..." class="search-input" />
-  </div>
-
   <h1>Modules</h1>
+  <div class="search-bar">
+    <input
+      type="text"
+      placeholder="Search modules..."
+      class="search-input"
+      [(ngModel)]="searchTerm"
+      (ngModelChange)="onSearchChange()"
+    />
+  </div>
 
   <!-- Assigned Modules Section -->
   <h2 class="section-title">Assigned by Fleet Manager</h2>
-  <div class="assigned-modules">
+  <div
+    class="assigned-modules"
+    *ngIf="assignedModules.length > 0; else noAssignedModules"
+  >
     @for (module of assignedModules; track module.id) {
     <app-assigned-module-card [module]="module"></app-assigned-module-card>
     }
   </div>
+  <ng-template #noAssignedModules>
+    <div class="no-results">No assigned modules match your search.</div>
+  </ng-template>
 
   <!-- All Available Modules Section -->
   <h2 class="section-title">All Available Modules</h2>
-  <div class="modules-grid">
+  <div class="modules-grid" *ngIf="modules.length > 0; else noModules">
     @for (module of modules; track module.id) {
     <app-module-card [module]="module"></app-module-card>
     }
   </div>
+  <ng-template #noModules>
+    <div class="no-results">No modules match your search.</div>
+  </ng-template>
 </div>
