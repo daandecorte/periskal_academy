@@ -21,9 +21,6 @@ public class ModuleService {
     public void save(ModuleDTO moduleDTO) {
         Module module = new Module();
         BeanUtils.copyProperties(moduleDTO, module);
-        if(moduleRepository.existsById(module.getId())) {
-            throw new DuplicateException("module with id " + module.getId() + " already exists");
-        }
         moduleRepository.save(module);
     }
     public Module findById(int id) {

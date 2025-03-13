@@ -83,7 +83,6 @@ public class UserService {
         if(userExams==null) throw new NotFoundException("user does not have any user exams");
         return userExams;
     }
-    @Transactional
     public UserModule addUserModule(int id, int moduleId) throws NotFoundException, DuplicateException {
         User user = userRepository.findById(id).orElse(null);
         if(user==null)

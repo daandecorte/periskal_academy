@@ -23,12 +23,4 @@ public class UserExamController {
     public ResponseEntity getExams() {
         return ResponseEntity.ok(this.userExamService.findAll());
     }
-
-    @PostMapping(value= "/userExams", produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserExam addModule(@RequestBody UserExamDTO userExamDTO) {
-        UserExam userExam = new UserExam();
-        BeanUtils.copyProperties(userExamDTO, userExam);
-        this.userExamService.save(userExamDTO);
-        return userExam;
-    }
 }
