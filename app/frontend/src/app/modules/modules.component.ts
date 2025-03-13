@@ -8,4 +8,6 @@ import { Component } from '@angular/core';
 })
 export class ModulesComponent {
 
+  // Elke modulekaart bevat een titel, beschrijving, aantal trainingen, voortgangsindicator en een speciaal icoon voor certificeringsmodules
+
 }
