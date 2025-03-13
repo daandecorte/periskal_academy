@@ -1,0 +1,16 @@
+<div class="assigned-card">
+  <div class="icon-section">
+    <div class="module-icon">
+      <fa-icon [icon]="faLayerGroup" class="yellow-icon"></fa-icon>
+    </div>
+  </div>
+  <div class="info-section">
+    <div class="module-title">{{ module.title }}</div>
+    <div class="module-date">
+      Assigned on {{ module.assignedDate || "Invalid Date" }}
+    </div>
+  </div>
+  <div class="button-section">
+    <button class="start-now-button">Start Now</button>
+  </div>
+</div>

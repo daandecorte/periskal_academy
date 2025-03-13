@@ -11,6 +11,7 @@ export interface Module {
   progress?: number; // percentage of completion
   hasCertificate: boolean;
   assigned?: boolean;
+  assignedDate?: string;
   status: 'not_started' | 'in_progress' | 'completed';
 }
 
@@ -27,6 +28,7 @@ export class ModuleService {
       progress: 50,
       hasCertificate: true,
       assigned: true,
+      assignedDate: '15-3-2024',
       status: 'in_progress'
     },
     {
