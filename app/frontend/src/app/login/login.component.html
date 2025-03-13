@@ -12,28 +12,36 @@
       <p>Language</p>
       <div class="iconHelp">
         <fa-icon [icon]="faGlobe"></fa-icon>
-        <select>
-          <option value="EN" class="extraOption">English</option>
-          <option value="NE">Nederlands</option>
-          <option value="FR">Français</option>
-          <option value="DE">Deutsch</option>
+        <select [(ngModel)]="language">
+          <option value="ENGLISH">English</option>
+          <option value="NEDERLANDS">Nederlands</option>
+          <option value="FRANCAIS">Français</option>
+          <option value="DEUTSCH">Deutsch</option>
         </select>
       </div>
       <p>Username</p>
       <div class="iconHelp">
         <fa-icon [icon]="faUser"></fa-icon>
-        <input type="text" placeholder="Enter your username" name="username" />
+        <input
+          type="text"
+          placeholder="Enter your username"
+          name="username"
+          [(ngModel)]="username"
+        />
       </div>
       <p>Password</p>
       <div class="iconHelp">
         <fa-icon [icon]="faLock"></fa-icon>
+        <fa-icon [icon]="faEye" id="eyeIcon"></fa-icon>
         <input
           type="password"
           placeholder="Enter your password"
           id="password"
+          [(ngModel)]="password"
         />
       </div>
-      <Button id="login">Login</Button>
+      <p id="textIncorrect"></p>
+      <Button id="login" (click)="login()">Login</Button>
     </div>
   </div>
 </header>

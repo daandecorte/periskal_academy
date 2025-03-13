@@ -36,7 +36,10 @@ div:nth-child(2) {
 .iconHelp fa-icon {
   position: absolute;
   left: 3rem;
-  top: 0.78rem;
+  top: 0.72rem;
+}
+#eyeIcon {
+  left: 16rem;
 }
 h2 {
   text-align: center;
@@ -57,11 +60,12 @@ button {
 }
 select,
 input {
-  width: 65%;
+  width: 52%;
   height: 2.2rem;
   border-radius: 10px;
   border: 1px lightgray solid;
   padding-left: 2.75rem;
+  padding-right: 2.75rem;
 }
 select {
   width: 80%;
@@ -76,4 +80,10 @@ fa-icon {
   border-radius: 10px;
   width: 80%;
   height: 2.2rem;
+}
+#textIncorrect {
+  color: red;
+  font-weight: bold;
+  margin-top: 0rem;
+  margin-bottom: 1rem;
 }

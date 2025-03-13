@@ -6,16 +6,14 @@ import { RoleSwitcherComponent } from './role-switcher/role-switcher.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, NavbarComponent, RoleSwitcherComponent],
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    NavbarComponent,
+    RoleSwitcherComponent,
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
-export class AppComponent {
-  title = 'frontend';
-
-  public informatie: any;
-
-  constructor() {
-  }
-  
-}
+export class AppComponent {}
