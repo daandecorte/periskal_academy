@@ -112,11 +112,16 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-    @PutMapping("/users/{id}")
-    public ResponseEntity update(@PathVariable int id ,@RequestBody User user) {
-        User newUser = this.userService.findById(id);
-        newUser.setLanguage(user.getLanguage());
-        this.userService.update(newUser);
-        return ResponseEntity.ok(newUser);
+    @PutMapping("/users")
+    public ResponseEntity update(@RequestBody UserDTO userDTO) {
+        try {
+            this.userService.update(userDTO);
+            return ResponseEntity.ok(userDTO);
+        }
+        catch(NotFoundException e) {
+            logger.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+
     }
 }

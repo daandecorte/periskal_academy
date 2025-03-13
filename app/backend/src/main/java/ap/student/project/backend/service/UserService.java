@@ -38,13 +38,18 @@ public class UserService {
 
     public void save(UserDTO userDTO) throws DuplicateException {
         User user = assemble(userDTO);
-        if(userRepository.existsById(user.getId())) {
-            throw new DuplicateException("User with id " + user.getId() + " already exists");
+        if(userRepository.existsByUserId(user.getUserId())) {
+            throw new DuplicateException("User with userid " + user.getUserId() + " already exists");
         }
         userRepository.save(user);
     }
-    public void update(User user) {
-        userRepository.save(user);
+    public void update(UserDTO userDTO) throws NotFoundException {
+        User updatedUser = userRepository.findByUserId(userDTO.userId());
+        if(updatedUser == null) {
+            throw new NotFoundException("User with userid " + userDTO.userId() + " not found");
+        }
+        updatedUser.setLanguage(userDTO.language());
+        userRepository.save(updatedUser);
     }
 
     public User findById(int id) throws NotFoundException {
