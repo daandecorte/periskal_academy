@@ -1,5 +1,6 @@
 package ap.student.project.backend.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -25,6 +26,10 @@ public class Module {
     @OneToMany
     @JoinTable(name = "exam")
     private List<Exam> exams;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name="tip")
+    @Nullable
+    private List<Tip> tips;
 
     public Module() {
     }
@@ -94,6 +99,15 @@ public class Module {
         this.exams = exams;
     }
 
+    @Nullable
+    public List<Tip> getTips() {
+        return tips;
+    }
+
+    public void setTips(@Nullable List<Tip> tips) {
+        this.tips = tips;
+    }
+
     @Override
     public String toString() {
         return "Module{" +
@@ -104,6 +118,7 @@ public class Module {
                 ", isActive=" + isActive +
                 ", trainings=" + trainings +
                 ", exams=" + exams +
+                ", tips=" + tips +
                 '}';
     }
 }
