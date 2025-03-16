@@ -2,7 +2,6 @@ package ap.student.project.backend.service;
 
 import ap.student.project.backend.dao.ModuleRepository;
 import ap.student.project.backend.dto.ModuleDTO;
-import ap.student.project.backend.entity.Language;
 import ap.student.project.backend.entity.Module;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +14,6 @@ import org.springframework.beans.BeanUtils;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,7 +45,7 @@ class ModuleServiceTest {
         BeanUtils.copyProperties(moduleDTO, module);
 
         moduleService.save(moduleDTO);
-        verify(moduleRepository, times(1)).save(module);
+        verify(moduleRepository, times(1)).save(any(Module.class));
     }
 
     @Test

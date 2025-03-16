@@ -103,10 +103,6 @@ public class Module {
         this.tips = tips;
     }
     @Override
-    public int hashCode() {
-        return Objects.hash(id, title, description, isActive, trainings, exams, tips);
-    }
-    @Override
     public String toString() {
         return "Module{" +
                 "id=" + id +
@@ -117,19 +113,5 @@ public class Module {
                 ", exams=" + exams +
                 ", tips=" + tips +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Module module = (Module) o;
-        return isActive == module.isActive &&
-                Objects.equals(id, module.id) &&
-                Objects.equals(title, module.title) &&
-                Objects.equals(description, module.description) &&
-                Objects.equals(trainings, module.trainings) &&
-                Objects.equals(exams, module.exams) &&
-                Objects.equals(tips, module.tips);
     }
 }
