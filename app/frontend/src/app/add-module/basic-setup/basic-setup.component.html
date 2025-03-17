@@ -1,1 +1,87 @@
-<p>basic-setup works!</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create New Module</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Create New Module</h2>
+
+      <!-- Steps Indicator -->
+      <div class="steps">
+        <div class="step active">
+          <div class="circle">1</div>
+          <span>Basic Setup</span>
+        </div>
+        <div class="line"></div>
+        <div class="step">
+          <div class="circle">2</div>
+          <span>Trainings</span>
+        </div>
+        <div class="line"></div>
+        <div class="step">
+          <div class="circle">3</div>
+          <span>Exam</span>
+        </div>
+        <div class="line"></div>
+        <div class="step">
+          <div class="circle">4</div>
+          <span>Preview</span>
+        </div>
+      </div>
+
+      <div class="body-container">
+        <!-- Form Section -->
+        <div class="form-group">
+          <label>Module Title</label>
+          <input type="text" placeholder="Enter module title" />
+
+          <label>Description</label>
+          <textarea placeholder="Enter description"></textarea>
+        </div>
+
+        <!-- Module Settings -->
+        <div class="module-settings">
+          <h3>Module Settings</h3>
+          <div class="settings-flex">
+            <div class="setting">
+              <span>Module Status</span>
+              <label class="switch">
+                <input type="checkbox" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="setting">
+              <span>Certificate Required</span>
+              <label class="switch">
+                <input type="checkbox" checked />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificate Settings -->
+        <div class="certificate-settings">
+          <h3>Certificate Settings</h3>
+          <div class="input-group">
+            <div>
+              <label>Validity Period (Years)</label>
+              <input type="number" value="5" />
+            </div>
+            <div>
+              <label>Certificate Price (€)</label>
+              <input type="number" value="0" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <!--<button class="btn" [RouterLink]="'/trainings'">Next</button>-->
+    </div>
+  </body>
+</html>

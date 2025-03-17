@@ -1,0 +1,18 @@
+.next-previous {
+  display: flex;
+  justify-content: space-around;
+}
+
+button {
+  background: #facc15;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background: #eab308;
+}

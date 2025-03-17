@@ -7,6 +7,11 @@ import { SkippersComponent } from './skippers/skippers.component';
 import { SupportComponent } from './support/support.component';
 import { LoginComponent } from './login/login.component';
 import { Role } from './services/auth.service';
+import { AddModuleComponent } from './add-module/add-module.component';
+import { BasicSetupComponent } from './add-module/basic-setup/basic-setup.component';
+import { TrainingsComponent } from './add-module/trainings/trainings.component';
+import { ExamComponent } from './add-module/exam/exam.component';
+import { PreviewComponent } from './add-module/preview/preview.component';
 
 
 export const routes: Routes = [
@@ -17,6 +22,13 @@ export const routes: Routes = [
   { path: 'user-management', component: UserManagementComponent , data: { roles: [Role.ADMIN] }}, //When role is admin
   { path: 'skippers', component: SkippersComponent , data: { roles: [Role.FLEETMANAGER] }}, //When role is fleet-manager
   { path: 'support', component: SupportComponent , data: { roles: [Role.SUPPORT] }}, //When role is helpdesk
+  { path: 'add-module', component: AddModuleComponent, children: [
+    { path: '', redirectTo: 'basic-setup', pathMatch: 'full'},
+    { path: 'basic-setup', component: BasicSetupComponent},
+    { path: 'trainings', component: TrainingsComponent},
+    { path: 'exam', component: ExamComponent},
+    { path: 'preview', component: PreviewComponent},
+  ]},
   { path: '', redirectTo: 'modules', pathMatch: 'full' }, 
   { path: '**', redirectTo: 'modules', pathMatch: 'full' },
 ];

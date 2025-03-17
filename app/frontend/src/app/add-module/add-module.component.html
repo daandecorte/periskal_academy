@@ -1,1 +1,10 @@
-<p>add-module works!</p>
+<!-- Hier worden de subcomponenten geladen -->
+<div>
+  <router-outlet></router-outlet>
+</div>
+
+<!-- Navigatieknoppen -->
+<div class="next-previous">
+  <button (click)="goToPreviousStep()">Previous</button>
+  <button (click)="goToNextStep()">Next</button>
+</div>
