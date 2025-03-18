@@ -63,8 +63,6 @@ public class ExamService {
             question.setExam(exam);
             if (exam.getQuestions().size() < exam.getQuestionAmount()) {
                 questionRepository.save(question);
-                //exam.getQuestions().add(question);
-                //examRepository.save(exam);
             } else {
                 throw new ListFullException("Exam with id " + id + " has a question limit of " + exam.getQuestionAmount());
             }

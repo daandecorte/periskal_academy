@@ -47,7 +47,7 @@ public class ModuleController {
         }
     }
 
-    @PutMapping(value = "/modules/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/modules/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity updateModule(@PathVariable("id") int id, @RequestBody ModuleDTO moduleDTO) {
         try {
             this.moduleService.update(id, moduleDTO);

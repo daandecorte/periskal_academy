@@ -38,6 +38,27 @@ public class ExamController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
     }
+    @GetMapping(value = "/exams/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getExamById(@PathVariable int id) {
+        try {
+            this.examService.findById(id);
+            return ResponseEntity.ok(this.examService.findById(id));
+        }
+        catch (NotFoundException e) {
+            logger.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+    @PutMapping(value = "/exams/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity updateExam(@PathVariable int id, @RequestBody ExamDTO examDTO) {
+        try {
+            this.examService.update(id, examDTO);
+            return ResponseEntity.ok(examDTO);
+        } catch (NotFoundException e) {
+            logger.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
     @GetMapping(value = "/exams/{id}/questions", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getQuestions(@PathVariable int id) {
         return ResponseEntity.ok(this.examService.findAllQuestionsByExamId(id));
@@ -57,5 +78,10 @@ public class ExamController {
             logger.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
+    }
+    @DeleteMapping(value = "/exams/{id}")
+    public ResponseEntity deleteExam(@PathVariable int id) {
+        this.examService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
