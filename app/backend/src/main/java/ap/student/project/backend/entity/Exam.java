@@ -18,19 +18,22 @@ public class Exam {
     private int time;
     @Column(name = "question_amount")
     private int questionAmount;
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "question")
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<Question> questions;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinTable(name="module_id")
+    private Module module;
 
     public Exam() {
     }
 
-    public Exam(int passingScore, int maxAttempts, int time, int questionAmount, List<Question> questions) {
+    public Exam(int passingScore, int maxAttempts, int time, int questionAmount, List<Question> questions, Module module) {
         this.passingScore = passingScore;
         this.maxAttempts = maxAttempts;
         this.time = time;
         this.questionAmount = questionAmount;
         this.questions = questions;
+        this.module = module;
     }
 
     public int getId() {
@@ -81,6 +84,14 @@ public class Exam {
         this.questions = questions;
     }
 
+    public Module getModule() {
+        return module;
+    }
+
+    public void setModule(Module module) {
+        this.module = module;
+    }
+
     @Override
     public String toString() {
         return "Exam{" +
@@ -90,6 +101,7 @@ public class Exam {
                 ", time=" + time +
                 ", questionAmount=" + questionAmount +
                 ", questions=" + questions +
+                ", module=" + module +
                 '}';
     }
 }

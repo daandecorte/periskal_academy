@@ -28,8 +28,7 @@ public class Module {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "training")
     private List<Training> trainings;
-    @OneToMany
-    @JoinTable(name = "exam")
+    @OneToMany(mappedBy = "module", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Exam> exams;
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name="tip")

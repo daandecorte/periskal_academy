@@ -1,5 +1,6 @@
 package ap.student.project.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -19,17 +20,21 @@ public class Question {
     @Enumerated(EnumType.STRING)
     @Column(name = "question_type")
     private QuestionType questionType;
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "question_option")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<QuestionOption> questionOptions;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "exam_id")
+    @JsonIgnore
+    private Exam exam;
 
     public Question() {
     }
 
-    public Question(Map<Language, String> text, QuestionType questionType, List<QuestionOption> questionOptions) {
+    public Question(Map<Language, String> text, QuestionType questionType, List<QuestionOption> questionOptions, Exam exam) {
         this.text = text;
         this.questionType = questionType;
         this.questionOptions = questionOptions;
+        this.exam = exam;
     }
 
     public int getId() {
@@ -64,13 +69,22 @@ public class Question {
         this.questionOptions = questionOptions;
     }
 
+    public Exam getExam() {
+        return exam;
+    }
+
+    public void setExam(Exam exam) {
+        this.exam = exam;
+    }
+
     @Override
     public String toString() {
         return "Question{" +
                 "id=" + id +
-                ", text='" + text + '\'' +
+                ", text=" + text +
                 ", questionType=" + questionType +
                 ", questionOptions=" + questionOptions +
+                ", exam=" + exam +
                 '}';
     }
 }
