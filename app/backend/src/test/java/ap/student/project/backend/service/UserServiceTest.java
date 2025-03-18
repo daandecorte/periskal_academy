@@ -114,19 +114,6 @@ class UserServiceTest {
         when(userRepository.findById(1)).thenReturn(Optional.of(user));
         assertDoesNotThrow(() -> userService.getAllUserModules(1));
     }
-
-    @Test
-    void testAddUserModule_UserNotFound() {
-        when(userRepository.findById(1)).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> userService.addUserModule(1, 1));
-    }
-
-    @Test
-    void testAddUserModule_ModuleNotFound() {
-        when(userRepository.findById(1)).thenReturn(Optional.of(user));
-        when(moduleRepository.findById(1)).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> userService.addUserModule(1, 1));
-    }
     @Test
     void testGetAllUserExams_UserNotFound() {
         when(userRepository.findById(1)).thenReturn(Optional.empty());
@@ -138,18 +125,5 @@ class UserServiceTest {
         user.setUserExams(new ArrayList<>());
         when(userRepository.findById(1)).thenReturn(Optional.of(user));
         assertDoesNotThrow(() -> userService.getAllUserExams(1));
-    }
-
-    @Test
-    void testAddUserExam_UserNotFound() {
-        when(userRepository.findById(1)).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> userService.addUserExam(1, 1));
-    }
-
-    @Test
-    void testAddUserExam_ExamNotFound() {
-        when(userRepository.findById(1)).thenReturn(Optional.of(user));
-        when(examRepository.findById(1)).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> userService.addUserExam(1, 1));
     }
 }

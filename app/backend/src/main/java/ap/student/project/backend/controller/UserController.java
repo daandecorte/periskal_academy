@@ -1,10 +1,6 @@
 package ap.student.project.backend.controller;
 
 import ap.student.project.backend.dto.UserDTO;
-import ap.student.project.backend.entity.Language;
-import ap.student.project.backend.entity.User;
-import ap.student.project.backend.entity.UserExam;
-import ap.student.project.backend.entity.UserModule;
 import ap.student.project.backend.exceptions.DuplicateException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import ap.student.project.backend.service.UserService;
@@ -15,9 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
-import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -50,8 +43,7 @@ public class UserController {
         try {
             this.userService.save(user);
             return ResponseEntity.status(HttpStatus.CREATED).body(userService.assemble(user));
-        }
-        catch (DuplicateException e) {
+        } catch (DuplicateException e) {
             logger.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
@@ -62,63 +54,35 @@ public class UserController {
         this.userService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
     @GetMapping(value = "/users/{id}/modules", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getModules(@PathVariable("id") int id) {
         try {
             return ResponseEntity.ok(this.userService.getAllUserModules(id));
-        }
-        catch (NotFoundException e) {
+        } catch (NotFoundException e) {
             logger.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
 
     }
+
     @GetMapping(value = "/users/{id}/exams", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getExams(@PathVariable("id") int id) {
         try {
             return ResponseEntity.ok(this.userService.getAllUserExams(id));
-        }
-        catch (NotFoundException e) {
+        } catch (NotFoundException e) {
             logger.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
 
     }
-    @PostMapping(value="/users/{id}/modules", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity addUserModule(@PathVariable("id") int id, @RequestParam int moduleId) {
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(this.userService.addUserModule(id, moduleId));
-        }
-        catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-        catch (DuplicateException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }
-    @PostMapping(value="/users/{id}/exams", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity addUserExam(@PathVariable("id") int id, @RequestParam int examId) {
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(this.userService.addUserExam(id, examId));
-        }
-        catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-        catch (DuplicateException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }
+
     @PutMapping("/users")
     public ResponseEntity update(@RequestBody UserDTO userDTO) {
         try {
             this.userService.update(userDTO);
             return ResponseEntity.ok(userDTO);
-        }
-        catch(NotFoundException e) {
+        } catch (NotFoundException e) {
             logger.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }

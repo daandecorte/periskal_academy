@@ -53,8 +53,7 @@ public class UserService {
     }
 
     public User findById(int id) throws NotFoundException {
-        Optional<User> optionalUser = userRepository.findById(id);
-        User user = optionalUser.orElse(null);
+        User user = userRepository.findById(id).orElse(null);
         if(user == null) {
             throw new NotFoundException("User with id " + id + " not found");
         }
@@ -103,7 +102,7 @@ public class UserService {
         userRepository.save(user);
         return userModule;
     }
-
+/*
     public UserExam addUserExam(int id, int examId) throws NotFoundException, DuplicateException {
         User user = userRepository.findById(id).orElse(null);
         if(user==null)
@@ -124,7 +123,7 @@ public class UserService {
         userRepository.save(user);
         return userExam;
     }
-
+*/
 
     public User assemble(UserDTO userDTO) {
         return new User(userDTO.userId(), userDTO.language());

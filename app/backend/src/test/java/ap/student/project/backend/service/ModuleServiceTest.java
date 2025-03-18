@@ -56,7 +56,7 @@ class ModuleServiceTest {
             moduleService.findById(1);
         });
 
-        assertEquals("module with id 1 not found", exception.getMessage());
+        assertEquals("Module with id 1 not found", exception.getMessage());
     }
 
     @Test

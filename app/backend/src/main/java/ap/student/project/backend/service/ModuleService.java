@@ -26,7 +26,7 @@ public class ModuleService {
     public Module findById(int id) {
         Module module = moduleRepository.findById(id).orElse(null);
         if(module == null) {
-            throw new NotFoundException("module with id " + id + " not found");
+            throw new NotFoundException("Module with id " + id + " not found");
         }
         return module;
     }
