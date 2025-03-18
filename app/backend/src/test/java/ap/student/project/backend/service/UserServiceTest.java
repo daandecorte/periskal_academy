@@ -38,40 +38,53 @@ class UserServiceTest {
     private UserService userService;
 
     private User user;
+    private UserDTO userDTO;
 
     @BeforeEach
     void setUp() {
         user = new User("1", Language.ENGLISH);
+        userDTO = new UserDTO("1", Language.ENGLISH);
     }
 
     @Test
     void testSaveUser() {
-        UserDTO userDTO = new UserDTO("1", Language.ENGLISH);
         when(userRepository.save(any(User.class))).thenReturn(user);
         assertDoesNotThrow(() -> userService.save(userDTO));
         verify(userRepository, times(1)).save(any(User.class));
     }
 
     @Test
-    void testUpdateUser() {
-        when(userRepository.save(user)).thenReturn(user);
-        assertDoesNotThrow(() -> userService.update(user));
+    void testUpdate_Success() {
+        when(userRepository.findByUserId(userDTO.userId())).thenReturn(user);
+
+        userService.update(userDTO);
+
+        assertEquals(Language.ENGLISH, user.getLanguage());
         verify(userRepository, times(1)).save(user);
     }
 
     @Test
-    void testFindById_UserExists() {
+    void testUpdate_UserNotFound() {
+        when(userRepository.findByUserId(userDTO.userId())).thenReturn(null);
+
+        assertThrows(NotFoundException.class, () -> userService.update(userDTO));
+    }
+
+    @Test
+    void testFindById_Success() {
         when(userRepository.findById(1)).thenReturn(Optional.of(user));
+
         User foundUser = userService.findById(1);
         assertNotNull(foundUser);
-        assertEquals(user, foundUser);
+        assertEquals("1", foundUser.getUserId());
     }
 
     @Test
     void testFindById_UserNotFound() {
         when(userRepository.findById(1)).thenReturn(Optional.empty());
-        User foundUser = userService.findById(1);
-        assertNull(foundUser);
+
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> userService.findById(1));
+        assertEquals("User with id 1 not found", exception.getMessage());
     }
 
     @Test
@@ -101,19 +114,6 @@ class UserServiceTest {
         when(userRepository.findById(1)).thenReturn(Optional.of(user));
         assertDoesNotThrow(() -> userService.getAllUserModules(1));
     }
-
-    @Test
-    void testAddUserModule_UserNotFound() {
-        when(userRepository.findById(1)).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> userService.addUserModule(1, 1));
-    }
-
-    @Test
-    void testAddUserModule_ModuleNotFound() {
-        when(userRepository.findById(1)).thenReturn(Optional.of(user));
-        when(moduleRepository.findById(1)).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> userService.addUserModule(1, 1));
-    }
     @Test
     void testGetAllUserExams_UserNotFound() {
         when(userRepository.findById(1)).thenReturn(Optional.empty());
@@ -125,18 +125,5 @@ class UserServiceTest {
         user.setUserExams(new ArrayList<>());
         when(userRepository.findById(1)).thenReturn(Optional.of(user));
         assertDoesNotThrow(() -> userService.getAllUserExams(1));
-    }
-
-    @Test
-    void testAddUserExam_UserNotFound() {
-        when(userRepository.findById(1)).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> userService.addUserExam(1, 1));
-    }
-
-    @Test
-    void testAddUserExam_ExamNotFound() {
-        when(userRepository.findById(1)).thenReturn(Optional.of(user));
-        when(examRepository.findById(1)).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> userService.addUserExam(1, 1));
     }
 }
