@@ -4,6 +4,6 @@ import ap.student.project.backend.entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record ChatMemberDTO(
-        @JsonProperty User users
+        @JsonProperty User user
 ) {
 }
