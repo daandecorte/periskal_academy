@@ -108,6 +108,9 @@ public class LoginController {
             }
         }
 
+        String encodedDongleCode = Base64.getEncoder()
+                .encodeToString(decodedDongleCode.getBytes(StandardCharsets.UTF_8));
+
         URL url = new URL("http://academyws.periskal.com/Academy.asmx");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -115,7 +118,7 @@ public class LoginController {
         conn.setRequestProperty("Content-Type", "application/soap+xml; charset=UTF-8");
         conn.setDoOutput(true);
 
-        String soapRequest = makeDongleRequest(decodedDongleCode);
+        String soapRequest = makeDongleRequest(encodedDongleCode);
 
         OutputStream os = conn.getOutputStream();
         os.write(soapRequest.getBytes());
