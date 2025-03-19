@@ -1,23 +1,22 @@
 package ap.student.project.backend.controller;
 
 import ap.student.project.backend.dto.UserDTO;
-import ap.student.project.backend.entity.Language;
-import ap.student.project.backend.entity.User;
-import ap.student.project.backend.entity.UserExam;
-import ap.student.project.backend.entity.UserModule;
+import ap.student.project.backend.exceptions.DuplicateException;
+import ap.student.project.backend.exceptions.NotFoundException;
 import ap.student.project.backend.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
-import java.util.List;
 
 @CrossOrigin
 @RestController
 public class UserController {
     private final UserService userService;
+    private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     public UserController(UserService userService) {
@@ -25,71 +24,68 @@ public class UserController {
     }
 
     @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<User> getAll() {
-        return userService.findAll();
+    public ResponseEntity getAll() {
+        return ResponseEntity.ok(userService.findAll());
     }
 
     @GetMapping(value = "/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public User getUserById(@PathVariable("id") int id) {
-        return userService.findById(id);
+    public ResponseEntity getUserById(@PathVariable("id") int id) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(userService.findById(id));
+        } catch (NotFoundException e) {
+            logger.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
     @PostMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public User create(@RequestBody UserDTO user) {
-        this.userService.save(user);
-        return userService.assemble(user);
+    public ResponseEntity create(@RequestBody UserDTO user) {
+        try {
+            this.userService.save(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body(userService.assemble(user));
+        } catch (DuplicateException e) {
+            logger.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
     }
 
     @DeleteMapping(value = "/users/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") int id) {
+    public ResponseEntity delete(@PathVariable("id") int id) {
         this.userService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
     @GetMapping(value = "/users/{id}/modules", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<UserModule> getModules(@PathVariable("id") int id) {
+    public ResponseEntity getModules(@PathVariable("id") int id) {
         try {
-            return this.userService.getAllUserModules(id);
-        }
-        catch (Exception e) {
-            return Collections.emptyList();
+            return ResponseEntity.ok(this.userService.getAllUserModules(id));
+        } catch (NotFoundException e) {
+            logger.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
 
     }
+
     @GetMapping(value = "/users/{id}/exams", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<UserExam> getExams(@PathVariable("id") int id) {
+    public ResponseEntity getExams(@PathVariable("id") int id) {
         try {
-            return this.userService.getAllUserExams(id);
-        }
-        catch (Exception e) {
-            return Collections.emptyList();
+            return ResponseEntity.ok(this.userService.getAllUserExams(id));
+        } catch (NotFoundException e) {
+            logger.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
 
     }
-    @PostMapping(value="/users/{id}/modules", produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserModule addUserModule(@PathVariable("id") int id, @RequestParam int moduleId) {
+
+    @PutMapping("/users")
+    public ResponseEntity update(@RequestBody UserDTO userDTO) {
         try {
-            return this.userService.addUserModule(id, moduleId);
+            this.userService.update(userDTO);
+            return ResponseEntity.ok(userDTO);
+        } catch (NotFoundException e) {
+            logger.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-        catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-    @PostMapping(value="/users/{id}/exams", produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserExam addUserExam(@PathVariable("id") int id, @RequestParam int examId) {
-        try {
-            return this.userService.addUserExam(id, examId);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-    @PutMapping("/users/{id}")
-    public ResponseEntity<User> update(@PathVariable int id ,@RequestBody User user) {
-        User newUser = this.userService.findById(id);
-        newUser.setLanguage(user.getLanguage());
-        this.userService.update(newUser);
-        return ResponseEntity.ok(newUser);
+
     }
 }

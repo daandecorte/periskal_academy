@@ -1,0 +1,68 @@
+.modules-container {
+  padding: 20px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  display: flex;
+  margin-bottom: 0;
+}
+
+h1 {
+  margin: 0;
+}
+
+.search-input {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  width: 250px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>');
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  background-size: 16px;
+  padding-right: 30px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.section-title {
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 500;
+  color: #333;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.assigned-modules {
+  margin-bottom: 40px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 10px;
+  border: 1px solid #f0f0f0;
+}
+
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.no-results {
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  color: #777;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin-bottom: 20px;
+  border: 1px solid #f0f0f0;
+}
