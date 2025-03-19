@@ -1,1 +1,57 @@
-<p>trainings works!</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create New Module</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!--<h2>Create New Module</h2>-->
+
+      <!-- Steps Indicator -->
+      <div class="steps">
+        <div class="step">
+          <div class="circle">1</div>
+          <span>Basic Setup</span>
+        </div>
+        <div class="line"></div>
+        <div class="step active">
+          <div class="circle">2</div>
+          <span>Trainings</span>
+        </div>
+        <div class="line"></div>
+        <div class="step">
+          <div class="circle">3</div>
+          <span>Exam</span>
+        </div>
+        <div class="line"></div>
+        <div class="step">
+          <div class="circle">4</div>
+          <span>Preview</span>
+        </div>
+      </div>
+
+      <div class="card-container">
+        <h3 class="title">Trainings</h3>
+
+        <div class="message-no-trainig">
+          <img
+            src="assets/no-training.svg"
+            alt="No trainings"
+            class="pic-no-training"
+          />
+          <p>
+            No trainings added yet. Click "Add Training" to create your first
+            training.
+          </p>
+        </div>
+
+        <div class="flex">
+          <button class="btn">+ Add Training</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,15 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-add-module',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule],
   templateUrl: './add-module.component.html',
   styleUrl: './add-module.component.css'
 })
 export class AddModuleComponent {
 
   steps = ['basic-setup', 'trainings', 'exam', 'preview'];
+  currentStep : string = '';
 
   constructor(private router: Router) {}
 
@@ -28,7 +30,7 @@ export class AddModuleComponent {
       this.router.navigate([`/add-module/${this.steps[currentIndex - 1]}`]);
     }
   }
-  
+
   /*constructor(private router: Router) {}
 
   goToNextStep() {

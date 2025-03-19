@@ -1,1 +1,80 @@
-<p>exam works!</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exam Settings</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!--<h2>Create New Module</h2>-->
+
+      <!-- Steps Indicator -->
+      <div class="steps">
+        <div class="step">
+          <div class="circle">1</div>
+          <span>Basic Setup</span>
+        </div>
+        <div class="line"></div>
+        <div class="step">
+          <div class="circle">2</div>
+          <span>Trainings</span>
+        </div>
+        <div class="line"></div>
+        <div class="step active">
+          <div class="circle">3</div>
+          <span>Exam</span>
+        </div>
+        <div class="line"></div>
+        <div class="step">
+          <div class="circle">4</div>
+          <span>Preview</span>
+        </div>
+      </div>
+
+      <div class="grid-container">
+        <h3 class="title">Exam Settings</h3>
+        <div>
+          <label class="label">Time Limit (minutes)</label>
+          <input type="number" class="input" value="60" />
+        </div>
+        <div>
+          <label class="label">Questions per Exam</label>
+          <input type="number" class="input" value="10" />
+        </div>
+        <div>
+          <label class="label">Required Passing Score (%)</label>
+          <input type="number" class="input" value="80" />
+        </div>
+        <div>
+          <label class="label">Maximum Retry Attempts</label>
+          <input type="number" class="input" value="3" />
+        </div>
+      </div>
+
+      <div class="question-pool">
+        <h3 class="title">Question Pool</h3>
+        <label class="label">Question Type</label>
+        <select class="input">
+          <option>Multiple Choice</option>
+          <option>True/False</option>
+        </select>
+
+        <label class="label">Question Text</label>
+        <textarea class="input"></textarea>
+
+        <label class="label">Answer Options</label>
+        <div class="answer-option">
+          <input type="radio" />
+          <input type="text" class="input" placeholder="Answer option" />
+          <button class="delete-btn">✖</button>
+        </div>
+        <div class="button-container">
+          <button class="add-option-btn">+ Add Option</button>
+          <button class="add-question-btn">+ Add Question</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
