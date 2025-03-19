@@ -6,10 +6,10 @@ import ap.student.project.backend.entity.QuestionType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.Map;
 
 public record QuestionDTO(
-        @JsonProperty("language") Language language,
-        @JsonProperty("text") String text,
+        @JsonProperty("text") Map<Language, String> text,
         @JsonProperty("question_type") QuestionType questionType,
         @JsonProperty("question_options") List<QuestionOption> questionOptions
 ) {

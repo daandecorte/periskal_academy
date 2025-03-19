@@ -12,13 +12,17 @@ public class QuestionOption {
     private String text;
     @Column(name = "is_correct")
     private boolean isCorrect;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "question_id")
+    private Question question;
 
     public QuestionOption() {
     }
 
-    public QuestionOption(String text, boolean isCorrect) {
+    public QuestionOption(String text, boolean isCorrect, Question question) {
         this.text = text;
         this.isCorrect = isCorrect;
+        this.question = question;
     }
 
     public int getId() {
@@ -45,12 +49,21 @@ public class QuestionOption {
         isCorrect = correct;
     }
 
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
     @Override
     public String toString() {
         return "QuestionOption{" +
                 "id=" + id +
                 ", text='" + text + '\'' +
                 ", isCorrect=" + isCorrect +
+                ", question=" + question +
                 '}';
     }
 }

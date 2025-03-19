@@ -1,8 +1,10 @@
 package ap.student.project.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "question")
@@ -10,25 +12,29 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column
-    private Language language;
-    @Column
-    private String text;
+    @ElementCollection
+    @CollectionTable(name = "question_texts", joinColumns = @JoinColumn(name = "question_id"))
+    @MapKeyColumn(name = "language")
+    @Column(name = "text")
+    private Map<Language, String> text;
     @Enumerated(EnumType.STRING)
     @Column(name = "question_type")
     private QuestionType questionType;
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "question_option")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<QuestionOption> questionOptions;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "exam_id")
+    @JsonIgnore
+    private Exam exam;
 
     public Question() {
     }
 
-    public Question(Language language, String text, QuestionType questionType, List<QuestionOption> questionOptions) {
-        this.language = language;
+    public Question(Map<Language, String> text, QuestionType questionType, List<QuestionOption> questionOptions, Exam exam) {
         this.text = text;
         this.questionType = questionType;
         this.questionOptions = questionOptions;
+        this.exam = exam;
     }
 
     public int getId() {
@@ -39,19 +45,11 @@ public class Question {
         this.id = id;
     }
 
-    public Language getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(Language language) {
-        this.language = language;
-    }
-
-    public String getText() {
+    public Map<Language, String> getText() {
         return text;
     }
 
-    public void setText(String text) {
+    public void setText(Map<Language, String> text) {
         this.text = text;
     }
 
@@ -71,14 +69,22 @@ public class Question {
         this.questionOptions = questionOptions;
     }
 
+    public Exam getExam() {
+        return exam;
+    }
+
+    public void setExam(Exam exam) {
+        this.exam = exam;
+    }
+
     @Override
     public String toString() {
         return "Question{" +
                 "id=" + id +
-                ", language=" + language +
-                ", text='" + text + '\'' +
+                ", text=" + text +
                 ", questionType=" + questionType +
                 ", questionOptions=" + questionOptions +
+                ", exam=" + exam +
                 '}';
     }
 }
