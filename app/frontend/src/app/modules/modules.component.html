@@ -1,13 +1,15 @@
 <div class="modules-container">
-  <h1>Modules</h1>
-  <div class="search-bar">
-    <input
-      type="text"
-      placeholder="Search modules..."
-      class="search-input"
-      [(ngModel)]="searchTerm"
-      (ngModelChange)="onSearchChange()"
-    />
+  <div class="header">
+    <h1>Modules</h1>
+    <div class="search-bar">
+      <input
+        type="text"
+        placeholder="Search modules..."
+        class="search-input"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange()"
+      />
+    </div>
   </div>
 
   <!-- Assigned Modules Section -->
@@ -26,7 +28,10 @@
 
   <!-- All Available Modules Section -->
   <h2 class="section-title">All Available Modules</h2>
-  <div class="modules-grid" *ngIf="modules.length > 0; else noModules">
+  <div
+    class="modules-grid reduced-columns"
+    *ngIf="modules.length > 0; else noModules"
+  >
     @for (module of modules; track module.id) {
     <app-module-card [module]="module"></app-module-card>
     }
