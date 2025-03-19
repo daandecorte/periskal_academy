@@ -2,75 +2,55 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { IUser } from '../types/user-info';
 
 export enum Role {
   SKIPPER = 'SKIPPER',
   INSTALLER = 'INSTALLER',
-  ADMIN = 'ADMIN',
+  ADMIN = 'ADMINISTRATOR',
   SUPPORT = 'SUPPORT',
-  FLEETMANAGER = 'FLEETMANAGER'
+  FLEETMANAGER = 'FLEETMANAGER',
 }
-
-export interface User {
-  username: string;
-  role: Role;
-  // Add other user properties
-}
-
-// This Authentication service is a placeholder for testing and demonstrating roles implementation and should be expanded on with actual authentication logic
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  private currentUserSubject = new BehaviorSubject<IUser | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {
-    // Check if user is stored in localStorage on service initialization
-    // I don't know if this is supposed to be here but I copied it of the internet haha
     const storedUser = localStorage.getItem('currentUser');
     if (storedUser) {
       this.currentUserSubject.next(JSON.parse(storedUser));
     }
   }
 
-  public get currentUserValue(): User | null {
+  public get currentUserValue(): IUser | null {
     return this.currentUserSubject.value;
   }
 
   // Actual authentication logic here
-  
 
   hasRole(role: Role): boolean {
     const user = this.currentUserValue;
-    return user !== null && user.role === role;
+    return user !== null && user.Role.toUpperCase() === role;
   }
 
   hasAnyRole(roles: Role[]): boolean {
     const user = this.currentUserValue;
-    return user !== null && roles.includes(user.role);
+    return user !== null && roles.includes(user.Role.toUpperCase() as Role);
   }
 
   logout(): void {
-    // Clear user from local storage
     localStorage.removeItem('currentUser');
-    
-    // Update the BehaviorSubject
+
     this.currentUserSubject.next(null);
-    
-    // Log for debugging
+
     console.log('User logged out');
-    
+
     // Additional logic for logging out here
 
     this.router.navigate(['/login']);
-  }
-
-  // Method for testing - DO NOT USE IN PRODUCTION
-  setCurrentUserForTesting(user: User): void {
-    localStorage.setItem('currentUser', JSON.stringify(user));
-    this.currentUserSubject.next(user);
-    console.log('Switched to role:', user.role);
   }
 }

@@ -2,7 +2,10 @@ package ap.student.project.backend.service;
 
 import ap.student.project.backend.dao.UserModuleRepository;
 import ap.student.project.backend.dto.UserModuleDTO;
+import ap.student.project.backend.entity.Module;
+import ap.student.project.backend.entity.User;
 import ap.student.project.backend.entity.UserModule;
+import ap.student.project.backend.exceptions.NotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,17 +16,25 @@ import java.util.List;
 public class UserModuleService {
 
     private final UserModuleRepository userModuleRepository;
+    private final UserService userService;
+    private final ModuleService moduleService;
 
     @Autowired
-    public UserModuleService(UserModuleRepository userModuleRepository) {
+    public UserModuleService(UserModuleRepository userModuleRepository, UserService userService, ModuleService moduleService) {
         this.userModuleRepository = userModuleRepository;
+        this.userService = userService;
+        this.moduleService = moduleService;
     }
 
     public void save(UserModuleDTO userModuleDTO) {
         UserModule userModule = new UserModule();
-        BeanUtils.copyProperties(userModuleDTO, userModule);
+        User user = userService.findById(userModuleDTO.user_id());
+        Module module = moduleService.findById(userModuleDTO.module_id());
+        userModule.setModule(module);
+        userModule.setUser(user);
         userModuleRepository.save(userModule);
     }
+
     public List<UserModule> findAll() {
         return userModuleRepository.findAll();
     }

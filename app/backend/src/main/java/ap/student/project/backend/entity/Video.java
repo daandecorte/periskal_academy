@@ -10,12 +10,15 @@ public class Video {
     private int id;
     @Column(name = "video_reference")
     private String videoReference;
+    @Column(name="language")
+    private Language language;
 
     public Video() {
     }
 
-    public Video(String videoReference) {
+    public Video(String videoReference, Language language) {
         this.videoReference = videoReference;
+        this.language = language;
     }
 
     public int getId() {
@@ -34,11 +37,20 @@ public class Video {
         this.videoReference = videoReference;
     }
 
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
+
     @Override
     public String toString() {
         return "Video{" +
                 "id=" + id +
                 ", videoReference='" + videoReference + '\'' +
+                ", language=" + language +
                 '}';
     }
 }
