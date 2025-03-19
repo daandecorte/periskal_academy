@@ -1,1 +1,71 @@
-<p>skippers works!</p>
+<header>
+  <nav>
+    <div class="top-row">
+      <h1>Sailors Management</h1>
+      <button class="assign-btn">
+        <fa-icon [icon]="faCertificate" class="btn-icon"></fa-icon>Assign
+        Certificate
+      </button>
+    </div>
+    <div class="search-container">
+      <select [(ngModel)]="selectedStatus" (change)="filterSkippers()">
+        <option value="all">All Status</option>
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+      <div class="search-input-container">
+        <fa-icon [icon]="faSearch" class="search-icon"></fa-icon>
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="filterSkippers()"
+          placeholder="Search sailors..."
+          name="search-sailors"
+        />
+      </div>
+    </div>
+    <div class="sailors-list">
+      <table>
+        <thead>
+          <tr>
+            <th class="name-column">NAME</th>
+            <th>PRODUCTS</th>
+            <th>CERTIFICATES</th>
+            <th>TRAINING PROGRESS</th>
+            <th>STATUS</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (skipper of filteredSkippersList; track $index) {
+          <tr>
+            <td class="name-cell">
+              <div class="initials">
+                {{ skipper.Firstname.charAt(0).toUpperCase()
+                }}{{ skipper.Lastname.charAt(0).toUpperCase() }}
+              </div>
+              <div class="sailor-details">
+                <div class="sailor-name">
+                  {{ skipper.Firstname }} {{ skipper.Lastname }}
+                </div>
+                <div class="sailor-schip">{{ skipper.Shipname }}</div>
+              </div>
+            </td>
+            <td>{{ skipper.Products.length }}</td>
+            <td>
+              <span class="certificate-tag active">{{
+                skipper.Products.length
+              }}</span>
+            </td>
+            <td>
+              <div class="progress-bar">
+                <div class="progress" style="width: 85%"></div>
+              </div>
+            </td>
+            <td><span class="status active">Active</span></td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </nav>
+</header>
