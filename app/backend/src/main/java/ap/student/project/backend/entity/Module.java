@@ -25,8 +25,7 @@ public class Module {
     private Map<Language, String> description;
     @Column(name = "is_active")
     private boolean isActive = false;
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "training")
+    @OneToMany(mappedBy = "module", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Training> trainings;
     @OneToMany(mappedBy = "module", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Exam> exams;
