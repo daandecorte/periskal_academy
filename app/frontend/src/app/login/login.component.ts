@@ -7,7 +7,7 @@ import {
   faLock,
   faEye,
   faTimes,
-  faKey
+  faKey,
 } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import { IUser } from '../types/user-info';
@@ -46,7 +46,7 @@ export class LoginComponent {
     // Check for dongle code in URL query parameters
     const urlParams = new URLSearchParams(window.location.search);
     const loginParam = urlParams.get('login');
-    
+
     if (loginParam) {
       // If dongle code is in URL, process it directly
       this.processDongleLogin(loginParam);
@@ -79,7 +79,9 @@ export class LoginComponent {
   async processDongleLogin(dongleCode: string) {
     try {
       let result = await fetch(
-        `/api/login?login=${encodeURIComponent(dongleCode)}&language=${this.language}`,
+        `/api/login?login=${encodeURIComponent(dongleCode)}&language=${
+          this.language
+        }`,
         {
           method: 'GET',
           headers: {
@@ -111,7 +113,6 @@ export class LoginComponent {
     await this.processDongleLogin(formattedDongleCode);
   }
 
-
   async login() {
     try {
       let result = await fetch(
@@ -132,19 +133,18 @@ export class LoginComponent {
     } catch (error) {
       console.error('Login error:', error);
       let textIncorrect = document.getElementById('textIncorrect');
-      if (textIncorrect)
-        textIncorrect.innerText = 'Authentication error.';
+      if (textIncorrect) textIncorrect.innerText = 'Authentication error.';
     }
   }
 
   private async processLoginResponse(result: Response) {
     let data = await result.json();
-    
+
     // Common response handler for both authentication methods
     if (!data.text) {
       // Determine the proper path to the authentication result
       let userData: IUser;
-      
+
       if (data.Body.AuthenticateResponse) {
         // Username/password auth response
         userData = {
@@ -164,7 +164,8 @@ export class LoginComponent {
         userData = {
           ...data.Body.Authenticate_DongleResponse.Authenticate_DongleResult,
           Products:
-            data.Body.Authenticate_DongleResponse.Authenticate_DongleResult.Products.string,
+            data.Body.Authenticate_DongleResponse.Authenticate_DongleResult
+              .Products.string,
           Skippers:
             data.Body.Authenticate_DongleResponse.Authenticate_DongleResult.Skippers.Client.map(
               (skipper: any) => ({
