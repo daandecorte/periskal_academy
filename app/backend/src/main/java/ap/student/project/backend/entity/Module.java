@@ -2,6 +2,9 @@ package ap.student.project.backend.entity;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.Map;
@@ -9,6 +12,9 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "module")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Module {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,73 +39,15 @@ public class Module {
     @JoinTable(name="tip")
     private List<Tip> tips;
 
-    public Module() {
-    }
-
-    public Module(Map<Language, String> title, Map<Language, String> description, boolean isActive, List<Training> trainings, List<Exam> exams) {
+    public Module(Map<Language, String> title, Map<Language, String> description, boolean isActive, List<Training> trainings, List<Exam> exams, List<Tip> tips) {
         this.title = title;
         this.description = description;
         this.isActive = isActive;
         this.trainings = trainings;
         this.exams = exams;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Map<Language, String> getTitle() {
-        return title;
-    }
-
-    public void setTitle(Map<Language, String> title) {
-        this.title = title;
-    }
-
-    public Map<Language, String> getDescription() {
-        return description;
-    }
-
-    public void setDescription(Map<Language, String> description) {
-        this.description = description;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public List<Training> getTrainings() {
-        return trainings;
-    }
-
-    public void setTrainings(List<Training> trainings) {
-        this.trainings = trainings;
-    }
-
-    public List<Exam> getExams() {
-        return exams;
-    }
-
-    public void setExams(List<Exam> exams) {
-        this.exams = exams;
-    }
-
-    @Nullable
-    public List<Tip> getTips() {
-        return tips;
-    }
-
-    public void setTips(@Nullable List<Tip> tips) {
         this.tips = tips;
     }
+
     @Override
     public String toString() {
         return "Module{" +

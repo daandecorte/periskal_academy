@@ -2,11 +2,18 @@ package ap.student.project.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.util.List;
 import java.util.Map;
 
 @Entity
 @Table(name = "training")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Training {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,55 +36,15 @@ public class Training {
     @JoinColumn(name = "module_id")
     @JsonIgnore
     private Module module;
+    @OneToMany(mappedBy = "training", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private List<Question> questions;
 
-    public Training() {
-    }
-
-    public Training(Map<Language, String> title, Map<Language, String> description, Video video, Module module) {
+    public Training(Map<Language, String> title, Map<Language, String> description, Video video, Module module, List<Question> questions) {
         this.title = title;
         this.description = description;
         this.video = video;
         this.module = module;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Map<Language, String> getTitle() {
-        return title;
-    }
-
-    public void setTitle(Map<Language, String> title) {
-        this.title = title;
-    }
-
-    public Map<Language, String> getDescription() {
-        return description;
-    }
-
-    public void setDescription(Map<Language, String> description) {
-        this.description = description;
-    }
-
-    public Video getVideo() {
-        return video;
-    }
-
-    public void setVideo(Video video) {
-        this.video = video;
-    }
-
-    public Module getModule() {
-        return module;
-    }
-
-    public void setModule(Module module) {
-        this.module = module;
+        this.questions = questions;
     }
 
     @Override
@@ -88,6 +55,7 @@ public class Training {
                 ", description=" + description +
                 ", video=" + video +
                 ", module=" + module +
+                ", questions=" + questions +
                 '}';
     }
 }

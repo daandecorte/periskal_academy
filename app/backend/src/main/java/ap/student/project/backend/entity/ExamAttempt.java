@@ -1,11 +1,17 @@
 package ap.student.project.backend.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "exam_attempt")
+@Getter
+@Setter
+@NoArgsConstructor
 public class ExamAttempt {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,55 +25,16 @@ public class ExamAttempt {
     private ExamStatusType examStatusType;
     @Column
     private int score;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_exam_id")
+    private UserExam userExam;
 
-    public ExamAttempt() {
-    }
-
-    public ExamAttempt(LocalDateTime startDateTime, LocalDateTime endDateTime, ExamStatusType examStatusType, int score) {
+    public ExamAttempt(LocalDateTime startDateTime, LocalDateTime endDateTime, ExamStatusType examStatusType, int score, UserExam userExam) {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.examStatusType = examStatusType;
         this.score = score;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getStartDateTime() {
-        return startDateTime;
-    }
-
-    public void setStartDateTime(LocalDateTime startDateTime) {
-        this.startDateTime = startDateTime;
-    }
-
-    public LocalDateTime getEndDateTime() {
-        return endDateTime;
-    }
-
-    public void setEndDateTime(LocalDateTime endDateTime) {
-        this.endDateTime = endDateTime;
-    }
-
-    public ExamStatusType getExamStatusType() {
-        return examStatusType;
-    }
-
-    public void setExamStatusType(ExamStatusType examStatusType) {
-        this.examStatusType = examStatusType;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
+        this.userExam = userExam;
     }
 
     @Override
@@ -78,6 +45,7 @@ public class ExamAttempt {
                 ", endDateTime=" + endDateTime +
                 ", examStatusType=" + examStatusType +
                 ", score=" + score +
+                ", userExam=" + userExam +
                 '}';
     }
 }

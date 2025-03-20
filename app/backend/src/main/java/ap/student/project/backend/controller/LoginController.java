@@ -1,8 +1,10 @@
 package ap.student.project.backend.controller;
 
+import ap.student.project.backend.dto.LoginRequest;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,24 +32,22 @@ import ap.student.project.backend.authentication.crypto;
 
 @RestController
 public class LoginController {
-    @GetMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String login(@RequestParam(required = false) String username,
-            @RequestParam(required = false) String password,
-            @RequestParam(required = false) String language,
-            @RequestParam(required = false) String login) throws IOException {
+    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String login(@RequestBody LoginRequest loginRequest) throws IOException {
+        String username = loginRequest.login().orElse(null);
+        String password = loginRequest.password().orElse(null);
+        String language = loginRequest.language().orElse(null);
+        String login = loginRequest.login().orElse(null);
 
-        // Dongle authentication
         if (login != null && !login.isEmpty()) {
             return authenticateWithDongle(login, language);
         }
 
-        // Credentials authentication
         if (username != null && password != null) {
             return authenticateWithCredentials(username, password, language);
         }
 
-        // No valid authentication parameters provided
-        return "{\"text\": \"Missing authentication parameters\"}";
+        return "{\"text\": \"Missing authentication parameters \"}" + username + " " + password;
     }
 
     private String authenticateWithCredentials(String username, String password, String language) throws IOException {

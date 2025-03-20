@@ -1,11 +1,19 @@
 package ap.student.project.backend.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "message")
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,45 +22,13 @@ public class Message {
     private LocalDateTime dateTime;
     @Column(name = "text_content")
     private String textContent;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "chat_id")
+    private Chat chat;
 
-    public Message() {
-    }
-
-    public Message(LocalDateTime dateTime, String textContent) {
+    public Message(LocalDateTime dateTime, String textContent, Chat chat) {
         this.dateTime = dateTime;
         this.textContent = textContent;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public String getTextContent() {
-        return textContent;
-    }
-
-    public void setTextContent(String textContent) {
-        this.textContent = textContent;
-    }
-
-    @Override
-    public String toString() {
-        return "Message{" +
-                "id=" + id +
-                ", dateTime=" + dateTime +
-                ", textContent='" + textContent + '\'' +
-                '}';
+        this.chat = chat;
     }
 }
