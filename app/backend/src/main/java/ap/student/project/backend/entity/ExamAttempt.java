@@ -25,12 +25,16 @@ public class ExamAttempt {
     private ExamStatusType examStatusType;
     @Column
     private int score;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_exam_id")
+    private UserExam userExam;
 
-    public ExamAttempt(LocalDateTime startDateTime, LocalDateTime endDateTime, ExamStatusType examStatusType, int score) {
+    public ExamAttempt(LocalDateTime startDateTime, LocalDateTime endDateTime, ExamStatusType examStatusType, int score, UserExam userExam) {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.examStatusType = examStatusType;
         this.score = score;
+        this.userExam = userExam;
     }
 
     @Override
@@ -41,6 +45,7 @@ public class ExamAttempt {
                 ", endDateTime=" + endDateTime +
                 ", examStatusType=" + examStatusType +
                 ", score=" + score +
+                ", userExam=" + userExam +
                 '}';
     }
 }
