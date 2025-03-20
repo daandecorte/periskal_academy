@@ -28,8 +28,9 @@ export const routes: Routes = [
     { path: 'trainings', component: TrainingsComponent},
     { path: 'exam', component: ExamComponent},
     { path: 'preview', component: PreviewComponent},
-    { path: 'training-form', component: TrainingFormComponent},
+    //{ path: 'trainings/new', component: TrainingFormComponent},
   ]},
+  { path: 'trainings/new', component: TrainingFormComponent},
   { path: '', redirectTo: 'modules', pathMatch: 'full' }, 
   { path: '**', redirectTo: 'modules', pathMatch: 'full' },
 ];
