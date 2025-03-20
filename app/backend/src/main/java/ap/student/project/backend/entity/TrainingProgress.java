@@ -1,11 +1,17 @@
 package ap.student.project.backend.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "training_progress")
+@Getter
+@Setter
+@NoArgsConstructor
 public class TrainingProgress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,44 +24,9 @@ public class TrainingProgress {
     @Column(name = "completed_at")
     private LocalDateTime completedAt;
 
-    public TrainingProgress() {
-    }
-
     public TrainingProgress(Training training, boolean videoWatched, LocalDateTime completedAt) {
         this.training = training;
         this.videoWatched = videoWatched;
-        this.completedAt = completedAt;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Training getTraining() {
-        return training;
-    }
-
-    public void setTraining(Training training) {
-        this.training = training;
-    }
-
-    public boolean isVideoWatched() {
-        return videoWatched;
-    }
-
-    public void setVideoWatched(boolean videoWatched) {
-        this.videoWatched = videoWatched;
-    }
-
-    public LocalDateTime getCompletedAt() {
-        return completedAt;
-    }
-
-    public void setCompletedAt(LocalDateTime completedAt) {
         this.completedAt = completedAt;
     }
 

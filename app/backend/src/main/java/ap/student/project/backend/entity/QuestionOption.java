@@ -1,9 +1,15 @@
 package ap.student.project.backend.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "question_option")
+@Getter
+@Setter
+@NoArgsConstructor
 public class QuestionOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,44 +22,9 @@ public class QuestionOption {
     @JoinColumn(name = "question_id")
     private Question question;
 
-    public QuestionOption() {
-    }
-
     public QuestionOption(String text, boolean isCorrect, Question question) {
         this.text = text;
         this.isCorrect = isCorrect;
-        this.question = question;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public boolean isCorrect() {
-        return isCorrect;
-    }
-
-    public void setCorrect(boolean correct) {
-        isCorrect = correct;
-    }
-
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(Question question) {
         this.question = question;
     }
 

@@ -1,11 +1,17 @@
 package ap.student.project.backend.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
 @Table(name = "user_exam")
+@Getter
+@Setter
+@NoArgsConstructor
 public class UserExam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,44 +26,9 @@ public class UserExam {
     @JoinTable(name = "user_id")
     private User user;
 
-    public UserExam() {
-    }
-
     public UserExam(Exam exam, List<ExamAttempt> examAttempts, User user) {
         this.exam = exam;
         this.examAttempts = examAttempts;
-        this.user = user;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Exam getExam() {
-        return exam;
-    }
-
-    public void setExam(Exam exam) {
-        this.exam = exam;
-    }
-
-    public List<ExamAttempt> getExamAttempts() {
-        return examAttempts;
-    }
-
-    public void setExamAttempts(List<ExamAttempt> examAttempts) {
-        this.examAttempts = examAttempts;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
         this.user = user;
     }
 

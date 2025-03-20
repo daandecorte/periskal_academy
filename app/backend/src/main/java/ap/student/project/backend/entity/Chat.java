@@ -1,11 +1,17 @@
 package ap.student.project.backend.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Set;
 
 @Entity
 @Table(name = "chat")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,44 +26,9 @@ public class Chat {
     @Column(name = "chat_status")
     private ChatStatus chatStatus;
 
-    public Chat() {
-    }
-
     public Chat(Set<ChatMember> chatMembers, Set<Message> messages, ChatStatus chatStatus) {
         this.chatMembers = chatMembers;
         this.messages = messages;
-        this.chatStatus = chatStatus;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Set<ChatMember> getChatMembers() {
-        return chatMembers;
-    }
-
-    public void setChatMembers(Set<ChatMember> chatMembers) {
-        this.chatMembers = chatMembers;
-    }
-
-    public Set<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(Set<Message> messages) {
-        this.messages = messages;
-    }
-
-    public ChatStatus getChatStatus() {
-        return chatStatus;
-    }
-
-    public void setChatStatus(ChatStatus chatStatus) {
         this.chatStatus = chatStatus;
     }
 

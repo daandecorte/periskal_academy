@@ -2,12 +2,18 @@ package ap.student.project.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.Map;
 
 @Entity
 @Table(name = "question")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,55 +32,17 @@ public class Question {
     @JoinColumn(name = "exam_id")
     @JsonIgnore
     private Exam exam;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "exam_id")
+    @JsonIgnore
+    private Training training;
 
-    public Question() {
-    }
-
-    public Question(Map<Language, String> text, QuestionType questionType, List<QuestionOption> questionOptions, Exam exam) {
+    public Question(Map<Language, String> text, QuestionType questionType, List<QuestionOption> questionOptions, Exam exam, Training training) {
         this.text = text;
         this.questionType = questionType;
         this.questionOptions = questionOptions;
         this.exam = exam;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Map<Language, String> getText() {
-        return text;
-    }
-
-    public void setText(Map<Language, String> text) {
-        this.text = text;
-    }
-
-    public QuestionType getQuestionType() {
-        return questionType;
-    }
-
-    public void setQuestionType(QuestionType questionType) {
-        this.questionType = questionType;
-    }
-
-    public List<QuestionOption> getQuestionOptions() {
-        return questionOptions;
-    }
-
-    public void setQuestionOptions(List<QuestionOption> questionOptions) {
-        this.questionOptions = questionOptions;
-    }
-
-    public Exam getExam() {
-        return exam;
-    }
-
-    public void setExam(Exam exam) {
-        this.exam = exam;
+        this.training = training;
     }
 
     @Override
@@ -85,6 +53,7 @@ public class Question {
                 ", questionType=" + questionType +
                 ", questionOptions=" + questionOptions +
                 ", exam=" + exam +
+                ", training=" + training +
                 '}';
     }
 }
