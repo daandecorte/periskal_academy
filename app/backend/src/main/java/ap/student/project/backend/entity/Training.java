@@ -39,11 +39,12 @@ public class Training {
     @OneToMany(mappedBy = "training", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<Question> questions;
 
-    public Training(Map<Language, String> title, Map<Language, String> description, Video video, Module module) {
+    public Training(Map<Language, String> title, Map<Language, String> description, Video video, Module module, List<Question> questions) {
         this.title = title;
         this.description = description;
         this.video = video;
         this.module = module;
+        this.questions = questions;
     }
 
     @Override
@@ -54,6 +55,7 @@ public class Training {
                 ", description=" + description +
                 ", video=" + video +
                 ", module=" + module +
+                ", questions=" + questions +
                 '}';
     }
 }

@@ -39,12 +39,13 @@ public class Module {
     @JoinTable(name="tip")
     private List<Tip> tips;
 
-    public Module(Map<Language, String> title, Map<Language, String> description, boolean isActive, List<Training> trainings, List<Exam> exams) {
+    public Module(Map<Language, String> title, Map<Language, String> description, boolean isActive, List<Training> trainings, List<Exam> exams, List<Tip> tips) {
         this.title = title;
         this.description = description;
         this.isActive = isActive;
         this.trainings = trainings;
         this.exams = exams;
+        this.tips = tips;
     }
 
     @Override

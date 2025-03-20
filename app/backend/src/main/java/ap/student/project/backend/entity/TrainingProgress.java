@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "training_progress")
@@ -23,11 +24,14 @@ public class TrainingProgress {
     private boolean videoWatched;
     @Column(name = "completed_at")
     private LocalDateTime completedAt;
+    @OneToMany(mappedBy = "trainingProgress", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private List<TrainingQuestionAnswer> trainingQuestionAnswers;
 
-    public TrainingProgress(Training training, boolean videoWatched, LocalDateTime completedAt) {
+    public TrainingProgress(Training training, boolean videoWatched, LocalDateTime completedAt, List<TrainingQuestionAnswer> trainingQuestionAnswers) {
         this.training = training;
         this.videoWatched = videoWatched;
         this.completedAt = completedAt;
+        this.trainingQuestionAnswers = trainingQuestionAnswers;
     }
 
     @Override
@@ -37,6 +41,7 @@ public class TrainingProgress {
                 ", training=" + training +
                 ", videoWatched=" + videoWatched +
                 ", completedAt=" + completedAt +
+                ", trainingQuestionAnswers=" + trainingQuestionAnswers +
                 '}';
     }
 }

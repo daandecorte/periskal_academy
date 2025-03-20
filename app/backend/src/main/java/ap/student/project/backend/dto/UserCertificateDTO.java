@@ -13,6 +13,5 @@ public record UserCertificateDTO(
         @JsonProperty("status") CertificateStatus status,
         @JsonProperty("user") User user,
         @JsonProperty("certificate") Certificate certificate
-
         ) {
 }
