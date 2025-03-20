@@ -58,19 +58,18 @@ export class LoginComponent {
   }
 
   async login() {
-    let result = await fetch(
-      `/api/login?username=${encodeURIComponent(
-        this.username
-      )}&password=${encodeURIComponent(this.password)}&language=${
-        this.language
-      }`,
-      {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-        },
-      }
-    );
+    let result = await fetch(`/api/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        username: this.username,
+        password: this.password,
+        language: this.language,
+      }),
+    });
 
     let data = await result.json();
     if (!data.text) {

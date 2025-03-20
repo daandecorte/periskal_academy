@@ -1,8 +1,10 @@
 package ap.student.project.backend.controller;
 
+import ap.student.project.backend.dto.LoginRequest;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,12 +30,12 @@ import java.util.Base64;
 
 @RestController
 public class LoginController {
-    @GetMapping(value="/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String login(@RequestParam String username, @RequestParam String password, @RequestParam String language) throws IOException {
+    @PostMapping(value="/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String login(@RequestBody LoginRequest loginRequest) throws IOException {
         URL url = new URL("http://academyws.periskal.com/Academy.asmx");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-        String encoded = encode(username, password);
+        String encoded = encode(loginRequest.username(), loginRequest.password());
 
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/soap+xml; charset=UTF-8");
