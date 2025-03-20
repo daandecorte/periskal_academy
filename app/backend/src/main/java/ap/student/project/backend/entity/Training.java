@@ -22,7 +22,7 @@ public class Training {
     @Column(name = "description")
     private Map<Language, String> description;
     @Enumerated(EnumType.STRING)
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "video_id")
     private Video video;
     @ManyToOne(fetch = FetchType.EAGER)

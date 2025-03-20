@@ -2,7 +2,9 @@ package ap.student.project.backend.service;
 
 import ap.student.project.backend.dao.TrainingRepository;
 import ap.student.project.backend.dto.TrainingDTO;
+import ap.student.project.backend.dto.VideoDTO;
 import ap.student.project.backend.entity.Training;
+import ap.student.project.backend.entity.Video;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -43,6 +45,16 @@ public class TrainingService {
             throw new NotFoundException("Training with id " + id + " not found");
         }
         BeanUtils.copyProperties(trainingDTO, training);
+        trainingRepository.save(training);
+    }
+    public void addVideo(int id, VideoDTO videoDTO) {
+        Training training = trainingRepository.findById(id).orElse(null);
+        if (training == null) {
+            throw new NotFoundException("Training with id " + id + " not found");
+        }
+        Video video = new Video();
+        BeanUtils.copyProperties(videoDTO, video);
+        training.setVideo(video);
         trainingRepository.save(training);
     }
 }
