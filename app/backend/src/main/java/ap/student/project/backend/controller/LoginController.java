@@ -89,27 +89,23 @@ public class LoginController {
         }
     }
 
-    // For quick testing, it is possible to test with a already decrypted dongle key
-    // using 'the DEBUG:' prefix or the test mode checkbox
-    // THIS DEBUG FUNCTION SHOULD BE REMOVED LATER
     private String authenticateWithDongle(String dongleCode, String language) throws IOException {
-        // DEBUG!! Check if dongle code needs to be decoded
-        String decodedDongleCode;
+        // Process dongle code if it has DEBUG prefix
+        String processedDongleCode;
         if (dongleCode.startsWith("DEBUG:")) {
-            // Use the plain text dongle code provided after "DEBUG:"
-            decodedDongleCode = dongleCode.substring(6);
-        } else {
-            // Normal mode: decrypt the encrypted dongle code
+            // For DEBUG mode, encrypt the plain dongle number provided after "DEBUG:"
+            String plainDongleNumber = dongleCode.substring(6);
             try {
-                decodedDongleCode = decryptDongleCode(dongleCode);
+                int dongleNumber = Integer.parseInt(plainDongleNumber);
+                processedDongleCode = crypto.encode(dongleNumber, null);
             } catch (Exception e) {
-                System.out.println("Error decrypting dongle code: " + e.getMessage());
-                return "{\"text\": \"Invalid dongle code\"}";
+                System.out.println("Error encrypting debug dongle code: " + e.getMessage());
+                return "{\"text\": \"Invalid dongle number format\"}";
             }
+        } else {
+            // Normal mode: use the encrypted dongle code as is
+            processedDongleCode = dongleCode;
         }
-
-        String encodedDongleCode = Base64.getEncoder()
-                .encodeToString(decodedDongleCode.getBytes(StandardCharsets.UTF_8));
 
         URL url = new URL("http://academyws.periskal.com/Academy.asmx");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -118,7 +114,7 @@ public class LoginController {
         conn.setRequestProperty("Content-Type", "application/soap+xml; charset=UTF-8");
         conn.setDoOutput(true);
 
-        String soapRequest = makeDongleRequest(encodedDongleCode);
+        String soapRequest = makeDongleRequest(processedDongleCode);
 
         OutputStream os = conn.getOutputStream();
         os.write(soapRequest.getBytes());
@@ -145,12 +141,6 @@ public class LoginController {
             System.out.println("HTTP Error: " + responseCode);
             return "{\"text\": \"Authentication service error: " + responseCode + "\"}";
         }
-    }
-
-    private String decryptDongleCode(String encryptedDongleCode) throws Exception {
-        // Use the crypto class to decode the encrypted dongle code
-        int dongleNumber = crypto.decode(encryptedDongleCode, null);
-        return String.valueOf(dongleNumber);
     }
 
     private String XMLtoJSON(String xml, String resultNodeName) throws Exception {
