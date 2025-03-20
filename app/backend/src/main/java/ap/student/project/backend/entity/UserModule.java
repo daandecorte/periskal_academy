@@ -1,9 +1,15 @@
 package ap.student.project.backend.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "user_module")
+@Getter
+@Setter
+@NoArgsConstructor
 public class UserModule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,44 +24,9 @@ public class UserModule {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public UserModule() {
-    }
-
     public UserModule(ModuleProgress moduleProgress, Module module, User user) {
         this.moduleProgress = moduleProgress;
         this.module = module;
-        this.user = user;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public ModuleProgress getModuleProgress() {
-        return moduleProgress;
-    }
-
-    public void setModuleProgress(ModuleProgress moduleProgress) {
-        this.moduleProgress = moduleProgress;
-    }
-
-    public Module getModule() {
-        return module;
-    }
-
-    public void setModule(Module module) {
-        this.module = module;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
         this.user = user;
     }
 

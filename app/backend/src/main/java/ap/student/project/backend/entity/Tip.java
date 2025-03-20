@@ -1,11 +1,17 @@
 package ap.student.project.backend.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Map;
 
 @Entity
 @Table(name="tip")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Tip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,34 +25,8 @@ public class Tip {
     @JoinColumn(name="module_id")
     private Module module;
 
-    public Tip() {}
-
     public Tip(Map<Language, String> text, Module module) {
         this.text = text;
-        this.module = module;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Map<Language, String> getText() {
-        return text;
-    }
-
-    public void setText(Map<Language, String> text) {
-        this.text = text;
-    }
-
-    public Module getModule() {
-        return module;
-    }
-
-    public void setModule(Module module) {
         this.module = module;
     }
 
