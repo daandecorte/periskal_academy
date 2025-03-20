@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Set;
 
@@ -12,6 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,15 +30,5 @@ public class Chat {
         this.chatMembers = chatMembers;
         this.messages = messages;
         this.chatStatus = chatStatus;
-    }
-
-    @Override
-    public String toString() {
-        return "Chat{" +
-                "id=" + id +
-                ", chatMembers=" + chatMembers +
-                ", messages=" + messages +
-                ", chatStatus=" + chatStatus +
-                '}';
     }
 }
