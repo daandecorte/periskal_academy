@@ -1,1 +1,17 @@
-<p>admin-modules works!</p>
+<div class="header">
+  <h1>Modules</h1>
+  <div class="actions">
+    <div class="search-bar">
+      <input
+        type="text"
+        placeholder="Search modules..."
+        class="search-input"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchChange()"
+      />
+    </div>
+    <button class="create-module-btn">
+      <span class="plus-icon">+</span> Create Module
+    </button>
+  </div>
+</div>

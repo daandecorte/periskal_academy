@@ -20,7 +20,7 @@ export const routes: Routes = [
   {
     path: 'modules',
     component: ModulesComponent,
-    canActivate: [RoleGuard],
+    //canActivate: [RoleGuard],
     data: {
       roles: [
         Role.SKIPPER,
@@ -31,19 +31,19 @@ export const routes: Routes = [
   {
     path: 'admin/modules',
     component: AdminModulesComponent,
-    canActivate: [RoleGuard],
+    //canActivate: [RoleGuard],
     data: { roles: [Role.ADMIN] }
   },
   {
     path: 'certificates',
     component: CertificatesComponent,
-    canActivate: [RoleGuard],
+    //canActivate: [RoleGuard],
     data: { roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT] },
   }, //When role is trainee, fleet-manager
   {
     path: 'tips-and-tricks',
     component: TipsAndTricksComponent,
-    canActivate: [RoleGuard],
+    //canActivate: [RoleGuard],
     data: {
       roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT, Role.FLEETMANAGER],
     },
@@ -51,25 +51,25 @@ export const routes: Routes = [
   {
     path: 'user-management',
     component: UserManagementComponent,
-    canActivate: [RoleGuard],
+    //canActivate: [RoleGuard],
     data: { roles: [Role.ADMIN] },
   }, //When role is admin
   {
     path: 'skippers',
     component: SkippersComponent,
-    canActivate: [RoleGuard],
+    //canActivate: [RoleGuard],
     data: { roles: [Role.FLEETMANAGER] },
   }, //When role is fleet-manager
   {
     path: 'support',
     component: SupportComponent,
-    canActivate: [RoleGuard],
+    //canActivate: [RoleGuard],
     data: { roles: [Role.SUPPORT] },
   }, //When role is helpdesk
   {
     path: 'add-module',
     component: AddModuleComponent,
-    canActivate: [RoleGuard],
+    //canActivate: [RoleGuard],
     data: { roles: [Role.ADMIN] },
     children: [
       { path: '', redirectTo: 'basic-setup', pathMatch: 'full' },
