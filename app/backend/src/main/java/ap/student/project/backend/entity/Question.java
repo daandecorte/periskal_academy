@@ -33,7 +33,7 @@ public class Question {
     @JsonIgnore
     private Exam exam;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "exam_id")
+    @JoinColumn(name = "training_id")
     @JsonIgnore
     private Training training;
 
