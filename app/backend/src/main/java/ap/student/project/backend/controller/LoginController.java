@@ -26,10 +26,31 @@ import java.nio.charset.StandardCharsets;
 import java.security.spec.KeySpec;
 import java.util.Base64;
 
+import ap.student.project.backend.authentication.crypto;
+
 @RestController
 public class LoginController {
-    @GetMapping(value="/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String login(@RequestParam String username, @RequestParam String password, @RequestParam String language) throws IOException {
+    @GetMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String login(@RequestParam(required = false) String username,
+            @RequestParam(required = false) String password,
+            @RequestParam(required = false) String language,
+            @RequestParam(required = false) String login) throws IOException {
+
+        // Dongle authentication
+        if (login != null && !login.isEmpty()) {
+            return authenticateWithDongle(login, language);
+        }
+
+        // Credentials authentication
+        if (username != null && password != null) {
+            return authenticateWithCredentials(username, password, language);
+        }
+
+        // No valid authentication parameters provided
+        return "{\"text\": \"Missing authentication parameters\"}";
+    }
+
+    private String authenticateWithCredentials(String username, String password, String language) throws IOException {
         URL url = new URL("http://academyws.periskal.com/Academy.asmx");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -39,7 +60,7 @@ public class LoginController {
         conn.setRequestProperty("Content-Type", "application/soap+xml; charset=UTF-8");
         conn.setDoOutput(true);
 
-        String soapRequest = makeRequest(encoded);
+        String soapRequest = makeCredentialsRequest(encoded);
 
         OutputStream os = conn.getOutputStream();
         os.write(soapRequest.getBytes());
@@ -56,27 +77,81 @@ public class LoginController {
             }
             br.close();
 
-            try{
-                return XMLtoJSON(response.toString());
-            } catch (Exception e){
+            try {
+                return XMLtoJSON(response.toString(), "AuthenticateResult");
+            } catch (Exception e) {
                 return "{\"text\": \"User not found\"}";
             }
 
         } else {
             System.out.println("HTTP Error: " + responseCode);
-            return null;
+            return "{\"text\": \"Authentication service error: " + responseCode + "\"}";
         }
     }
 
-    private String XMLtoJSON(String xml) throws Exception {
+    protected String authenticateWithDongle(String dongleCode, String language) throws IOException {
+        // Process dongle code if it has DEBUG prefix
+        String processedDongleCode;
+        if (dongleCode.startsWith("DEBUG:")) {
+            // For DEBUG mode, encrypt the plain dongle number provided after "DEBUG:"
+            String plainDongleNumber = dongleCode.substring(6);
+            try {
+                int dongleNumber = Integer.parseInt(plainDongleNumber);
+                processedDongleCode = crypto.encode(dongleNumber, null);
+            } catch (Exception e) {
+                System.out.println("Error encrypting debug dongle code: " + e.getMessage());
+                return "{\"text\": \"Invalid dongle number format\"}";
+            }
+        } else {
+            // Normal mode: use the encrypted dongle code as is
+            processedDongleCode = dongleCode;
+        }
+
+        URL url = new URL("http://academyws.periskal.com/Academy.asmx");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type", "application/soap+xml; charset=UTF-8");
+        conn.setDoOutput(true);
+
+        String soapRequest = makeDongleRequest(processedDongleCode);
+
+        OutputStream os = conn.getOutputStream();
+        os.write(soapRequest.getBytes());
+        os.flush();
+        os.close();
+
+        int responseCode = conn.getResponseCode();
+        if (responseCode == 200) { // = OK
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line;
+            StringBuilder response = new StringBuilder();
+            while ((line = br.readLine()) != null) {
+                response.append(line);
+            }
+            br.close();
+
+            try {
+                return XMLtoJSON(response.toString(), "Authenticate_DongleResult");
+            } catch (Exception e) {
+                System.out.println("Error processing dongle authentication response: " + e.getMessage());
+                return "{\"text\": \"Invalid dongle or processing error\"}";
+            }
+        } else {
+            System.out.println("HTTP Error: " + responseCode);
+            return "{\"text\": \"Authentication service error: " + responseCode + "\"}";
+        }
+    }
+
+    private String XMLtoJSON(String xml, String resultNodeName) throws Exception {
         XmlMapper xmlMapper = new XmlMapper();
         xmlMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         JsonNode node = xmlMapper.readTree(xml.getBytes());
 
-        JsonNode authResultNode = findNode(node, "AuthenticateResult");
+        JsonNode authResultNode = findNode(node, resultNodeName);
         if (authResultNode == null || authResultNode.isMissingNode()) {
-            throw new Exception("AuthenticateResult not found in XML.");
+            throw new Exception(resultNodeName + " not found in XML.");
         }
 
         if (authResultNode.has("Password")) {
@@ -86,7 +161,7 @@ public class LoginController {
         if (authResultNode.has("Username")) {
             ((ObjectNode) authResultNode).remove("Username");
         }
-        
+
         JsonNode skippersNode = authResultNode.get("Skippers");
         if (skippersNode != null && skippersNode.has("Client")) {
             for (JsonNode client : skippersNode.get("Client")) {
@@ -113,7 +188,7 @@ public class LoginController {
         return null;
     }
 
-    private String makeRequest(String encoded){
+    private String makeCredentialsRequest(String encoded) {
         return "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
                 + "<soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
                 + "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" "
@@ -126,22 +201,35 @@ public class LoginController {
                 + "</soap12:Envelope>";
     }
 
+    private String makeDongleRequest(String dongleCode) {
+        return "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+                + "<soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
+                + "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" "
+                + "xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">"
+                + "<soap12:Body>"
+                + "<Authenticate_Dongle xmlns=\"http://tempuri.org/\">"
+                + "<Dongle>" + dongleCode + "</Dongle>"
+                + "</Authenticate_Dongle>"
+                + "</soap12:Body>"
+                + "</soap12:Envelope>";
+    }
+
     private final String salt = "PeriskalAcademy2024";
 
-    private String encode(String username, String password){
-        if(username.trim().isEmpty() || password.trim().isEmpty()) {
+    private String encode(String username, String password) {
+        if (username.trim().isEmpty() || password.trim().isEmpty()) {
             throw new IllegalArgumentException("Username and/or password cannot be empty.");
         }
 
-        String combined = username+":"+password;
+        String combined = username + ":" + password;
 
         String encrypted = encryptString(combined);
 
         return Base64.getEncoder().encodeToString(encrypted.getBytes(StandardCharsets.UTF_8));
     }
 
-    private String encryptString(String input){
-        try{
+    private String encryptString(String input) {
+        try {
             byte[] key = deriveKeyFromSalt(salt);
             SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
             byte[] iv = new byte[16];
@@ -152,20 +240,21 @@ public class LoginController {
 
             byte[] encryptedBytes = cipher.doFinal(input.getBytes(StandardCharsets.UTF_8));
             return Base64.getEncoder().encodeToString(encryptedBytes);
-        } catch (Exception e){
+        } catch (Exception e) {
 
         }
         return null;
     }
 
-    private byte[] deriveKeyFromSalt(String salt){
+    private byte[] deriveKeyFromSalt(String salt) {
         try {
             byte[] saltBytes = salt.getBytes(StandardCharsets.UTF_8); // Ensure same UTF-8 encoding as C#
 
             SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
             KeySpec spec = new PBEKeySpec(salt.toCharArray(), saltBytes, 10000, 256);
             return factory.generateSecret(spec).getEncoded();
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         return null;
     }
 }
