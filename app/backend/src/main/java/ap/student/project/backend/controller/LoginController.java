@@ -89,7 +89,7 @@ public class LoginController {
         }
     }
 
-    private String authenticateWithDongle(String dongleCode, String language) throws IOException {
+    protected String authenticateWithDongle(String dongleCode, String language) throws IOException {
         // Process dongle code if it has DEBUG prefix
         String processedDongleCode;
         if (dongleCode.startsWith("DEBUG:")) {
