@@ -13,6 +13,9 @@ export interface Module {
   assigned?: boolean;
   assignedDate?: string;
   status: 'not_started' | 'in_progress' | 'completed';
+  isActive?: boolean;
+  languages?: string[]; // ['NL', 'FR', 'DE', 'EN']
+  moduleType?: 'Navigation' | 'Safety' | 'Communication';
 }
 
 @Injectable({
@@ -29,7 +32,10 @@ export class ModuleService {
       hasCertificate: true,
       assigned: true,
       assignedDate: '15-3-2024',
-      status: 'in_progress'
+      status: 'in_progress',
+      isActive: true,
+      languages: ['NL', 'FR', 'DE', 'EN'],
+      moduleType: 'Safety'
     },
     {
       id: 2,
@@ -37,7 +43,10 @@ export class ModuleService {
       description: 'Working with maritime charts and routes',
       trainingCount: 2,
       hasCertificate: true,
-      status: 'not_started'
+      status: 'not_started',
+      isActive: true,
+      languages: ['NL', 'FR', 'DE', 'EN'],
+      moduleType: 'Navigation'
     },
     {
       id: 3,
@@ -47,7 +56,10 @@ export class ModuleService {
       progress: 30,
       hasCertificate: true,
       assigned: true,
-      status: 'in_progress'
+      status: 'in_progress',
+      isActive: true,
+      languages: ['NL', 'FR', 'DE', 'EN'],
+      moduleType: 'Navigation'
     },
     {
       id: 4,
@@ -55,7 +67,10 @@ export class ModuleService {
       description: 'Working with maritime charts and routes',
       trainingCount: 5,
       hasCertificate: true,
-      status: 'not_started'
+      status: 'not_started',
+      isActive: true,
+      languages: ['NL', 'FR', 'DE', 'EN'],
+      moduleType: 'Navigation'
     },
     {
       id: 5,
@@ -63,7 +78,10 @@ export class ModuleService {
       description: 'Working with maritime charts and routes',
       trainingCount: 2,
       hasCertificate: true,
-      status: 'not_started'
+      status: 'not_started',
+      isActive: false,
+      languages: ['NL', 'FR', 'DE', 'EN'],
+      moduleType: 'Navigation'
     }
   ];
 
