@@ -16,11 +16,9 @@ public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "chatmember_id")
+    @OneToMany(mappedBy = "chat", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<ChatMember> chatMembers;
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "message_id")
+    @OneToMany(mappedBy = "chat", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Message> messages;
     @Enumerated(EnumType.STRING)
     @Column(name = "chat_status")
