@@ -1,0 +1,34 @@
+<h2>Create New Module</h2>
+
+<!-- Steps Indicator -->
+<!--<div class="steps">
+  <div class="step active" [routerLink]="['basic-setup', steps[0]]">
+    <div class="circle" [ngClass]="{ active: currentStep === steps[0] }">1</div>
+    <span>Basic Setup</span>
+  </div>
+  <div class="line"></div>
+  <div class="step" [routerLink]="['trainings', steps[1]]">
+    <div class="circle" [ngClass]="{ active: currentStep === steps[1] }">2</div>
+    <span>Trainings</span>
+  </div>
+  <div class="line"></div>
+  <div class="step" [routerLink]="['exam', steps[2]]">
+    <div class="circle" [ngClass]="{ active: currentStep === steps[2] }">3</div>
+    <span>Exam</span>
+  </div>
+  <div class="line"></div>
+  <div class="step" [routerLink]="['preview', steps[3]]">
+    <div class="circle" [ngClass]="{ active: currentStep === steps[3] }">4</div>
+    <span>Preview</span>
+  </div>
+</div>-->
+<!-- Hier worden de subcomponenten geladen -->
+<div>
+  <router-outlet></router-outlet>
+</div>
+
+<!-- Navigatieknoppen -->
+<div class="next-previous">
+  <button class="prev-btn" (click)="goToPreviousStep()">&larr; Previous</button>
+  <button class="next-btn" (click)="goToNextStep()">Next</button>
+</div>

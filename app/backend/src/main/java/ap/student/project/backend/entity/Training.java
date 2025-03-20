@@ -1,5 +1,6 @@
 package ap.student.project.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Map;
@@ -21,17 +22,22 @@ public class Training {
     @Column(name = "description")
     private Map<Language, String> description;
     @Enumerated(EnumType.STRING)
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "video_id")
     private Video video;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "module_id")
+    @JsonIgnore
+    private Module module;
 
     public Training() {
     }
 
-    public Training( Map<Language, String> title,  Map<Language, String> description, Video video) {
+    public Training(Map<Language, String> title, Map<Language, String> description, Video video, Module module) {
         this.title = title;
         this.description = description;
         this.video = video;
+        this.module = module;
     }
 
     public int getId() {
@@ -66,6 +72,14 @@ public class Training {
         this.video = video;
     }
 
+    public Module getModule() {
+        return module;
+    }
+
+    public void setModule(Module module) {
+        this.module = module;
+    }
+
     @Override
     public String toString() {
         return "Training{" +
@@ -73,6 +87,7 @@ public class Training {
                 ", title=" + title +
                 ", description=" + description +
                 ", video=" + video +
+                ", module=" + module +
                 '}';
     }
 }
