@@ -1,6 +1,7 @@
 package ap.student.project.backend.controller;
 
 import ap.student.project.backend.dto.TrainingDTO;
+import ap.student.project.backend.dto.VideoDTO;
 import ap.student.project.backend.entity.Training;
 import ap.student.project.backend.exceptions.DuplicateException;
 import ap.student.project.backend.exceptions.NotFoundException;
@@ -64,6 +65,17 @@ public class TrainingController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         catch (NotFoundException e) {
+            logger.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+    @PostMapping(value = "/trainings/{id}/video")
+    public ResponseEntity addVideo(@PathVariable Integer id, @RequestBody VideoDTO videoDTO) {
+        try {
+            trainingService.addVideo(id, videoDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(videoDTO);
+        }
+        catch(NotFoundException e) {
             logger.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
