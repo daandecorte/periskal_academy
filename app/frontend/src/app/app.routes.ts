@@ -42,7 +42,7 @@ export const routes: Routes = [
     data: {
       roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT, Role.FLEETMANAGER],
     },
-  }, 
+  },
   {
     path: 'user-management',
     component: UserManagementComponent,
@@ -70,4 +70,6 @@ export const routes: Routes = [
       { path: 'preview', component: PreviewComponent },
     ],
   },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
