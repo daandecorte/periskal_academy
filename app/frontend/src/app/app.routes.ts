@@ -13,6 +13,8 @@ import { TrainingsComponent } from './add-module/trainings/trainings.component';
 import { ExamComponent } from './add-module/exam/exam.component';
 import { PreviewComponent } from './add-module/preview/preview.component';
 import { TrainingFormComponent } from './add-module/training-form/training-form.component';
+import { ContentComponent } from './add-module/training-form/content/content.component';
+import { QuestionsComponent } from './add-module/training-form/questions/questions.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent }, //To get a role
@@ -28,9 +30,12 @@ export const routes: Routes = [
     { path: 'trainings', component: TrainingsComponent},
     { path: 'exam', component: ExamComponent},
     { path: 'preview', component: PreviewComponent},
-    //{ path: 'trainings/new', component: TrainingFormComponent},
+    { path: 'trainings/new', component: TrainingFormComponent, children: [
+      { path: 'content', component: ContentComponent},
+      { path: 'questions', component: QuestionsComponent}
+    ]},
   ]},
-  { path: 'trainings/new', component: TrainingFormComponent},
+  //{ path: 'trainings/new', component: TrainingFormComponent},
   { path: '', redirectTo: 'modules', pathMatch: 'full' }, 
   { path: '**', redirectTo: 'modules', pathMatch: 'full' },
 ];

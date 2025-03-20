@@ -49,7 +49,10 @@
         </div>
 
         <div class="flex">
-          <button class="btn" [routerLink]="'/trainings/new'">
+          <button
+            class="btn"
+            [routerLink]="['/add-module/trainings', 'new', 'content']"
+          >
             + Add Training
           </button>
         </div>
