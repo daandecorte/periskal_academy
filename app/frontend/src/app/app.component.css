@@ -13,5 +13,7 @@ app-navbar {
 .content {
   flex-grow: 1;
   padding: 20px;
+  margin: -8px;
   overflow: auto;
+  background-color: #f3f4f6;
 }

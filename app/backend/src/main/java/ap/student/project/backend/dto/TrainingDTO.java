@@ -9,7 +9,6 @@ import java.util.Map;
 public record TrainingDTO(
         @JsonProperty("title") Map<Language, String> titles,
         @JsonProperty("description") Map<Language, String> descriptions,
-        @JsonProperty("language") Language language,
         @JsonProperty("video") Video video
 ) {
 }
