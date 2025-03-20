@@ -22,7 +22,7 @@ export const routes: Routes = [
   { path: 'user-management', component: UserManagementComponent , data: { roles: [Role.ADMIN] }}, //When role is admin
   { path: 'skippers', component: SkippersComponent , data: { roles: [Role.FLEETMANAGER] }}, //When role is fleet-manager
   { path: 'support', component: SupportComponent , data: { roles: [Role.SUPPORT] }}, //When role is helpdesk
-  { path: 'add-module', component: AddModuleComponent, children: [
+  { path: 'add-module', component: AddModuleComponent, data: { roles: [Role.ADMIN] }, children: [
     { path: '', redirectTo: 'basic-setup', pathMatch: 'full'},
     { path: 'basic-setup', component: BasicSetupComponent},
     { path: 'trainings', component: TrainingsComponent},
