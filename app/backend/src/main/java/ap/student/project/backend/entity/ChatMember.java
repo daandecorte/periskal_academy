@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "chat_member")
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class ChatMember {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,16 +19,12 @@ public class ChatMember {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="chat_id")
+    private Chat chat;
 
-    public ChatMember(User user) {
+    public ChatMember(User user, Chat chat) {
         this.user = user;
-    }
-
-    @Override
-    public String toString() {
-        return "ChatMember{" +
-                "id=" + id +
-                ", user=" + user +
-                '}';
+        this.chat = chat;
     }
 }
