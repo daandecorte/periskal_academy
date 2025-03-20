@@ -12,6 +12,7 @@ import { BasicSetupComponent } from './add-module/basic-setup/basic-setup.compon
 import { TrainingsComponent } from './add-module/trainings/trainings.component';
 import { ExamComponent } from './add-module/exam/exam.component';
 import { PreviewComponent } from './add-module/preview/preview.component';
+import { TrainingFormComponent } from './add-module/training-form/training-form.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent }, //To get a role
@@ -27,6 +28,7 @@ export const routes: Routes = [
     { path: 'trainings', component: TrainingsComponent},
     { path: 'exam', component: ExamComponent},
     { path: 'preview', component: PreviewComponent},
+    { path: 'training-form', component: TrainingFormComponent},
   ]},
   { path: '', redirectTo: 'modules', pathMatch: 'full' }, 
   { path: '**', redirectTo: 'modules', pathMatch: 'full' },

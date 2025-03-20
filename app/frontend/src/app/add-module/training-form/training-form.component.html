@@ -1,0 +1,48 @@
+<body>
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Add New Training</h2>
+      <button class="close-btn">×</button>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active">Content</button>
+      <button class="tab">Questions</button>
+    </div>
+
+    <form class="form-container">
+      <div class="form-group">
+        <label>Module Title</label>
+        <input type="text" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <label>Module Description</label>
+        <textarea class="form-control"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Video Content</label>
+        <div class="video-upload">
+          <div class="language-selection">
+            <button class="lang-btn active">NL</button>
+            <button class="lang-btn">FR</button>
+            <button class="lang-btn">DE</button>
+            <button class="lang-btn active">EN</button>
+          </div>
+          <div class="upload-box">
+            <div class="upload-icon">⬆</div>
+            <p>Click to upload or drag and drop</p>
+            <p>MP4, WebM or OGG (MAX: 80MB)</p>
+            <input type="file" accept="video/mp4,video/webm,video/ogg" />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="cancel-btn">Cancel</button>
+        <button class="save-btn">Save Module</button>
+      </div>
+    </form>
+  </div>
+</body>
