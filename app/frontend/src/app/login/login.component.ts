@@ -78,17 +78,17 @@ export class LoginComponent {
 
   async processDongleLogin(dongleCode: string) {
     try {
-      let result = await fetch(
-        `/api/login?login=${encodeURIComponent(dongleCode)}&language=${
-          this.language
-        }`,
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-          },
-        }
-      );
+      let result = await fetch(`/api/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          login: this.dongleCode,
+          language: this.language,
+        }),
+      });
 
       await this.processLoginResponse(result);
     } catch (error) {
@@ -115,19 +115,18 @@ export class LoginComponent {
 
   async login() {
     try {
-      let result = await fetch(
-        `/api/login?username=${encodeURIComponent(
-          this.username
-        )}&password=${encodeURIComponent(this.password)}&language=${
-          this.language
-        }`,
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-          },
-        }
-      );
+      let result = await fetch(`/api/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          username: this.username,
+          password: this.password,
+          language: this.language,
+        }),
+      });
 
       await this.processLoginResponse(result);
     } catch (error) {
@@ -140,13 +139,10 @@ export class LoginComponent {
   private async processLoginResponse(result: Response) {
     let data = await result.json();
 
-    // Common response handler for both authentication methods
     if (!data.text) {
-      // Determine the proper path to the authentication result
       let userData: IUser;
 
       if (data.Body.AuthenticateResponse) {
-        // Username/password auth response
         userData = {
           ...data.Body.AuthenticateResponse.AuthenticateResult,
           Products:
@@ -160,7 +156,6 @@ export class LoginComponent {
             ),
         };
       } else if (data.Body.Authenticate_DongleResponse) {
-        // Dongle auth response
         userData = {
           ...data.Body.Authenticate_DongleResponse.Authenticate_DongleResult,
           Products:
