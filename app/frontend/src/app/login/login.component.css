@@ -74,7 +74,8 @@ select {
 fa-icon {
   color: gray;
 }
-#login {
+#login,
+#dongleLogin {
   background-color: #ffd100;
   border: none;
   border-radius: 10px;
@@ -86,4 +87,29 @@ fa-icon {
   font-weight: bold;
   margin-top: 0rem;
   margin-bottom: 1rem;
+}
+
+.debug-toggle {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+#toggleDebug {
+  background-color: #e0e0e0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
+.dongle-debug {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed #ccc;
+}
+
+#dongleLogin {
+  margin-bottom: 1.5rem;
 }
