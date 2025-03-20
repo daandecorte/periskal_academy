@@ -19,8 +19,7 @@ public class UserExam {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "exam_id")
     private Exam exam;
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "exam_attempt")
+    @OneToMany(mappedBy = "userExam", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<ExamAttempt> examAttempts;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(name = "user_id")
