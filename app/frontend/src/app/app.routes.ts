@@ -100,6 +100,7 @@ export const routes: Routes = [
   {
     path: 'add-module',
     component: AddModuleComponent,
+    data: { roles: [Role.ADMIN] },
     children: [
       { path: '', redirectTo: 'basic-setup', pathMatch: 'full' },
       { path: 'basic-setup', component: BasicSetupComponent },
