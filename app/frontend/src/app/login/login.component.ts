@@ -12,10 +12,11 @@ import {
 import { Router } from '@angular/router';
 import { IUser } from '../types/user-info';
 import { LanguageService } from '../services/language.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
-  imports: [FontAwesomeModule, FormsModule],
+  imports: [FontAwesomeModule, FormsModule, TranslateModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -35,7 +36,8 @@ export class LoginComponent {
 
   constructor(
     private router: Router,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private translate: TranslateService
   ) {
     this.languageService.currentLanguage$.subscribe((lang) => {
       this.language = lang;
@@ -66,9 +68,18 @@ export class LoginComponent {
         : (inputPassword.type = 'password');
     });
   }
-
+  mapLanguage(lang: string): string {
+    switch (lang) {
+      case 'ENGLISH': return 'en';
+      case 'FRENCH': return 'fr';
+      case 'GERMAN': return 'de';
+      case 'DUTCH': return 'nl';
+      default: return 'en';
+    }
+  }
   onLanguageChange() {
     this.languageService.setLanguage(this.language);
+    this.translate.use(this.mapLanguage(this.language))
   }
 
   // toggle dongle debug

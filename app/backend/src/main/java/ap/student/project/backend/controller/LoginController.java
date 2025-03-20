@@ -47,7 +47,7 @@ public class LoginController {
             return authenticateWithCredentials(username, password, language);
         }
 
-        return "{\"text\": \"Missing authentication parameters\"}";
+        return "{\"text\": \"Missing authentication parameters \"}" + username + " " + password;
     }
 
     private String authenticateWithCredentials(String username, String password, String language) throws IOException {
