@@ -1,11 +1,17 @@
 package ap.student.project.backend.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
 @Table(name = "exam")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Exam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,71 +30,12 @@ public class Exam {
     @JoinTable(name="module_id")
     private Module module;
 
-    public Exam() {
-    }
-
     public Exam(int passingScore, int maxAttempts, int time, int questionAmount, List<Question> questions, Module module) {
         this.passingScore = passingScore;
         this.maxAttempts = maxAttempts;
         this.time = time;
         this.questionAmount = questionAmount;
         this.questions = questions;
-        this.module = module;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getPassingScore() {
-        return passingScore;
-    }
-
-    public void setPassingScore(int passingScore) {
-        this.passingScore = passingScore;
-    }
-
-    public int getMaxAttempts() {
-        return maxAttempts;
-    }
-
-    public void setMaxAttempts(int maxAttempts) {
-        this.maxAttempts = maxAttempts;
-    }
-
-    public int getTime() {
-        return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
-
-    public int getQuestionAmount() {
-        return questionAmount;
-    }
-
-    public void setQuestionAmount(int questionAmount) {
-        this.questionAmount = questionAmount;
-    }
-
-    public List<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
-    }
-
-    public Module getModule() {
-        return module;
-    }
-
-    public void setModule(Module module) {
         this.module = module;
     }
 

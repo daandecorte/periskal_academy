@@ -7,15 +7,16 @@ import {
   faLock,
   faEye,
   faTimes,
-  faKey
+  faKey,
 } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import { IUser } from '../types/user-info';
 import { LanguageService } from '../services/language.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
-  imports: [FontAwesomeModule, FormsModule],
+  imports: [FontAwesomeModule, FormsModule, TranslateModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -35,7 +36,8 @@ export class LoginComponent {
 
   constructor(
     private router: Router,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private translate: TranslateService
   ) {
     this.languageService.currentLanguage$.subscribe((lang) => {
       this.language = lang;
@@ -46,7 +48,7 @@ export class LoginComponent {
     // Check for dongle code in URL query parameters
     const urlParams = new URLSearchParams(window.location.search);
     const loginParam = urlParams.get('login');
-    
+
     if (loginParam) {
       // If dongle code is in URL, process it directly
       this.processDongleLogin(loginParam);
@@ -66,9 +68,18 @@ export class LoginComponent {
         : (inputPassword.type = 'password');
     });
   }
-
+  mapLanguage(lang: string): string {
+    switch (lang) {
+      case 'ENGLISH': return 'en';
+      case 'FRENCH': return 'fr';
+      case 'GERMAN': return 'de';
+      case 'DUTCH': return 'nl';
+      default: return 'en';
+    }
+  }
   onLanguageChange() {
     this.languageService.setLanguage(this.language);
+    this.translate.use(this.mapLanguage(this.language))
   }
 
   // toggle dongle debug
@@ -78,15 +89,17 @@ export class LoginComponent {
 
   async processDongleLogin(dongleCode: string) {
     try {
-      let result = await fetch(
-        `/api/login?login=${encodeURIComponent(dongleCode)}&language=${this.language}`,
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-          },
-        }
-      );
+      let result = await fetch(`/api/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          login: this.dongleCode,
+          language: this.language,
+        }),
+      });
 
       await this.processLoginResponse(result);
     } catch (error) {
@@ -111,42 +124,36 @@ export class LoginComponent {
     await this.processDongleLogin(formattedDongleCode);
   }
 
-
   async login() {
     try {
-      let result = await fetch(
-        `/api/login?username=${encodeURIComponent(
-          this.username
-        )}&password=${encodeURIComponent(this.password)}&language=${
-          this.language
-        }`,
-        {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-          },
-        }
-      );
+      let result = await fetch(`/api/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          username: this.username,
+          password: this.password,
+          language: this.language,
+        }),
+      });
 
       await this.processLoginResponse(result);
     } catch (error) {
       console.error('Login error:', error);
       let textIncorrect = document.getElementById('textIncorrect');
-      if (textIncorrect)
-        textIncorrect.innerText = 'Authentication error.';
+      if (textIncorrect) textIncorrect.innerText = 'Authentication error.';
     }
   }
 
   private async processLoginResponse(result: Response) {
     let data = await result.json();
-    
-    // Common response handler for both authentication methods
+
     if (!data.text) {
-      // Determine the proper path to the authentication result
       let userData: IUser;
-      
+
       if (data.Body.AuthenticateResponse) {
-        // Username/password auth response
         userData = {
           ...data.Body.AuthenticateResponse.AuthenticateResult,
           Products:
@@ -160,11 +167,11 @@ export class LoginComponent {
             ),
         };
       } else if (data.Body.Authenticate_DongleResponse) {
-        // Dongle auth response
         userData = {
           ...data.Body.Authenticate_DongleResponse.Authenticate_DongleResult,
           Products:
-            data.Body.Authenticate_DongleResponse.Authenticate_DongleResult.Products.string,
+            data.Body.Authenticate_DongleResponse.Authenticate_DongleResult
+              .Products.string,
           Skippers:
             data.Body.Authenticate_DongleResponse.Authenticate_DongleResult.Skippers.Client.map(
               (skipper: any) => ({

@@ -1,11 +1,18 @@
 package ap.student.project.backend.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "training_progress")
+@Getter
+@Setter
+@NoArgsConstructor
 public class TrainingProgress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,46 +24,14 @@ public class TrainingProgress {
     private boolean videoWatched;
     @Column(name = "completed_at")
     private LocalDateTime completedAt;
+    @OneToMany(mappedBy = "trainingProgress", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private List<TrainingQuestionAnswer> trainingQuestionAnswers;
 
-    public TrainingProgress() {
-    }
-
-    public TrainingProgress(Training training, boolean videoWatched, LocalDateTime completedAt) {
+    public TrainingProgress(Training training, boolean videoWatched, LocalDateTime completedAt, List<TrainingQuestionAnswer> trainingQuestionAnswers) {
         this.training = training;
         this.videoWatched = videoWatched;
         this.completedAt = completedAt;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Training getTraining() {
-        return training;
-    }
-
-    public void setTraining(Training training) {
-        this.training = training;
-    }
-
-    public boolean isVideoWatched() {
-        return videoWatched;
-    }
-
-    public void setVideoWatched(boolean videoWatched) {
-        this.videoWatched = videoWatched;
-    }
-
-    public LocalDateTime getCompletedAt() {
-        return completedAt;
-    }
-
-    public void setCompletedAt(LocalDateTime completedAt) {
-        this.completedAt = completedAt;
+        this.trainingQuestionAnswers = trainingQuestionAnswers;
     }
 
     @Override
@@ -66,6 +41,7 @@ public class TrainingProgress {
                 ", training=" + training +
                 ", videoWatched=" + videoWatched +
                 ", completedAt=" + completedAt +
+                ", trainingQuestionAnswers=" + trainingQuestionAnswers +
                 '}';
     }
 }

@@ -1,0 +1,57 @@
+.question-pool {
+  margin: auto;
+  margin-bottom: 10px;
+  background: white;
+}
+/* Labels and inputfields */
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 14px;
+}
+
+/* Answer options */
+.answer-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.answer-option input[type="radio"] {
+  margin-right: 8px;
+  margin-bottom: 10px;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* Buttons */
+.add-option-btn,
+.add-question-btn {
+  background-color: #fbbf24;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}

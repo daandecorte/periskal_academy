@@ -12,102 +12,31 @@ import { BasicSetupComponent } from './add-module/basic-setup/basic-setup.compon
 import { TrainingsComponent } from './add-module/trainings/trainings.component';
 import { ExamComponent } from './add-module/exam/exam.component';
 import { PreviewComponent } from './add-module/preview/preview.component';
+import { TrainingFormComponent } from './add-module/training-form/training-form.component';
+import { ContentComponent } from './add-module/training-form/content/content.component';
+import { QuestionsComponent } from './add-module/training-form/questions/questions.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent }, //To get a role
-  {
-    path: 'modules',
-    component: ModulesComponent,
-    data: {
-      roles: [
-        Role.SKIPPER,
-        Role.INSTALLER,
-        Role.ADMIN,
-        Role.SUPPORT,
-        Role.FLEETMANAGER,
-      ],
-    },
-  }, //When role is trainee, fleet-manager, helpdesk, admin
-  {
-    path: 'certificates',
-    component: CertificatesComponent,
-    data: { roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT] },
-  }, //When role is trainee, fleet-manager
-  {
-    path: 'tips-and-tricks',
-    component: TipsAndTricksComponent,
-    data: {
-      roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT, Role.FLEETMANAGER],
-    },
-  }, //When role is trainee, fleet-manager, helpdesk
-  /*{
-    path: 'user-management',
-    component: UserManagementComponent,
-    data: { roles: [Role.ADMIN] },
-  }, //When role is admin*/
-  {
-    path: 'skippers',
-    component: SkippersComponent,
-    data: { roles: [Role.FLEETMANAGER, Role.SUPPORT, Role.ADMIN] },
-  }, //When role is fleet-manager
-  {
-    path: 'support',
-    component: SupportComponent,
-    data: { roles: [Role.SUPPORT] },
-  }, //When role is helpdesk
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: '**', redirectTo: 'login', pathMatch: 'full' },
-  {
-    path: 'modules',
-    component: ModulesComponent,
-    data: {
-      roles: [
-        Role.SKIPPER,
-        Role.INSTALLER,
-        Role.ADMIN,
-        Role.SUPPORT,
-        Role.FLEETMANAGER,
-      ],
-    },
-  }, //When role is trainee, fleet-manager, helpdesk, admin
-  {
-    path: 'certificates',
-    component: CertificatesComponent,
-    data: { roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT] },
-  }, //When role is trainee, fleet-manager
-  {
-    path: 'tips-and-tricks',
-    component: TipsAndTricksComponent,
-    data: {
-      roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT, Role.FLEETMANAGER],
-    },
-  }, //When role is trainee, fleet-manager, helpdesk
-  {
-    path: 'user-management',
-    component: UserManagementComponent,
-    data: { roles: [Role.ADMIN] },
-  }, //When role is admin
-  {
-    path: 'skippers',
-    component: SkippersComponent,
-    data: { roles: [Role.FLEETMANAGER] },
-  }, //When role is fleet-manager
-  {
-    path: 'support',
-    component: SupportComponent,
-    data: { roles: [Role.SUPPORT] },
-  }, //When role is helpdesk
-  {
-    path: 'add-module',
-    component: AddModuleComponent,
-    children: [
-      { path: '', redirectTo: 'basic-setup', pathMatch: 'full' },
-      { path: 'basic-setup', component: BasicSetupComponent },
-      { path: 'trainings', component: TrainingsComponent },
-      { path: 'exam', component: ExamComponent },
-      { path: 'preview', component: PreviewComponent },
-    ],
-  },
-  { path: '', redirectTo: 'modules', pathMatch: 'full' },
+  { path: 'modules', component: ModulesComponent , data: { roles: [Role.SKIPPER, Role.INSTALLER, Role.ADMIN, Role.SUPPORT, Role.FLEETMANAGER] }}, //When role is trainee, fleet-manager, helpdesk, admin
+  { path: 'certificates', component: CertificatesComponent , data: { roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT] }}, //When role is trainee, fleet-manager
+  { path: 'tips-and-tricks', component: TipsAndTricksComponent , data: { roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT, Role.FLEETMANAGER] }}, //When role is trainee, fleet-manager, helpdesk
+  { path: 'user-management', component: UserManagementComponent , data: { roles: [Role.ADMIN] }}, //When role is admin
+  { path: 'skippers', component: SkippersComponent , data: { roles: [Role.FLEETMANAGER] }}, //When role is fleet-manager
+  { path: 'support', component: SupportComponent , data: { roles: [Role.SUPPORT] }}, //When role is helpdesk
+  { path: 'add-module', component: AddModuleComponent, children: [
+    { path: '', redirectTo: 'basic-setup', pathMatch: 'full'},
+    { path: 'basic-setup', component: BasicSetupComponent},
+    { path: 'trainings', component: TrainingsComponent},
+    { path: 'exam', component: ExamComponent},
+    { path: 'preview', component: PreviewComponent},
+    { path: 'trainings/new', component: TrainingFormComponent, children: [
+      { path: 'content', component: ContentComponent},
+      { path: 'questions', component: QuestionsComponent}
+    ]},
+  ]},
+  //{ path: 'trainings/new', component: TrainingFormComponent},
+  { path: '', redirectTo: 'modules', pathMatch: 'full' }, 
   { path: '**', redirectTo: 'modules', pathMatch: 'full' },
 ];
+
