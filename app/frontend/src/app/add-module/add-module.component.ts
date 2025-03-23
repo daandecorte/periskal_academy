@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
+import { filter, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-module',
@@ -12,49 +12,45 @@ import { Subscription } from 'rxjs';
 export class AddModuleComponent {
   steps = ['basic-setup', 'trainings', 'exam', 'preview'];
   currentStep: string = this.steps[0]; 
+  private routerSubscription!: Subscription;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.routerSubscription = this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        const currentPath = this.route.snapshot.firstChild?.url[0]?.path || this.steps[0];
+        if (this.steps.includes(currentPath)) {
+          this.currentStep = currentPath;
+        }
+      });
+  }
 
   goToNextStep() {
-    const currentPath = this.router.url.split('/').pop();
-    const currentIndex = this.steps.indexOf(currentPath || '');
-    if (currentIndex >= 0 && currentIndex < this.steps.length - 1) {
-      this.router.navigate([`/add-module/${this.steps[currentIndex + 1]}`]);
+    const currentIndex = this.steps.indexOf(this.currentStep);
+    if (currentIndex < this.steps.length - 1) {
       this.currentStep = this.steps[currentIndex + 1];
+      this.router.navigate([`/add-module/${this.currentStep}`]);
     }
   }
 
   goToPreviousStep() {
-    const currentPath = this.router.url.split('/').pop();
-    const currentIndex = this.steps.indexOf(currentPath || '');
-    if (currentIndex > 0 && currentPath !== 'basic-setup') {
-      this.router.navigate([`/add-module/${this.steps[currentIndex - 1]}`]);
-      this.currentStep = this.steps[currentIndex - 1]; 
+    const currentIndex = this.steps.indexOf(this.currentStep);
+    if (currentIndex > 0) {
+      this.currentStep = this.steps[currentIndex - 1];
+      this.router.navigate([`/add-module/${this.currentStep}`]);
     }
   }
 
   publishModule() {
-    this.router.navigate(['/modules']); // Navigeren naar de /modules route
+    this.router.navigate(['/modules']);
+  }
+
+  ngOnDestroy() {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
   }
   
-  /*steps = ['basic-setup', 'trainings', 'exam', 'preview'];
-  currentStep : string = '';
-
-  constructor(private router: Router) {}
-
-  goToNextStep() {
-    const currentPath = this.router.url.split('/').pop();
-    const currentIndex = this.steps.indexOf(currentPath || '');
-    if (currentIndex >= 0 && currentIndex < this.steps.length - 1) {
-      this.router.navigate([`/add-module/${this.steps[currentIndex + 1]}`]);
-    }
-  }
-
-  goToPreviousStep() {
-    const currentPath = this.router.url.split('/').pop();
-    const currentIndex = this.steps.indexOf(currentPath || '');
-    if (currentIndex > 0) {
-      this.router.navigate([`/add-module/${this.steps[currentIndex - 1]}`]);
-    }
-  }*/
 }

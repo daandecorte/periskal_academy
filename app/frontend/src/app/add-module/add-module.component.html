@@ -1,4 +1,19 @@
 <h2>Create New Module</h2>
+<!-- Steps Indicator -->
+<div class="steps">
+  @for (step of steps; track step) { @if (steps.indexOf(step) > 0) {
+  <div class="line"></div>
+  }
+  <div class="step-container">
+    <div [class.active]="currentStep === step" class="step">
+      <div class="circle">{{ steps.indexOf(step) + 1 }}</div>
+
+      <span>{{ step | titlecase }}</span>
+    </div>
+  </div>
+  }
+</div>
+
 <div>
   <router-outlet></router-outlet>
 </div>
