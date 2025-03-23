@@ -47,6 +47,59 @@
         <div class="module-settings">
           <h3>Module Settings</h3>
           <div class="settings-flex">
+            <div class="setting-box">
+              <span class="setting-label">Module Status</span>
+              <div class="switch-container">
+                <label class="switch">
+                  <input type="checkbox" checked />
+                  <span class="slider round"></span>
+                </label>
+                <span class="status-text active">Active</span>
+              </div>
+            </div>
+            <div class="setting-box">
+              <span class="setting-label">Certificate Required</span>
+              <div class="switch-container">
+                <label class="switch">
+                  <input type="checkbox" checked />
+                  <span class="slider round"></span>
+                </label>
+                <span class="status-text required">Required</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificate Settings -->
+        <div class="certificate-settings">
+          <h3>Certificate Settings</h3>
+          <div class="input-group">
+            <div class="input-box">
+              <label>Validity Period (Years)</label>
+              <input type="number" value="5" />
+            </div>
+            <div class="input-box">
+              <label>Certificate Price (€)</label>
+              <input type="number" value="0" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--<div class="body-container">-->
+      <!-- Form Section -->
+      <!--<div class="form-group">
+          <label>Module Title</label>
+          <input type="text" placeholder="Enter module title" />
+
+          <label>Description</label>
+          <textarea placeholder="Enter description"></textarea>
+        </div>-->
+
+      <!-- Module Settings -->
+      <!--<div class="module-settings">
+          <h3>Module Settings</h3>
+          <div class="settings-flex">
             <div class="setting">
               <span>Module Status</span>
               <label class="switch">
@@ -62,10 +115,10 @@
               </label>
             </div>
           </div>
-        </div>
+        </div>-->
 
-        <!-- Certificate Settings -->
-        <div class="certificate-settings">
+      <!-- Certificate Settings -->
+      <!--<div class="certificate-settings">
           <h3>Certificate Settings</h3>
           <div class="input-group">
             <div>
@@ -78,7 +131,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
 
       <!-- Submit Button -->
       <!--<button class="btn" [RouterLink]="'/trainings'">Next</button>-->
