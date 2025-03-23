@@ -6,16 +6,18 @@ services:
       - 443:443
     volumes:
       - ./traefik.yml:/etc/traefik/traefik.yml
-      - ./acme.json:/acme.json
+      - ./acme.json:/etc/traefik/acme.json
       - /var/run/docker.sock:/var/run/docker.sock
       - ./passwd:/etc/traefik/passwd
       - ./conf.d:/etc/traefik/conf.d
     labels:
-      - "traefik.http.routers.dashboard.rule=Host(`traefik-localhost.traefik.me`)" # 142-132-228-124.traefik.me
+      - "traefik.http.routers.dashboard.rule=Host(`daandc.me`)" # 142-132-228-124.traefik.me #traefik.brianmatth.me
       - "traefik.http.routers.dashboard.service=api@internal"
       - "traefik.http.routers.dashboard.middlewares=auth"
       - "traefik.http.middlewares.auth.basicauth.usersfile=/etc/traefik/passwd"
-      - "traefik.http.routers.dashboard.entrypoints=web"
+      - "traefik.http.routers.dashboard.tls=true"
+      - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
 
 networks:
   default:
