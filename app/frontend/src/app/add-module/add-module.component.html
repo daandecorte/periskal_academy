@@ -1,34 +1,29 @@
 <h2>Create New Module</h2>
-
 <!-- Steps Indicator -->
-<!--<div class="steps">
-  <div class="step active" [routerLink]="['basic-setup', steps[0]]">
-    <div class="circle" [ngClass]="{ active: currentStep === steps[0] }">1</div>
-    <span>Basic Setup</span>
-  </div>
+<div class="steps">
+  @for (step of steps; track step) { @if (steps.indexOf(step) > 0) {
   <div class="line"></div>
-  <div class="step" [routerLink]="['trainings', steps[1]]">
-    <div class="circle" [ngClass]="{ active: currentStep === steps[1] }">2</div>
-    <span>Trainings</span>
+  }
+  <div class="step-container">
+    <div [class.active]="currentStep === step" class="step">
+      <div class="circle">{{ steps.indexOf(step) + 1 }}</div>
+
+      <span>{{ step | titlecase }}</span>
+    </div>
   </div>
-  <div class="line"></div>
-  <div class="step" [routerLink]="['exam', steps[2]]">
-    <div class="circle" [ngClass]="{ active: currentStep === steps[2] }">3</div>
-    <span>Exam</span>
-  </div>
-  <div class="line"></div>
-  <div class="step" [routerLink]="['preview', steps[3]]">
-    <div class="circle" [ngClass]="{ active: currentStep === steps[3] }">4</div>
-    <span>Preview</span>
-  </div>
-</div>-->
-<!-- Hier worden de subcomponenten geladen -->
+  }
+</div>
+
 <div>
   <router-outlet></router-outlet>
 </div>
 
-<!-- Navigatieknoppen -->
+<!-- NavButtons -->
 <div class="next-previous">
-  <button class="prev-btn" (click)="goToPreviousStep()">&larr; Previous</button>
-  <button class="next-btn" (click)="goToNextStep()">Next</button>
+  @if(currentStep !== 'basic-setup'){
+  <button class="prev-btn" (click)="goToPreviousStep()">&larr; Previous</button
+  >} @if(currentStep !== 'preview'){
+  <button class="next-btn" (click)="goToNextStep()">Next</button>}
+  @if(currentStep === 'preview'){
+  <button class="publish-btn" (click)="publishModule()">Publish</button>}
 </div>
