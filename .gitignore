@@ -1,0 +1,3 @@
+traefik/
+jenkins/
+app/docker-compose.yml
