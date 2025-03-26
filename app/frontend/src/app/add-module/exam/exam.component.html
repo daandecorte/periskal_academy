@@ -1,55 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Exam Settings</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="container">
-      <div class="grid-container">
-        <h3 class="title">Exam Settings</h3>
-        <div>
-          <label class="label">Time Limit (minutes)</label>
-          <input type="number" class="input" value="60" />
-        </div>
-        <div>
-          <label class="label">Questions per Exam</label>
-          <input type="number" class="input" value="10" />
-        </div>
-        <div>
-          <label class="label">Required Passing Score (%)</label>
-          <input type="number" class="input" value="80" />
-        </div>
-        <div>
-          <label class="label">Maximum Retry Attempts</label>
-          <input type="number" class="input" value="3" />
-        </div>
+<div class="container">
+  <div class="exam-settings">
+    <h3 class="title">Exam Settings</h3>
+    <div class="settings-grid">
+      <div class="setting-item">
+        <label class="label">Time Limit (minutes)</label>
+        <input type="number" class="input" value="60" min="0" />
       </div>
-
-      <div class="question-pool">
-        <h3 class="title">Question Pool</h3>
-        <label class="label">Question Type</label>
-        <select class="input">
-          <option>Multiple Choice</option>
-          <option>True/False</option>
-        </select>
-
-        <label class="label">Question Text</label>
-        <textarea class="input"></textarea>
-
-        <label class="label">Answer Options</label>
-        <div class="answer-option">
-          <input type="radio" />
-          <input type="text" class="input" placeholder="Answer option" />
-          <button class="delete-btn">✖</button>
-        </div>
-        <div class="button-container">
-          <button class="add-option-btn">+ Add Option</button>
-          <button class="add-question-btn">+ Add Question</button>
-        </div>
+      <div class="setting-item">
+        <label class="label">Questions per Exam</label>
+        <input type="number" class="input" value="10" min="0" />
+      </div>
+      <div class="setting-item">
+        <label class="label">Required Passing Score (%)</label>
+        <input type="number" class="input" value="80" min="0" />
+      </div>
+      <div class="setting-item">
+        <label class="label">Maximum Retry Attempts</label>
+        <input type="number" class="input" value="3" min="0" />
+        <small class="hint">Set to unlimited attempts by entering 0</small>
       </div>
     </div>
-  </body>
-</html>
+  </div>
+
+  <div class="question-pool">
+    <div class="button-container">
+      <h3 class="title">Question Pool</h3>
+
+      <button class="add-question-btn">+ Add Question</button>
+    </div>
+
+    <div class="question-pool-container">
+      <label class="label">Question Type</label>
+      <select class="input">
+        <option>Multiple Choice</option>
+        <option>True/False</option>
+      </select>
+
+      <label class="label">Question Text</label>
+      <textarea class="input"></textarea>
+
+      <label class="label">Answer Options</label>
+      <div class="answer-option">
+        <input type="radio" />
+        <input type="text" class="input" placeholder="Answer option" />
+        <button class="delete-btn">✖</button>
+      </div>
+      <button class="add-option-btn">+ Add Option</button>
+    </div>
+  </div>
+</div>

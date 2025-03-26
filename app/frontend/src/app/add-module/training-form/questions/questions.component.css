@@ -33,7 +33,7 @@ label {
 .delete-btn {
   background: none;
   border: none;
-  color: red;
+  color: #898686;
   cursor: pointer;
   font-size: 16px;
   margin-bottom: 10px;
