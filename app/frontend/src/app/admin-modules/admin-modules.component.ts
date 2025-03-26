@@ -2,36 +2,43 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Module, ModuleService } from '../services/module.service';
+import { AdminModuleCardComponent } from '../admin-module-card/admin-module-card.component';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-modules',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, AdminModuleCardComponent, RouterModule],
   templateUrl: './admin-modules.component.html',
   styleUrl: './admin-modules.component.css'
 })
 export class AdminModulesComponent {
   modules: Module[] = [];
+  allModules: Module[] = [];
   searchTerm: string = '';
 
-  constructor(private moduleService: ModuleService) {}
+  constructor(private moduleService: ModuleService, private router: Router) {}
 
   ngOnInit(): void {
     this.moduleService.getModules().subscribe(modules => {
-      this.modules = modules;
+      this.allModules = modules;
       this.filterModules();
     });
   }
 
   filterModules(): void {
     this.modules = this.searchTerm
-      ? this.modules.filter(module => 
+      ? this.allModules.filter(module => 
           module.title.toLowerCase().includes(this.searchTerm.toLowerCase())
         )
-      : this.modules;
+      : this.allModules;
   }
 
   onSearchChange(): void {
     this.filterModules();
+  }
+
+  navigateToAddModule(): void {
+    this.router.navigate(['/add-module']);
   }
 }
 

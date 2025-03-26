@@ -1,17 +1,30 @@
-<div class="header">
-  <h1>Modules</h1>
-  <div class="actions">
-    <div class="search-bar">
-      <input
-        type="text"
-        placeholder="Search modules..."
-        class="search-input"
-        [(ngModel)]="searchTerm"
-        (ngModelChange)="onSearchChange()"
-      />
+<div class="modules-container">
+  <div class="header">
+    <h1>Modules</h1>
+    <div class="actions">
+      <div class="search-bar">
+        <input
+          type="text"
+          placeholder="Search modules..."
+          class="search-input"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchChange()"
+        />
+      </div>
+      <button class="create-module-btn" (click)="navigateToAddModule()">
+        <span class="plus-icon">+</span> Create Module
+      </button>
     </div>
-    <button class="create-module-btn">
-      <span class="plus-icon">+</span> Create Module
-    </button>
   </div>
+
+  <!-- Modules Section -->
+  <h2 class="section-title">All Modules</h2>
+  <div class="modules-grid" *ngIf="modules.length > 0; else noModules">
+    @for (module of modules; track module.id) {
+    <app-admin-module-card [module]="module"></app-admin-module-card>
+    }
+  </div>
+  <ng-template #noModules>
+    <div class="no-results">No modules match your search.</div>
+  </ng-template>
 </div>
