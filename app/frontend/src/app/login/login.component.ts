@@ -70,19 +70,23 @@ export class LoginComponent {
   }
   mapLanguage(lang: string): string {
     switch (lang) {
-      case 'ENGLISH': return 'en';
-      case 'FRENCH': return 'fr';
-      case 'GERMAN': return 'de';
-      case 'DUTCH': return 'nl';
-      default: return 'en';
+      case 'ENGLISH':
+        return 'en';
+      case 'FRENCH':
+        return 'fr';
+      case 'GERMAN':
+        return 'de';
+      case 'DUTCH':
+        return 'nl';
+      default:
+        return 'en';
     }
   }
   onLanguageChange() {
     this.languageService.setLanguage(this.language);
-    this.translate.use(this.mapLanguage(this.language))
+    this.translate.use(this.mapLanguage(this.language));
   }
 
-  // toggle dongle debug
   toggleDongleDebug() {
     this.showDongleDebug = !this.showDongleDebug;
   }
@@ -96,7 +100,7 @@ export class LoginComponent {
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          login: this.dongleCode,
+          login: dongleCode,
           language: this.language,
         }),
       });

@@ -34,7 +34,7 @@ import ap.student.project.backend.authentication.crypto;
 public class LoginController {
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public String login(@RequestBody LoginRequest loginRequest) throws IOException {
-        String username = loginRequest.login().orElse(null);
+        String username = loginRequest.username().orElse(null);
         String password = loginRequest.password().orElse(null);
         String language = loginRequest.language().orElse(null);
         String login = loginRequest.login().orElse(null);
@@ -47,7 +47,7 @@ public class LoginController {
             return authenticateWithCredentials(username, password, language);
         }
 
-        return "{\"text\": \"Missing authentication parameters \"}" + username + " " + password;
+        return "{\"text\": \"Missing authentication parameters \"}";
     }
 
     private String authenticateWithCredentials(String username, String password, String language) throws IOException {
@@ -68,7 +68,7 @@ public class LoginController {
         os.close();
 
         int responseCode = conn.getResponseCode();
-        if (responseCode == 200) { // = OK
+        if (responseCode == 200) {
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String line;
             StringBuilder response = new StringBuilder();
