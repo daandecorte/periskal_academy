@@ -20,7 +20,7 @@
   border: 2px solid #eee;
 }
 
-.title {
+.exam-settings.title {
   margin-bottom: 15px;
   font-size: 18px;
   font-weight: bold;
@@ -37,12 +37,12 @@
   flex-direction: column;
 }
 
-.label {
+.exam-settings.label {
   font-weight: 500;
   margin-bottom: 5px;
 }
 
-.input {
+.exam-settings.input {
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
