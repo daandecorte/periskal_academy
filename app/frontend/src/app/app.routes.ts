@@ -15,10 +15,11 @@ import { PreviewComponent } from './add-module/preview/preview.component';
 import { TrainingFormComponent } from './add-module/training-form/training-form.component';
 import { ContentComponent } from './add-module/training-form/content/content.component';
 import { QuestionsComponent } from './add-module/training-form/questions/questions.component';
+import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent }, //To get a role
-  { path: 'modules', component: ModulesComponent , data: { roles: [Role.SKIPPER, Role.INSTALLER, Role.ADMIN, Role.SUPPORT, Role.FLEETMANAGER] }}, //When role is trainee, fleet-manager, helpdesk, admin
+  { path: 'modules', component: ModulesComponent/*, canActivate: [authGuard]*/ , data: { roles: [Role.SKIPPER, Role.INSTALLER, Role.ADMIN, Role.SUPPORT, Role.FLEETMANAGER] }}, //When role is trainee, fleet-manager, helpdesk, admin
   { path: 'certificates', component: CertificatesComponent , data: { roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT] }}, //When role is trainee, fleet-manager
   { path: 'tips-and-tricks', component: TipsAndTricksComponent , data: { roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT, Role.FLEETMANAGER] }}, //When role is trainee, fleet-manager, helpdesk
   { path: 'user-management', component: UserManagementComponent , data: { roles: [Role.ADMIN] }}, //When role is admin
