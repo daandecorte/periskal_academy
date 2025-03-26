@@ -1,0 +1,82 @@
+.admin-module-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 16px;
+  border: 1px solid #f0f0f0;
+}
+
+.module-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.module-title {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+.module-description {
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.module-stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.status {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  background-color: #f0f0f0;
+}
+
+.status.active {
+  background-color: #e6f7e6;
+  color: #2e7d32;
+}
+
+.training-count {
+  font-size: 14px;
+  color: #555;
+}
+
+.language-badges {
+  display: flex;
+  gap: 8px;
+}
+
+.lang-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  background-color: #f0f0f0;
+}
+
+.lang-badge.nl {
+  background-color: #e6f7e6;
+}
+
+.lang-badge.fr {
+  background-color: #e3f2fd;
+}
+
+.lang-badge.de {
+  background-color: #fff8e1;
+}
+
+.lang-badge.en {
+  background-color: #e8eaf6;
+}

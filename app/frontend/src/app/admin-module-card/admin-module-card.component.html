@@ -1,1 +1,23 @@
-<p>admin-module-card works!</p>
+<div class="admin-module-card">
+  <div class="module-header">
+    <span class="module-title">{{ module.title }} Module</span>
+    <div class="actions">
+      <button class="edit-btn" aria-label="Edit module">✏️</button>
+      <button class="delete-btn" aria-label="Delete module">🗑️</button>
+    </div>
+  </div>
+  <p class="module-description">{{ module.description }}</p>
+
+  <div class="module-stats">
+    <span class="status" [class.active]="module.isActive">
+      {{ module.isActive ? "Active" : "Draft" }}
+    </span>
+    <span class="training-count">{{ module.trainingCount }} Trainings</span>
+  </div>
+
+  <div class="language-badges">
+    @for (lang of module.languages; track lang) {
+    <span class="lang-badge" [class]="lang.toLowerCase()">{{ lang }}</span>
+    }
+  </div>
+</div>
