@@ -17,6 +17,7 @@ import { RoleGuard } from './guards/role.guard';
 import { TrainingFormComponent } from './add-module/training-form/training-form.component';
 import { ContentComponent } from './add-module/training-form/content/content.component';
 import { QuestionsComponent } from './add-module/training-form/questions/questions.component';
+import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent }, //To get a role
