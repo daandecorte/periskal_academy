@@ -1,46 +1,60 @@
 .admin-module-card {
   background-color: white;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  padding: 16px;
-  border: 1px solid #f0f0f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
 }
 
 .module-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .module-title {
   font-weight: 600;
   font-size: 18px;
+  color: #333;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
 }
 
 .actions button {
   background: none;
   border: none;
   cursor: pointer;
-  margin-left: 8px;
+  color: #666;
+  font-size: 14px;
+  padding: 4px;
 }
 
 .module-description {
   color: #666;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+  flex-grow: 1;
 }
 
 .module-stats {
   display: flex;
   gap: 16px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  align-items: center;
 }
 
 .status {
-  padding: 4px 8px;
+  padding: 4px 12px;
   border-radius: 12px;
   font-size: 12px;
-  background-color: #f0f0f0;
+  background-color: #fff8c2;
+  color: #91823c;
 }
 
 .status.active {
@@ -56,27 +70,16 @@
 .language-badges {
   display: flex;
   gap: 8px;
+  margin-top: auto;
 }
 
 .lang-badge {
-  padding: 4px 8px;
-  border-radius: 12px;
+  padding: 6px 12px;
+  border-radius: 4px;
   font-size: 12px;
   background-color: #f0f0f0;
-}
-
-.lang-badge.nl {
+  color: #333;
+  flex-grow: 1;
+  text-align: center;
   background-color: #e6f7e6;
-}
-
-.lang-badge.fr {
-  background-color: #e3f2fd;
-}
-
-.lang-badge.de {
-  background-color: #fff8e1;
-}
-
-.lang-badge.en {
-  background-color: #e8eaf6;
 }
