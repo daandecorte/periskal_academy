@@ -32,31 +32,29 @@ import ap.student.project.backend.authentication.crypto;
 
 @RestController
 public class LoginController {
-    @GetMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String login(@RequestParam(required = false) String username,
-            @RequestParam(required = false) String password,
-            @RequestParam(required = false) String language,
-            @RequestParam(required = false) String login) throws IOException {
+    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String login(@RequestBody LoginRequest loginRequest) throws IOException {
+        String username = loginRequest.login().orElse(null);
+        String password = loginRequest.password().orElse(null);
+        String language = loginRequest.language().orElse(null);
+        String login = loginRequest.login().orElse(null);
 
-        // Dongle authentication
         if (login != null && !login.isEmpty()) {
             return authenticateWithDongle(login, language);
         }
 
-        // Credentials authentication
         if (username != null && password != null) {
             return authenticateWithCredentials(username, password, language);
         }
 
-        // No valid authentication parameters provided
-        return "{\"text\": \"Missing authentication parameters\"}";
+        return "{\"text\": \"Missing authentication parameters \"}" + username + " " + password;
     }
 
     private String authenticateWithCredentials(String username, String password, String language) throws IOException {
         URL url = new URL("http://academyws.periskal.com/Academy.asmx");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-        String encoded = encode(loginRequest.username(), loginRequest.password());
+        String encoded = encode(username, password);
 
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/soap+xml; charset=UTF-8");

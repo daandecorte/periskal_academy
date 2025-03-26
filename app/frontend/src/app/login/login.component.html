@@ -8,8 +8,8 @@
     />
 
     <div>
-      <h2>Login</h2>
-      <p>Language</p>
+      <h2>{{"LOGIN" | translate}}</h2>
+      <p>{{"LANGUAGE" | translate}}</p>
       <div class="iconHelp">
         <fa-icon [icon]="faGlobe"></fa-icon>
         <select [(ngModel)]="language" (change)="onLanguageChange()">
@@ -19,29 +19,29 @@
           <option value="GERMAN">Deutsch</option>
         </select>
       </div>
-      <p>Username</p>
+      <p>{{"USERNAME" | translate}}</p>
       <div class="iconHelp">
         <fa-icon [icon]="faUser"></fa-icon>
         <input
           type="text"
-          placeholder="Enter your username"
+          [placeholder]="'ENTER_USER_NAME' | translate"
           name="username"
           [(ngModel)]="username"
         />
       </div>
-      <p>Password</p>
+      <p>{{"PASSWORD" | translate}}</p>
       <div class="iconHelp">
         <fa-icon [icon]="faLock"></fa-icon>
         <fa-icon [icon]="faEye" id="eyeIcon"></fa-icon>
         <input
           type="password"
-          placeholder="Enter your password"
+          [placeholder]="'ENTER_YOUR_PASSWORD' | translate"
           id="password"
           [(ngModel)]="password"
         />
       </div>
       <p id="textIncorrect"></p>
-      <Button id="login" (click)="login()">Login</Button>
+      <Button id="login" (click)="login()">{{"LOGIN" | translate}}</Button>
 
       <!-- Debug toggle button -->
       <div class="debug-toggle">

@@ -4,11 +4,12 @@ import { Module, ModuleService } from '../services/module.service';
 import { ModuleCardComponent } from '../module-card/module-card.component';
 import { AssignedModuleCardComponent } from '../assigned-module-card/assigned-module-card.component';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-modules',
   standalone: true,
-  imports: [CommonModule, ModuleCardComponent, AssignedModuleCardComponent, FormsModule],
+  imports: [CommonModule, ModuleCardComponent, AssignedModuleCardComponent, FormsModule, TranslateModule],
   templateUrl: './modules.component.html',
   styleUrl: './modules.component.css'
 })

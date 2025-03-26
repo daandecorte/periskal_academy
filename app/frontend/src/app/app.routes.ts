@@ -14,6 +14,9 @@ import { ExamComponent } from './add-module/exam/exam.component';
 import { PreviewComponent } from './add-module/preview/preview.component';
 import { AdminModulesComponent } from './admin-modules/admin-modules.component';
 import { RoleGuard } from './guards/role.guard';
+import { TrainingFormComponent } from './add-module/training-form/training-form.component';
+import { ContentComponent } from './add-module/training-form/content/content.component';
+import { QuestionsComponent } from './add-module/training-form/questions/questions.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent }, //To get a role
@@ -74,11 +77,16 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'basic-setup', pathMatch: 'full' },
       { path: 'basic-setup', component: BasicSetupComponent },
-      { path: 'trainings', component: TrainingsComponent },
-      { path: 'exam', component: ExamComponent },
-      { path: 'preview', component: PreviewComponent },
-    ],
-  },
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: '**', redirectTo: 'login', pathMatch: 'full' },
+      { path: 'trainings', component: TrainingsComponent},
+      { path: 'exam', component: ExamComponent},
+      { path: 'preview', component: PreviewComponent},
+      { path: 'trainings/new', component: TrainingFormComponent, children: [
+        { path: 'content', component: ContentComponent},
+        { path: 'questions', component: QuestionsComponent}
+      ]},
+  ]},
+  //{ path: 'trainings/new', component: TrainingFormComponent},
+  { path: '', redirectTo: 'modules', pathMatch: 'full' }, 
+  { path: '**', redirectTo: 'modules', pathMatch: 'full' },
 ];
+

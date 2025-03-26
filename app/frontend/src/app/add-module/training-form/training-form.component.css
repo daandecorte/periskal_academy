@@ -1,0 +1,63 @@
+body {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+/* Modal styling */
+.modal {
+  width: 500px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  padding-right: 35px;
+}
+
+/* Header styling */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.modal-header h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Tabs styling */
+.tabs {
+  display: flex;
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 15px;
+}
+
+.tab {
+  padding: 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+a {
+  color: #000;
+  margin-right: 20px;
+  text-decoration: none;
+}
+
+/*.tab*/
+.active {
+  border-bottom: 2px solid #facc15;
+  font-weight: bold;
+}

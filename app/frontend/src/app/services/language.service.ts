@@ -10,17 +10,23 @@ export class LanguageService {
 
   constructor() {
     const savedLanguage = localStorage.getItem('language');
-    if (savedLanguage) {
+    if (savedLanguage && SUPPORTED_LANGUAGES.includes(savedLanguage)) {
       this.currentLanguage.next(savedLanguage);
     }
   }
 
   setLanguage(lang: string) {
-    this.currentLanguage.next(lang);
-    localStorage.setItem('language', lang);
+    if(SUPPORTED_LANGUAGES.includes(lang)) {
+      this.currentLanguage.next(lang);
+      localStorage.setItem('language', lang);
+    }
+    else {
+      console.warn(`Language ${lang} is not supported`)
+    }
   }
 
   getLanguage(): string {
     return this.currentLanguage.value;
   }
 }
+export const SUPPORTED_LANGUAGES = ['ENGLISH', 'FRENCH', 'GERMAN', 'DUTCH'];
