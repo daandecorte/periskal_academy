@@ -7,10 +7,20 @@
   <div class="info-section">
     <div class="module-title">{{ module.title }}</div>
     <div class="module-date">
-      Assigned on {{ module.assignedDate || "Invalid Date" }}
+      {{
+        "ASSIGNED_MODULE_CARD.ASSIGNED_ON"
+          | translate
+            : {
+                date:
+                  module.assignedDate ||
+                  ("ASSIGNED_MODULE_CARD.INVALID_DATE" | translate)
+              }
+      }}
     </div>
   </div>
   <div class="button-section">
-    <button class="start-now-button">Start Now</button>
+    <button class="start-now-button">
+      {{ "ASSIGNED_MODULE_CARD.START_NOW" | translate }}
+    </button>
   </div>
 </div>

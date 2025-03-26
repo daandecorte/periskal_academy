@@ -4,10 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { Module, ModuleService } from '../services/module.service';
 import { AdminModuleCardComponent } from '../admin-module-card/admin-module-card.component';
 import { RouterModule, Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-admin-modules',
-  imports: [CommonModule, FormsModule, AdminModuleCardComponent, RouterModule],
+  imports: [CommonModule, FormsModule, AdminModuleCardComponent, RouterModule, TranslateModule],
   templateUrl: './admin-modules.component.html',
   styleUrl: './admin-modules.component.css'
 })

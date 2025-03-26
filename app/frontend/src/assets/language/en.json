@@ -1,10 +1,30 @@
 {
-    "LOGOUT": "Logout",
-    "MODULES": "Modules",
-    "ENTER_USER_NAME": "Enter your username",
-    "USERNAME": "Username",
-    "PASSWORD": "Password",
-    "ENTER_YOUR_PASSWORD": "Enter your password",
-    "LOGIN": "Login",
-    "LANGUAGE": "Language"
+  "LOGOUT": "Logout",
+  "MODULES": "Modules",
+  "ENTER_USER_NAME": "Enter your username",
+  "USERNAME": "Username",
+  "PASSWORD": "Password",
+  "ENTER_YOUR_PASSWORD": "Enter your password",
+  "LOGIN": "Login",
+  "LANGUAGE": "Language",
+  "MODULES": {
+    "TITLE": "Modules",
+    "ASSIGNED_SECTION": "Assigned by Fleet Manager",
+    "ALL_MODULES_SECTION": "All Available Modules",
+    "NO_ASSIGNED_MODULES": "No assigned modules match your search.",
+    "NO_MODULES_FOUND": "No modules match your search.",
+    "SEARCH_PLACEHOLDER": "Search modules..."
+  },
+  "ADMIN_MODULES": {
+    "TITLE": "Modules",
+    "SEARCH_PLACEHOLDER": "Search modules...",
+    "CREATE_BUTTON": "Create Module",
+    "ALL_MODULES_SECTION": "All Modules",
+    "NO_MODULES_FOUND": "No modules match your search."
+  },
+  "ASSIGNED_MODULE_CARD": {
+    "ASSIGNED_ON": "Assigned on {{date}}",
+    "INVALID_DATE": "Invalid Date",
+    "START_NOW": "Start Now"
+  }
 }

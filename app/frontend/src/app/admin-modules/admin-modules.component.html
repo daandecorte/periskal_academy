@@ -1,30 +1,35 @@
 <div class="modules-container">
   <div class="header">
-    <h1>Modules</h1>
+    <h1>{{ "ADMIN_MODULES.TITLE" | translate }}</h1>
     <div class="actions">
       <div class="search-bar">
         <input
           type="text"
-          placeholder="Search modules..."
+          [placeholder]="'ADMIN_MODULES.SEARCH_PLACEHOLDER' | translate"
           class="search-input"
           [(ngModel)]="searchTerm"
           (ngModelChange)="onSearchChange()"
         />
       </div>
       <button class="create-module-btn" (click)="navigateToAddModule()">
-        <span class="plus-icon">+</span> Create Module
+        <span class="plus-icon">+</span>
+        {{ "ADMIN_MODULES.CREATE_BUTTON" | translate }}
       </button>
     </div>
   </div>
 
   <!-- Modules Section -->
-  <h2 class="section-title">All Modules</h2>
+  <h2 class="section-title">
+    {{ "ADMIN_MODULES.ALL_MODULES_SECTION" | translate }}
+  </h2>
   <div class="modules-grid" *ngIf="modules.length > 0; else noModules">
     @for (module of modules; track module.id) {
     <app-admin-module-card [module]="module"></app-admin-module-card>
     }
   </div>
   <ng-template #noModules>
-    <div class="no-results">No modules match your search.</div>
+    <div class="no-results">
+      {{ "ADMIN_MODULES.NO_MODULES_FOUND" | translate }}
+    </div>
   </ng-template>
 </div>

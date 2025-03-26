@@ -1,10 +1,30 @@
 {
-    "LOGOUT": "Uitloggen",
-    "MODULES": "Modules",
-    "ENTER_USER_NAME": "Voer uw gebruikersnaam in",
-    "USERNAME": "Gebruikersnaam",
-    "PASSWORD": "Wachtwoord",
-    "ENTER_YOUR_PASSWORD": "Voer uw wachtwoord in",
-    "LOGIN": "Inloggen",
-    "LANGUAGE": "Taal"
+  "LOGOUT": "Uitloggen",
+  "MODULES": "Modules",
+  "ENTER_USER_NAME": "Voer uw gebruikersnaam in",
+  "USERNAME": "Gebruikersnaam",
+  "PASSWORD": "Wachtwoord",
+  "ENTER_YOUR_PASSWORD": "Voer uw wachtwoord in",
+  "LOGIN": "Inloggen",
+  "LANGUAGE": "Taal",
+  "MODULES": {
+    "TITLE": "Modules",
+    "ASSIGNED_SECTION": "Toegewezen door Fleet Manager",
+    "ALL_MODULES_SECTION": "Alle beschikbare modules",
+    "NO_ASSIGNED_MODULES": "Geen toegewezen modules komen overeen met uw zoekopdracht.",
+    "NO_MODULES_FOUND": "Geen modules komen overeen met uw zoekopdracht.",
+    "SEARCH_PLACEHOLDER": "Zoek modules..."
+  },
+  "ADMIN_MODULES": {
+    "TITLE": "Modules",
+    "SEARCH_PLACEHOLDER": "Zoek modules...",
+    "CREATE_BUTTON": "Module aanmaken",
+    "ALL_MODULES_SECTION": "Alle modules",
+    "NO_MODULES_FOUND": "Geen modules komen overeen met uw zoekopdracht."
+  },
+  "ASSIGNED_MODULE_CARD": {
+    "ASSIGNED_ON": "Toegewezen op {{date}}",
+    "INVALID_DATE": "Ongeldige datum",
+    "START_NOW": "Start nu"
+  }
 }

@@ -1,10 +1,30 @@
 {
-    "LOGOUT": "Se déconnecter",
-    "MODULES": "Modules",
-    "ENTER_USER_NAME": "Entrez votre nom d'utilisateur",
-    "USERNAME": "Nom d'utilisateur",
-    "PASSWORD": "Mot de passe",
-    "ENTER_YOUR_PASSWORD": "Entrez votre mot de passe",
-    "LOGIN": "Connexion",
-    "LANGUAGE": "Langue"
+  "LOGOUT": "Se déconnecter",
+  "MODULES": "Modules",
+  "ENTER_USER_NAME": "Entrez votre nom d'utilisateur",
+  "USERNAME": "Nom d'utilisateur",
+  "PASSWORD": "Mot de passe",
+  "ENTER_YOUR_PASSWORD": "Entrez votre mot de passe",
+  "LOGIN": "Connexion",
+  "LANGUAGE": "Langue",
+  "MODULES": {
+    "TITLE": "Modules",
+    "ASSIGNED_SECTION": "Assignés par le gestionnaire de flotte",
+    "ALL_MODULES_SECTION": "Tous les modules disponibles",
+    "NO_ASSIGNED_MODULES": "Aucun module attribué ne correspond à votre recherche.",
+    "NO_MODULES_FOUND": "Aucun module ne correspond à votre recherche.",
+    "SEARCH_PLACEHOLDER": "Rechercher des modules..."
+  },
+  "ADMIN_MODULES": {
+    "TITLE": "Modules",
+    "SEARCH_PLACEHOLDER": "Rechercher des modules...",
+    "CREATE_BUTTON": "Créer un module",
+    "ALL_MODULES_SECTION": "Tous les modules",
+    "NO_MODULES_FOUND": "Aucun module ne correspond à votre recherche."
+  },
+  "ASSIGNED_MODULE_CARD": {
+    "ASSIGNED_ON": "Assigné le {{date}}",
+    "INVALID_DATE": "Date invalide",
+    "START_NOW": "Commencer"
+  }
 }
