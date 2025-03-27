@@ -1,4 +1,4 @@
-<h2>Create New Module</h2>
+<h2>{{ "ADMIN_ADD_MODULES.TITLE" | translate }}</h2>
 <!-- Steps Indicator -->
 <div class="steps">
   @for (step of steps; track step) { @if (steps.indexOf(step) > 0) {
@@ -21,9 +21,13 @@
 <!-- NavButtons -->
 <div class="next-previous">
   @if(currentStep !== 'basic-setup'){
-  <button class="prev-btn" (click)="goToPreviousStep()">&larr; Previous</button
+  <button class="prev-btn" (click)="goToPreviousStep()">
+    &larr; {{ "ADMIN_ADD_MODULES.PREVIOUS" | translate }}</button
   >} @if(currentStep !== 'preview'){
-  <button class="next-btn" (click)="goToNextStep()">Next</button>}
-  @if(currentStep === 'preview'){
-  <button class="publish-btn" (click)="publishModule()">Publish</button>}
+  <button class="next-btn" (click)="goToNextStep()">
+    {{ "ADMIN_ADD_MODULES.NEXT" | translate }}</button
+  >} @if(currentStep === 'preview'){
+  <button class="publish-btn" (click)="publishModule()">
+    {{ "ADMIN_ADD_MODULES.PUBLISH" | translate }}</button
+  >}
 </div>

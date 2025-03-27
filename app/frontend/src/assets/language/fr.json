@@ -51,9 +51,39 @@
     "TRUE_FALSE": "Vrai/Faux",
     "QUESTION_TEXT": "Texte de la question",
     "ANSWER_OPTION": "Options de réponse",
-    "SEARCH_PLACEHOLDER": "Option de réponse",
+    "OPTION_PLACEHOLDER": "Option de réponse",
     "ADD_OPTION": "+ Ajouter une option"
 
+},
+"ADMIN_ADD_MODULES": {
+    "EXAM_TITLE": "Paramètres de l'examen",
+    "TIME_LIMIT": "Limite de temps (minutes)",
+    "QUETIONS": "Questions par examen",
+    "PASSING_SCORE": "Score requis pour réussir (%)",
+    "MAX_ATTEMPTS": "Nombre maximal de tentatives",
+    "MAX_ATTEMPTS_DESCRIPTION": "Définir un nombre illimité de tentatives en entrant 0",
+    "MODULE_SETTINGS": "Paramètres du module",
+    "ACTIVE": "Actif",
+    "CERTIFICATE": "Certificat requis",
+    "REQUIRED": "Obligatoire",
+    "CERTIFICATE_SETTINGS": "Paramètres du certificat",
+    "PERIOD": "Période de validité (années)",
+    "PRICE": "Prix du certificat (€)",
+    "MODULE_OVERVIEW": "Aperçu du module",
+    "MODULE_BASIC_INFO": "Informations de base du module complètes",
+    "MODULE_TRAINING": "3 formations créées",
+    "MODULE_EXAM": "15 questions d'examen ajoutées",
+    "TRAINING_TITLE": "Formations",
+    "NO_TRAINING_DESCRIPTION": "Aucune formation ajoutée pour l’instant. Cliquez sur 'Ajouter une formation' pour créer votre première formation.",
+    "ADD_TRAINING": "+ Ajouter une formation",
+    "TRAINING_CANCEL": "Annuler",
+    "TRAINING_SAVE": "Enregistrer la formation",
+    "TITLE": "Créer un nouveau module",
+    "PREVIOUS": "Précédent",
+    "NEXT": "Suivant",
+    "PUBLISH": "Publier"
 }
+
+
 
 }

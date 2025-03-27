@@ -51,9 +51,39 @@
     "TRUE_FALSE": "Wahr/Falsch",
     "QUESTION_TEXT": "Fragetext",
     "ANSWER_OPTION": "Antwortoptionen",
-    "SEARCH_PLACEHOLDER": "Antwortoption",
+    "OPTION_PLACEHOLDER": "Antwortoption",
     "ADD_OPTION": "+ Option hinzufügen"
 
+},
+"ADMIN_ADD_MODULES": {
+    "EXAM_TITLE": "Prüfungseinstellungen",
+    "TIME_LIMIT": "Zeitlimit (Minuten)",
+    "QUETIONS": "Fragen pro Prüfung",
+    "PASSING_SCORE": "Erforderliche Bestehensnote (%)",
+    "MAX_ATTEMPTS": "Maximale Wiederholungsversuche",
+    "MAX_ATTEMPTS_DESCRIPTION": "Unbegrenzte Versuche durch Eingabe von 0 festlegen",
+    "MODULE_SETTINGS": "Moduleinstellungen",
+    "ACTIVE": "Aktiv",
+    "CERTIFICATE": "Zertifikat erforderlich",
+    "REQUIRED": "Erforderlich",
+    "CERTIFICATE_SETTINGS": "Zertifikateinstellungen",
+    "PERIOD": "Gültigkeitsdauer (Jahre)",
+    "PRICE": "Zertifikatspreis (€)",
+    "MODULE_OVERVIEW": "Modulübersicht",
+    "MODULE_BASIC_INFO": "Grundlegende Modulinformationen abgeschlossen",
+    "MODULE_TRAINING": "3 Schulungen erstellt",
+    "MODULE_EXAM": "15 Prüfungsfragen hinzugefügt",
+    "TRAINING_TITLE": "Schulungen",
+    "NO_TRAINING_DESCRIPTION": "Noch keine Schulungen hinzugefügt. Klicken Sie auf 'Schulung hinzufügen', um Ihre erste Schulung zu erstellen.",
+    "ADD_TRAINING": "+ Schulung hinzufügen",
+    "TRAINING_CANCEL": "Abbrechen",
+    "TRAINING_SAVE": "Schulung speichern",
+    "TITLE": "Neues Modul erstellen",
+    "PREVIOUS": "Zurück",
+    "NEXT": "Weiter",
+    "PUBLISH": "Veröffentlichen"
 }
+
+
 
 }

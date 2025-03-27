@@ -51,8 +51,38 @@
     "TRUE_FALSE": "Waar/Onwaar",
     "QUESTION_TEXT": "Vraagtekst",
     "ANSWER_OPTION": "Antwoordopties",
-    "SEARCH_PLACEHOLDER": "Antwoordoptie",
+    "OPTION_PLACEHOLDER": "Antwoordoptie",
     "ADD_OPTION": "+ Optie toevoegen"
+},
+"ADMIN_ADD_MODULES": {
+    "EXAM_TITLE": "Examensinstellingen",
+    "TIME_LIMIT": "Tijdslimiet (minuten)",
+    "QUETIONS": "Vragen per examen",
+    "PASSING_SCORE": "Benodigde slaagscore (%)",
+    "MAX_ATTEMPTS": "Maximaal aantal herkansingen",
+    "MAX_ATTEMPTS_DESCRIPTION": "Stel onbeperkte pogingen in door 0 in te voeren",
+    "MODULE_SETTINGS": "Module-instellingen",
+    "ACTIVE": "Actief",
+    "CERTIFICATE": "Certificaat vereist",
+    "REQUIRED": "Vereist",
+    "CERTIFICATE_SETTINGS": "Certificaatinstellingen",
+    "PERIOD": "Geldigheidsperiode (jaren)",
+    "PRICE": "Certificaatprijs (€)",
+    "MODULE_OVERVIEW": "Moduleoverzicht",
+    "MODULE_BASIC_INFO": "Basis module-informatie voltooid",
+    "MODULE_TRAINING": "3 trainingen aangemaakt",
+    "MODULE_EXAM": "15 examenvragen toegevoegd",
+    "TRAINING_TITLE": "Trainingen",
+    "NO_TRAINING_DESCRIPTION": "Nog geen trainingen toegevoegd. Klik op 'Training toevoegen' om je eerste training te maken.",
+    "ADD_TRAINING": "+ Training toevoegen",
+    "TRAINING_CANCEL": "Annuleren",
+    "TRAINING_SAVE": "Training opslaan",
+    "TITLE": "Maak nieuw module",
+    "PREVIOUS": "Vorige",
+    "NEXT": "Volgende",
+    "PUBLISH": "Publiceren"
 }
+
+
 
 }
