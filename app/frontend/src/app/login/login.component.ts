@@ -87,7 +87,6 @@ export class LoginComponent {
   }
 
   onLanguageChange() {
-    this.languageService.setLanguage(this.language);
     this.translate.use(this.mapLanguage(this.language));
   }
 
@@ -198,6 +197,7 @@ export class LoginComponent {
       }
 
       this.authService.setCurrentUser(userData);
+      this.languageService.setLanguage(this.language);
       this.router.navigate(['/modules']);
     } else {
       // Handle specific error cases
