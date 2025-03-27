@@ -21,7 +21,6 @@ import { authGuard } from './auth.guard';
 import { AdminEditModuleComponent } from './admin-edit-module/admin-edit-module.component';
 import { BasicInfoComponent } from './admin-edit-module/basic-info/basic-info.component';
 import { EditTrainingsComponent } from './admin-edit-module/edit-trainings/edit-trainings.component';
-import { EditExamComponent } from './admin-edit-module/edit-exam/edit-exam.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
