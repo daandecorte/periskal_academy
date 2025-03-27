@@ -46,6 +46,17 @@ public class UserService {
         }
         return user;
     }
+    public User findByUserId(String userId) throws NotFoundException {
+        User user = userRepository.findByUserId(userId);
+        if(user == null) {
+            throw new NotFoundException("User with userid " + userId + " not found");
+        }
+        return user;
+    }
+    public boolean existsByUserId(String userId) {
+        User user = userRepository.findByUserId(userId);
+        return user != null;
+    }
 
     public List<User> findAll() {
         return userRepository.findAll();
