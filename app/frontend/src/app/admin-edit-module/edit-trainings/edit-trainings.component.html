@@ -1,16 +1,16 @@
 <form class="form-container">
   <div class="form-group">
-    <label>Training Title</label>
+    <label> {{ "ADMIN_EDIT_MODULES.TRAINING_TITLE" | translate }}</label>
     <input type="text" class="form-control" />
   </div>
 
   <div class="form-group">
-    <label>Training Description</label>
+    <label> {{ "ADMIN_EDIT_MODULES.TRAINING_DESCRIPTION" | translate }}</label>
     <textarea class="form-control"></textarea>
   </div>
 
   <div class="form-group">
-    <label>Video Content</label>
+    <label>{{ "ADMIN_EDIT_MODULES.VIDEO" | translate }}</label>
     <div class="video-upload">
       <div class="language-selection">
         <button class="lang-btn active">NL</button>
@@ -20,8 +20,12 @@
       </div>
       <div class="upload-box">
         <div class="upload-icon">⬆</div>
-        <p>Click to upload or drag and drop</p>
-        <p>MP4, WebM or OGG (MAX: 80MB)</p>
+        <p>
+          {{ "ADMIN_EDIT_MODULES.VIDEO_DESCRIPTION" | translate }}
+        </p>
+        <p>
+          {{ "ADMIN_EDIT_MODULES.VIDEO_FORMAT" | translate }}
+        </p>
         <input type="file" accept="video/mp4,video/webm,video/ogg" />
       </div>
     </div>
@@ -30,26 +34,47 @@
 
 <div class="question-pool">
   <div class="button-container">
-    <h3 class="title">Question Pool</h3>
-    <button class="add-question-btn">+ Add Question</button>
+    <h3 class="title">
+      {{ "ADMIN_EDIT_MODULES.QUESTION_POOL" | translate }}
+    </h3>
+    <button class="add-question-btn">
+      {{ "ADMIN_EDIT_MODULES.ADD_QUESTION" | translate }}
+    </button>
   </div>
 
   <div class="question-pool-container">
-    <label class="label">Question Type</label>
+    <label class="label">{{
+      "ADMIN_EDIT_MODULES.QUESTION_TYPE" | translate
+    }}</label>
     <select class="input">
-      <option>Multiple Choice</option>
-      <option>True/False</option>
+      <option>
+        {{ "ADMIN_EDIT_MODULES.MULTIPLE_CHOICE" | translate }}
+      </option>
+      <option>
+        {{ "ADMIN_EDIT_MODULES.TRUE_FALSE" | translate }}
+      </option>
     </select>
 
-    <label class="label">Question Text</label>
+    <label class="label">{{
+      "ADMIN_EDIT_MODULES.QUESTION_TEXT" | translate
+    }}</label>
     <textarea class="input"></textarea>
 
-    <label class="label">Answer Options</label>
+    <label class="label">
+      {{ "ADMIN_EDIT_MODULES.ANSWER_OPTION" | translate }}</label
+    >
     <div class="answer-option">
       <input type="radio" />
-      <input type="text" class="input" placeholder="Answer option" />
+      <input
+        type="text"
+        class="input"
+        placeholder="Answer option"
+        [placeholder]="'ADMIN_MODULES.SEARCH_PLACEHOLDER' | translate"
+      />
       <button class="delete-btn">✖</button>
     </div>
-    <button class="add-option-btn">+ Add Option</button>
+    <button class="add-option-btn">
+      {{ "ADMIN_EDIT_MODULES.ADD_OPTION" | translate }}
+    </button>
   </div>
 </div>

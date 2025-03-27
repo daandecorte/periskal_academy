@@ -38,6 +38,20 @@
     "DESCRIPTION": "Description",
     "SAVE_BUTTON": "Save",
     "ENTER_MODULE_TITLE":"Enter module title",
-    "ENTER_DESCRIPTION": "Enter description"
+    "ENTER_DESCRIPTION": "Enter description",
+    "TRAINING_TITLE": "Training Title",
+    "TRAINING_DESCRIPTION": "Training Description",
+    "VIDEO": "Video Content",
+    "VIDEO_DESCRIPTION": "Click to upload or drag and drop",
+    "VIDEO_FORMAT": "MP4, WebM or OGG (MAX: 80MB)",
+    "QUESTION_POOL": "Question Pool",
+    "ADD_QUESTION": "+ Add Question",
+    "QUESTION_TYPE": "Question Type",
+    "MULTIPLE_CHOICE": "Multiple Choice",
+    "TRUE_FALSE": "True/False",
+    "QUESTION_TEXT": "Question Text",
+    "ANSWER_OPTION": "Answer Options",
+    "SEARCH_PLACEHOLDER": "Answer option",
+    "ADD_OPTION": "+ Add Option"
   }
 }

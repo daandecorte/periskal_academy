@@ -38,8 +38,21 @@
     "DESCRIPTION": "Beschrijving",
     "SAVE_BUTTON": "Opslaan",
     "ENTER_MODULE_TITLE": "Voer de moduletitel in",
-    "ENTER_DESCRIPTION": "Voer de beschrijving in"
-
+    "ENTER_DESCRIPTION": "Voer de beschrijving in",
+    "TRAINING_TITLE": "Trainingstitel",
+    "TRAINING_DESCRIPTION": "Trainingsbeschrijving",
+    "VIDEO": "Videocontent",
+    "VIDEO_DESCRIPTION": "Klik om te uploaden of sleep en zet neer",
+    "VIDEO_FORMAT": "MP4, WebM of OGG (MAX: 80MB)",
+    "QUESTION_POOL": "Vragenbank",
+    "ADD_QUESTION": "+ Vraag toevoegen",
+    "QUESTION_TYPE": "Vraagtype",
+    "MULTIPLE_CHOICE": "Meerkeuze",
+    "TRUE_FALSE": "Waar/Onwaar",
+    "QUESTION_TEXT": "Vraagtekst",
+    "ANSWER_OPTION": "Antwoordopties",
+    "SEARCH_PLACEHOLDER": "Antwoordoptie",
+    "ADD_OPTION": "+ Optie toevoegen"
 }
 
 }

@@ -38,7 +38,21 @@
     "DESCRIPTION": "Beschreibung",
     "SAVE_BUTTON": "Speichern",
     "ENTER_MODULE_TITLE": "Modultitel eingeben",
-    "ENTER_DESCRIPTION": "Beschreibung eingeben"
+    "ENTER_DESCRIPTION": "Beschreibung eingeben",
+    "TRAINING_TITLE": "Schulungstitel",
+    "TRAINING_DESCRIPTION": "Schulungsbeschreibung",
+    "VIDEO": "Videoinhalt",
+    "VIDEO_DESCRIPTION": "Klicken zum Hochladen oder per Drag & Drop ablegen",
+    "VIDEO_FORMAT": "MP4, WebM oder OGG (MAX: 80MB)",
+    "QUESTION_POOL": "Fragenpool",
+    "ADD_QUESTION": "+ Frage hinzufügen",
+    "QUESTION_TYPE": "Fragetyp",
+    "MULTIPLE_CHOICE": "Mehrfachauswahl",
+    "TRUE_FALSE": "Wahr/Falsch",
+    "QUESTION_TEXT": "Fragetext",
+    "ANSWER_OPTION": "Antwortoptionen",
+    "SEARCH_PLACEHOLDER": "Antwortoption",
+    "ADD_OPTION": "+ Option hinzufügen"
 
 }
 

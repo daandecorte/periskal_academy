@@ -38,7 +38,22 @@
     "DESCRIPTION": "Description",
     "SAVE_BUTTON": "Enregistrer",
     "ENTER_MODULE_TITLE": "Saisissez le titre du module",
-    "ENTER_DESCRIPTION": "Saisissez la description"
+    "ENTER_DESCRIPTION": "Saisissez la description",
+    "TRAINING_TITLE": "Titre de la formation",
+    "TRAINING_DESCRIPTION": "Description de la formation",
+    "VIDEO": "Contenu vidéo",
+    "VIDEO_DESCRIPTION": "Cliquez pour télécharger ou glissez-déposez",
+    "VIDEO_FORMAT": "MP4, WebM ou OGG (MAX: 80MB)",
+    "QUESTION_POOL": "Banque de questions",
+    "ADD_QUESTION": "+ Ajouter une question",
+    "QUESTION_TYPE": "Type de question",
+    "MULTIPLE_CHOICE": "Choix multiple",
+    "TRUE_FALSE": "Vrai/Faux",
+    "QUESTION_TEXT": "Texte de la question",
+    "ANSWER_OPTION": "Options de réponse",
+    "SEARCH_PLACEHOLDER": "Option de réponse",
+    "ADD_OPTION": "+ Ajouter une option"
+
 }
 
 }
