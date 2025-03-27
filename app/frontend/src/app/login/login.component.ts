@@ -70,6 +70,7 @@ export class LoginComponent {
         : (inputPassword.type = 'password');
     });
   }
+
   mapLanguage(lang: string): string {
     switch (lang) {
       case 'ENGLISH':
@@ -84,6 +85,7 @@ export class LoginComponent {
         return 'en';
     }
   }
+
   onLanguageChange() {
     this.languageService.setLanguage(this.language);
     this.translate.use(this.mapLanguage(this.language));
@@ -110,27 +112,37 @@ export class LoginComponent {
       await this.processLoginResponse(result);
     } catch (error) {
       console.error('Dongle login error:', error);
-      let textIncorrect = document.getElementById('textIncorrect');
-      if (textIncorrect)
-        textIncorrect.innerText = 'Dongle authentication failed.';
+      this.showError('Failed to connect to authentication server. Please check your internet connection and try again.');
     }
   }
 
   async dongleLogin() {
     if (!this.dongleCode) {
-      let textIncorrect = document.getElementById('textIncorrect');
-      if (textIncorrect)
-        textIncorrect.innerText = 'Please enter a dongle code.';
+      this.showError('Please enter a valid dongle code.');
+      return;
+    }
+
+    if (this.dongleCode.length < 8) {
+      this.showError('Dongle code is too short. Please enter a complete dongle code.');
       return;
     }
 
     // Add DEBUG: prefix for testing dongle code without prior encryption
-    // If the DEBUG: prefix is present, the backend knows it still needs to encrypt the dongle code
     const formattedDongleCode = `DEBUG:${this.dongleCode}`;
     await this.processDongleLogin(formattedDongleCode);
   }
 
   async login() {
+    if (!this.username) {
+      this.showError('Please enter your username.');
+      return;
+    }
+
+    if (!this.password) {
+      this.showError('Please enter your password.');
+      return;
+    }
+
     try {
       let result = await fetch(`/api/login`, {
         method: 'POST',
@@ -146,17 +158,15 @@ export class LoginComponent {
       });
 
       // Log the raw response for debugging
-    const responseText = await result.clone().text();
-    console.log('Raw response:', responseText);
+      const responseText = await result.clone().text();
+      console.log('Raw response:', responseText);
 
-    await this.processLoginResponse(result);
-  } catch (error) {
-    console.error('Dongle login error:', error);
-    let textIncorrect = document.getElementById('textIncorrect');
-    if (textIncorrect)
-      textIncorrect.innerText = 'Dongle authentication failed.';
+      await this.processLoginResponse(result);
+    } catch (error) {
+      console.error('Login error:', error);
+      this.showError('Failed to connect to authentication server. Please check your internet connection and try again.');
+    }
   }
-}
 
   private async processLoginResponse(result: Response) {
     let data = await result.json();
@@ -189,15 +199,33 @@ export class LoginComponent {
           ) || []
         };
       } else {
-        throw new Error('Unexpected response format');
+        throw new Error('Unexpected response format from server');
       }
 
       this.authService.setCurrentUser(userData);
       this.router.navigate(['/modules']);
     } else {
-      let textIncorrect = document.getElementById('textIncorrect');
-      if (textIncorrect)
-        textIncorrect.innerText = data.text || 'Authentication failed.';
+      // Handle specific error cases
+      let errorMessage = 'Authentication failed.';
+      
+      if (data.text.includes('Invalid username or password')) {
+        errorMessage = 'The username or password you entered is incorrect. Please try again.';
+      } else if (data.text.includes('Dongle authentication failed')) {
+        errorMessage = 'The dongle code is invalid or expired. Please check the code and try again.';
+      } else if (data.text.includes('Account locked')) {
+        errorMessage = 'Your account has been temporarily locked due to multiple failed attempts. Please try again later or contact support.';
+      } else if (data.text.includes('Server error')) {
+        errorMessage = 'We encountered a server error while processing your request. Please try again later.';
+      }
+      
+      this.showError(errorMessage);
+    }
+  }
+
+  private showError(message: string) {
+    let textIncorrect = document.getElementById('textIncorrect');
+    if (textIncorrect) {
+      textIncorrect.innerText = message;
     }
   }
 }
