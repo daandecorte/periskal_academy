@@ -26,5 +26,15 @@
     "ASSIGNED_ON": "Zugewiesen am {{date}}",
     "INVALID_DATE": "Ungültiges Datum",
     "START_NOW": "Jetzt starten"
+  },
+  "USER_DETAIL": {
+  "ASSIGN_NEW_CERTIFICATE": "Neues Zertifikat zuweisen",
+  "MODULES_PROGRESS": "Modulfortschritt",
+  "ALL_STATUS": "Alle Status",
+  "IN_PROGRESS": "In Bearbeitung",
+  "COMPLETED": "Abgeschlossen",
+  "SEARCH_MODULES": "Module suchen...",
+  "OVERALL_PROGRESS": "Gesamtfortschritt",
+  "USER_DETAIL": "Benutzerdetails"
   }
 }

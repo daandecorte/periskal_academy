@@ -2,9 +2,9 @@
     <div class="page-actions">
         <a href="#" class="back-button">
             <i class="fas fa-arrow-left">&larr;</i>
-            <h2 class="title">Sailor Details</h2>
+            <h2 class="title">{{'USER_DETAIL.USER_DETAIL' | translate}}</h2>
         </a>
-        <button class="assign-certificate-btn">+ Assign New Certificate</button>
+        <button class="assign-certificate-btn">+ {{"USER_DETAIL.ASSIGN_NEW_CERTIFICATE" | translate}}</button>
     </div>
 
     <div class="sailor-header">
@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="progress-bar">
-            overall progress
+            {{"USER_DETAIL.OVERALL_PROGRESS"|translate}}
             <div class="overall-progress">
                 <div class="overall-progress-bar"></div>
             </div>
@@ -26,14 +26,14 @@
 
 
     <div class="modules-section">
-        <h3>Modules Progress</h3>
+        <h3>{{"USER_DETAIL.MODULES_PROGRESS" | translate}}</h3>
         <div class="modules-filters">
             <select>
-                <option>All Status</option>
-                <option>In Progress</option>
-                <option>Completed</option>
+                <option>{{"USER_DETAIL.ALL_STATUS" | translate}}</option>
+                <option>{{"USER_DETAIL.IN_PROGRESS" | translate}}</option>
+                <option>{{"USER_DETAIL.COMPLETED" | translate}}</option>
             </select>
-            <input type="text" placeholder="Search modules...">
+            <input type="text" [placeholder]='"USER_DETAIL.SEARCH_MODULES" | translate'>
         </div>
 
         <div class="module-item">
