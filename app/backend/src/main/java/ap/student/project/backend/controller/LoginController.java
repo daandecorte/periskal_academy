@@ -1,7 +1,13 @@
 package ap.student.project.backend.controller;
 
 import ap.student.project.backend.dto.LoginRequest;
+import ap.student.project.backend.dto.UserDTO;
+import ap.student.project.backend.entity.Language;
+import ap.student.project.backend.service.UserService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.fasterxml.jackson.databind.util.JSONWrappedObject;
+import org.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,6 +38,10 @@ import ap.student.project.backend.authentication.crypto;
 
 @RestController
 public class LoginController {
+    public final UserService userService;
+    public LoginController(UserService userService) {
+        this.userService = userService;
+    }
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public String login(@RequestBody LoginRequest loginRequest) throws IOException {
         String username = loginRequest.username().orElse(null);
@@ -78,9 +88,16 @@ public class LoginController {
             br.close();
 
             try {
-                return XMLtoJSON(response.toString(), "AuthenticateResult");
+                JSONObject json = new JSONObject(XMLtoJSON(response.toString(), "AuthenticateResult"));
+                String userId = json
+                        .getJSONObject("Body")
+                        .getJSONObject("AuthenticateResponse")
+                        .getJSONObject("AuthenticateResult")
+                        .getString("ID");
+                addUser(userId, language);
+                return json.toString();
             } catch (Exception e) {
-                return "{\"text\": \"User not found\"}";
+                return "{\"text\": \"User not found\"}" + e.getMessage();
             }
 
         } else {
@@ -132,7 +149,14 @@ public class LoginController {
             br.close();
 
             try {
-                return XMLtoJSON(response.toString(), "Authenticate_DongleResult");
+                JSONObject json = new JSONObject(XMLtoJSON(response.toString(), "Authenticate_DongleResult"));
+                String userId=json
+                        .getJSONObject("Body")
+                        .getJSONObject("Authenticate_DongleResponse")
+                        .getJSONObject("Authenticate_DongleResult")
+                        .getString("ID");
+                addUser(userId, language);
+                return json.toString();
             } catch (Exception e) {
                 System.out.println("Error processing dongle authentication response: " + e.getMessage());
                 return "{\"text\": \"Invalid dongle or processing error\"}";
@@ -256,5 +280,11 @@ public class LoginController {
         } catch (Exception e) {
         }
         return null;
+    }
+    private void addUser(String userId, String language) {
+        if(!userService.existsByUserId(userId)) {
+            UserDTO userDTO = new UserDTO(userId, Language.valueOf(language));
+            userService.save(userDTO);
+        }
     }
 }

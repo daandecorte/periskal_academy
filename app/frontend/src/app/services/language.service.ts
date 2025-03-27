@@ -7,7 +7,6 @@ import { BehaviorSubject } from 'rxjs';
 export class LanguageService {
   private currentLanguage = new BehaviorSubject<string>('ENGLISH');
   public currentLanguage$ = this.currentLanguage.asObservable();
-
   constructor() {
     const savedLanguage = localStorage.getItem('language');
     if (savedLanguage && SUPPORTED_LANGUAGES.includes(savedLanguage)) {
@@ -15,10 +14,28 @@ export class LanguageService {
     }
   }
 
-  setLanguage(lang: string) {
+  async setLanguage(lang: string) {
     if(SUPPORTED_LANGUAGES.includes(lang)) {
       this.currentLanguage.next(lang);
       localStorage.setItem('language', lang);
+
+      let user= localStorage.getItem("currentUser");
+      if(user) {
+        let userId=JSON.parse(user).ID;
+
+        let result = await fetch('/api/users', {
+          method:'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            user_id: userId,
+            language: lang
+          })
+        });
+        console.log(result);
+      }
     }
     else {
       console.warn(`Language ${lang} is not supported`)
