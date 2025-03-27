@@ -122,11 +122,6 @@ export class LoginComponent {
       return;
     }
 
-    if (this.dongleCode.length < 8) {
-      this.showError('Dongle code is too short. Please enter a complete dongle code.');
-      return;
-    }
-
     // Add DEBUG: prefix for testing dongle code without prior encryption
     const formattedDongleCode = `DEBUG:${this.dongleCode}`;
     await this.processDongleLogin(formattedDongleCode);
