@@ -1,0 +1,21 @@
+<div class="modal">
+  <div class="modal-header">
+    <h2>Edit Module</h2>
+  </div>
+
+  <div class="tabs">
+    <a [routerLink]="['/edit-module/basic-info']" [routerLinkActive]="'active'">
+      Basic Info
+    </a>
+    <a [routerLink]="['/edit-module/trainings']" [routerLinkActive]="'active'">
+      Trainings
+    </a>
+    <a [routerLink]="['/edit-module/exam']" [routerLinkActive]="'active'">
+      Exam
+    </a>
+  </div>
+
+  <div class="form-group">
+    <router-outlet></router-outlet>
+  </div>
+</div>

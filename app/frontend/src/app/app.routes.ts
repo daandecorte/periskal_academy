@@ -18,6 +18,10 @@ import { TrainingFormComponent } from './add-module/training-form/training-form.
 import { ContentComponent } from './add-module/training-form/content/content.component';
 import { QuestionsComponent } from './add-module/training-form/questions/questions.component';
 import { authGuard } from './auth.guard';
+import { AdminEditModuleComponent } from './admin-edit-module/admin-edit-module.component';
+import { BasicInfoComponent } from './admin-edit-module/basic-info/basic-info.component';
+import { EditTrainingsComponent } from './admin-edit-module/edit-trainings/edit-trainings.component';
+import { EditExamComponent } from './admin-edit-module/edit-exam/edit-exam.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -88,7 +92,17 @@ export const routes: Routes = [
       },
     ],
   },
-  //{ path: 'trainings/new', component: TrainingFormComponent},
+  { path: 'edit-module',
+    component: AdminEditModuleComponent,
+    //canActivate: [RoleGuard],
+    data: { roles: [Role.ADMIN] },
+    children: [
+      { path: '', redirectTo: 'basic-info', pathMatch: 'full' },
+      { path: 'basic-info', component: BasicInfoComponent },
+      { path: 'trainings', component: EditTrainingsComponent },
+      { path: 'exam', component: EditExamComponent },
+    ]
+  },
   { path: '', redirectTo: 'modules', pathMatch: 'full' },
   { path: '**', redirectTo: 'modules', pathMatch: 'full' },
 ];
