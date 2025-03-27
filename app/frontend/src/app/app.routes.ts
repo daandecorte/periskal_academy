@@ -18,6 +18,7 @@ import { TrainingFormComponent } from './add-module/training-form/training-form.
 import { ContentComponent } from './add-module/training-form/content/content.component';
 import { QuestionsComponent } from './add-module/training-form/questions/questions.component';
 import { authGuard } from './auth.guard';
+import { UserdetailComponent } from './userdetail/userdetail.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -66,6 +67,12 @@ export const routes: Routes = [
     component: SupportComponent,
     //canActivate: [RoleGuard],
     data: { roles: [Role.SUPPORT] },
+  },
+  {
+    path: 'userdetail',
+    component: UserdetailComponent,
+    //canActivate: [RoleGuard],
+    data: { roles: [Role.ADMIN, Role.SUPPORT] },
   },
   {
     path: 'add-module',
