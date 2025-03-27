@@ -145,13 +145,18 @@ export class LoginComponent {
         }),
       });
 
-      await this.processLoginResponse(result);
-    } catch (error) {
-      console.error('Login error:', error);
-      let textIncorrect = document.getElementById('textIncorrect');
-      if (textIncorrect) textIncorrect.innerText = 'Authentication error.';
-    }
+      // Log the raw response for debugging
+    const responseText = await result.clone().text();
+    console.log('Raw response:', responseText);
+
+    await this.processLoginResponse(result);
+  } catch (error) {
+    console.error('Dongle login error:', error);
+    let textIncorrect = document.getElementById('textIncorrect');
+    if (textIncorrect)
+      textIncorrect.innerText = 'Dongle authentication failed.';
   }
+}
 
   private async processLoginResponse(result: Response) {
     let data = await result.json();
@@ -175,16 +180,13 @@ export class LoginComponent {
       } else if (data.Body.Authenticate_DongleResponse) {
         userData = {
           ...data.Body.Authenticate_DongleResponse.Authenticate_DongleResult,
-          Products:
-            data.Body.Authenticate_DongleResponse.Authenticate_DongleResult
-              .Products.string,
-          Skippers:
-            data.Body.Authenticate_DongleResponse.Authenticate_DongleResult.Skippers.Client.map(
-              (skipper: any) => ({
-                ...skipper,
-                Products: skipper.Products.string,
-              })
-            ),
+          Products: data.Body.Authenticate_DongleResponse.Authenticate_DongleResult.Products?.string || [],
+          Skippers: data.Body.Authenticate_DongleResponse.Authenticate_DongleResult.Skippers?.Client?.map(
+            (skipper: any) => ({
+              ...skipper,
+              Products: skipper.Products?.string || []
+            })
+          ) || []
         };
       } else {
         throw new Error('Unexpected response format');
