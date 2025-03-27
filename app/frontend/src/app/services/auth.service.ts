@@ -32,6 +32,11 @@ export class AuthService {
 
   // Actual authentication logic here
 
+  setCurrentUser(user: IUser): void {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    this.currentUserSubject.next(user);
+  }
+
   hasRole(role: Role): boolean {
     const user = this.currentUserValue;
     return user !== null && user.Role.toUpperCase() === role;

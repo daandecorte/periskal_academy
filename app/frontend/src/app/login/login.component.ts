@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { IUser } from '../types/user-info';
 import { LanguageService } from '../services/language.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -36,6 +37,7 @@ export class LoginComponent {
 
   constructor(
     private router: Router,
+    private authService: AuthService,
     private languageService: LanguageService,
     private translate: TranslateService
   ) {
@@ -188,7 +190,7 @@ export class LoginComponent {
         throw new Error('Unexpected response format');
       }
 
-      localStorage.setItem('currentUser', JSON.stringify(userData));
+      this.authService.setCurrentUser(userData);
       this.router.navigate(['/modules']);
     } else {
       let textIncorrect = document.getElementById('textIncorrect');

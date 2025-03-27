@@ -20,30 +20,27 @@ import { QuestionsComponent } from './add-module/training-form/questions/questio
 import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent }, //To get a role
+  { path: 'login', component: LoginComponent },
   {
     path: 'modules',
     component: ModulesComponent,
     //canActivate: [RoleGuard],
     data: {
-      roles: [
-        Role.SKIPPER,
-        Role.INSTALLER,
-      ],
+      roles: [Role.SKIPPER, Role.INSTALLER],
     },
-  }, //When role is trainee
+  },
   {
     path: 'admin/modules',
     component: AdminModulesComponent,
     //canActivate: [RoleGuard],
-    data: { roles: [Role.ADMIN] }
+    data: { roles: [Role.ADMIN] },
   },
   {
     path: 'certificates',
     component: CertificatesComponent,
     //canActivate: [RoleGuard],
     data: { roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT] },
-  }, //When role is trainee, fleet-manager
+  },
   {
     path: 'tips-and-tricks',
     component: TipsAndTricksComponent,
@@ -57,19 +54,19 @@ export const routes: Routes = [
     component: UserManagementComponent,
     //canActivate: [RoleGuard],
     data: { roles: [Role.ADMIN] },
-  }, //When role is admin
+  },
   {
     path: 'skippers',
     component: SkippersComponent,
     //canActivate: [RoleGuard],
     data: { roles: [Role.FLEETMANAGER] },
-  }, //When role is fleet-manager
+  },
   {
     path: 'support',
     component: SupportComponent,
     //canActivate: [RoleGuard],
     data: { roles: [Role.SUPPORT] },
-  }, //When role is helpdesk
+  },
   {
     path: 'add-module',
     component: AddModuleComponent,
@@ -78,16 +75,20 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'basic-setup', pathMatch: 'full' },
       { path: 'basic-setup', component: BasicSetupComponent },
-      { path: 'trainings', component: TrainingsComponent},
-      { path: 'exam', component: ExamComponent},
-      { path: 'preview', component: PreviewComponent},
-      { path: 'trainings/new', component: TrainingFormComponent, children: [
-        { path: 'content', component: ContentComponent},
-        { path: 'questions', component: QuestionsComponent}
-      ]},
-  ]},
+      { path: 'trainings', component: TrainingsComponent },
+      { path: 'exam', component: ExamComponent },
+      { path: 'preview', component: PreviewComponent },
+      {
+        path: 'trainings/new',
+        component: TrainingFormComponent,
+        children: [
+          { path: 'content', component: ContentComponent },
+          { path: 'questions', component: QuestionsComponent },
+        ],
+      },
+    ],
+  },
   //{ path: 'trainings/new', component: TrainingFormComponent},
-  { path: '', redirectTo: 'modules', pathMatch: 'full' }, 
+  { path: '', redirectTo: 'modules', pathMatch: 'full' },
   { path: '**', redirectTo: 'modules', pathMatch: 'full' },
 ];
-

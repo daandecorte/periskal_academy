@@ -18,7 +18,11 @@ import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { LanguageService } from '../services/language.service';
 import { FormsModule } from '@angular/forms';
-import { TranslateModule, TranslateService, TranslatePipe } from '@ngx-translate/core';
+import {
+  TranslateModule,
+  TranslateService,
+  TranslatePipe,
+} from '@ngx-translate/core';
 
 interface NavLink {
   path: string;
@@ -36,7 +40,7 @@ interface NavLink {
     NgClass,
     CommonModule,
     FormsModule,
-    TranslateModule
+    TranslateModule,
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
@@ -122,11 +126,16 @@ export class NavbarComponent {
 
   mapLanguage(lang: string): string {
     switch (lang) {
-      case 'ENGLISH': return 'en';
-      case 'FRENCH': return 'fr';
-      case 'GERMAN': return 'de';
-      case 'DUTCH': return 'nl';
-      default: return 'en';
+      case 'ENGLISH':
+        return 'en';
+      case 'FRENCH':
+        return 'fr';
+      case 'GERMAN':
+        return 'de';
+      case 'DUTCH':
+        return 'nl';
+      default:
+        return 'en';
     }
   }
 
@@ -134,7 +143,7 @@ export class NavbarComponent {
     this.languageService.setLanguage(this.language);
     const langCode = this.mapLanguage(this.language);
     this.translate.use(langCode);
-    console.log("lang: "+ langCode)
+    console.log('lang: ' + langCode);
   }
 
   isLinkVisible(link: NavLink): boolean {
