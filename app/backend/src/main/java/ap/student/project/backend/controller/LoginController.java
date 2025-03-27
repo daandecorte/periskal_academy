@@ -94,10 +94,7 @@ public class LoginController {
                         .getJSONObject("AuthenticateResponse")
                         .getJSONObject("AuthenticateResult")
                         .getString("ID");
-                if(!userService.existsByUserId(userId)) {
-                    UserDTO userDTO = new UserDTO(userId, Language.valueOf(language));
-                    userService.save(userDTO);
-                }
+                addUser(userId, language);
                 return json.toString();
             } catch (Exception e) {
                 return "{\"text\": \"User not found\"}" + e.getMessage();
@@ -152,7 +149,14 @@ public class LoginController {
             br.close();
 
             try {
-                return XMLtoJSON(response.toString(), "Authenticate_DongleResult");
+                JSONObject json = new JSONObject(XMLtoJSON(response.toString(), "Authenticate_DongleResult"));
+                String userId=json
+                        .getJSONObject("Body")
+                        .getJSONObject("Authenticate_DongleResponse")
+                        .getJSONObject("Authenticate_DongleResult")
+                        .getString("ID");
+                addUser(userId, language);
+                return json.toString();
             } catch (Exception e) {
                 System.out.println("Error processing dongle authentication response: " + e.getMessage());
                 return "{\"text\": \"Invalid dongle or processing error\"}";
@@ -276,5 +280,11 @@ public class LoginController {
         } catch (Exception e) {
         }
         return null;
+    }
+    private void addUser(String userId, String language) {
+        if(!userService.existsByUserId(userId)) {
+            UserDTO userDTO = new UserDTO(userId, Language.valueOf(language));
+            userService.save(userDTO);
+        }
     }
 }
