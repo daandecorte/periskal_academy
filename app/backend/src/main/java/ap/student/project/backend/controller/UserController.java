@@ -37,6 +37,15 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+    @GetMapping(value = "/users/userId/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getUserById(@PathVariable("userId") String userId) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(userService.findByUserId(userId));
+        } catch (NotFoundException e) {
+            logger.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 
     @PostMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity create(@RequestBody UserDTO user) {
