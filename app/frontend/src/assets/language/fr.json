@@ -26,5 +26,19 @@
     "ASSIGNED_ON": "Assigné le {{date}}",
     "INVALID_DATE": "Date invalide",
     "START_NOW": "Commencer"
-  }
+  },
+  "ADMIN_EDIT_MODULES": {
+    "TITLE": "Modifier le Module",
+    "BASIC_INFO_TAB": "Informations de Base",
+    "TRAININGS_TAB": "Formations",
+    "EXAM_TAB": "Examen",
+    "SUBTITLE": "Informations de Base",
+    "SWITCH": "Statut du Module",
+    "MODULE_TITLE": "Titre du Module",
+    "DESCRIPTION": "Description",
+    "SAVE_BUTTON": "Enregistrer",
+    "ENTER_MODULE_TITLE": "Saisissez le titre du module",
+    "ENTER_DESCRIPTION": "Saisissez la description"
+}
+
 }

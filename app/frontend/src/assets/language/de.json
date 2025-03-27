@@ -26,5 +26,20 @@
     "ASSIGNED_ON": "Zugewiesen am {{date}}",
     "INVALID_DATE": "Ungültiges Datum",
     "START_NOW": "Jetzt starten"
-  }
+  },
+  "ADMIN_EDIT_MODULES": {
+    "TITLE": "Modul Bearbeiten",
+    "BASIC_INFO_TAB": "Grundlegende Informationen",
+    "TRAININGS_TAB": "Schulungen",
+    "EXAM_TAB": "Prüfung",
+    "SUBTITLE": "Grundlegende Informationen",
+    "SWITCH": "Modulstatus",
+    "MODULE_TITLE": "Modultitel",
+    "DESCRIPTION": "Beschreibung",
+    "SAVE_BUTTON": "Speichern",
+    "ENTER_MODULE_TITLE": "Modultitel eingeben",
+    "ENTER_DESCRIPTION": "Beschreibung eingeben"
+
+}
+
 }

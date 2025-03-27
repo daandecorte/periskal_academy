@@ -26,5 +26,20 @@
     "ASSIGNED_ON": "Toegewezen op {{date}}",
     "INVALID_DATE": "Ongeldige datum",
     "START_NOW": "Start nu"
-  }
+  },
+  "ADMIN_EDIT_MODULES": {
+    "TITLE": "Module Bewerken",
+    "BASIC_INFO_TAB": "Basisinformatie",
+    "TRAININGS_TAB": "Trainingen",
+    "EXAM_TAB": "Examen",
+    "SUBTITLE": "Basisinformatie",
+    "SWITCH": "Module Status",
+    "MODULE_TITLE": "Module Titel",
+    "DESCRIPTION": "Beschrijving",
+    "SAVE_BUTTON": "Opslaan",
+    "ENTER_MODULE_TITLE": "Voer de moduletitel in",
+    "ENTER_DESCRIPTION": "Voer de beschrijving in"
+
+}
+
 }
