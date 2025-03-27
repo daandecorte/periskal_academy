@@ -100,7 +100,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'basic-info', pathMatch: 'full' },
       { path: 'basic-info', component: BasicInfoComponent },
       { path: 'trainings', component: EditTrainingsComponent },
-      { path: 'exam', component: EditExamComponent },
+      { path: 'exam', component: ExamComponent },
     ]
   },
   { path: '', redirectTo: 'modules', pathMatch: 'full' },

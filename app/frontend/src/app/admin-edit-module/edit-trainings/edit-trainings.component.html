@@ -1,1 +1,55 @@
-<p>edit-trainings works!</p>
+<form class="form-container">
+  <div class="form-group">
+    <label>Training Title</label>
+    <input type="text" class="form-control" />
+  </div>
+
+  <div class="form-group">
+    <label>Training Description</label>
+    <textarea class="form-control"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label>Video Content</label>
+    <div class="video-upload">
+      <div class="language-selection">
+        <button class="lang-btn active">NL</button>
+        <button class="lang-btn">FR</button>
+        <button class="lang-btn">DE</button>
+        <button class="lang-btn active">EN</button>
+      </div>
+      <div class="upload-box">
+        <div class="upload-icon">⬆</div>
+        <p>Click to upload or drag and drop</p>
+        <p>MP4, WebM or OGG (MAX: 80MB)</p>
+        <input type="file" accept="video/mp4,video/webm,video/ogg" />
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="question-pool">
+  <div class="button-container">
+    <h3 class="title">Question Pool</h3>
+    <button class="add-question-btn">+ Add Question</button>
+  </div>
+
+  <div class="question-pool-container">
+    <label class="label">Question Type</label>
+    <select class="input">
+      <option>Multiple Choice</option>
+      <option>True/False</option>
+    </select>
+
+    <label class="label">Question Text</label>
+    <textarea class="input"></textarea>
+
+    <label class="label">Answer Options</label>
+    <div class="answer-option">
+      <input type="radio" />
+      <input type="text" class="input" placeholder="Answer option" />
+      <button class="delete-btn">✖</button>
+    </div>
+    <button class="add-option-btn">+ Add Option</button>
+  </div>
+</div>
