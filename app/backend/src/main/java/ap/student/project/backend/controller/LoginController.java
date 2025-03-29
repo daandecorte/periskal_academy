@@ -92,11 +92,11 @@ public class LoginController {
                         .getJSONObject("Body")
                         .getJSONObject("AuthenticateResponse")
                         .getJSONObject("AuthenticateResult");
-                String userId = json.getString("ID");
+                String persikalId = json.getString("ID");
                 String firstname = json.getString("Firstname");
                 String lastname = json.getString("Lastname");
                 String shipname = json.getString("Shipname");
-                addUser(userId, firstname, lastname,shipname, language);
+                addUser(persikalId, firstname, lastname,shipname, language);
                 return json.toString();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -156,11 +156,11 @@ public class LoginController {
                         .getJSONObject("Body")
                         .getJSONObject("Authenticate_DongleResponse")
                         .getJSONObject("Authenticate_DongleResult");
-                String userId = json.getString("ID");
+                String persikalId = json.getString("ID");
                 String firstname = json.getString("Firstname");
                 String lastname = json.getString("Lastname");
                 String shipname = json.getString("Shipname");
-                addUser(userId, firstname, lastname,shipname, language);
+                addUser(persikalId, firstname, lastname,shipname, language);
                 return json.toString();
             } catch (Exception e) {
                 System.out.println("Error processing dongle authentication response: " + e.getMessage());
@@ -286,9 +286,9 @@ public class LoginController {
         }
         return null;
     }
-    private void addUser(String userId, String firstname, String lastname, String shipname, String language) {
-        if(!userService.existsByUserId(userId)) {
-            UserDTO userDTO = new UserDTO(userId, firstname, lastname, shipname, Language.valueOf(language));
+    private void addUser(String persikalId, String firstname, String lastname, String shipname, String language) {
+        if(!userService.existsByPeriskalId(persikalId)) {
+            UserDTO userDTO = new UserDTO(persikalId, firstname, lastname, shipname, Language.valueOf(language));
             userService.save(userDTO);
         }
     }

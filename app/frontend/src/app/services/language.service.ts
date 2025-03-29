@@ -21,7 +21,7 @@ export class LanguageService {
 
       let user= localStorage.getItem("currentUser");
       if(user) {
-        let userId=JSON.parse(user).ID;
+        let periskalId=JSON.parse(user).ID;
 
         let result = await fetch('/api/users', {
           method:'PUT',
@@ -30,7 +30,7 @@ export class LanguageService {
             Accept: 'application/json',
           },
           body: JSON.stringify({
-            user_id: userId,
+            periskal_id: periskalId,
             language: lang
           })
         });

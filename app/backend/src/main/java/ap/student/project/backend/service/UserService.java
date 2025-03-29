@@ -55,7 +55,7 @@ public class UserService {
         return user;
     }
 
-    public boolean existsByUserId(String userId) {
+    public boolean existsByPeriskalId(String userId) {
         User user = userRepository.findByPeriskalId(userId);
         return user != null;
     }
