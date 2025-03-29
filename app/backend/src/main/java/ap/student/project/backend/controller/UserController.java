@@ -37,10 +37,10 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-    @GetMapping(value = "/users/userId/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getUserById(@PathVariable("userId") String userId) {
+    @GetMapping(value = "/users/periskalId/{periskalId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getUserById(@PathVariable("periskalId") String periskalId) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(userService.findByUserId(userId));
+            return ResponseEntity.status(HttpStatus.OK).body(userService.findByPeriskalId(periskalId));
         } catch (NotFoundException e) {
             logger.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -75,7 +75,7 @@ public class UserController {
 
     }
 
-    @GetMapping(value = "/users/{id}/examattempts", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/users/{id}/examAttempts", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getExams(@PathVariable("id") int id) {
         try {
             return ResponseEntity.ok(this.userService.getAllExamAttempts(id));

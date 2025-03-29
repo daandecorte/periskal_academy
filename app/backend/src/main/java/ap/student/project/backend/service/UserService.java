@@ -47,10 +47,10 @@ public class UserService {
         return user;
     }
 
-    public User findByUserId(String userId) throws NotFoundException {
-        User user = userRepository.findByPeriskalId(userId);
+    public User findByPeriskalId(String periskalId) throws NotFoundException {
+        User user = userRepository.findByPeriskalId(periskalId);
         if (user == null) {
-            throw new NotFoundException("User with userid " + userId + " not found");
+            throw new NotFoundException("User with periskal id " + periskalId + " not found");
         }
         return user;
     }

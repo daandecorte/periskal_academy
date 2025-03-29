@@ -1,5 +1,6 @@
 package ap.student.project.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class ExamAttempt {
     private int score;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_module_id")
+    @JsonIgnore
     private UserModule userModule;
 
     public ExamAttempt(LocalDateTime startDateTime, LocalDateTime endDateTime, ExamStatusType examStatusType, int score, UserModule userModule) {
