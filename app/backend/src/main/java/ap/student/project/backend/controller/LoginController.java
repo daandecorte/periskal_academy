@@ -88,15 +88,18 @@ public class LoginController {
             br.close();
 
             try {
-                JSONObject json = new JSONObject(XMLtoJSON(response.toString(), "AuthenticateResult"));
-                String userId = json
+                JSONObject json = new JSONObject(XMLtoJSON(response.toString(), "AuthenticateResult"))
                         .getJSONObject("Body")
                         .getJSONObject("AuthenticateResponse")
-                        .getJSONObject("AuthenticateResult")
-                        .getString("ID");
-                addUser(userId, language);
+                        .getJSONObject("AuthenticateResult");
+                String userId = json.getString("ID");
+                String firstname = json.getString("Firstname");
+                String lastname = json.getString("Lastname");
+                String shipname = json.getString("Shipname");
+                addUser(userId, firstname, lastname,shipname, language);
                 return json.toString();
             } catch (Exception e) {
+                e.printStackTrace();
                 return "{\"text\": \"User not found\"}" + e.getMessage();
             }
 
@@ -149,13 +152,15 @@ public class LoginController {
             br.close();
 
             try {
-                JSONObject json = new JSONObject(XMLtoJSON(response.toString(), "Authenticate_DongleResult"));
-                String userId=json
+                JSONObject json = new JSONObject(XMLtoJSON(response.toString(), "AuthenticateResult"))
                         .getJSONObject("Body")
                         .getJSONObject("Authenticate_DongleResponse")
-                        .getJSONObject("Authenticate_DongleResult")
-                        .getString("ID");
-                addUser(userId, language);
+                        .getJSONObject("Authenticate_DongleResult");
+                String userId = json.getString("ID");
+                String firstname = json.getString("Firstname");
+                String lastname = json.getString("Lastname");
+                String shipname = json.getString("Shipname");
+                addUser(userId, firstname, lastname,shipname, language);
                 return json.toString();
             } catch (Exception e) {
                 System.out.println("Error processing dongle authentication response: " + e.getMessage());
@@ -281,9 +286,9 @@ public class LoginController {
         }
         return null;
     }
-    private void addUser(String userId, String language) {
+    private void addUser(String userId, String firstname, String lastname, String shipname, String language) {
         if(!userService.existsByUserId(userId)) {
-            UserDTO userDTO = new UserDTO(userId, Language.valueOf(language));
+            UserDTO userDTO = new UserDTO(userId, firstname, lastname, shipname, Language.valueOf(language));
             userService.save(userDTO);
         }
     }

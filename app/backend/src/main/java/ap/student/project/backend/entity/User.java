@@ -19,6 +19,12 @@ public class User {
     private int id;
     @Column(name = "user_id")
     private String userId;
+    @Column(name="firstname")
+    private String firstname;
+    @Column(name="lastname")
+    private String lastname;
+    @Column(name="shipname")
+    private String shipname;
     @Enumerated(EnumType.STRING)
     @Column(name = "language")
     private Language language;
@@ -29,9 +35,12 @@ public class User {
     @JsonIgnore
     private List<UserModule> userModules;
 
-    public User(String userId, Language language) {
+    public User(String userId, String firstname, String lastname, String shipname, Language language) {
         this.userId = userId;
         this.language = language;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.shipname = shipname;
     }
 
     @Override
@@ -40,6 +49,9 @@ public class User {
                 "id=" + id +
                 ", userId='" + userId + '\'' +
                 ", language=" + language +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", shipname='" + shipname + '\'' +
                 ", userExams=" + userExams +
                 ", userModules=" + userModules +
                 '}';

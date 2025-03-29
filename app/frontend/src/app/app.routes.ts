@@ -69,7 +69,7 @@ export const routes: Routes = [
     data: { roles: [Role.SUPPORT] },
   },
   {
-    path: 'userdetail',
+    path: 'userdetail/:id',
     component: UserdetailComponent,
     //canActivate: [RoleGuard],
     data: { roles: [Role.ADMIN, Role.SUPPORT] },

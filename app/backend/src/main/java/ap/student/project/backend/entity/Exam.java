@@ -1,5 +1,6 @@
 package ap.student.project.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class Exam {
     private List<Question> questions;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(name="module_id")
+    @JsonIgnore
     private Module module;
 
     public Exam(int passingScore, int maxAttempts, int time, int questionAmount, List<Question> questions, Module module) {

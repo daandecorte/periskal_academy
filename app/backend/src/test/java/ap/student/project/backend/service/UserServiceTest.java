@@ -42,8 +42,8 @@ class UserServiceTest {
 
     @BeforeEach
     void setUp() {
-        user = new User("1", Language.ENGLISH);
-        userDTO = new UserDTO("1", Language.ENGLISH);
+        user = new User("1", "", "", "", Language.ENGLISH);
+        userDTO = new UserDTO("1", "", "", "", Language.ENGLISH);
     }
 
     @Test

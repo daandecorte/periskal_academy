@@ -81,6 +81,6 @@ public class UserService {
         return userExams;
     }
     public User assemble(UserDTO userDTO) {
-        return new User(userDTO.userId(), userDTO.language());
+        return new User(userDTO.userId(), userDTO.firstname(), userDTO.lastname(), userDTO.shipname(), userDTO.language());
     }
 }
