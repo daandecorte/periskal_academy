@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { LanguageService } from '../services/language.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-userdetail',
@@ -12,8 +14,9 @@ import { TranslatePipe } from '@ngx-translate/core';
 export class UserdetailComponent {
   userId: string | null = '';
   userdetails: UserDetail[] | undefined;
+  currentLanguage: keyof Translated = 'ENGLISH';
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private languageService: LanguageService) {
   }
   async getUserInfo() {
     let modules = await fetch(`/api/users/${this.userId}/modules`);
@@ -25,6 +28,10 @@ export class UserdetailComponent {
   ngOnInit(): void {
     this.userId = this.route.snapshot.paramMap.get('id');
     this.getUserInfo()
+
+    this.languageService.currentLanguage$.subscribe((language) => {
+      this.currentLanguage = language as keyof Translated; // Type assertion
+    });
   }
 }
 
@@ -47,10 +54,12 @@ interface Module {
   tips: any[];
   trainings: any[];
 }
-interface UserExam {
+interface ExamAttempt {
   id: number,
-  exam: Exam,
-  exam_attempts: any[]
+  start_date_time: string,
+  end_date_time: string,
+  exam_status_type: string,
+  score: number
 }
 interface Translated {
   ENGLISH: string, 
@@ -73,7 +82,7 @@ interface UserDetail {
   module_progress: any | null; // Use a proper type if available
   module: Module;
   user: User;
-  user_exams: UserExam[]
+  exam_attempts: ExamAttempt[]
 }
 
 interface UserDetailResponse {

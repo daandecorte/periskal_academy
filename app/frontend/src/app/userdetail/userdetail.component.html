@@ -35,50 +35,11 @@
             </select>
             <input type="text" [placeholder]='"USER_DETAIL.SEARCH_MODULES" | translate'>
         </div>
-
-        <div class="module-item">
-            <div class="module-header">
-                <h4>Navigation Safety Certificate</h4>
-                <div class="module-status status-in-progress">In Progress</div>
-            </div>
-            <p>Assigned on March 15, 2024</p>
-            <div class="course-progress">
-                <div class="course-progress-bar"></div>
-            </div>
-            <p>Last activity: Today at 14:30</p>
-            <div class="exam-status">
-                <h4>Exam status</h4>
-                <div>Available after completing the course</div>
-            </div>
-        </div>
-
-        <div class="module-item">
-            <div class="module-header">
-                <h4>Emergency Response Certificate</h4>
-                <div class="module-status status-completed">Completed</div>
-            </div>
-            <p>Assigned on February 1, 2024</p>
-            <div class="course-progress">
-                <div class="course-progress-bar" style="width: 100%;"></div>
-            </div>
-            <p>Last activity: Today at 14:30</p>
-            <div class="exam-status">
-                <h4>Exam status</h4>
-                <div>
-                    <p>First attempt: March 14, 2024</p>
-                    <p class="exam-failed">Failed (65%)</p>
-                </div>
-                <div>
-                    <p>Second attempt: March 15, 2024</p>
-                    <p class="exam-passed">Passed (92%)</p>
-                </div>
-                
-            </div>
-        </div>
         @for(detail of userdetails; track $index) {
             <div class="module-item">
                 <div class="module-header">
-                    <h4>{{detail.module.title?.ENGLISH}} Certificate</h4>
+                    
+                    <h4>{{detail.module.title?.[currentLanguage]}} Certificate</h4>
                     <div class="module-status status-completed">{{detail.module_progress}}</div>
                 </div>
                 <p>Assigned on February 1, 2024</p>
@@ -86,20 +47,15 @@
                     <div class="course-progress-bar" style="width: 100%;"></div>
                 </div>
                 <p>Last activity: Today at 14:30</p>
-                @for(examattempt of detail.user_exams; track $index) {
-                    <div class="exam-status">
-                        <h4>Exam status</h4>
+                <div class="exam-status">
+                    <h4>Exam status</h4>
+                @for(attempt of detail.exam_attempts; track $index) {
                         <div>
-                            <p>First attempt: March 14, 2024</p>
-                            <p class="exam-failed">Failed (65%)</p>
+                            <p>First attempt: {{attempt.end_date_time}}</p>
+                            <p class="exam-failed">{{attempt.exam_status_type}} {{attempt.score}}%</p>
                         </div>
-                        <div>
-                            <p>Second attempt: March 15, 2024</p>
-                            <p class="exam-passed">Passed (92%)</p>
-                        </div>
-                        
-                    </div>
-                }
+                    }
+                </div>
             </div>
         }
     </div>
