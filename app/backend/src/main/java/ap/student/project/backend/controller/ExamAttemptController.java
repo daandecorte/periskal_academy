@@ -17,13 +17,13 @@ public class ExamAttemptController {
         this.examAttemptService = examAttemptService;
     }
 
-    @GetMapping(value = "/examAttempts", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getExams() {
+    @GetMapping(value = "/exam_attempts", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getExamAttempts() {
         return ResponseEntity.ok(this.examAttemptService.findAll());
     }
 
-    @PostMapping(value = "/examAttempts", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity createUserExam(@RequestBody ExamAttemptDTO examAttemptDTO) {
+    @PostMapping(value = "/exam_attempts", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity createExamAttempt(@RequestBody ExamAttemptDTO examAttemptDTO) {
         try {
             this.examAttemptService.save(examAttemptDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(examAttemptDTO);

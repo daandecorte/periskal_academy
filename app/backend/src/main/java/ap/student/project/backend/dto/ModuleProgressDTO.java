@@ -12,6 +12,7 @@ public record ModuleProgressDTO(
         @JsonProperty("start_date_time") LocalDateTime startDateTime,
         @JsonProperty("last_time_accessed") LocalDateTime lastTimeAccessed,
         @JsonProperty("status") ProgressStatusType status,
-        @JsonProperty("training_progress") List<TrainingProgress> trainingProgress
+        @JsonProperty("training_progress") List<TrainingProgress> trainingProgress,
+        @JsonProperty("user_module_id") int userModuleId
 ) {
 }

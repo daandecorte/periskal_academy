@@ -17,8 +17,7 @@ public class UserModule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "module_progress")
+    @OneToOne(mappedBy = "userModule", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private ModuleProgress moduleProgress;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "module_id")
