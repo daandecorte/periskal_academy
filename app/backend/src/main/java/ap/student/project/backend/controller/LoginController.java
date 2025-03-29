@@ -88,14 +88,15 @@ public class LoginController {
             br.close();
 
             try {
-                JSONObject json = new JSONObject(XMLtoJSON(response.toString(), "AuthenticateResult"))
+                JSONObject json = new JSONObject(XMLtoJSON(response.toString(), "AuthenticateResult"));
+                        JSONObject authenticateResult = json
                         .getJSONObject("Body")
                         .getJSONObject("AuthenticateResponse")
                         .getJSONObject("AuthenticateResult");
-                String persikalId = json.getString("ID");
-                String firstname = json.getString("Firstname");
-                String lastname = json.getString("Lastname");
-                String shipname = json.getString("Shipname");
+                String persikalId = authenticateResult.getString("ID");
+                String firstname = authenticateResult.getString("Firstname");
+                String lastname = authenticateResult.getString("Lastname");
+                String shipname = authenticateResult.getString("Shipname");
                 addUser(persikalId, firstname, lastname,shipname, language);
                 return json.toString();
             } catch (Exception e) {
@@ -152,14 +153,15 @@ public class LoginController {
             br.close();
 
             try {
-                JSONObject json = new JSONObject(XMLtoJSON(response.toString(), "AuthenticateResult"))
+                JSONObject json = new JSONObject(XMLtoJSON(response.toString(), "Authenticate_DongleResult"));
+                JSONObject authenticateResult = json
                         .getJSONObject("Body")
                         .getJSONObject("Authenticate_DongleResponse")
                         .getJSONObject("Authenticate_DongleResult");
-                String persikalId = json.getString("ID");
-                String firstname = json.getString("Firstname");
-                String lastname = json.getString("Lastname");
-                String shipname = json.getString("Shipname");
+                String persikalId = authenticateResult.getString("ID");
+                String firstname = authenticateResult.getString("Firstname");
+                String lastname = authenticateResult.getString("Lastname");
+                String shipname = authenticateResult.getString("Shipname");
                 addUser(persikalId, firstname, lastname,shipname, language);
                 return json.toString();
             } catch (Exception e) {
