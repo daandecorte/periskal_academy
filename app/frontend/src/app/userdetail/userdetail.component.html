@@ -9,7 +9,7 @@
 
     <div class="sailor-header">
         <div class="sailor-profile">
-            <div class="avatar">JS</div>
+            <div class="avatar">{{userdetails?.[0]?.user?.firstname?.[0]?.toLocaleUpperCase() ?? ""}}{{userdetails?.[0]?.user?.lastname?.[0]?.toLocaleUpperCase() ?? ''}}</div>
             <div class="sailor-info">
                 <h2>{{userdetails?.[0]?.user?.firstname ?? ''}} {{userdetails?.[0]?.user?.lastname ?? ''}}</h2>
                 <p>{{userdetails?.[0]?.user?.shipname ?? ''}}</p>
