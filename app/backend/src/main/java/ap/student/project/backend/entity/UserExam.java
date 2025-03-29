@@ -1,5 +1,6 @@
 package ap.student.project.backend.entity;
-
+/*
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,13 +23,14 @@ public class UserExam {
     @OneToMany(mappedBy = "userExam", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<ExamAttempt> examAttempts;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_id")
-    private User user;
+    @JoinColumn(name = "user_module")
+    @JsonIgnore
+    private UserModule userModule;
 
-    public UserExam(Exam exam, List<ExamAttempt> examAttempts, User user) {
+    public UserExam(Exam exam, List<ExamAttempt> examAttempts, UserModule userModule) {
         this.exam = exam;
         this.examAttempts = examAttempts;
-        this.user = user;
+        this.userModule = userModule;
     }
 
     @Override
@@ -37,7 +39,8 @@ public class UserExam {
                 "id=" + id +
                 ", exam=" + exam +
                 ", examAttempts=" + examAttempts +
-                ", user=" + user +
+                ", user=" + userModule +
                 '}';
     }
 }
+*/

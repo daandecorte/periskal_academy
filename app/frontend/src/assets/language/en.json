@@ -81,5 +81,15 @@
     "PREVIOUS": "Previous",
     "NEXT": "Next",
     "PUBLISH": "Publish"
+  },
+  "USER_DETAIL": {
+    "ASSIGN_NEW_CERTIFICATE": "Assign New Certificate",
+    "MODULES_PROGRESS": "Modules Progress",
+    "ALL_STATUS": "All Status",
+    "IN_PROGRESS": "In Progress",
+    "COMPLETED": "Completed",
+    "SEARCH_MODULES": "Search Modules...",
+    "OVERALL_PROGRESS": "Overall Progress",
+    "USER_DETAIL": "User Detail"
   }
 }

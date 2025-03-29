@@ -1,5 +1,6 @@
 package ap.student.project.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,15 +27,16 @@ public class ExamAttempt {
     @Column
     private int score;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_exam_id")
-    private UserExam userExam;
+    @JoinColumn(name = "user_module_id")
+    @JsonIgnore
+    private UserModule userModule;
 
-    public ExamAttempt(LocalDateTime startDateTime, LocalDateTime endDateTime, ExamStatusType examStatusType, int score, UserExam userExam) {
+    public ExamAttempt(LocalDateTime startDateTime, LocalDateTime endDateTime, ExamStatusType examStatusType, int score, UserModule userModule) {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.examStatusType = examStatusType;
         this.score = score;
-        this.userExam = userExam;
+        this.userModule = userModule;
     }
 
     @Override
@@ -45,7 +47,7 @@ public class ExamAttempt {
                 ", endDateTime=" + endDateTime +
                 ", examStatusType=" + examStatusType +
                 ", score=" + score +
-                ", userExam=" + userExam +
+                ", userExam=" + userModule +
                 '}';
     }
 }

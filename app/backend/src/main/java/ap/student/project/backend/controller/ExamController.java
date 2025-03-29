@@ -4,6 +4,7 @@ import ap.student.project.backend.dto.ExamDTO;
 import ap.student.project.backend.dto.QuestionDTO;
 import ap.student.project.backend.exceptions.DuplicateException;
 import ap.student.project.backend.exceptions.ListFullException;
+import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import ap.student.project.backend.service.ExamService;
 import org.slf4j.Logger;
@@ -33,9 +34,13 @@ public class ExamController {
         try {
             this.examService.save(examDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(examDTO);
-        } catch (DuplicateException e) {
+        } catch (NotFoundException e) {
             logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+        catch (MissingArgumentException e) {
+            logger.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
     @GetMapping(value = "/exams/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

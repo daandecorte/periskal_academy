@@ -21,6 +21,7 @@ import { authGuard } from './auth.guard';
 import { AdminEditModuleComponent } from './admin-edit-module/admin-edit-module.component';
 import { BasicInfoComponent } from './admin-edit-module/basic-info/basic-info.component';
 import { EditTrainingsComponent } from './admin-edit-module/edit-trainings/edit-trainings.component';
+import { UserdetailComponent } from './userdetail/userdetail.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -69,6 +70,12 @@ export const routes: Routes = [
     component: SupportComponent,
     //canActivate: [RoleGuard],
     data: { roles: [Role.SUPPORT] },
+  },
+  {
+    path: 'userdetail/:id',
+    component: UserdetailComponent,
+    //canActivate: [RoleGuard],
+    data: { roles: [Role.ADMIN, Role.SUPPORT] },
   },
   {
     path: 'add-module',

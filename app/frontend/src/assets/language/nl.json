@@ -27,6 +27,16 @@
     "INVALID_DATE": "Ongeldige datum",
     "START_NOW": "Start nu"
   },
+  "USER_DETAIL": {
+  "ASSIGN_NEW_CERTIFICATE": "Nieuw certificaat toewijzen",
+  "MODULES_PROGRESS": "Voortgang van modules",
+  "ALL_STATUS": "Alle statussen",
+  "IN_PROGRESS": "Bezig",
+  "COMPLETED": "Voltooid",
+  "SEARCH_MODULES": "Modules zoeken...",
+  "OVERALL_PROGRESS": "Totale voortgang",
+  "USER_DETAIL": "Gebruikersgegevens"
+  },
   "ADMIN_EDIT_MODULES": {
     "TITLE": "Module Bewerken",
     "BASIC_INFO_TAB": "Basisinformatie",

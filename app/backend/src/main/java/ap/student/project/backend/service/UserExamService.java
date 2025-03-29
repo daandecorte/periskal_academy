@@ -1,5 +1,5 @@
 package ap.student.project.backend.service;
-
+/*
 import ap.student.project.backend.dao.UserExamRepository;
 import ap.student.project.backend.dto.UserExamDTO;
 import ap.student.project.backend.dto.UserModuleDTO;
@@ -13,21 +13,21 @@ import java.util.List;
 @Service
 public class UserExamService {
     private final UserExamRepository userExamRepository;
-    private final UserService userService;
     private final ExamService examService;
+    private final UserModuleService userModuleService;
 
-    public UserExamService(UserExamRepository userExamRepository, UserService userService, ExamService examService) {
+    public UserExamService(UserExamRepository userExamRepository, ExamService examService, UserModuleService userModuleService) {
         this.userExamRepository = userExamRepository;
-        this.userService = userService;
         this.examService = examService;
+        this.userModuleService = userModuleService;
     }
 
     public void save(UserExamDTO userExamDTO) {
         UserExam userExam = new UserExam();
-        User user = userService.findById(userExamDTO.user_id());
+        UserModule userModule = userModuleService.findById(userExamDTO.user_module_id());
         Exam exam = examService.findById(userExamDTO.exam_id());
         userExam.setExam(exam);
-        userExam.setUser(user);
+        userExam.setUserModule(userModule);
         userExamRepository.save(userExam);
     }
 
@@ -35,3 +35,4 @@ public class UserExamService {
         return userExamRepository.findAll();
     }
 }
+*/

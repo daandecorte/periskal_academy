@@ -1,5 +1,6 @@
 package ap.student.project.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,15 +25,19 @@ public class ModuleProgress {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private ProgressStatusType status;
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "training_progress")
+    @OneToMany( mappedBy = "moduleProgress", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<TrainingProgress> trainingProgress;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="user_module_id")
+    @JsonIgnore
+    private UserModule userModule;
 
-    public ModuleProgress(LocalDateTime startDateTime, LocalDateTime lastTimeAccessed, ProgressStatusType status, List<TrainingProgress> trainingProgress) {
+    public ModuleProgress(LocalDateTime startDateTime, LocalDateTime lastTimeAccessed, ProgressStatusType status, List<TrainingProgress> trainingProgress, UserModule userModule) {
         this.startDateTime = startDateTime;
         this.lastTimeAccessed = lastTimeAccessed;
         this.status = status;
         this.trainingProgress = trainingProgress;
+        this.userModule = userModule;
     }
 
     @Override
@@ -43,6 +48,7 @@ public class ModuleProgress {
                 ", lastTimeAccessed=" + lastTimeAccessed +
                 ", status=" + status +
                 ", trainingProgress=" + trainingProgress +
+                ", userModule=" + userModule +
                 '}';
     }
 }
