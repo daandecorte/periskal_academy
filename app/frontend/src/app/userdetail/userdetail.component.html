@@ -40,18 +40,18 @@
                 <div class="module-header">
                     
                     <h4>{{detail.module.title?.[currentLanguage]}} Certificate</h4>
-                    <div class="module-status status-completed">{{detail.module_progress}}</div>
+                    <div class="module-status status-completed">{{detail.module_progress.status ?? "no status"}}</div>
                 </div>
-                <p>Assigned on February 1, 2024</p>
+                <p>Assigned on: {{detail.module_progress.start_date_time ?? "date"}}</p>
                 <div class="course-progress">
                     <div class="course-progress-bar" style="width: 100%;"></div>
                 </div>
-                <p>Last activity: Today at 14:30</p>
+                <p>Last activity: {{detail.module_progress.last_time_accessed ?? "date"}}</p>
                 <div class="exam-status">
                     <h4>Exam status</h4>
                 @for(attempt of detail.exam_attempts; track $index) {
                         <div>
-                            <p>First attempt: {{attempt.end_date_time}}</p>
+                            <p>Attempt #{{$index+1}}: {{attempt.end_date_time}}</p>
                             <p class="exam-failed">{{attempt.exam_status_type}} {{attempt.score}}%</p>
                         </div>
                     }

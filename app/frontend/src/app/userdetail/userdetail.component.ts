@@ -79,10 +79,17 @@ interface User {
 
 interface UserDetail {
   id: number;
-  module_progress: any | null; // Use a proper type if available
+  module_progress: ModuleProgress
   module: Module;
   user: User;
   exam_attempts: ExamAttempt[]
+}
+interface ModuleProgress {
+    id: number,
+    start_date_time: string | null,
+    last_time_accessed: string | null,
+    status: string | null,
+    training_progress: any
 }
 
 interface UserDetailResponse {
