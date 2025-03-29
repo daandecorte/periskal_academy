@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends ListCrudRepository<User, Integer> {
-    User findByUserId(String userId);
-    boolean existsByUserId(String userId);
+    User findByPeriskalId(String periskalId);
+    boolean existsByPeriskalId(String periskalId);
 }

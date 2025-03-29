@@ -26,9 +26,6 @@ class UserServiceTest {
     private UserModuleRepository userModuleRepository;
 
     @Mock
-    private UserExamRepository userExamRepository;
-
-    @Mock
     private ExamRepository examRepository;
 
     @Mock
@@ -55,7 +52,7 @@ class UserServiceTest {
 
     @Test
     void testUpdate_Success() {
-        when(userRepository.findByUserId(userDTO.userId())).thenReturn(user);
+        when(userRepository.findByPeriskalId(userDTO.periskalId())).thenReturn(user);
 
         userService.update(userDTO);
 
@@ -65,7 +62,7 @@ class UserServiceTest {
 
     @Test
     void testUpdate_UserNotFound() {
-        when(userRepository.findByUserId(userDTO.userId())).thenReturn(null);
+        when(userRepository.findByPeriskalId(userDTO.periskalId())).thenReturn(null);
 
         assertThrows(NotFoundException.class, () -> userService.update(userDTO));
     }
@@ -76,7 +73,7 @@ class UserServiceTest {
 
         User foundUser = userService.findById(1);
         assertNotNull(foundUser);
-        assertEquals("1", foundUser.getUserId());
+        assertEquals("1", foundUser.getPeriskalId());
     }
 
     @Test
@@ -117,13 +114,6 @@ class UserServiceTest {
     @Test
     void testGetAllUserExams_UserNotFound() {
         when(userRepository.findById(1)).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> userService.getAllUserExams(1));
-    }
-
-    @Test
-    void testGetAllUserExams_Success() throws NotFoundException {
-        user.setUserExams(new ArrayList<>());
-        when(userRepository.findById(1)).thenReturn(Optional.of(user));
-        assertDoesNotThrow(() -> userService.getAllUserExams(1));
+        assertThrows(NotFoundException.class, () -> userService.getAllExamAttempts(1));
     }
 }

@@ -75,10 +75,10 @@ public class UserController {
 
     }
 
-    @GetMapping(value = "/users/{id}/exams", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/users/{id}/examattempts", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getExams(@PathVariable("id") int id) {
         try {
-            return ResponseEntity.ok(this.userService.getAllUserExams(id));
+            return ResponseEntity.ok(this.userService.getAllExamAttempts(id));
         } catch (NotFoundException e) {
             logger.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

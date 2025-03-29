@@ -1,5 +1,5 @@
 package ap.student.project.backend.controller;
-
+/*
 import ap.student.project.backend.dto.UserExamDTO;
 import ap.student.project.backend.exceptions.NotFoundException;
 import ap.student.project.backend.service.UserExamService;
@@ -32,3 +32,4 @@ public class UserExamController {
         }
     }
 }
+*/

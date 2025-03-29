@@ -11,13 +11,16 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class UserdetailComponent {
   userId: string | null = '';
+  userdetails: UserDetail[] | undefined;
 
   constructor(private route: ActivatedRoute) {
   }
   async getUserInfo() {
     let modules = await fetch(`/api/users/${this.userId}/modules`);
-    let modulesdata = await modules.json();
-    await console.log(modulesdata);
+    this.userdetails = await modules.json();
+    if(this.userdetails) {
+      await console.log(this.userdetails[0]);
+    }
   }
   ngOnInit(): void {
     this.userId = this.route.snapshot.paramMap.get('id');
@@ -38,16 +41,30 @@ interface Exam {
 interface Module {
   id: number;
   active: boolean;
-  description?: string;
-  title?: string;
+  description?: Translated;
+  title?: Translated;
   exams: Exam[];
-  tips: any[]; // Use a proper type if available
-  trainings: any[]; // Use a proper type if available
+  tips: any[];
+  trainings: any[];
+}
+interface UserExam {
+  id: number,
+  exam: Exam,
+  exam_attempts: any[]
+}
+interface Translated {
+  ENGLISH: string, 
+  FRENCH: string, 
+  DUTCH: string,
+  GERMAN: string,
 }
 
 interface User {
   id: number;
   language: string;
+  firstname: string;
+  lastname: string;
+  shipname: string;
   user_id: string;
 }
 
@@ -56,6 +73,7 @@ interface UserDetail {
   module_progress: any | null; // Use a proper type if available
   module: Module;
   user: User;
+  user_exams: UserExam[]
 }
 
 interface UserDetailResponse {
