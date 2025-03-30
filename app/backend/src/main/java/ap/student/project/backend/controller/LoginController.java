@@ -96,7 +96,7 @@ public class LoginController {
                 String persikalId = authenticateResult.getString("ID");
                 String firstname = authenticateResult.getString("Firstname");
                 String lastname = authenticateResult.getString("Lastname");
-                String shipname = authenticateResult.getString("Shipname");
+                String shipname = authenticateResult.optString("Shipname", "");
                 addUser(persikalId, firstname, lastname,shipname, language);
                 return json.toString();
             } catch (Exception e) {
@@ -161,7 +161,7 @@ public class LoginController {
                 String persikalId = authenticateResult.getString("ID");
                 String firstname = authenticateResult.getString("Firstname");
                 String lastname = authenticateResult.getString("Lastname");
-                String shipname = authenticateResult.getString("Shipname");
+                String shipname = authenticateResult.optString("Shipname", "");
                 addUser(persikalId, firstname, lastname,shipname, language);
                 return json.toString();
             } catch (Exception e) {
