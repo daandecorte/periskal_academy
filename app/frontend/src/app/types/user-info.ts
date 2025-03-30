@@ -11,10 +11,4 @@ export interface IUser {
 
 export interface ISkipper {
   ID: string;
-  Username: string;
-  Firstname: string;
-  Lastname: string;
-  Shipname: string;
-  Role: string;
-  Products: string[];
 }
