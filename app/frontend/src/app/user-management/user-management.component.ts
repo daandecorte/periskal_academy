@@ -32,16 +32,16 @@ export class UserManagementComponent {
     let result = await fetch('api/users');
     this.userListRaw = await result.json();
     for (const el of this.userListRaw) {
-      var moduleCount = await this.getUserModules(Number(el.id));
-      var certificateCount = await this.getUserCertificates(Number(el.id));
+      let moduleCount = await this.getUserModules(Number(el.id));
+      //let certificateCount = await this.getUserCertificates(Number(el.id));
 
       var temp: IUserFull = {
         id: el.id || '-1',
         firstname: el.firstname || 'invalid',
         lastname: el.lastname || 'invalid',
         shipname: el.shipname || 'invalid',
-        products: `${moduleCount}` || '-1',
-        certificates: `${certificateCount}` || '-1',
+        products: `${moduleCount}`,
+        certificates: `-1`,
       };
 
       console.log(temp);
@@ -58,7 +58,7 @@ export class UserManagementComponent {
   }
 
   async getUserCertificates(id: number) {
-    return;
+    return `-1`;
     // API is er nog NIET
     var res = await fetch(`api/users/${id}/certificates`);
     var certData: IData[] = await res.json();

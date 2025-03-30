@@ -30,29 +30,28 @@ export class SkippersComponent {
     this.currentUser$ = this.authService.currentUser$;
     this.authService.currentUser$.subscribe((user) => {
       if (user?.Role.toUpperCase() == 'FLEETMANAGER') {
-        this.skippersListPerId = user.Skippers.map((skipper) =>
-          skipper.ID.slice(3)
-        );
+        this.skippersListPerId = user.Skippers.map((skipper) => skipper.ID);
         this.getUsers();
       }
     });
   }
 
   async getUsers() {
-    for (let id in this.skippersListPerId) {
+    for (const id of this.skippersListPerId) {
+      console.log(id);
       let result = await fetch(`api/users/periskal_id/${id}`);
       let temp: IUsers = await result.json();
 
-      var moduleCount = await this.getUserModules(Number(temp.id));
-      //var certificateCount = await this.getUserCertificates(Number(temp.id));
+      let moduleCount = await this.getUserModules(Number(temp.id));
+      // let certificateCount = await this.getUserCertificates(Number(temp.id));
 
-      var tempF: IUserFull = {
+      let tempF: IUserFull = {
         id: temp.id,
         firstname: temp.firstname,
         lastname: temp.lastname,
         shipname: temp.shipname,
         products: `${moduleCount}`,
-        certificates: '1',
+        certificates: `-1`,
       };
 
       this.skippersList.push(tempF);
