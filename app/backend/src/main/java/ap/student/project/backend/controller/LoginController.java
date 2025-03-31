@@ -1,47 +1,44 @@
 package ap.student.project.backend.controller;
 
+import ap.student.project.backend.authentication.crypto;
 import ap.student.project.backend.dto.LoginRequest;
 import ap.student.project.backend.dto.UserDTO;
 import ap.student.project.backend.entity.Language;
 import ap.student.project.backend.service.UserService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.fasterxml.jackson.databind.util.JSONWrappedObject;
-import org.json.JSONObject;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import org.json.JSONObject;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.crypto.Cipher;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import javax.crypto.*;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.spec.KeySpec;
 import java.util.Base64;
 
-import ap.student.project.backend.authentication.crypto;
-
 @RestController
 public class LoginController {
     public final UserService userService;
+
     public LoginController(UserService userService) {
         this.userService = userService;
     }
+
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public String login(@RequestBody LoginRequest loginRequest) throws IOException {
         String username = loginRequest.username().orElse(null);
@@ -89,7 +86,7 @@ public class LoginController {
 
             try {
                 JSONObject json = new JSONObject(XMLtoJSON(response.toString(), "AuthenticateResult"));
-                        JSONObject authenticateResult = json
+                JSONObject authenticateResult = json
                         .getJSONObject("Body")
                         .getJSONObject("AuthenticateResponse")
                         .getJSONObject("AuthenticateResult");
@@ -97,7 +94,7 @@ public class LoginController {
                 String firstname = authenticateResult.getString("Firstname");
                 String lastname = authenticateResult.getString("Lastname");
                 String shipname = authenticateResult.optString("Shipname", "");
-                addUser(persikalId, firstname, lastname,shipname, language);
+                addUser(persikalId, firstname, lastname, shipname, language);
                 return json.toString();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -162,7 +159,7 @@ public class LoginController {
                 String firstname = authenticateResult.getString("Firstname");
                 String lastname = authenticateResult.getString("Lastname");
                 String shipname = authenticateResult.optString("Shipname", "");
-                addUser(persikalId, firstname, lastname,shipname, language);
+                addUser(persikalId, firstname, lastname, shipname, language);
                 return json.toString();
             } catch (Exception e) {
                 System.out.println("Error processing dongle authentication response: " + e.getMessage());
@@ -288,8 +285,9 @@ public class LoginController {
         }
         return null;
     }
+
     private void addUser(String persikalId, String firstname, String lastname, String shipname, String language) {
-        if(!userService.existsByPeriskalId(persikalId)) {
+        if (!userService.existsByPeriskalId(persikalId)) {
             UserDTO userDTO = new UserDTO(persikalId, firstname, lastname, shipname, Language.valueOf(language));
             userService.save(userDTO);
         }

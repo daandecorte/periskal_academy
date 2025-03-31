@@ -1,4 +1,4 @@
-package ap.student.project.backend.entity;
+/*package ap.student.project.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -14,13 +14,11 @@ public class Video {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "video_reference")
-    private String videoReference;
-    @Column(name="language")
-    private Language language;
+    @Column(name = "video_references")
+    private Map<Language, String> videoReferences;
 
-    public Video(String videoReference, Language language) {
-        this.videoReference = videoReference;
+    public Video(Map<Language, String> videoReferences) {
+        this.videoReferences = videoReference;
         this.language = language;
     }
 
@@ -33,3 +31,4 @@ public class Video {
                 '}';
     }
 }
+*/

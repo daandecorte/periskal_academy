@@ -3,13 +3,14 @@ package ap.student.project.backend.service;
 import ap.student.project.backend.dao.TrainingRepository;
 import ap.student.project.backend.dto.TrainingDTO;
 import ap.student.project.backend.dto.VideoDTO;
+import ap.student.project.backend.entity.Language;
 import ap.student.project.backend.entity.Training;
-import ap.student.project.backend.entity.Video;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TrainingService {
@@ -52,9 +53,9 @@ public class TrainingService {
         if (training == null) {
             throw new NotFoundException("Training with id " + id + " not found");
         }
-        Video video = new Video();
-        BeanUtils.copyProperties(videoDTO, video);
-        training.setVideo(video);
+        Map<Language, String> videoReference = training.getVideoReference();
+        videoReference.put(videoDTO.language(), videoDTO.videoReference());
+        training.setVideoReference(videoReference);
         trainingRepository.save(training);
     }
 }
