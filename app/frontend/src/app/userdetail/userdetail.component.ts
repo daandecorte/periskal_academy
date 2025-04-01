@@ -30,7 +30,7 @@ export class UserdetailComponent {
     this.getUserInfo()
 
     this.languageService.currentLanguage$.subscribe((language) => {
-      this.currentLanguage = language as keyof Translated; // Type assertion
+      this.currentLanguage = language as keyof Translated;
     });
   }
 }

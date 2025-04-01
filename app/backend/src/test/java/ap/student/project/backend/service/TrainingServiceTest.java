@@ -83,7 +83,7 @@ class TrainingServiceTest {
     void testUpdateTraining_NotFound() {
         when(trainingRepository.findById(1)).thenReturn(Optional.empty());
 
-        TrainingDTO dto = new TrainingDTO(null, null, null);
+        TrainingDTO dto = new TrainingDTO(null, null, null, 1);
         assertThrows(NotFoundException.class, () -> trainingService.updateTraining(1, dto));
     }
 

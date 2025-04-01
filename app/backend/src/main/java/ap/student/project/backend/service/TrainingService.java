@@ -4,6 +4,7 @@ import ap.student.project.backend.dao.TrainingRepository;
 import ap.student.project.backend.dto.TrainingDTO;
 import ap.student.project.backend.dto.VideoDTO;
 import ap.student.project.backend.entity.Language;
+import ap.student.project.backend.entity.Module;
 import ap.student.project.backend.entity.Training;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.springframework.beans.BeanUtils;
@@ -15,15 +16,22 @@ import java.util.Map;
 @Service
 public class TrainingService {
     private final TrainingRepository trainingRepository;
+    private final ModuleService moduleService;
 
-    public TrainingService(TrainingRepository trainingRepository) {
+    public TrainingService(TrainingRepository trainingRepository, ModuleService moduleService) {
         this.trainingRepository = trainingRepository;
+        this.moduleService = moduleService;
     }
     public List<Training> getAllTrainings() {
         return trainingRepository.findAll();
     }
     public void save(TrainingDTO trainingDTO) {
         Training training = new Training();
+        Module module = moduleService.findById(trainingDTO.moduleId());
+        if(module == null) {
+            throw new NotFoundException("Module with id " + trainingDTO.moduleId() + "not found");
+        }
+        training.setModule(module);
         BeanUtils.copyProperties(trainingDTO, training);
         trainingRepository.save(training);
     }
