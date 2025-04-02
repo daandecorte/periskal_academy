@@ -4,25 +4,33 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageService } from '../services/language.service';
 import { Subscription } from 'rxjs';
+import { AuthService, Role } from '../services/auth.service';
+import { IUser } from '../types/user-info';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-userdetail',
-  imports: [CommonModule, TranslatePipe],
+  imports: [CommonModule, TranslatePipe, FormsModule],
   templateUrl: './userdetail.component.html',
   styleUrl: './userdetail.component.css'
 })
 export class UserdetailComponent {
+  Role=Role;
   userId: string | null = '';
   userdetails: UserDetail[] | undefined;
+  filteredUserDetails: UserDetail[] = [];
   currentLanguage: keyof Translated = 'ENGLISH';
+  selectedStatus: string = 'ALL';
+  searchQuery: string = '';
 
-  constructor(private route: ActivatedRoute, private languageService: LanguageService) {
+  constructor(private route: ActivatedRoute, private languageService: LanguageService, public authService: AuthService) {
   }
   async getUserInfo() {
     let modules = await fetch(`/api/users/${this.userId}/modules`);
     this.userdetails = await modules.json();
     if(this.userdetails) {
-      await console.log(this.userdetails[0]);
+      await console.log(this.userdetails);
+      this.filteredUserDetails = await this.userdetails;
     }
   }
   ngOnInit(): void {
@@ -32,6 +40,16 @@ export class UserdetailComponent {
     this.languageService.currentLanguage$.subscribe((language) => {
       this.currentLanguage = language as keyof Translated;
     });
+  }
+  filterModules() {
+    if(this.userdetails) {
+      this.filteredUserDetails = this.userdetails.filter(detail => {
+        const matchesStatus = this.selectedStatus === '' || this.selectedStatus === 'ALL' || detail.module_progress?.status === this.selectedStatus;
+        const matchesTitle = this.searchQuery === '' || detail.module.title?.[this.currentLanguage].toLowerCase().includes(this.searchQuery.toLowerCase());
+  
+        return matchesStatus && matchesTitle;
+      });
+    }
   }
 }
 

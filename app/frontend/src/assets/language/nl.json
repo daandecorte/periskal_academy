@@ -1,6 +1,5 @@
 {
   "LOGOUT": "Uitloggen",
-  "MODULES": "Modules",
   "ENTER_USER_NAME": "Voer uw gebruikersnaam in",
   "USERNAME": "Gebruikersnaam",
   "PASSWORD": "Wachtwoord",
@@ -35,7 +34,12 @@
   "COMPLETED": "Voltooid",
   "SEARCH_MODULES": "Modules zoeken...",
   "OVERALL_PROGRESS": "Totale voortgang",
-  "USER_DETAIL": "Gebruikersgegevens"
+  "USER_DETAIL": "Gebruikersgegevens",
+  "NO_EXAM_ATTEMPTS_YET": "Nog geen examenpogingen",
+  "ATTEMPT": "Poging",
+  "ASSIGNED_ON": "Toegewezen op",
+  "LAST_ACTIVITY": "Laatste activiteit",
+  "EXAM_STATUS": "Examenstatus"
   },
   "ADMIN_EDIT_MODULES": {
     "TITLE": "Module Bewerken",

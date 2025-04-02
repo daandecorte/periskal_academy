@@ -1,6 +1,5 @@
 {
   "LOGOUT": "Se déconnecter",
-  "MODULES": "Modules",
   "ENTER_USER_NAME": "Entrez votre nom d'utilisateur",
   "USERNAME": "Nom d'utilisateur",
   "PASSWORD": "Mot de passe",
@@ -35,7 +34,12 @@
   "COMPLETED": "Terminé",
   "SEARCH_MODULES": "Rechercher des modules...",
   "OVERALL_PROGRESS": "Progression globale",
-  "USER_DETAIL": "Détail de l'utilisateur"
+  "USER_DETAIL": "Détail de l'utilisateur",
+  "NO_EXAM_ATTEMPTS_YET": "Aucune tentative d'examen pour l'instant",
+  "ATTEMPT": "Tentative",
+  "ASSIGNED_ON": "Assigné le",
+  "LAST_ACTIVITY": "Dernière activité",
+  "EXAM_STATUS": "Statut de l'examen"
   },
   "ADMIN_EDIT_MODULES": {
     "TITLE": "Modifier le Module",

@@ -1,6 +1,5 @@
 {
   "LOGOUT": "Logout",
-  "MODULES": "Modules",
   "ENTER_USER_NAME": "Enter your username",
   "USERNAME": "Username",
   "PASSWORD": "Password",
@@ -90,6 +89,11 @@
     "COMPLETED": "Completed",
     "SEARCH_MODULES": "Search Modules...",
     "OVERALL_PROGRESS": "Overall Progress",
-    "USER_DETAIL": "User Detail"
+    "USER_DETAIL": "User Detail",
+    "NO_EXAM_ATTEMPTS_YET":"No Exam Attempts Yet",
+    "ATTEMPT": "Attempt",
+    "ASSIGNED_ON": "Assigned On",
+    "LAST_ACTIVITY": "Last Activity",
+    "EXAM_STATUS":"Exam Status"
   }
 }

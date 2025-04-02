@@ -31,4 +31,13 @@ public class ModuleProgressController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+    @PutMapping(value="module_progress/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity updateModuleProgress(@PathVariable("id") int id, @RequestBody ModuleProgressDTO moduleProgressDTO) {
+        try {
+            this.moduleProgressService.update(id, moduleProgressDTO);
+            return ResponseEntity.ok(moduleProgressDTO);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }
