@@ -87,7 +87,6 @@ export class LoginComponent {
   }
 
   onLanguageChange() {
-    this.languageService.setLanguage(this.language);
     this.translate.use(this.mapLanguage(this.language));
   }
 
@@ -151,11 +150,6 @@ export class LoginComponent {
           language: this.language,
         }),
       });
-
-      // Log the raw response for debugging
-      const responseText = await result.clone().text();
-      console.log('Raw response:', responseText);
-
       await this.processLoginResponse(result);
     } catch (error) {
       console.error('Login error:', error);
@@ -198,6 +192,7 @@ export class LoginComponent {
       }
 
       this.authService.setCurrentUser(userData);
+      this.languageService.setLanguage(this.language);
       this.router.navigate(['/modules']);
     } else {
       // Handle specific error cases

@@ -1,6 +1,5 @@
 {
   "LOGOUT": "Abmelden",
-  "MODULES": "Module",
   "ENTER_USER_NAME": "Geben Sie Ihren Benutzernamen ein",
   "USERNAME": "Benutzername",
   "PASSWORD": "Passwort",
@@ -26,5 +25,79 @@
     "ASSIGNED_ON": "Zugewiesen am {{date}}",
     "INVALID_DATE": "Ungültiges Datum",
     "START_NOW": "Jetzt starten"
-  }
+  },
+  "USER_DETAIL": {
+  "ASSIGN_NEW_CERTIFICATE": "Neues Zertifikat zuweisen",
+  "MODULES_PROGRESS": "Modulfortschritt",
+  "ALL_STATUS": "Alle Status",
+  "IN_PROGRESS": "In Bearbeitung",
+  "COMPLETED": "Abgeschlossen",
+  "SEARCH_MODULES": "Module suchen...",
+  "OVERALL_PROGRESS": "Gesamtfortschritt",
+  "USER_DETAIL": "Benutzerdetails",
+  "NO_EXAM_ATTEMPTS_YET": "Noch keine Prüfungsversuche",
+  "ATTEMPT": "Versuch",
+  "ASSIGNED_ON": "Zugewiesen am",
+  "LAST_ACTIVITY": "Letzte Aktivität",
+  "EXAM_STATUS": "Prüfungsstatus"
+  },
+  "ADMIN_EDIT_MODULES": {
+    "TITLE": "Modul Bearbeiten",
+    "BASIC_INFO_TAB": "Grundlegende Informationen",
+    "TRAININGS_TAB": "Schulungen",
+    "EXAM_TAB": "Prüfung",
+    "SUBTITLE": "Grundlegende Informationen",
+    "SWITCH": "Modulstatus",
+    "MODULE_TITLE": "Modultitel",
+    "DESCRIPTION": "Beschreibung",
+    "SAVE_BUTTON": "Speichern",
+    "ENTER_MODULE_TITLE": "Modultitel eingeben",
+    "ENTER_DESCRIPTION": "Beschreibung eingeben",
+    "TRAINING_TITLE": "Schulungstitel",
+    "TRAINING_DESCRIPTION": "Schulungsbeschreibung",
+    "VIDEO": "Videoinhalt",
+    "VIDEO_DESCRIPTION": "Klicken zum Hochladen oder per Drag & Drop ablegen",
+    "VIDEO_FORMAT": "MP4, WebM oder OGG (MAX: 80MB)",
+    "QUESTION_POOL": "Fragenpool",
+    "ADD_QUESTION": "+ Frage hinzufügen",
+    "QUESTION_TYPE": "Fragetyp",
+    "MULTIPLE_CHOICE": "Mehrfachauswahl",
+    "TRUE_FALSE": "Wahr/Falsch",
+    "QUESTION_TEXT": "Fragetext",
+    "ANSWER_OPTION": "Antwortoptionen",
+    "OPTION_PLACEHOLDER": "Antwortoption",
+    "ADD_OPTION": "+ Option hinzufügen"
+
+},
+"ADMIN_ADD_MODULES": {
+    "EXAM_TITLE": "Prüfungseinstellungen",
+    "TIME_LIMIT": "Zeitlimit (Minuten)",
+    "QUETIONS": "Fragen pro Prüfung",
+    "PASSING_SCORE": "Erforderliche Bestehensnote (%)",
+    "MAX_ATTEMPTS": "Maximale Wiederholungsversuche",
+    "MAX_ATTEMPTS_DESCRIPTION": "Unbegrenzte Versuche durch Eingabe von 0 festlegen",
+    "MODULE_SETTINGS": "Moduleinstellungen",
+    "ACTIVE": "Aktiv",
+    "CERTIFICATE": "Zertifikat erforderlich",
+    "REQUIRED": "Erforderlich",
+    "CERTIFICATE_SETTINGS": "Zertifikateinstellungen",
+    "PERIOD": "Gültigkeitsdauer (Jahre)",
+    "PRICE": "Zertifikatspreis (€)",
+    "MODULE_OVERVIEW": "Modulübersicht",
+    "MODULE_BASIC_INFO": "Grundlegende Modulinformationen abgeschlossen",
+    "MODULE_TRAINING": "3 Schulungen erstellt",
+    "MODULE_EXAM": "15 Prüfungsfragen hinzugefügt",
+    "TRAINING_TITLE": "Schulungen",
+    "NO_TRAINING_DESCRIPTION": "Noch keine Schulungen hinzugefügt. Klicken Sie auf 'Schulung hinzufügen', um Ihre erste Schulung zu erstellen.",
+    "ADD_TRAINING": "+ Schulung hinzufügen",
+    "TRAINING_CANCEL": "Abbrechen",
+    "TRAINING_SAVE": "Schulung speichern",
+    "TITLE": "Neues Modul erstellen",
+    "PREVIOUS": "Zurück",
+    "NEXT": "Weiter",
+    "PUBLISH": "Veröffentlichen"
+}
+
+
+
 }

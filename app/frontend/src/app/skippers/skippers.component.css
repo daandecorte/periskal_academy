@@ -178,6 +178,7 @@ td {
   background-color: #f0f0f0;
   border-radius: 5px;
   overflow: hidden;
+  margin-right: 60px;
 }
 
 .progress {

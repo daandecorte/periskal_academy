@@ -17,12 +17,12 @@ public class UserModuleController {
         this.userModuleService = userModuleService;
     }
 
-    @GetMapping(value = "/userModules", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/user_modules", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getUserModules() {
         return ResponseEntity.ok(this.userModuleService.findAll());
     }
 
-    @PostMapping(value = "/userModules", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/user_modules", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createUserModule(@RequestBody UserModuleDTO userModuleDTO) {
         try {
             this.userModuleService.save(userModuleDTO);

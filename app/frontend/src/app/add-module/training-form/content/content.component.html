@@ -1,36 +1,38 @@
 <form class="form-container">
   <div class="form-group">
-    <label>Module Title</label>
+    <label>{{ "ADMIN_EDIT_MODULES.TRAINING_TITLE" | translate }}</label>
     <input type="text" class="form-control" />
   </div>
 
   <div class="form-group">
-    <label>Module Description</label>
+    <label>{{ "ADMIN_EDIT_MODULES.TRAINING_DESCRIPTION" | translate }}</label>
     <textarea class="form-control"></textarea>
   </div>
 
   <div class="form-group">
-    <label>Video Content</label>
+    <label>{{ "ADMIN_EDIT_MODULES.VIDEO" | translate }}</label>
     <div class="video-upload">
       <div class="language-selection">
-        <button class="lang-btn active">NL</button>
-        <button class="lang-btn">FR</button>
-        <button class="lang-btn">DE</button>
-        <button class="lang-btn active">EN</button>
+        <button class="lang-btn" [class.active]="selectedLanguage==='DUTCH'" (click)="changeVideoLanguage('DUTCH'); $event.preventDefault()">NL</button>
+        <button class="lang-btn" [class.active]="selectedLanguage==='FRENCH'" (click)="changeVideoLanguage('FRENCH'); $event.preventDefault()">FR</button>
+        <button class="lang-btn" [class.active]="selectedLanguage==='GERMAN'" (click)="changeVideoLanguage('GERMAN'); $event.preventDefault()">DE</button>
+        <button class="lang-btn" [class.active]="selectedLanguage==='ENGLISH'" (click)="changeVideoLanguage('ENGLISH'); $event.preventDefault()">EN</button>
       </div>
       <div class="upload-box">
         <div class="upload-icon">⬆</div>
-        <p>Click to upload or drag and drop</p>
-        <p>MP4, WebM or OGG (MAX: 80MB)</p>
-        <input type="file" accept="video/mp4,video/webm,video/ogg" />
+        <p>{{ "ADMIN_EDIT_MODULES.VIDEO_DESCRIPTION" | translate }}</p>
+        <p>{{ "ADMIN_EDIT_MODULES.VIDEO_FORMAT" | translate }}</p>
+        <input type="file" id="videoInput" accept="video/mp4,video/webm,video/ogg" (change)="uploadVideo()"/>
       </div>
     </div>
   </div>
 
   <div class="form-actions">
     <button class="cancel-btn" [routerLink]="['/add-module/trainings']">
-      Cancel
+      {{ "ADMIN_ADD_MODULES.TRAINING_CANCEL" | translate }}
     </button>
-    <button class="save-btn">Save Training</button>
+    <button class="save-btn">
+      {{ "ADMIN_ADD_MODULES.TRAINING_SAVE" | translate }}
+    </button>
   </div>
 </form>

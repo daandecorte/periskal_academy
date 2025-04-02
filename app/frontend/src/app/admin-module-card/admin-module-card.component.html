@@ -2,7 +2,11 @@
   <div class="module-header">
     <span class="module-title">{{ module.title }} Module</span>
     <div class="actions">
-      <button class="edit-btn" aria-label="Edit module">
+      <button
+        class="edit-btn"
+        aria-label="Edit module"
+        [routerLink]="['/edit-module']"
+      >
         <fa-icon [icon]="faPencilAlt"></fa-icon>
       </button>
       <button class="delete-btn" aria-label="Delete module">

@@ -17,30 +17,38 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "user_id")
-    private String userId;
+    @Column(name = "periskal_id")
+    private String periskalId;
+    @Column(name="firstname")
+    private String firstname;
+    @Column(name="lastname")
+    private String lastname;
+    @Column(name="shipname")
+    private String shipname;
     @Enumerated(EnumType.STRING)
     @Column(name = "language")
     private Language language;
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JsonIgnore
-    private List<UserExam> userExams;
     @OneToMany( mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JsonIgnore
     private List<UserModule> userModules;
 
-    public User(String userId, Language language) {
-        this.userId = userId;
+    public User(String periskalId, String firstname, String lastname, String shipname, Language language) {
+        this.periskalId = periskalId;
         this.language = language;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.shipname = shipname;
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", userId='" + userId + '\'' +
+                ", userId='" + periskalId + '\'' +
                 ", language=" + language +
-                ", userExams=" + userExams +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", shipname='" + shipname + '\'' +
                 ", userModules=" + userModules +
                 '}';
     }
