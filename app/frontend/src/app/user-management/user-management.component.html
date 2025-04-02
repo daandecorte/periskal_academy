@@ -34,7 +34,7 @@
         </thead>
         <tbody>
           @for (user of filteredUserList; track $index) {
-          <tr [routerLink]="['/user-detail', user.id]">
+          <tr [routerLink]="['/userdetail', user.id]">
             <td class="name-cell">
               <div class="initials">
                 {{ user.firstname.charAt(0).toUpperCase()
