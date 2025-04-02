@@ -38,7 +38,7 @@
         </thead>
         <tbody>
           @for (skipper of filteredSkippersList; track $index) {
-          <tr [routerLink]="['/user-detail', skipper.id]">
+          <tr [routerLink]="['/userdetail', skipper.id]">
             <td class="name-cell">
               <div class="initials">
                 {{ skipper.firstname.charAt(0).toUpperCase()
