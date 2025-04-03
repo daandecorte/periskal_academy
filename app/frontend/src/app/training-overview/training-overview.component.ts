@@ -3,7 +3,16 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ModuleService, Module } from '../services/module.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPlayCircle, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faPlayCircle, 
+  faCheckCircle, 
+  faBook, 
+  faClock, 
+  faQuestionCircle,
+  faArrowLeft,
+  faCertificate,
+  faExclamationTriangle
+} from '@fortawesome/free-solid-svg-icons';
 
 interface TrainingSection {
   id: number;
@@ -31,6 +40,12 @@ export class TrainingOverviewComponent implements OnInit {
   // Font Awesome icons
   faPlayCircle = faPlayCircle;
   faCheckCircle = faCheckCircle;
+  faBook = faBook;
+  faClock = faClock;
+  faQuestionCircle = faQuestionCircle;
+  faArrowLeft = faArrowLeft;
+  faCertificate = faCertificate;
+  faExclamationTriangle = faExclamationTriangle;
 
   constructor(
     private route: ActivatedRoute,

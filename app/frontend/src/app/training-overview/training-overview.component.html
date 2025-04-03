@@ -1,6 +1,5 @@
 <div class="training-overview-container">
   <div class="module-header">
-    <span class="module-icon">📚</span>
     <h1 class="module-title">{{ module?.title }}</h1>
   </div>
 
@@ -17,21 +16,24 @@
       <div class="training-section">
         <div class="section-content">
           <div class="section-header">
-            <h3>{{ section.id }}. {{ section.title }}</h3>
-            @if (section.completed) {
-            <span class="status-badge"
-              >{{ modulesCompleted }} of {{ totalModules }} completed</span
-            >
-            }
+            <h3>
+              {{ section.id }}. {{ section.title }}
+              @if (section.completed) {
+              <span class="status-badge">
+                <fa-icon [icon]="faCheckCircle" class="button-icon"></fa-icon>
+                completed</span
+              >
+              }
+            </h3>
           </div>
           <p class="section-description">{{ section.description }}</p>
           <div class="section-meta">
             <span class="meta-item">
-              <span class="meta-icon">⏱️</span>
+              <fa-icon [icon]="faClock" class="meta-icon"></fa-icon>
               {{ section.duration }}
             </span>
             <span class="meta-item">
-              <span class="meta-icon">❓</span>
+              <fa-icon [icon]="faQuestionCircle" class="meta-icon"></fa-icon>
               {{ section.questionCount }} questions
             </span>
           </div>
@@ -42,6 +44,11 @@
           [class.start-button]="!section.completed"
           (click)="goToTraining(section.id)"
         >
+          @if (section.completed) {
+          <fa-icon [icon]="faPlayCircle" class="button-icon"></fa-icon>
+          } @else {
+          <fa-icon [icon]="faPlayCircle" class="button-icon"></fa-icon>
+          }
           {{ getActionText(section.completed) }}
         </button>
       </div>
@@ -64,12 +71,16 @@
     </div>
 
     <div class="action-buttons">
-      <button class="back-button" (click)="goBack()">Back</button>
+      <button class="back-button" (click)="goBack()">
+        <fa-icon [icon]="faArrowLeft" class="button-icon"></fa-icon>
+        Back
+      </button>
       <button
         class="certificate-button"
         [disabled]="modulesCompleted < totalModules"
         (click)="goToCertificate()"
       >
+        <fa-icon [icon]="faCertificate" class="button-icon"></fa-icon>
         Go for Certificate
       </button>
     </div>
