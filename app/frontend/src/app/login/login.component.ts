@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
@@ -111,7 +111,9 @@ export class LoginComponent {
       await this.processLoginResponse(result);
     } catch (error) {
       console.error('Dongle login error:', error);
-      this.showError('Failed to connect to authentication server. Please check your internet connection and try again.');
+      this.showError(
+        'Failed to connect to authentication server. Please check your internet connection and try again.'
+      );
     }
   }
 
@@ -153,7 +155,9 @@ export class LoginComponent {
       await this.processLoginResponse(result);
     } catch (error) {
       console.error('Login error:', error);
-      this.showError('Failed to connect to authentication server. Please check your internet connection and try again.');
+      this.showError(
+        'Failed to connect to authentication server. Please check your internet connection and try again.'
+      );
     }
   }
 
@@ -179,13 +183,16 @@ export class LoginComponent {
       } else if (data.Body.Authenticate_DongleResponse) {
         userData = {
           ...data.Body.Authenticate_DongleResponse.Authenticate_DongleResult,
-          Products: data.Body.Authenticate_DongleResponse.Authenticate_DongleResult.Products?.string || [],
-          Skippers: data.Body.Authenticate_DongleResponse.Authenticate_DongleResult.Skippers?.Client?.map(
-            (skipper: any) => ({
-              ...skipper,
-              Products: skipper.Products?.string || []
-            })
-          ) || []
+          Products:
+            data.Body.Authenticate_DongleResponse.Authenticate_DongleResult
+              .Products?.string || [],
+          Skippers:
+            data.Body.Authenticate_DongleResponse.Authenticate_DongleResult.Skippers?.Client?.map(
+              (skipper: any) => ({
+                ...skipper,
+                Products: skipper.Products?.string || [],
+              })
+            ) || [],
         };
       } else {
         throw new Error('Unexpected response format from server');
@@ -197,17 +204,21 @@ export class LoginComponent {
     } else {
       // Handle specific error cases
       let errorMessage = 'Authentication failed.';
-      
+
       if (data.text.includes('Invalid username or password')) {
-        errorMessage = 'The username or password you entered is incorrect. Please try again.';
+        errorMessage =
+          'The username or password you entered is incorrect. Please try again.';
       } else if (data.text.includes('Dongle authentication failed')) {
-        errorMessage = 'The dongle code is invalid or expired. Please check the code and try again.';
+        errorMessage =
+          'The dongle code is invalid or expired. Please check the code and try again.';
       } else if (data.text.includes('Account locked')) {
-        errorMessage = 'Your account has been temporarily locked due to multiple failed attempts. Please try again later or contact support.';
+        errorMessage =
+          'Your account has been temporarily locked due to multiple failed attempts. Please try again later or contact support.';
       } else if (data.text.includes('Server error')) {
-        errorMessage = 'We encountered a server error while processing your request. Please try again later.';
+        errorMessage =
+          'We encountered a server error while processing your request. Please try again later.';
       }
-      
+
       this.showError(errorMessage);
     }
   }
@@ -216,6 +227,13 @@ export class LoginComponent {
     let textIncorrect = document.getElementById('textIncorrect');
     if (textIncorrect) {
       textIncorrect.innerText = message;
+    }
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.login();
     }
   }
 }

@@ -104,22 +104,22 @@ body {
   margin-right: 10px;
   color: #787878;
   background-color: #d7e1e7;
-  height: 23px;
-  width: 23px;
+  height: 24px;
+  width: 24px;
   border-radius: 5rem;
-  padding-left: 6px;
-  padding-top: 6px;
+  padding-left: 8px;
+  padding-top: 7px;
 }
 
 .section-header .info-icon {
   margin-right: 10px;
   color: #385cc7;
   background-color: #cfecfe;
-  height: 23px;
-  width: 23px;
+  height: 24px;
+  width: 24px;
   border-radius: 5rem;
-  padding-left: 6px;
-  padding-top: 6px;
+  padding-left: 8px;
+  padding-top: 7px;
 }
 
 .edit-icon {

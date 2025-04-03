@@ -27,8 +27,10 @@
         General
       </h2>
       <div>
+        @if(editorUser){
         <fa-icon [icon]="faPencil" class="edit-icon"></fa-icon>
         <fa-icon [icon]="faTrash" class="delete-icon"></fa-icon>
+        }
         <fa-icon
           [icon]="sectionsOpenState[0] ? faAngleUp : faAngleDown"
         ></fa-icon>
@@ -39,10 +41,12 @@
         <div class="text-flex">
           Always check your vessel's documentation before departure.
         </div>
+        @if(editorUser){
         <div class="icon-flex">
           <fa-icon [icon]="faPencil" class="edit-icon"></fa-icon>
           <fa-icon [icon]="faTrash" class="delete-icon"></fa-icon>
         </div>
+        }
       </div>
     </div>
   </div>
@@ -54,8 +58,10 @@
         Navigation Safety
       </h2>
       <div>
+        @if(editorUser){
         <fa-icon [icon]="faPencil" class="edit-icon"></fa-icon>
         <fa-icon [icon]="faTrash" class="delete-icon"></fa-icon>
+        }
         <fa-icon
           [icon]="sectionsOpenState[1] ? faAngleUp : faAngleDown"
         ></fa-icon>
@@ -66,10 +72,12 @@
         <div class="text-flex">
           Always check your vessel's documentation before departure.
         </div>
+        @if(editorUser){
         <div class="icon-flex">
           <fa-icon [icon]="faPencil" class="edit-icon"></fa-icon>
           <fa-icon [icon]="faTrash" class="delete-icon"></fa-icon>
         </div>
+        }
       </div>
     </div>
   </div>
