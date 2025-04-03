@@ -27,19 +27,20 @@
     "START_NOW": "Commencer"
   },
   "USER_DETAIL": {
-  "ASSIGN_NEW_CERTIFICATE": "Attribuer un nouveau certificat",
-  "MODULES_PROGRESS": "Progression des modules",
-  "ALL_STATUS": "Tous les statuts",
-  "IN_PROGRESS": "En cours",
-  "COMPLETED": "Terminé",
-  "SEARCH_MODULES": "Rechercher des modules...",
-  "OVERALL_PROGRESS": "Progression globale",
-  "USER_DETAIL": "Détail de l'utilisateur",
-  "NO_EXAM_ATTEMPTS_YET": "Aucune tentative d'examen pour l'instant",
-  "ATTEMPT": "Tentative",
-  "ASSIGNED_ON": "Assigné le",
-  "LAST_ACTIVITY": "Dernière activité",
-  "EXAM_STATUS": "Statut de l'examen"
+    "ASSIGN_NEW_CERTIFICATE": "Attribuer un nouveau certificat",
+    "ALL_STATUS": "Tous les statuts",
+    "IN_PROGRESS": "En cours",
+    "COMPLETED": "Terminé",
+    "OVERALL_PROGRESS": "Progression globale",
+    "USER_DETAIL": "Détail de l'utilisateur",
+    "NO_EXAM_ATTEMPTS_YET": "Aucune tentative d'examen pour l'instant",
+    "ATTEMPT": "Tentative",
+    "ASSIGNED_ON": "Assigné le",
+    "LAST_ACTIVITY": "Dernière activité",
+    "EXAM_STATUS": "Statut de l'examen",
+    "TRAININGS_PROGRESS": "Progression des formations",
+    "SEARCH_TRAININGS": "Rechercher des formations...",
+    "NO_TRAININGS_ASSIGNED": "Aucune formation n'est attribuée à cet utilisateur."
   },
   "ADMIN_EDIT_MODULES": {
     "TITLE": "Modifier le Module",

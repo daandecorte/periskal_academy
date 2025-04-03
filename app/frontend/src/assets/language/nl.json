@@ -27,19 +27,20 @@
     "START_NOW": "Start nu"
   },
   "USER_DETAIL": {
-  "ASSIGN_NEW_CERTIFICATE": "Nieuw certificaat toewijzen",
-  "MODULES_PROGRESS": "Voortgang van modules",
-  "ALL_STATUS": "Alle statussen",
-  "IN_PROGRESS": "Bezig",
-  "COMPLETED": "Voltooid",
-  "SEARCH_MODULES": "Modules zoeken...",
-  "OVERALL_PROGRESS": "Totale voortgang",
-  "USER_DETAIL": "Gebruikersgegevens",
-  "NO_EXAM_ATTEMPTS_YET": "Nog geen examenpogingen",
-  "ATTEMPT": "Poging",
-  "ASSIGNED_ON": "Toegewezen op",
-  "LAST_ACTIVITY": "Laatste activiteit",
-  "EXAM_STATUS": "Examenstatus"
+    "ASSIGN_NEW_CERTIFICATE": "Nieuw certificaat toewijzen",
+    "ALL_STATUS": "Alle statussen",
+    "IN_PROGRESS": "Bezig",
+    "COMPLETED": "Voltooid",
+    "OVERALL_PROGRESS": "Totale voortgang",
+    "USER_DETAIL": "Gebruikersgegevens",
+    "NO_EXAM_ATTEMPTS_YET": "Nog geen examenpogingen",
+    "ATTEMPT": "Poging",
+    "ASSIGNED_ON": "Toegewezen op",
+    "LAST_ACTIVITY": "Laatste activiteit",
+    "EXAM_STATUS": "Examenstatus",
+    "TRAININGS_PROGRESS": "Voortgang van trainingen",
+    "SEARCH_TRAININGS": "Zoek trainingen...",
+    "NO_TRAININGS_ASSIGNED": "Deze gebruiker heeft geen trainingen toegewezen."
   },
   "ADMIN_EDIT_MODULES": {
     "TITLE": "Module Bewerken",
