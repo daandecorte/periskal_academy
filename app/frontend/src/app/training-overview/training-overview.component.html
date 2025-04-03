@@ -5,12 +5,12 @@
 
   <div class="module-content">
     <div class="about-section">
-      <h2>About this Module</h2>
+      <h2>About this Training</h2>
       <p>{{ module?.description }}</p>
     </div>
 
     <div class="training-sections">
-      <h2>Training Sections:</h2>
+      <h2>Modules:</h2>
 
       @for (section of trainingSections; track section.id) {
       <div class="training-section">
@@ -85,7 +85,7 @@
           Go for Certificate
         </button>
         <div class="tooltip" *ngIf="modulesCompleted < totalModules">
-          Please complete all trainings first!
+          Please complete all modules first!
         </div>
       </div>
     </div>
