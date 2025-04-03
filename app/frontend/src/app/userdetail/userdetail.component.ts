@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-userdetail',
-  imports: [CommonModule, TranslatePipe, FormsModule],
+  imports: [CommonModule, TranslatePipe, FormsModule, DatePipe],
   templateUrl: './userdetail.component.html',
   styleUrl: './userdetail.component.css'
 })

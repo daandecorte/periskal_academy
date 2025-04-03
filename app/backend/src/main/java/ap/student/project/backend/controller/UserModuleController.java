@@ -1,6 +1,7 @@
 package ap.student.project.backend.controller;
 
 import ap.student.project.backend.dto.UserModuleDTO;
+import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import ap.student.project.backend.service.UserModuleService;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,9 @@ public class UserModuleController {
             return ResponseEntity.status(HttpStatus.CREATED).body(userModuleDTO);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+        catch (MissingArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 }

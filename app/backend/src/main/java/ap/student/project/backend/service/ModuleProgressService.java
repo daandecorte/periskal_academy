@@ -6,6 +6,7 @@ import ap.student.project.backend.dto.UserDTO;
 import ap.student.project.backend.entity.ModuleProgress;
 import ap.student.project.backend.entity.User;
 import ap.student.project.backend.entity.UserModule;
+import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,9 @@ public class ModuleProgressService {
 
     public void save(ModuleProgressDTO moduleProgressDTO) {
         ModuleProgress moduleProgress = new ModuleProgress();
+        if(moduleProgressDTO.userModuleId()==0) {
+            throw new MissingArgumentException("user_module_id is missing");
+        }
         UserModule userModule = userModuleService.findById(moduleProgressDTO.userModuleId());
         moduleProgress.setUserModule(userModule);
         BeanUtils.copyProperties(moduleProgressDTO, moduleProgress);
