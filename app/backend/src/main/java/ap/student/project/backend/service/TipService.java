@@ -15,12 +15,10 @@ import java.util.List;
 @Service
 public class TipService {
     private final TipRepository tipRepository;
-    private final ModuleService moduleService;
 
     @Autowired
-    public TipService(TipRepository tipRepository, ModuleService moduleService) {
+    public TipService(TipRepository tipRepository) {
         this.tipRepository = tipRepository;
-        this.moduleService = moduleService;
     }
 
     public List<Tip> findAll() { return tipRepository.findAll(); }
@@ -34,8 +32,7 @@ public class TipService {
     }
 
     public Tip save(TipDTO tipDTO){
-        Module module = moduleService.findById((tipDTO.moduleId()));
-        Tip tip = new Tip(tipDTO.text(), module);
+        Tip tip = new Tip(tipDTO.title(), tipDTO.text());
         return tipRepository.save(tip);
     }
 
@@ -44,12 +41,8 @@ public class TipService {
         if (updatedTip == null) {
             throw new NotFoundException("Tip with id " + id + " not found");
         }
+        updatedTip.setTitle(tipDTO.title());
         updatedTip.setText(tipDTO.text());
-        try{
-            updatedTip.setModule(moduleService.findById(tipDTO.moduleId()));
-        } catch (NotFoundException e) {
-            updatedTip.setModule(null);
-        }
         tipRepository.save(updatedTip);
     }
 
