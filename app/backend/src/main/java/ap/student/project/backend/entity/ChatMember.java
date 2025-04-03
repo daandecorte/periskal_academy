@@ -1,5 +1,6 @@
 package ap.student.project.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class ChatMember {
     private User user;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="chat_id")
+    @JsonIgnore
     private Chat chat;
     @OneToMany(mappedBy = "chatMember", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<Message> messages;

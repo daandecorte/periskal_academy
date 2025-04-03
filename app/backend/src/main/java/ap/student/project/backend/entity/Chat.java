@@ -20,15 +20,12 @@ public class Chat {
     private int id;
     @OneToMany(mappedBy = "chat", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<ChatMember> chatMembers;
-    @OneToMany(mappedBy = "chat", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    private Set<Message> messages;
     @Enumerated(EnumType.STRING)
     @Column(name = "chat_status")
     private ChatStatus chatStatus;
 
-    public Chat(Set<ChatMember> chatMembers, Set<Message> messages, ChatStatus chatStatus) {
+    public Chat(Set<ChatMember> chatMembers, ChatStatus chatStatus) {
         this.chatMembers = chatMembers;
-        this.messages = messages;
         this.chatStatus = chatStatus;
     }
 }
