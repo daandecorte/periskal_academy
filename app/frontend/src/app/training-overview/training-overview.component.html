@@ -75,14 +75,19 @@
         <fa-icon [icon]="faArrowLeft" class="button-icon"></fa-icon>
         Back
       </button>
-      <button
-        class="certificate-button"
-        [disabled]="modulesCompleted < totalModules"
-        (click)="goToCertificate()"
-      >
-        <fa-icon [icon]="faCertificate" class="button-icon"></fa-icon>
-        Go for Certificate
-      </button>
+      <div class="tooltip-container">
+        <button
+          class="certificate-button"
+          [disabled]="modulesCompleted < totalModules"
+          (click)="goToCertificate()"
+        >
+          <fa-icon [icon]="faCertificate" class="button-icon"></fa-icon>
+          Go for Certificate
+        </button>
+        <div class="tooltip" *ngIf="modulesCompleted < totalModules">
+          Please complete all trainings first!
+        </div>
+      </div>
     </div>
   </div>
 </div>

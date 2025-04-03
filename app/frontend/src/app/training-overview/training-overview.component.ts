@@ -95,7 +95,7 @@ export class TrainingOverviewComponent implements OnInit {
         id: 2,
         title: 'Emergency Procedures',
         description: 'Learn how to handle emergency situations',
-        completed: false,
+        completed: true,
         duration: '11 min video',
         questionCount: 2
       },
