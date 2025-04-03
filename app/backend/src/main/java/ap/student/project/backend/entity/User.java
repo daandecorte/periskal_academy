@@ -31,6 +31,9 @@ public class User {
     @OneToMany( mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JsonIgnore
     private List<UserTraining> userTrainings;
+    @OneToMany( mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JsonIgnore
+    private List<ChatMember> chatMembers;
 
     public User(String periskalId, String firstname, String lastname, String shipname, Language language) {
         this.periskalId = periskalId;
