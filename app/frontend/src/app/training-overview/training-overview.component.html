@@ -1,0 +1,77 @@
+<div class="training-overview-container">
+  <div class="module-header">
+    <span class="module-icon">📚</span>
+    <h1 class="module-title">{{ module?.title }}</h1>
+  </div>
+
+  <div class="module-content">
+    <div class="about-section">
+      <h2>About this Module</h2>
+      <p>{{ module?.description }}</p>
+    </div>
+
+    <div class="training-sections">
+      <h2>Training Sections:</h2>
+
+      @for (section of trainingSections; track section.id) {
+      <div class="training-section">
+        <div class="section-content">
+          <div class="section-header">
+            <h3>{{ section.id }}. {{ section.title }}</h3>
+            @if (section.completed) {
+            <span class="status-badge"
+              >{{ modulesCompleted }} of {{ totalModules }} completed</span
+            >
+            }
+          </div>
+          <p class="section-description">{{ section.description }}</p>
+          <div class="section-meta">
+            <span class="meta-item">
+              <span class="meta-icon">⏱️</span>
+              {{ section.duration }}
+            </span>
+            <span class="meta-item">
+              <span class="meta-icon">❓</span>
+              {{ section.questionCount }} questions
+            </span>
+          </div>
+        </div>
+        <button
+          class="action-button"
+          [class.review-button]="section.completed"
+          [class.start-button]="!section.completed"
+          (click)="goToTraining(section.id)"
+        >
+          {{ getActionText(section.completed) }}
+        </button>
+      </div>
+      }
+    </div>
+
+    <div class="module-progress">
+      <h3>Module Progress</h3>
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div
+            class="progress-fill"
+            [style.width.%]="getProgressPercentage()"
+          ></div>
+        </div>
+        <div class="progress-text">
+          {{ modulesCompleted }} of {{ totalModules }} completed
+        </div>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <button class="back-button" (click)="goBack()">Back</button>
+      <button
+        class="certificate-button"
+        [disabled]="modulesCompleted < totalModules"
+        (click)="goToCertificate()"
+      >
+        Go for Certificate
+      </button>
+    </div>
+  </div>
+</div>

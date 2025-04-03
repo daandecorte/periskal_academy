@@ -22,6 +22,7 @@ import { AdminEditModuleComponent } from './admin-edit-module/admin-edit-module.
 import { BasicInfoComponent } from './admin-edit-module/basic-info/basic-info.component';
 import { EditTrainingsComponent } from './admin-edit-module/edit-trainings/edit-trainings.component';
 import { UserdetailComponent } from './userdetail/userdetail.component';
+import { TrainingOverviewComponent } from './training-overview/training-overview.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -109,6 +110,9 @@ export const routes: Routes = [
       { path: 'exam', component: ExamComponent },
     ]
   },
+  { path: 'modules/:id', component: TrainingOverviewComponent },
+  { path: 'modules/:id/training/:sectionId', redirectTo: 'modules/:id' }, // Placeholder for future implementation
+  { path: 'modules/:id/certificate', redirectTo: 'modules/:id' }, // Placeholder for future implementation
   { path: '', redirectTo: 'modules', pathMatch: 'full' },
   { path: '**', redirectTo: 'modules', pathMatch: 'full' },
 ];
