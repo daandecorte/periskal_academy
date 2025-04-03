@@ -1,1 +1,67 @@
-<p>user-management works!</p>
+<header>
+  <nav>
+    <div class="top-row">
+      <h1>User Management</h1>
+    </div>
+    <div class="search-container">
+      <select [(ngModel)]="selectedFilter" (change)="filterUsers()">
+        <option value="default">Filter by</option>
+        <option value="name">Name</option>
+        <option value="shipname">Shipname</option>
+        <option value="products">Products</option>
+        <option value="certificates">Certificates</option>
+      </select>
+      <div class="search-input-container">
+        <fa-icon [icon]="faSearch" class="search-icon"></fa-icon>
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="filterUsers()"
+          placeholder="Search sailors..."
+          name="search-sailors"
+        />
+      </div>
+    </div>
+    <div class="sailors-list">
+      <table>
+        <thead>
+          <tr>
+            <th class="name-column">NAME</th>
+            <th>PRODUCTS</th>
+            <th>CERTIFICATES</th>
+            <th>TRAINING PROGRESS</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of filteredUserList; track $index) {
+          <tr [routerLink]="['/userdetail', user.id]">
+            <td class="name-cell">
+              <div class="initials">
+                {{ user.firstname.charAt(0).toUpperCase()
+                }}{{ user.lastname.charAt(0).toUpperCase() }}
+              </div>
+              <div class="sailor-details">
+                <div class="sailor-name">
+                  {{ user.firstname }} {{ user.lastname }}
+                </div>
+                <div class="sailor-schip">{{ user.shipname }}</div>
+              </div>
+            </td>
+            <td>{{ user.products }}</td>
+            <td>
+              <span class="certificate-tag active">{{
+                user.certificates
+              }}</span>
+            </td>
+            <td>
+              <div class="progress-bar">
+                <div class="progress" style="width: 85%"></div>
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </nav>
+</header>

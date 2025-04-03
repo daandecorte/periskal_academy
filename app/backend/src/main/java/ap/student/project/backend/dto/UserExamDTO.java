@@ -7,7 +7,7 @@ import java.util.List;
 
 public record UserExamDTO(
         @JsonProperty("exam_id") int exam_id,
-        @JsonProperty("user_id") int user_id,
+        @JsonProperty("user_module_id") int user_module_id,
         @JsonProperty("exam_attempts") List<ExamAttemptDTO> examAttempts
 ) {
 }

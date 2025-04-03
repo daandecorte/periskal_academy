@@ -11,6 +11,11 @@
           (ngModelChange)="onSearchChange()"
         />
       </div>
+      <button class="data-source-toggle" (click)="toggleDataSource()">
+        {{
+          moduleService.getUseDemoData() ? "Use Backend Data" : "Use Demo Data"
+        }}
+      </button>
       <button class="create-module-btn" (click)="navigateToAddModule()">
         <span class="plus-icon">+</span>
         {{ "ADMIN_MODULES.CREATE_BUTTON" | translate }}
@@ -18,18 +23,29 @@
     </div>
   </div>
 
-  <!-- Modules Section -->
-  <h2 class="section-title">
-    {{ "ADMIN_MODULES.ALL_MODULES_SECTION" | translate }}
-  </h2>
-  <div class="modules-grid" *ngIf="modules.length > 0; else noModules">
-    @for (module of modules; track module.id) {
-    <app-admin-module-card [module]="module"></app-admin-module-card>
-    }
+  <!-- Loading and Error States -->
+  <div *ngIf="loading" class="loading-indicator">
+    {{ "ADMIN_MODULES.LOADING" | translate }}
   </div>
-  <ng-template #noModules>
-    <div class="no-results">
-      {{ "ADMIN_MODULES.NO_MODULES_FOUND" | translate }}
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <!-- Modules Section -->
+  <ng-container *ngIf="!loading && !error">
+    <h2 class="section-title">
+      {{ "ADMIN_MODULES.ALL_MODULES_SECTION" | translate }}
+    </h2>
+    <div class="modules-grid" *ngIf="modules.length > 0; else noModules">
+      @for (module of modules; track module.id) {
+      <app-admin-module-card [module]="module"></app-admin-module-card>
+      }
     </div>
-  </ng-template>
+    <ng-template #noModules>
+      <div class="no-results">
+        {{ "ADMIN_MODULES.NO_MODULES_FOUND" | translate }}
+      </div>
+    </ng-template>
+  </ng-container>
 </div>

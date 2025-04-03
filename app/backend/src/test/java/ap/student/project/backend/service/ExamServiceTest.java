@@ -50,7 +50,7 @@ public class ExamServiceTest {
         exam.setTime(60);
         exam.setQuestions(new ArrayList<>());
 
-        examDTO = new ExamDTO(60, 3, 60, 5);
+        examDTO = new ExamDTO(60, 3, 60, 5, 1);
 
         questionDTO = new QuestionDTO(null, QuestionType.MULTIPLE_CHOICE, null);
 

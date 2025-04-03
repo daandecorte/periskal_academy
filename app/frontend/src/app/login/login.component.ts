@@ -87,7 +87,6 @@ export class LoginComponent {
   }
 
   onLanguageChange() {
-    this.languageService.setLanguage(this.language);
     this.translate.use(this.mapLanguage(this.language));
   }
 
@@ -122,11 +121,6 @@ export class LoginComponent {
       return;
     }
 
-    if (this.dongleCode.length < 8) {
-      this.showError('Dongle code is too short. Please enter a complete dongle code.');
-      return;
-    }
-
     // Add DEBUG: prefix for testing dongle code without prior encryption
     const formattedDongleCode = `DEBUG:${this.dongleCode}`;
     await this.processDongleLogin(formattedDongleCode);
@@ -156,11 +150,6 @@ export class LoginComponent {
           language: this.language,
         }),
       });
-
-      // Log the raw response for debugging
-      const responseText = await result.clone().text();
-      console.log('Raw response:', responseText);
-
       await this.processLoginResponse(result);
     } catch (error) {
       console.error('Login error:', error);
@@ -203,6 +192,7 @@ export class LoginComponent {
       }
 
       this.authService.setCurrentUser(userData);
+      this.languageService.setLanguage(this.language);
       this.router.navigate(['/modules']);
     } else {
       // Handle specific error cases

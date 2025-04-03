@@ -1,37 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create New Module</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="container">
-      <div class="card-container">
-        <h3 class="title">Trainings</h3>
+<body>
+  <div class="container">
+    <div class="card-container">
+      <h3 class="title">
+        {{ "ADMIN_ADD_MODULES.TRAINING_TITLE" | translate }}
+      </h3>
 
-        <div class="message-no-trainig">
-          <!--<img
+      <div class="message-no-trainig">
+        <!--<img
             src="assets/no-training.svg"
             alt="No trainings"
             class="pic-no-training"
           />-->
-          <p>
-            No trainings added yet. Click "Add Training" to create your first
-            training.
-          </p>
-        </div>
+        <p>
+          {{ "ADMIN_ADD_MODULES.NO_TRAINING_DESCRIPTION" | translate }}
+        </p>
+      </div>
 
-        <div class="flex">
-          <button
-            class="btn"
-            [routerLink]="['/add-module/trainings', 'new', 'content']"
-          >
-            + Add Training
-          </button>
-        </div>
+      <div class="flex">
+        <button
+          class="btn"
+          [routerLink]="['/add-module/trainings', 'new', 'content']"
+        >
+          {{ "ADMIN_ADD_MODULES.ADD_TRAINING" | translate }}
+        </button>
       </div>
     </div>
-  </body>
-</html>
+  </div>
+</body>

@@ -40,7 +40,14 @@ label {
 }
 
 /* Buttons */
-.add-option-btn,
+.add-option-btn {
+  background: none;
+  border: none;
+  color: #898686;
+  cursor: pointer;
+  font-size: 14px;
+}
+
 .add-question-btn {
   background-color: #fbbf24;
   color: white;

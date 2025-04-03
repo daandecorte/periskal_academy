@@ -5,8 +5,10 @@ import ap.student.project.backend.dao.QuestionRepository;
 import ap.student.project.backend.dto.ExamDTO;
 import ap.student.project.backend.dto.QuestionDTO;
 import ap.student.project.backend.entity.Exam;
+import ap.student.project.backend.entity.Module;
 import ap.student.project.backend.entity.Question;
 import ap.student.project.backend.exceptions.ListFullException;
+import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -18,19 +20,29 @@ import java.util.List;
 public class ExamService {
     private final ExamRepository examRepository;
     private final QuestionRepository questionRepository;
+    private final ModuleService moduleService;
 
-    public ExamService(ExamRepository examRepository, QuestionRepository questionRepository) {
+    public ExamService(ExamRepository examRepository, QuestionRepository questionRepository, ModuleService moduleService) {
         this.examRepository = examRepository;
         this.questionRepository = questionRepository;
+        this.moduleService = moduleService;
     }
 
-    public void save(ExamDTO examDTO) {
+    public void save(ExamDTO examDTO) throws MissingArgumentException, NotFoundException {
         Exam exam = new Exam();
+        if(examDTO.moduleId()==0) {
+            throw new MissingArgumentException("module_id is missing");
+        }
+        Module module = moduleService.findById(examDTO.moduleId());
+        if(module==null) {
+            throw new NotFoundException("module with id" + examDTO.moduleId() +" not found");
+        }
         BeanUtils.copyProperties(examDTO, exam);
+        exam.setModule(module);
         examRepository.save(exam);
     }
 
-    public Exam findById(int id) {
+    public Exam findById(int id) throws NotFoundException {
         Exam exam = examRepository.findById(id).orElse(null);
         if (exam == null) {
             throw new NotFoundException("Exam with id " + id + " not found");
@@ -38,7 +50,7 @@ public class ExamService {
         return exam;
     }
 
-    public void update(int id, ExamDTO examDTO) {
+    public void update(int id, ExamDTO examDTO) throws NotFoundException {
         Exam exam = examRepository.findById(id).orElse(null);
         if (exam == null) {
             throw new NotFoundException("Exam with id " + id + " not found");

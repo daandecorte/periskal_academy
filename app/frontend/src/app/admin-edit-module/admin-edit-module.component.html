@@ -1,0 +1,21 @@
+<div class="modal">
+  <div class="modal-header">
+    <h2>{{ "ADMIN_EDIT_MODULES.TITLE" | translate }}</h2>
+  </div>
+
+  <div class="tabs">
+    <a [routerLink]="['/edit-module/basic-info']" [routerLinkActive]="'active'">
+      {{ "ADMIN_EDIT_MODULES.BASIC_INFO_TAB" | translate }}
+    </a>
+    <a [routerLink]="['/edit-module/trainings']" [routerLinkActive]="'active'">
+      {{ "ADMIN_EDIT_MODULES.TRAININGS_TAB" | translate }}
+    </a>
+    <a [routerLink]="['/edit-module/exam']" [routerLinkActive]="'active'">
+      {{ "ADMIN_EDIT_MODULES.EXAM_TAB" | translate }}
+    </a>
+  </div>
+
+  <div class="form-group">
+    <router-outlet></router-outlet>
+  </div>
+</div>

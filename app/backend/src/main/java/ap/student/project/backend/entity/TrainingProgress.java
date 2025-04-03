@@ -18,8 +18,11 @@ public class TrainingProgress {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "trainin_id")
+    @JoinColumn(name = "training_id")
     private Training training;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="module_progress_id")
+    private ModuleProgress moduleProgress;
     @Column(name = "video_watched")
     private boolean videoWatched;
     @Column(name = "completed_at")

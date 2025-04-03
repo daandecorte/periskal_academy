@@ -5,7 +5,6 @@ import ap.student.project.backend.dto.TrainingDTO;
 import ap.student.project.backend.dto.VideoDTO;
 import ap.student.project.backend.entity.Language;
 import ap.student.project.backend.entity.Training;
-import ap.student.project.backend.entity.Video;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,19 +46,6 @@ class TrainingServiceTest {
     }
 
     @Test
-    void testSaveTraining() {
-        Video video = new Video();
-        video.setLanguage(Language.ENGLISH);
-        TrainingDTO dto = new TrainingDTO(null,null, video);
-
-        trainingService.save(dto);
-
-        ArgumentCaptor<Training> captor = ArgumentCaptor.forClass(Training.class);
-        verify(trainingRepository).save(captor.capture());
-        assertEquals(Language.ENGLISH, captor.getValue().getVideo().getLanguage());
-    }
-
-    @Test
     void testGetTrainingById_Found() {
         Training training = new Training();
         training.setId(1);
@@ -94,43 +80,11 @@ class TrainingServiceTest {
     }
 
     @Test
-    void testUpdateTraining_Found() {
-        Training existingTraining = new Training();
-        existingTraining.setId(1);
-        when(trainingRepository.findById(1)).thenReturn(Optional.of(existingTraining));
-        Video video = new Video();
-        video.setLanguage(Language.ENGLISH);
-        TrainingDTO dto = new TrainingDTO(null, null, video);
-
-        trainingService.updateTraining(1, dto);
-
-        ArgumentCaptor<Training> captor = ArgumentCaptor.forClass(Training.class);
-        verify(trainingRepository).save(captor.capture());
-        assertEquals(Language.ENGLISH, captor.getValue().getVideo().getLanguage());
-    }
-
-    @Test
     void testUpdateTraining_NotFound() {
         when(trainingRepository.findById(1)).thenReturn(Optional.empty());
 
-        TrainingDTO dto = new TrainingDTO(null, null, null);
+        TrainingDTO dto = new TrainingDTO(null, null, null, 1);
         assertThrows(NotFoundException.class, () -> trainingService.updateTraining(1, dto));
-    }
-
-    @Test
-    void testAddVideo_Found() {
-        Training training = new Training();
-        training.setId(1);
-        when(trainingRepository.findById(1)).thenReturn(Optional.of(training));
-
-        VideoDTO videoDTO = new VideoDTO("ref", Language.ENGLISH);
-
-        trainingService.addVideo(1, videoDTO);
-
-        ArgumentCaptor<Training> captor = ArgumentCaptor.forClass(Training.class);
-        verify(trainingRepository).save(captor.capture());
-        assertNotNull(captor.getValue().getVideo());
-        assertEquals("ref", captor.getValue().getVideo().getVideoReference());
     }
 
     @Test

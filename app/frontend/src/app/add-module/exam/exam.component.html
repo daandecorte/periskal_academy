@@ -1,50 +1,78 @@
 <div class="container">
   <div class="exam-settings">
-    <h3 class="title">Exam Settings</h3>
+    <h3 class="title">
+      {{ "ADMIN_ADD_MODULES.EXAM_TITLE" | translate }}
+    </h3>
     <div class="settings-grid">
       <div class="setting-item">
-        <label class="label">Time Limit (minutes)</label>
+        <label class="label">
+          {{ "ADMIN_ADD_MODULES.TIME_LIMIT" | translate }}</label
+        >
         <input type="number" class="input" value="60" min="0" />
       </div>
       <div class="setting-item">
-        <label class="label">Questions per Exam</label>
+        <label class="label">
+          {{ "ADMIN_ADD_MODULES.QUETIONS" | translate }}</label
+        >
         <input type="number" class="input" value="10" min="0" />
       </div>
       <div class="setting-item">
-        <label class="label">Required Passing Score (%)</label>
+        <label class="label">
+          {{ "ADMIN_ADD_MODULES.PASSING_SCORE" | translate }}</label
+        >
         <input type="number" class="input" value="80" min="0" />
       </div>
       <div class="setting-item">
-        <label class="label">Maximum Retry Attempts</label>
+        <label class="label">
+          {{ "ADMIN_ADD_MODULES.MAX_ATTEMPTS" | translate }}</label
+        >
         <input type="number" class="input" value="3" min="0" />
-        <small class="hint">Set to unlimited attempts by entering 0</small>
+        <small class="hint">
+          {{ "ADMIN_ADD_MODULES.MAX_ATTEMPTS_DESCRIPTION" | translate }}</small
+        >
       </div>
     </div>
   </div>
 
   <div class="question-pool">
     <div class="button-container">
-      <h3 class="title">Question Pool</h3>
-      <button class="add-question-btn">+ Add Question</button>
+      <h3 class="title">
+        {{ "ADMIN_EDIT_MODULES.QUESTION_POOL" | translate }}
+      </h3>
+      <button class="add-question-btn">
+        {{ "ADMIN_EDIT_MODULES.ADD_QUESTION" | translate }}
+      </button>
     </div>
 
     <div class="question-pool-container">
-      <label class="label">Question Type</label>
+      <label class="label">{{
+        "ADMIN_EDIT_MODULES.QUESTION_TYPE" | translate
+      }}</label>
       <select class="input">
-        <option>Multiple Choice</option>
-        <option>True/False</option>
+        <option>{{ "ADMIN_EDIT_MODULES.MULTIPLE_CHOICE" | translate }}</option>
+        <option>{{ "ADMIN_EDIT_MODULES.TRUE_FALSE" | translate }}</option>
       </select>
 
-      <label class="label">Question Text</label>
+      <label class="label">{{
+        "ADMIN_EDIT_MODULES.QUESTION_TEXT" | translate
+      }}</label>
       <textarea class="input"></textarea>
 
-      <label class="label">Answer Options</label>
+      <label class="label">{{
+        "ADMIN_EDIT_MODULES.ANSWER_OPTION" | translate
+      }}</label>
       <div class="answer-option">
         <input type="radio" />
-        <input type="text" class="input" placeholder="Answer option" />
+        <input
+          type="text"
+          class="input"
+          [placeholder]="'ADMIN_EDIT_MODULES.OPTION_PLACEHOLDER' | translate"
+        />
         <button class="delete-btn">✖</button>
       </div>
-      <button class="add-option-btn">+ Add Option</button>
+      <button class="add-option-btn">
+        {{ "ADMIN_EDIT_MODULES.ADD_OPTION" | translate }}
+      </button>
     </div>
   </div>
 </div>

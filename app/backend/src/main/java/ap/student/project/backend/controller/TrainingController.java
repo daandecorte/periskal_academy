@@ -4,6 +4,7 @@ import ap.student.project.backend.dto.TrainingDTO;
 import ap.student.project.backend.dto.VideoDTO;
 import ap.student.project.backend.entity.Training;
 import ap.student.project.backend.exceptions.DuplicateException;
+import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import ap.student.project.backend.service.TrainingService;
 import org.slf4j.Logger;
@@ -32,9 +33,13 @@ public class TrainingController {
             this.trainingService.save(trainingDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(trainingDTO);
         }
-        catch (DuplicateException e) {
+        catch (NotFoundException e) {
             logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+        catch (MissingArgumentException e) {
+            logger.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
     @GetMapping(value = "/trainings/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

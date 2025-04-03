@@ -38,13 +38,8 @@ public class ModuleController {
 
     @PostMapping(value = "/modules", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addModule(@RequestBody ModuleDTO moduleDTO) {
-        try {
-            this.moduleService.save(moduleDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(moduleDTO);
-        } catch (DuplicateException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        }
+        this.moduleService.save(moduleDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(moduleDTO);
     }
 
     @PutMapping(value = "/modules/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

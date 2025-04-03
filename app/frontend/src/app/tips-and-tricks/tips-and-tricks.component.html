@@ -1,1 +1,38 @@
-<p>tips-and-tricks works!</p>
+<body>
+  <h1>Tips and tricks</h1>
+
+  <div class="tips-section">
+    <div class="section-header" (click)="toggleSection($event, 0)">
+      <h2>
+        <fa-icon [icon]="faGlobe" class="globe-icon"></fa-icon>
+        General
+      </h2>
+      <fa-icon
+        [icon]="sectionsOpenState[0] ? faAngleUp : faAngleDown"
+      ></fa-icon>
+    </div>
+    <div class="section-content hidden">
+      <div class="tip-item">
+        Always check your vessel's documentation before departure.
+      </div>
+    </div>
+  </div>
+
+  <div class="tips-section safety-section">
+    <div class="section-header" (click)="toggleSection($event, 1)">
+      <h2>
+        <fa-icon [icon]="faInfo" class="info-icon"></fa-icon>
+        Navigation Safety
+      </h2>
+      <fa-icon
+        [icon]="sectionsOpenState[1] ? faAngleUp : faAngleDown"
+      ></fa-icon>
+    </div>
+    <div class="section-content hidden">
+      <div class="tip-item">
+        When planning a route through narrow waterways, always consider the
+        vessel's turning radius and ensure sufficient space for maneuvering.
+      </div>
+    </div>
+  </div>
+</body>

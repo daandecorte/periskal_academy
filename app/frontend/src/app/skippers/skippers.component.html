@@ -8,10 +8,12 @@
       </button>
     </div>
     <div class="search-container">
-      <select [(ngModel)]="selectedStatus" (change)="filterSkippers()">
-        <option value="all">All Status</option>
-        <option value="active">Active</option>
-        <option value="inactive">Inactive</option>
+      <select [(ngModel)]="selectedFilter" (change)="filterSkippers()">
+        <option value="default">Filter by</option>
+        <option value="name">Name</option>
+        <option value="shipname">Shipname</option>
+        <option value="products">Products</option>
+        <option value="certificates">Certificates</option>
       </select>
       <div class="search-input-container">
         <fa-icon [icon]="faSearch" class="search-icon"></fa-icon>
@@ -32,28 +34,27 @@
             <th>PRODUCTS</th>
             <th>CERTIFICATES</th>
             <th>TRAINING PROGRESS</th>
-            <th>STATUS</th>
           </tr>
         </thead>
         <tbody>
           @for (skipper of filteredSkippersList; track $index) {
-          <tr>
+          <tr [routerLink]="['/userdetail', skipper.id]">
             <td class="name-cell">
               <div class="initials">
-                {{ skipper.Firstname.charAt(0).toUpperCase()
-                }}{{ skipper.Lastname.charAt(0).toUpperCase() }}
+                {{ skipper.firstname.charAt(0).toUpperCase()
+                }}{{ skipper.lastname.charAt(0).toUpperCase() }}
               </div>
               <div class="sailor-details">
                 <div class="sailor-name">
-                  {{ skipper.Firstname }} {{ skipper.Lastname }}
+                  {{ skipper.firstname }} {{ skipper.lastname }}
                 </div>
-                <div class="sailor-schip">{{ skipper.Shipname }}</div>
+                <div class="sailor-schip">{{ skipper.shipname }}</div>
               </div>
             </td>
-            <td>{{ skipper.Products.length }}</td>
+            <td>{{ skipper.products }}</td>
             <td>
               <span class="certificate-tag active">{{
-                skipper.Products.length
+                skipper.certificates
               }}</span>
             </td>
             <td>
@@ -61,7 +62,6 @@
                 <div class="progress" style="width: 85%"></div>
               </div>
             </td>
-            <td><span class="status active">Active</span></td>
           </tr>
           }
         </tbody>
