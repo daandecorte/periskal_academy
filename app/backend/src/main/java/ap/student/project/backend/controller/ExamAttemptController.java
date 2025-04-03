@@ -1,6 +1,7 @@
 package ap.student.project.backend.controller;
 
 import ap.student.project.backend.dto.ExamAttemptDTO;
+import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import ap.student.project.backend.service.ExamAttemptService;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,9 @@ public class ExamAttemptController {
             return ResponseEntity.status(HttpStatus.CREATED).body(examAttemptDTO);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+        catch (MissingArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 }

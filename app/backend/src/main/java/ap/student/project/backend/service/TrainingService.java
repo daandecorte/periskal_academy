@@ -6,6 +6,7 @@ import ap.student.project.backend.dto.VideoDTO;
 import ap.student.project.backend.entity.Language;
 import ap.student.project.backend.entity.Module;
 import ap.student.project.backend.entity.Training;
+import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -27,10 +28,10 @@ public class TrainingService {
     }
     public void save(TrainingDTO trainingDTO) {
         Training training = new Training();
-        Module module = moduleService.findById(trainingDTO.moduleId());
-        if(module == null) {
-            throw new NotFoundException("Module with id " + trainingDTO.moduleId() + "not found");
+        if(trainingDTO.moduleId()==0) {
+            throw new MissingArgumentException("module_id is missing");
         }
+        Module module = moduleService.findById(trainingDTO.moduleId());
         training.setModule(module);
         BeanUtils.copyProperties(trainingDTO, training);
         trainingRepository.save(training);

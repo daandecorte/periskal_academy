@@ -4,6 +4,7 @@ import ap.student.project.backend.dao.ExamAttemptRepository;
 import ap.student.project.backend.dto.ExamAttemptDTO;
 import ap.student.project.backend.entity.ExamAttempt;
 import ap.student.project.backend.entity.UserModule;
+import ap.student.project.backend.exceptions.MissingArgumentException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,9 @@ public class ExamAttemptService {
 
     public void save(ExamAttemptDTO examAttemptDTO) {
         ExamAttempt examAttempt = new ExamAttempt();
+        if(examAttemptDTO.userModuleId()==0) {
+            throw new MissingArgumentException("user_module_id is missing");
+        }
         UserModule userModule = userModuleService.findById(examAttemptDTO.userModuleId());
         examAttempt.setUserModule(userModule);
         BeanUtils.copyProperties(examAttemptDTO, examAttempt);
