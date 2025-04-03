@@ -21,7 +21,7 @@
   <ul class="navbar-links">
     @for (link of navLinks; track link) { @if (isLinkVisible(link)) {
     <li>
-      <a [routerLink]="link.path" routerLinkActive="is-active">
+      <a [routerLink]="getLinkPath(link)" routerLinkActive="is-active">
         <span class="icon-wrapper">
           <fa-icon [icon]="link.icon" class="yellow-icon"></fa-icon>
         </span>
@@ -46,7 +46,7 @@
       <span class="logout-icon">
         <fa-icon [icon]="faSignOutAlt" class="red-icon"></fa-icon>
       </span>
-      {{"LOGOUT" | translate}}
+      {{ "LOGOUT" | translate }}
     </a>
   </div>
 </nav>

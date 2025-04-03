@@ -29,6 +29,7 @@ interface NavLink {
   icon: any;
   label: string;
   allowedRoles: Role[];
+  adminPath?: string;
 }
 
 @Component({
@@ -68,10 +69,11 @@ export class NavbarComponent {
       allowedRoles: [
         Role.SKIPPER,
         Role.INSTALLER,
-        Role.ADMIN,
         Role.SUPPORT,
         Role.FLEETMANAGER,
+        Role.ADMIN
       ],
+      adminPath: 'admin/modules'
     },
     {
       path: 'certificates',
@@ -160,5 +162,12 @@ export class NavbarComponent {
 
   logout(): void {
     this.authService.logout();
+  }
+
+  getLinkPath(link: NavLink): string {
+    if (link.adminPath && this.currentUserRole?.toUpperCase() === Role.ADMIN) {
+      return link.adminPath;
+    }
+    return link.path;
   }
 }
