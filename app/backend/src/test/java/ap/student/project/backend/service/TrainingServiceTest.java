@@ -1,25 +1,22 @@
 package ap.student.project.backend.service;
-
 import ap.student.project.backend.dao.TrainingRepository;
 import ap.student.project.backend.dto.TrainingDTO;
-import ap.student.project.backend.dto.VideoDTO;
-import ap.student.project.backend.entity.Language;
 import ap.student.project.backend.entity.Training;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class TrainingServiceTest {
 
     @Mock
@@ -28,70 +25,62 @@ class TrainingServiceTest {
     @InjectMocks
     private TrainingService trainingService;
 
+    private TrainingDTO trainingDTO;
+    private Training training;
+
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        trainingDTO = new TrainingDTO(null,null, false, null, null); // Assuming a name field in DTO
+        training = new Training();
     }
 
     @Test
-    void testGetAllTrainings() {
-        Training t1 = new Training();
-        Training t2 = new Training();
-        when(trainingRepository.findAll()).thenReturn(Arrays.asList(t1, t2));
+    void save_ShouldSaveTraining_WhenValidDTOIsProvided() {
+        trainingService.save(trainingDTO);
+        verify(trainingRepository, times(1)).save(any(Training.class));
+    }
 
-        List<Training> trainings = trainingService.getAllTrainings();
+    @Test
+    void findById_ShouldThrowException_WhenTrainingNotFound() {
+        when(trainingRepository.findById(1)).thenReturn(Optional.empty());
+        assertThrows(NotFoundException.class, () -> trainingService.findById(1));
+    }
 
-        assertEquals(2, trainings.size());
+    @Test
+    void findById_ShouldReturnTraining_WhenFound() {
+        when(trainingRepository.findById(1)).thenReturn(Optional.of(training));
+        Training result = trainingService.findById(1);
+        assertNotNull(result);
+        verify(trainingRepository, times(1)).findById(1);
+    }
+
+    @Test
+    void update_ShouldThrowException_WhenTrainingNotFound() {
+        when(trainingRepository.findById(1)).thenReturn(Optional.empty());
+        assertThrows(NotFoundException.class, () -> trainingService.update(1, trainingDTO));
+    }
+
+    @Test
+    void update_ShouldSaveUpdatedTraining_WhenFound() {
+        when(trainingRepository.findById(1)).thenReturn(Optional.of(training));
+
+        trainingService.update(1, trainingDTO);
+
+        verify(trainingRepository, times(1)).save(any(Training.class));
+    }
+
+    @Test
+    void findAll_ShouldReturnListOfTrainings() {
+        when(trainingRepository.findAll()).thenReturn(List.of(training));
+
+        List<Training> result = trainingService.findAll();
+        assertEquals(1, result.size());
         verify(trainingRepository, times(1)).findAll();
     }
 
     @Test
-    void testGetTrainingById_Found() {
-        Training training = new Training();
-        training.setId(1);
-        when(trainingRepository.findById(1)).thenReturn(Optional.of(training));
-
-        Training result = trainingService.getTrainingById(1);
-
-        assertEquals(1, result.getId());
-    }
-
-    @Test
-    void testGetTrainingById_NotFound() {
-        when(trainingRepository.findById(1)).thenReturn(Optional.empty());
-
-        assertThrows(NotFoundException.class, () -> trainingService.getTrainingById(1));
-    }
-
-    @Test
-    void testDeleteTrainingById_Found() {
-        when(trainingRepository.existsById(1)).thenReturn(true);
-
-        trainingService.deleteTrainingById(1);
-
-        verify(trainingRepository).deleteById(1);
-    }
-
-    @Test
-    void testDeleteTrainingById_NotFound() {
-        when(trainingRepository.existsById(1)).thenReturn(false);
-
-        assertThrows(NotFoundException.class, () -> trainingService.deleteTrainingById(1));
-    }
-
-    @Test
-    void testUpdateTraining_NotFound() {
-        when(trainingRepository.findById(1)).thenReturn(Optional.empty());
-
-        TrainingDTO dto = new TrainingDTO(null, null, null, 1);
-        assertThrows(NotFoundException.class, () -> trainingService.updateTraining(1, dto));
-    }
-
-    @Test
-    void testAddVideo_NotFound() {
-        when(trainingRepository.findById(1)).thenReturn(Optional.empty());
-
-        VideoDTO videoDTO = new VideoDTO(null, null);
-        assertThrows(NotFoundException.class, () -> trainingService.addVideo(1, videoDTO));
+    void delete_ShouldCallRepositoryDeleteById() {
+        trainingService.delete(1);
+        verify(trainingRepository, times(1)).deleteById(1);
     }
 }

@@ -3,7 +3,7 @@ package ap.student.project.backend.service;
 import ap.student.project.backend.dao.ExamAttemptRepository;
 import ap.student.project.backend.dto.ExamAttemptDTO;
 import ap.student.project.backend.entity.ExamAttempt;
-import ap.student.project.backend.entity.UserModule;
+import ap.student.project.backend.entity.UserTraining;
 import ap.student.project.backend.exceptions.MissingArgumentException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -13,20 +13,20 @@ import java.util.List;
 @Service
 public class ExamAttemptService {
     private final ExamAttemptRepository examAttemptRepository;
-    private final UserModuleService userModuleService;
+    private final UserTrainingService userTrainingService;
 
-    public ExamAttemptService(ExamAttemptRepository examAttemptRepository, UserModuleService userModuleService) {
+    public ExamAttemptService(ExamAttemptRepository examAttemptRepository, UserTrainingService userTrainingService) {
         this.examAttemptRepository = examAttemptRepository;
-        this.userModuleService = userModuleService;
+        this.userTrainingService = userTrainingService;
     }
 
     public void save(ExamAttemptDTO examAttemptDTO) {
         ExamAttempt examAttempt = new ExamAttempt();
-        if(examAttemptDTO.userModuleId()==0) {
-            throw new MissingArgumentException("user_module_id is missing");
+        if(examAttemptDTO.userTrainingId()==0) {
+            throw new MissingArgumentException("user_training_id is missing");
         }
-        UserModule userModule = userModuleService.findById(examAttemptDTO.userModuleId());
-        examAttempt.setUserModule(userModule);
+        UserTraining userTraining = userTrainingService.findById(examAttemptDTO.userTrainingId());
+        examAttempt.setUserTraining(userTraining);
         BeanUtils.copyProperties(examAttemptDTO, examAttempt);
         examAttemptRepository.save(examAttempt);
     }

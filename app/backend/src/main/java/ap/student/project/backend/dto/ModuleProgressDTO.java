@@ -1,18 +1,13 @@
 package ap.student.project.backend.dto;
 
-import ap.student.project.backend.entity.ProgressStatusType;
-import ap.student.project.backend.entity.Question;
-import ap.student.project.backend.entity.TrainingProgress;
+import ap.student.project.backend.entity.Module;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public record ModuleProgressDTO(
-        @JsonProperty("start_date_time") LocalDateTime startDateTime,
-        @JsonProperty("last_time_accessed") LocalDateTime lastTimeAccessed,
-        @JsonProperty("status") ProgressStatusType status,
-        @JsonProperty("training_progress") List<TrainingProgress> trainingProgress,
-        @JsonProperty("user_module_id") int userModuleId
+        @JsonProperty("module") Module module,
+        @JsonProperty("video_watched") boolean videoWatched,
+        @JsonProperty("completed_at") LocalDateTime completedAt
 ) {
 }

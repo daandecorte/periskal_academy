@@ -2,10 +2,7 @@ package ap.student.project.backend.service;
 
 import ap.student.project.backend.dao.TipRepository;
 import ap.student.project.backend.dto.TipDTO;
-import ap.student.project.backend.dto.UserDTO;
 import ap.student.project.backend.entity.Tip;
-import ap.student.project.backend.entity.Module;
-import ap.student.project.backend.entity.User;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

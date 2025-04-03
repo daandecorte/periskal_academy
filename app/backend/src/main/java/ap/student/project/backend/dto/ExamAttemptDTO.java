@@ -10,6 +10,6 @@ public record ExamAttemptDTO(
         @JsonProperty("end_date_time") LocalDateTime endDateTime,
         @JsonProperty("exam_status_type") ExamStatusType examStatusType,
         @JsonProperty("score") int score,
-        @JsonProperty("user_module_id") int userModuleId
+        @JsonProperty("user_training_id") int userTrainingId
 ) {
 }

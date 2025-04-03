@@ -4,7 +4,7 @@ import ap.student.project.backend.dao.UserRepository;
 import ap.student.project.backend.dto.UserDTO;
 import ap.student.project.backend.entity.ExamAttempt;
 import ap.student.project.backend.entity.User;
-import ap.student.project.backend.entity.UserModule;
+import ap.student.project.backend.entity.UserTraining;
 import ap.student.project.backend.exceptions.DuplicateException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,22 +68,22 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public List<UserModule> getAllUserModules(int id) throws NotFoundException {
+    public List<UserTraining> getAllUserModules(int id) throws NotFoundException {
         User user = userRepository.findById(id).orElse(null);
         if (user == null) throw new NotFoundException("user not found");
-        List<UserModule> userModules = user.getUserModules();
-        if (userModules == null) throw new NotFoundException("user does not have any user modules");
-        return userModules;
+        List<UserTraining> userTrainings = user.getUserTrainings();
+        if (userTrainings == null) throw new NotFoundException("user does not have any user trainings");
+        return userTrainings;
     }
 
     public List<ExamAttempt> getAllExamAttempts(int id) throws NotFoundException {
         User user = userRepository.findById(id).orElse(null);
         if (user == null) throw new NotFoundException("user not found");
-        List<UserModule> userModules = user.getUserModules();
-        if (userModules == null) throw new NotFoundException("user does not have any user modules");
+        List<UserTraining> userTrainings = user.getUserTrainings();
+        if (userTrainings == null) throw new NotFoundException("user does not have any user trainings");
         List<ExamAttempt> examAttempts = new ArrayList<>();
-        for (UserModule userModule : userModules) {
-            examAttempts.addAll(userModule.getExamAttempts());
+        for (UserTraining userTraining : userTrainings) {
+            examAttempts.addAll(userTraining.getExamAttempts());
         }
         if (examAttempts.isEmpty()) throw new NotFoundException("user does not have any exam attempts");
         return examAttempts;

@@ -27,16 +27,16 @@ public class ExamAttempt {
     @Column
     private int score;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_module_id")
+    @JoinColumn(name = "user_training_id")
     @JsonIgnore
-    private UserModule userModule;
+    private UserTraining userTraining;
 
-    public ExamAttempt(LocalDateTime startDateTime, LocalDateTime endDateTime, ExamStatusType examStatusType, int score, UserModule userModule) {
+    public ExamAttempt(LocalDateTime startDateTime, LocalDateTime endDateTime, ExamStatusType examStatusType, int score, UserTraining userTraining) {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.examStatusType = examStatusType;
         this.score = score;
-        this.userModule = userModule;
+        this.userTraining = userTraining;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class ExamAttempt {
                 ", endDateTime=" + endDateTime +
                 ", examStatusType=" + examStatusType +
                 ", score=" + score +
-                ", userExam=" + userModule +
+                ", userExam=" + userTraining +
                 '}';
     }
 }

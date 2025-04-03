@@ -64,7 +64,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping(value = "/users/{id}/modules", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/users/{id}/trainings", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getModules(@PathVariable("id") int id) {
         try {
             return ResponseEntity.ok(this.userService.getAllUserModules(id));

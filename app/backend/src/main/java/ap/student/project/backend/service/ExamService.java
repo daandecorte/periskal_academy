@@ -5,7 +5,7 @@ import ap.student.project.backend.dao.QuestionRepository;
 import ap.student.project.backend.dto.ExamDTO;
 import ap.student.project.backend.dto.QuestionDTO;
 import ap.student.project.backend.entity.Exam;
-import ap.student.project.backend.entity.Module;
+import ap.student.project.backend.entity.Training;
 import ap.student.project.backend.entity.Question;
 import ap.student.project.backend.exceptions.ListFullException;
 import ap.student.project.backend.exceptions.MissingArgumentException;
@@ -20,25 +20,25 @@ import java.util.List;
 public class ExamService {
     private final ExamRepository examRepository;
     private final QuestionRepository questionRepository;
-    private final ModuleService moduleService;
+    private final TrainingService trainingService;
 
-    public ExamService(ExamRepository examRepository, QuestionRepository questionRepository, ModuleService moduleService) {
+    public ExamService(ExamRepository examRepository, QuestionRepository questionRepository, TrainingService trainingService) {
         this.examRepository = examRepository;
         this.questionRepository = questionRepository;
-        this.moduleService = moduleService;
+        this.trainingService = trainingService;
     }
 
     public void save(ExamDTO examDTO) throws MissingArgumentException, NotFoundException {
         Exam exam = new Exam();
-        if(examDTO.moduleId()==0) {
-            throw new MissingArgumentException("module_id is missing");
+        if(examDTO.trainingId()==0) {
+            throw new MissingArgumentException("training_id is missing");
         }
-        Module module = moduleService.findById(examDTO.moduleId());
-        if(module==null) {
-            throw new NotFoundException("module with id" + examDTO.moduleId() +" not found");
+        Training training = trainingService.findById(examDTO.trainingId());
+        if(training ==null) {
+            throw new NotFoundException("training with id" + examDTO.trainingId() +" not found");
         }
         BeanUtils.copyProperties(examDTO, exam);
-        exam.setModule(module);
+        exam.setTraining(training);
         examRepository.save(exam);
     }
 
