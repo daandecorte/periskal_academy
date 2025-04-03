@@ -5,11 +5,12 @@ import { ModuleCardComponent } from '../module-card/module-card.component';
 import { AssignedModuleCardComponent } from '../assigned-module-card/assigned-module-card.component';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { TraineeChatComponent } from '../trainee-chat/trainee-chat.component';
 
 @Component({
   selector: 'app-modules',
   standalone: true,
-  imports: [CommonModule, ModuleCardComponent, AssignedModuleCardComponent, FormsModule, TranslateModule],
+  imports: [CommonModule, ModuleCardComponent, AssignedModuleCardComponent, FormsModule, TranslateModule, TraineeChatComponent],
   templateUrl: './modules.component.html',
   styleUrl: './modules.component.css'
 })

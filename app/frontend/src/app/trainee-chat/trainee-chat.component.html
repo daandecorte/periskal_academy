@@ -1,0 +1,41 @@
+<div class="chat-container" *ngIf="isOpen">
+    <div class="chat-header">
+        <div class="chat-header-left">
+            <div class="support-icon">
+                <fa-icon [icon]="faHeadset"></fa-icon>
+            </div>
+            <div>
+                <div class="support-title">Periskal Support</div>
+                <div class="support-status">Online - Ready to help</div>
+            </div>
+        </div>
+        <button class="close-button" (click)="toggleChat()">&times;</button>
+    </div>
+
+    <div class="chat-body">
+        <div class="message">
+            <div class="message-avatar">
+                <fa-icon [icon]="faHeadset"></fa-icon>
+            </div>
+            <div class="message-content">
+                <p>👋 Hi there! How can I help you today?</p>
+                <p>Feel free to ask about:</p>
+                <ul class="topic-list">
+                    <li>Certificate requirements</li>
+                    <li>Training progress</li>
+                    <li>Technical support</li>
+                    <li>General questions</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-input">
+        <input type="text" class="input-field" placeholder="Type your question here...">
+        <button class="send-button">
+            <fa-icon [icon]="faPaperPlane"></fa-icon>
+        </button>
+    </div>
+</div>
+  <button class="chat-button" *ngIf="!isOpen" (click)="toggleChat()"><fa-icon [icon]="faComments"></fa-icon></button>
+  
