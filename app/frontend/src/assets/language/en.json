@@ -36,7 +36,7 @@
     "MODULE_TITLE": "Module Title",
     "DESCRIPTION": "Description",
     "SAVE_BUTTON": "Save",
-    "ENTER_MODULE_TITLE":"Enter module title",
+    "ENTER_MODULE_TITLE": "Enter module title",
     "ENTER_DESCRIPTION": "Enter description",
     "TRAINING_TITLE": "Training Title",
     "TRAINING_DESCRIPTION": "Training Description",
@@ -90,11 +90,24 @@
     "SEARCH_TRAININGS": "Search Trainings...",
     "OVERALL_PROGRESS": "Overall Progress",
     "USER_DETAIL": "User Detail",
-    "NO_EXAM_ATTEMPTS_YET":"No Exam Attempts Yet",
+    "NO_EXAM_ATTEMPTS_YET": "No Exam Attempts Yet",
     "ATTEMPT": "Attempt",
     "ASSIGNED_ON": "Assigned On",
     "LAST_ACTIVITY": "Last Activity",
-    "EXAM_STATUS":"Exam Status",
+    "EXAM_STATUS": "Exam Status",
     "NO_TRAININGS_ASSIGNED": "This person has no trainings assigned."
+  },
+  "TRAINING_OVERVIEW": {
+    "ABOUT_TRAINING": "About this Training",
+    "MODULES": "Modules",
+    "MODULE_PROGRESS": "Module Progress",
+    "OF_COMPLETED": "of {{completed}} completed",
+    "BACK": "Back",
+    "GO_FOR_CERTIFICATE": "Go for Certificate",
+    "COMPLETE_ALL_MODULES_FIRST": "Please complete all modules first!",
+    "COMPLETED": "completed",
+    "QUESTIONS": "questions",
+    "START": "Start",
+    "REVIEW": "Review"
   }
 }

@@ -28,9 +28,11 @@
   },
   "USER_DETAIL": {
     "ASSIGN_NEW_CERTIFICATE": "Nieuw certificaat toewijzen",
+    "MODULES_PROGRESS": "Voortgang van modules",
     "ALL_STATUS": "Alle statussen",
     "IN_PROGRESS": "Bezig",
     "COMPLETED": "Voltooid",
+    "SEARCH_MODULES": "Modules zoeken...",
     "OVERALL_PROGRESS": "Totale voortgang",
     "USER_DETAIL": "Gebruikersgegevens",
     "NO_EXAM_ATTEMPTS_YET": "Nog geen examenpogingen",
@@ -68,8 +70,8 @@
     "ANSWER_OPTION": "Antwoordopties",
     "OPTION_PLACEHOLDER": "Antwoordoptie",
     "ADD_OPTION": "+ Optie toevoegen"
-},
-"ADMIN_ADD_MODULES": {
+  },
+  "ADMIN_ADD_MODULES": {
     "EXAM_TITLE": "Examensinstellingen",
     "TIME_LIMIT": "Tijdslimiet (minuten)",
     "QUETIONS": "Vragen per examen",
@@ -96,8 +98,18 @@
     "PREVIOUS": "Vorige",
     "NEXT": "Volgende",
     "PUBLISH": "Publiceren"
-}
-
-
-
+  },
+  "TRAINING_OVERVIEW": {
+    "ABOUT_TRAINING": "Over deze training",
+    "MODULES": "Modules",
+    "MODULE_PROGRESS": "Modulevoortgang",
+    "OF_COMPLETED": "van {{completed}} voltooid",
+    "BACK": "Terug",
+    "GO_FOR_CERTIFICATE": "Ga voor certificaat",
+    "COMPLETE_ALL_MODULES_FIRST": "Voltooi eerst alle modules!",
+    "COMPLETED": "voltooid",
+    "QUESTIONS": "vragen",
+    "START": "Start",
+    "REVIEW": "Herzien"
+  }
 }

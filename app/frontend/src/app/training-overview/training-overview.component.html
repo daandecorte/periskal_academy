@@ -1,0 +1,102 @@
+<div class="training-overview-container">
+  <div class="module-header">
+    <h1 class="module-title">{{ module?.title }}</h1>
+  </div>
+
+  <div class="module-content">
+    <div class="about-section">
+      <h2>{{ "TRAINING_OVERVIEW.ABOUT_TRAINING" | translate }}</h2>
+      <p>{{ module?.description }}</p>
+    </div>
+
+    <div class="training-sections">
+      <h2>{{ "TRAINING_OVERVIEW.MODULES" | translate }}:</h2>
+
+      @for (section of trainingSections; track section.id) {
+      <div class="training-section">
+        <div class="section-content">
+          <div class="section-header">
+            <h3>
+              {{ section.id }}. {{ section.title }}
+              @if (section.completed) {
+              <span class="status-badge">
+                <fa-icon [icon]="faCheckCircle" class="button-icon"></fa-icon>
+                {{ "TRAINING_OVERVIEW.COMPLETED" | translate }}</span
+              >
+              }
+            </h3>
+          </div>
+          <p class="section-description">{{ section.description }}</p>
+          <div class="section-meta">
+            <span class="meta-item">
+              <fa-icon [icon]="faClock" class="meta-icon"></fa-icon>
+              {{ section.duration }}
+            </span>
+            <span class="meta-item">
+              <fa-icon [icon]="faQuestionCircle" class="meta-icon"></fa-icon>
+              {{ section.questionCount }}
+              {{ "TRAINING_OVERVIEW.QUESTIONS" | translate }}
+            </span>
+          </div>
+        </div>
+        <button
+          class="action-button"
+          [class.review-button]="section.completed"
+          [class.start-button]="!section.completed"
+          (click)="goToTraining(section.id)"
+        >
+          @if (section.completed) {
+          <fa-icon [icon]="faPlayCircle" class="button-icon"></fa-icon>
+          } @else {
+          <fa-icon [icon]="faPlayCircle" class="button-icon"></fa-icon>
+          }
+          {{
+            section.completed
+              ? ("TRAINING_OVERVIEW.REVIEW" | translate)
+              : ("TRAINING_OVERVIEW.START" | translate)
+          }}
+        </button>
+      </div>
+      }
+    </div>
+
+    <div class="module-progress">
+      <h3>{{ "TRAINING_OVERVIEW.MODULE_PROGRESS" | translate }}</h3>
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div
+            class="progress-fill"
+            [style.width.%]="getProgressPercentage()"
+          ></div>
+        </div>
+        <div class="progress-text">
+          {{ modulesCompleted }}
+          {{
+            "TRAINING_OVERVIEW.OF_COMPLETED"
+              | translate : { completed: totalModules }
+          }}
+        </div>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <button class="back-button" (click)="goBack()">
+        <fa-icon [icon]="faArrowLeft" class="button-icon"></fa-icon>
+        {{ "TRAINING_OVERVIEW.BACK" | translate }}
+      </button>
+      <div class="tooltip-container">
+        <button
+          class="certificate-button"
+          [disabled]="modulesCompleted < totalModules"
+          (click)="goToCertificate()"
+        >
+          <fa-icon [icon]="faCertificate" class="button-icon"></fa-icon>
+          {{ "TRAINING_OVERVIEW.GO_FOR_CERTIFICATE" | translate }}
+        </button>
+        <div class="tooltip" *ngIf="modulesCompleted < totalModules">
+          {{ "TRAINING_OVERVIEW.COMPLETE_ALL_MODULES_FIRST" | translate }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

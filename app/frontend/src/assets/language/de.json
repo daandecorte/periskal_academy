@@ -28,9 +28,11 @@
   },
   "USER_DETAIL": {
     "ASSIGN_NEW_CERTIFICATE": "Neues Zertifikat zuweisen",
+    "MODULES_PROGRESS": "Modulfortschritt",
     "ALL_STATUS": "Alle Status",
     "IN_PROGRESS": "In Bearbeitung",
     "COMPLETED": "Abgeschlossen",
+    "SEARCH_MODULES": "Module suchen...",
     "OVERALL_PROGRESS": "Gesamtfortschritt",
     "USER_DETAIL": "Benutzerdetails",
     "NO_EXAM_ATTEMPTS_YET": "Noch keine Prüfungsversuche",
@@ -68,9 +70,8 @@
     "ANSWER_OPTION": "Antwortoptionen",
     "OPTION_PLACEHOLDER": "Antwortoption",
     "ADD_OPTION": "+ Option hinzufügen"
-
-},
-"ADMIN_ADD_MODULES": {
+  },
+  "ADMIN_ADD_MODULES": {
     "EXAM_TITLE": "Prüfungseinstellungen",
     "TIME_LIMIT": "Zeitlimit (Minuten)",
     "QUETIONS": "Fragen pro Prüfung",
@@ -97,8 +98,18 @@
     "PREVIOUS": "Zurück",
     "NEXT": "Weiter",
     "PUBLISH": "Veröffentlichen"
-}
-
-
-
+  },
+  "TRAINING_OVERVIEW": {
+    "ABOUT_TRAINING": "Über diese Schulung",
+    "MODULES": "Module",
+    "MODULE_PROGRESS": "Modulforschritt",
+    "OF_COMPLETED": "von {{completed}} abgeschlossen",
+    "BACK": "Zurück",
+    "GO_FOR_CERTIFICATE": "Zum Zertifikat",
+    "COMPLETE_ALL_MODULES_FIRST": "Bitte schließen Sie zuerst alle Module ab!",
+    "COMPLETED": "abgeschlossen",
+    "QUESTIONS": "Fragen",
+    "START": "Starten",
+    "REVIEW": "Wiederholen"
+  }
 }
