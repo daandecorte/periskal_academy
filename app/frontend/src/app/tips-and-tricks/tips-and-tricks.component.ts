@@ -4,8 +4,15 @@ import {
   faInfoCircle,
   faAngleDown,
   faAngleUp,
+  faSearch,
+  faAdd,
+  faPencil,
+  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AuthService } from '../services/auth.service';
+import { IUser } from '../types/user-info';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tips-and-tricks',
@@ -18,9 +25,30 @@ export class TipsAndTricksComponent {
   faInfo = faInfoCircle;
   faAngleUp = faAngleUp;
   faAngleDown = faAngleDown;
+  faSearch = faSearch;
+  faAdd = faAdd;
+  faPencil = faPencil;
+  faTrash = faTrash;
 
   sectionsOpenState: boolean[] = [false, false];
-  ngOnInit() {}
+
+  currentUser$: Observable<IUser | null>;
+  currentUserRole: string | null = null;
+  editorUser: boolean = false;
+
+  constructor(private authService: AuthService) {
+    this.currentUser$ = this.authService.currentUser$;
+    this.authService.currentUser$.subscribe((user) => {
+      this.currentUserRole = user ? user.Role : null;
+    });
+
+    if (
+      this.currentUserRole?.toLowerCase() == 'support' ||
+      this.currentUserRole?.toLowerCase() == 'administrator'
+    ) {
+      this.editorUser = true;
+    }
+  }
 
   toggleSection(event: Event, index: number): void {
     const header = event.currentTarget as HTMLElement;
