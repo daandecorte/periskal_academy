@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Module } from '../services/module.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faLayerGroup, faCertificate } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 
 //Elke modulekaart bevat een titel, beschrijving, aantal trainingen, voortgangsindicator en een speciaal icoon voor certificeringsmodules
 
@@ -19,7 +20,13 @@ export class ModuleCardComponent {
   faLayerGroup = faLayerGroup;  
   faCertificate = faCertificate;
 
+  constructor(private router: Router) {}
+
   getButtonText(): string {
     return this.module.status === 'not_started' ? 'Start Training' : 'Continue Training';
+  }
+
+  goToTrainingOverview(): void {
+    this.router.navigate(['/modules', this.module.id]);
   }
 }
