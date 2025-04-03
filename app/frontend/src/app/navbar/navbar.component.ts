@@ -71,6 +71,7 @@ export class NavbarComponent {
         Role.INSTALLER,
         Role.SUPPORT,
         Role.FLEETMANAGER,
+        Role.ADMIN
       ],
       adminPath: 'admin/modules'
     },
@@ -164,7 +165,7 @@ export class NavbarComponent {
   }
 
   getLinkPath(link: NavLink): string {
-    if (link.adminPath && this.currentUserRole === Role.ADMIN) {
+    if (link.adminPath && this.currentUserRole?.toUpperCase() === Role.ADMIN) {
       return link.adminPath;
     }
     return link.path;
