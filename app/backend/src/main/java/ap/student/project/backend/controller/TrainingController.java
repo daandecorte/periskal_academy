@@ -1,10 +1,6 @@
 package ap.student.project.backend.controller;
 
 import ap.student.project.backend.dto.TrainingDTO;
-import ap.student.project.backend.dto.VideoDTO;
-import ap.student.project.backend.entity.Training;
-import ap.student.project.backend.exceptions.DuplicateException;
-import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import ap.student.project.backend.service.TrainingService;
 import org.slf4j.Logger;
@@ -12,10 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@CrossOrigin
+@RestController
 public class TrainingController {
     private final TrainingService trainingService;
     private final Logger logger = LoggerFactory.getLogger(TrainingController.class);
@@ -23,67 +19,42 @@ public class TrainingController {
     public TrainingController(TrainingService trainingService) {
         this.trainingService = trainingService;
     }
+
     @GetMapping(value = "/trainings", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getAllTrainings() {
-        return ResponseEntity.ok(trainingService.getAllTrainings());
+    public ResponseEntity getModules() {
+        return ResponseEntity.ok(this.trainingService.findAll());
     }
-    @PostMapping(value = "/trainings", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity addTraining(@RequestBody TrainingDTO trainingDTO) {
-        try {
-            this.trainingService.save(trainingDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(trainingDTO);
-        }
-        catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-        catch (MissingArgumentException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }
+
     @GetMapping(value = "/trainings/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getTrainingById(@PathVariable Integer id) {
+    public ResponseEntity getModuleById(@PathVariable Integer id) {
         try {
-            return ResponseEntity.ok(trainingService.getTrainingById(id));
-        }
-        catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-    }
-    @PutMapping(value = "/trainings/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity updateTraining(@PathVariable Integer id, @RequestBody TrainingDTO trainingDTO) {
-        try {
-            this.trainingService.updateTraining(id, trainingDTO);
-            return ResponseEntity.ok(trainingDTO);
-        }
-        catch(NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-    }
-    @DeleteMapping(value = "/trainings/{id}")
-    public ResponseEntity deleteTraining(@PathVariable Integer id) {
-        try {
-            trainingService.deleteTrainingById(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-    }
-    @PostMapping(value = "/trainings/{id}/video")
-    public ResponseEntity addVideo(@PathVariable Integer id, @RequestBody VideoDTO videoDTO) {
-        try {
-            trainingService.addVideo(id, videoDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(videoDTO);
-        }
-        catch(NotFoundException e) {
+            return ResponseEntity.ok(this.trainingService.findById(id));
+        } catch (NotFoundException e) {
             logger.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
+    @PostMapping(value = "/trainings", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity addModule(@RequestBody TrainingDTO trainingDTO) {
+        this.trainingService.save(trainingDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(trainingDTO);
+    }
+
+    @PutMapping(value = "/trainings/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity updateModule(@PathVariable("id") int id, @RequestBody TrainingDTO trainingDTO) {
+        try {
+            this.trainingService.update(id, trainingDTO);
+            return ResponseEntity.ok(trainingDTO);
+        } catch (NotFoundException e) {
+            logger.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/trainings/{id}")
+    public ResponseEntity deleteModule(@PathVariable("id") int id) {
+        trainingService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

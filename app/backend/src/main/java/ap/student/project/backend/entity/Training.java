@@ -1,6 +1,5 @@
 package ap.student.project.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,37 +25,32 @@ public class Training {
     @ElementCollection
     @CollectionTable(name = "training_descriptions", joinColumns = @JoinColumn(name = "training_id"))
     @MapKeyColumn(name = "language")
-    @Column(name = "description")
+    @Column(name="description")
     private Map<Language, String> description;
-    @ElementCollection
-    @CollectionTable(name = "video_references", joinColumns = @JoinColumn(name = "training_id"))
-    @MapKeyColumn(name = "language")
-    @Column(name = "video_reference")
-    private Map<Language, String> videoReference;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "module_id")
-    @JsonIgnore
-    private Module module;
-    @OneToMany(mappedBy = "training", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private List<Question> questions;
+    @Column(name = "is_active")
+    private boolean isActive = false;
+    @OneToMany(mappedBy = "training", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<Module> modules;
+    @OneToMany(mappedBy = "training", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<Exam> exams;
 
-    public Training(Map<Language, String> title, Map<Language, String> description, Map<Language, String> videoReference, Module module, List<Question> questions) {
+    public Training(Map<Language, String> title, Map<Language, String> description, boolean isActive, List<Module> modules, List<Exam> exams) {
         this.title = title;
         this.description = description;
-        this.videoReference = videoReference;
-        this.module = module;
-        this.questions = questions;
+        this.isActive = isActive;
+        this.modules = modules;
+        this.exams = exams;
     }
 
     @Override
     public String toString() {
         return "Training{" +
                 "id=" + id +
-                ", title=" + title +
-                ", description=" + description +
-                ", videoReference=" + videoReference +
-                ", module=" + module +
-                ", questions=" + questions +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", isActive=" + isActive +
+                ", modules=" + modules +
+                ", exams=" + exams +
                 '}';
     }
 }

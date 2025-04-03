@@ -1,14 +1,12 @@
 package ap.student.project.backend.service;
 
-import ap.student.project.backend.dao.TrainingRepository;
-import ap.student.project.backend.dto.TrainingDTO;
+import ap.student.project.backend.dao.ModuleRepository;
+import ap.student.project.backend.dto.ModuleDTO;
 import ap.student.project.backend.dto.VideoDTO;
-import ap.student.project.backend.entity.Language;
-import ap.student.project.backend.entity.Training;
+import ap.student.project.backend.entity.Module;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -23,10 +21,10 @@ import static org.mockito.Mockito.*;
 class TrainingServiceTest {
 
     @Mock
-    private TrainingRepository trainingRepository;
+    private ModuleRepository moduleRepository;
 
     @InjectMocks
-    private TrainingService trainingService;
+    private ModuleService moduleService;
 
     @BeforeEach
     void setUp() {
@@ -35,63 +33,63 @@ class TrainingServiceTest {
 
     @Test
     void testGetAllTrainings() {
-        Training t1 = new Training();
-        Training t2 = new Training();
-        when(trainingRepository.findAll()).thenReturn(Arrays.asList(t1, t2));
+        Module t1 = new Module();
+        Module t2 = new Module();
+        when(moduleRepository.findAll()).thenReturn(Arrays.asList(t1, t2));
 
-        List<Training> trainings = trainingService.getAllTrainings();
+        List<Module> modules = moduleService.getAllTrainings();
 
-        assertEquals(2, trainings.size());
-        verify(trainingRepository, times(1)).findAll();
+        assertEquals(2, modules.size());
+        verify(moduleRepository, times(1)).findAll();
     }
 
     @Test
     void testGetTrainingById_Found() {
-        Training training = new Training();
-        training.setId(1);
-        when(trainingRepository.findById(1)).thenReturn(Optional.of(training));
+        Module module = new Module();
+        module.setId(1);
+        when(moduleRepository.findById(1)).thenReturn(Optional.of(module));
 
-        Training result = trainingService.getTrainingById(1);
+        Module result = moduleService.getTrainingById(1);
 
         assertEquals(1, result.getId());
     }
 
     @Test
     void testGetTrainingById_NotFound() {
-        when(trainingRepository.findById(1)).thenReturn(Optional.empty());
+        when(moduleRepository.findById(1)).thenReturn(Optional.empty());
 
-        assertThrows(NotFoundException.class, () -> trainingService.getTrainingById(1));
+        assertThrows(NotFoundException.class, () -> moduleService.getTrainingById(1));
     }
 
     @Test
     void testDeleteTrainingById_Found() {
-        when(trainingRepository.existsById(1)).thenReturn(true);
+        when(moduleRepository.existsById(1)).thenReturn(true);
 
-        trainingService.deleteTrainingById(1);
+        moduleService.deleteTrainingById(1);
 
-        verify(trainingRepository).deleteById(1);
+        verify(moduleRepository).deleteById(1);
     }
 
     @Test
     void testDeleteTrainingById_NotFound() {
-        when(trainingRepository.existsById(1)).thenReturn(false);
+        when(moduleRepository.existsById(1)).thenReturn(false);
 
-        assertThrows(NotFoundException.class, () -> trainingService.deleteTrainingById(1));
+        assertThrows(NotFoundException.class, () -> moduleService.deleteTrainingById(1));
     }
 
     @Test
     void testUpdateTraining_NotFound() {
-        when(trainingRepository.findById(1)).thenReturn(Optional.empty());
+        when(moduleRepository.findById(1)).thenReturn(Optional.empty());
 
-        TrainingDTO dto = new TrainingDTO(null, null, null, 1);
-        assertThrows(NotFoundException.class, () -> trainingService.updateTraining(1, dto));
+        ModuleDTO dto = new ModuleDTO(null, null, null, 1);
+        assertThrows(NotFoundException.class, () -> moduleService.updateTraining(1, dto));
     }
 
     @Test
     void testAddVideo_NotFound() {
-        when(trainingRepository.findById(1)).thenReturn(Optional.empty());
+        when(moduleRepository.findById(1)).thenReturn(Optional.empty());
 
         VideoDTO videoDTO = new VideoDTO(null, null);
-        assertThrows(NotFoundException.class, () -> trainingService.addVideo(1, videoDTO));
+        assertThrows(NotFoundException.class, () -> moduleService.addVideo(1, videoDTO));
     }
 }

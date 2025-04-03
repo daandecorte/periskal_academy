@@ -1,8 +1,8 @@
 package ap.student.project.backend.service;
 
-import ap.student.project.backend.dao.ModuleRepository;
-import ap.student.project.backend.dto.ModuleDTO;
-import ap.student.project.backend.entity.Module;
+import ap.student.project.backend.dao.TrainingRepository;
+import ap.student.project.backend.dto.TrainingDTO;
+import ap.student.project.backend.entity.Training;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,89 +23,89 @@ import static org.mockito.Mockito.*;
 class ModuleServiceTest {
 
     @Mock
-    private ModuleRepository moduleRepository;
+    private TrainingRepository trainingRepository;
 
     @InjectMocks
-    private ModuleService moduleService;
+    private TrainingService trainingService;
 
-    private Module module;
-    private ModuleDTO moduleDTO;
+    private Training training;
+    private TrainingDTO trainingDTO;
 
     @BeforeEach
     void setUp() {
-        module = new Module();
-        module.setId(1);
-        module.setActive(true);
-        moduleDTO = new ModuleDTO(null, null, false, null, null);
+        training = new Training();
+        training.setId(1);
+        training.setActive(true);
+        trainingDTO = new TrainingDTO(null, null, false, null, null);
     }
 
     @Test
     void save_ShouldSaveModule_WhenModuleDoesNotExist() {
-        Module module = new Module();
-        BeanUtils.copyProperties(moduleDTO, module);
+        Training training = new Training();
+        BeanUtils.copyProperties(trainingDTO, training);
 
-        moduleService.save(moduleDTO);
-        verify(moduleRepository, times(1)).save(any(Module.class));
+        trainingService.save(trainingDTO);
+        verify(trainingRepository, times(1)).save(any(Training.class));
     }
 
     @Test
     void findById_ShouldThrowNotFoundException_WhenModuleNotFound() {
-        when(moduleRepository.findById(1)).thenReturn(Optional.empty());
+        when(trainingRepository.findById(1)).thenReturn(Optional.empty());
 
         NotFoundException exception = assertThrows(NotFoundException.class, () -> {
-            moduleService.findById(1);
+            trainingService.findById(1);
         });
 
-        assertEquals("Module with id 1 not found", exception.getMessage());
+        assertEquals("Training with id 1 not found", exception.getMessage());
     }
 
     @Test
     void findById_ShouldReturnModule_WhenModuleExists() {
-        when(moduleRepository.findById(1)).thenReturn(Optional.of(module));
+        when(trainingRepository.findById(1)).thenReturn(Optional.of(training));
 
-        Module foundModule = moduleService.findById(1);
+        Training foundTraining = trainingService.findById(1);
 
-        assertNotNull(foundModule);
-        assertEquals(1, foundModule.getId());
-        assertTrue(foundModule.isActive());
+        assertNotNull(foundTraining);
+        assertEquals(1, foundTraining.getId());
+        assertTrue(foundTraining.isActive());
     }
 
     @Test
     void update_ShouldThrowNotFoundException_WhenModuleNotFound() {
-        when(moduleRepository.findById(1)).thenReturn(Optional.empty());
+        when(trainingRepository.findById(1)).thenReturn(Optional.empty());
 
         NotFoundException exception = assertThrows(NotFoundException.class, () -> {
-            moduleService.update(1, moduleDTO);
+            trainingService.update(1, trainingDTO);
         });
 
-        assertEquals("Module with id 1 not found", exception.getMessage());
-        verify(moduleRepository, never()).save(any(Module.class));
+        assertEquals("Training with id 1 not found", exception.getMessage());
+        verify(trainingRepository, never()).save(any(Training.class));
     }
 
     @Test
     void update_ShouldUpdateModule_WhenModuleExists() {
-        when(moduleRepository.findById(1)).thenReturn(Optional.of(module));
+        when(trainingRepository.findById(1)).thenReturn(Optional.of(training));
 
-        moduleService.update(1, moduleDTO);
+        trainingService.update(1, trainingDTO);
 
-        verify(moduleRepository, times(1)).save(module);
-        assertFalse(module.isActive());
+        verify(trainingRepository, times(1)).save(training);
+        assertFalse(training.isActive());
     }
 
     @Test
     void findAll_ShouldReturnModuleList() {
-        List<Module> modules = Arrays.asList(module, new Module());
-        when(moduleRepository.findAll()).thenReturn(modules);
+        List<Training> trainings = Arrays.asList(training, new Training());
+        when(trainingRepository.findAll()).thenReturn(trainings);
 
-        List<Module> result = moduleService.findAll();
+        List<Training> result = trainingService.findAll();
 
         assertEquals(2, result.size());
     }
 
     @Test
     void delete_ShouldCallDeleteById() {
-        moduleService.delete(1);
+        trainingService.delete(1);
 
-        verify(moduleRepository, times(1)).deleteById(1);
+        verify(trainingRepository, times(1)).deleteById(1);
     }
 }

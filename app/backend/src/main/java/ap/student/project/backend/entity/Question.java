@@ -33,16 +33,16 @@ public class Question {
     @JsonIgnore
     private Exam exam;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "training_id")
+    @JoinColumn(name = "module_id")
     @JsonIgnore
-    private Training training;
+    private Module module;
 
-    public Question(Map<Language, String> text, QuestionType questionType, List<QuestionOption> questionOptions, Exam exam, Training training) {
+    public Question(Map<Language, String> text, QuestionType questionType, List<QuestionOption> questionOptions, Exam exam, Module module) {
         this.text = text;
         this.questionType = questionType;
         this.questionOptions = questionOptions;
         this.exam = exam;
-        this.training = training;
+        this.module = module;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class Question {
                 ", questionType=" + questionType +
                 ", questionOptions=" + questionOptions +
                 ", exam=" + exam +
-                ", training=" + training +
+                ", module=" + module +
                 '}';
     }
 }

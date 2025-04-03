@@ -30,7 +30,7 @@ public class User {
     private Language language;
     @OneToMany( mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JsonIgnore
-    private List<UserModule> userModules;
+    private List<UserTraining> userTrainings;
 
     public User(String periskalId, String firstname, String lastname, String shipname, Language language) {
         this.periskalId = periskalId;
@@ -49,7 +49,7 @@ public class User {
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", shipname='" + shipname + '\'' +
-                ", userModules=" + userModules +
+                ", userTrainings=" + userTrainings +
                 '}';
     }
 }

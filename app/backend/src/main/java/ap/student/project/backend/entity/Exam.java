@@ -28,17 +28,17 @@ public class Exam {
     @OneToMany(mappedBy = "exam", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<Question> questions;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinTable(name="module_id")
+    @JoinColumn(name="training_id")
     @JsonIgnore
-    private Module module;
+    private Training training;
 
-    public Exam(int passingScore, int maxAttempts, int time, int questionAmount, List<Question> questions, Module module) {
+    public Exam(int passingScore, int maxAttempts, int time, int questionAmount, List<Question> questions, Training training) {
         this.passingScore = passingScore;
         this.maxAttempts = maxAttempts;
         this.time = time;
         this.questionAmount = questionAmount;
         this.questions = questions;
-        this.module = module;
+        this.training = training;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class Exam {
                 ", time=" + time +
                 ", questionAmount=" + questionAmount +
                 ", questions=" + questions +
-                ", module=" + module +
+                ", training=" + training +
                 '}';
     }
 }

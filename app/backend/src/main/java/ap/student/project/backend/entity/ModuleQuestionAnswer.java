@@ -10,13 +10,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TrainingQuestionAnswer extends QuestionAnswer {
+public class ModuleQuestionAnswer extends QuestionAnswer {
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "training_progress_id")
-    private TrainingProgress trainingProgress;
+    @JoinColumn(name = "module_progress_id")
+    private ModuleProgress moduleProgress;
 
-    public TrainingQuestionAnswer(Question question, QuestionOption questionOption, TrainingProgress trainingProgress ) {
+    public ModuleQuestionAnswer(Question question, QuestionOption questionOption, ModuleProgress moduleProgress) {
         super(question, questionOption);
-        this.trainingProgress = trainingProgress;
+        this.moduleProgress = moduleProgress;
     }
 }

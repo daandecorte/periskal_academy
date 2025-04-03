@@ -23,13 +23,13 @@ class UserServiceTest {
     private UserRepository userRepository;
 
     @Mock
-    private UserModuleRepository userModuleRepository;
+    private UserTrainingRepository userTrainingRepository;
 
     @Mock
     private ExamRepository examRepository;
 
     @Mock
-    private ModuleRepository moduleRepository;
+    private TrainingRepository trainingRepository;
 
     @InjectMocks
     private UserService userService;
@@ -107,7 +107,7 @@ class UserServiceTest {
 
     @Test
     void testGetAllUserModules_Success() throws NotFoundException {
-        user.setUserModules(new ArrayList<>());
+        user.setUserTrainings(new ArrayList<>());
         when(userRepository.findById(1)).thenReturn(Optional.of(user));
         assertDoesNotThrow(() -> userService.getAllUserModules(1));
     }
