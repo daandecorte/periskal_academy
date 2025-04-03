@@ -1,5 +1,6 @@
 package ap.student.project.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,34 +18,37 @@ public class TrainingProgress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "training_id")
-    private Training training;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="module_progress_id")
-    private ModuleProgress moduleProgress;
-    @Column(name = "video_watched")
-    private boolean videoWatched;
-    @Column(name = "completed_at")
-    private LocalDateTime completedAt;
-    @OneToMany(mappedBy = "trainingProgress", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    private List<TrainingQuestionAnswer> trainingQuestionAnswers;
+    @Column(name = "start_date_time")
+    private LocalDateTime startDateTime;
+    @Column(name = "last_time_accessed")
+    private LocalDateTime lastTimeAccessed;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private ProgressStatusType status;
+    @OneToMany( mappedBy = "trainingProgress", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<ModuleProgress> moduleProgresses;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="user_training_id")
+    @JsonIgnore
+    private UserTraining userTraining;
 
-    public TrainingProgress(Training training, boolean videoWatched, LocalDateTime completedAt, List<TrainingQuestionAnswer> trainingQuestionAnswers) {
-        this.training = training;
-        this.videoWatched = videoWatched;
-        this.completedAt = completedAt;
-        this.trainingQuestionAnswers = trainingQuestionAnswers;
+    public TrainingProgress(LocalDateTime startDateTime, LocalDateTime lastTimeAccessed, ProgressStatusType status, List<ModuleProgress> moduleProgresses, UserTraining userTraining) {
+        this.startDateTime = startDateTime;
+        this.lastTimeAccessed = lastTimeAccessed;
+        this.status = status;
+        this.moduleProgresses = moduleProgresses;
+        this.userTraining = userTraining;
     }
 
     @Override
     public String toString() {
         return "TrainingProgress{" +
                 "id=" + id +
-                ", training=" + training +
-                ", videoWatched=" + videoWatched +
-                ", completedAt=" + completedAt +
-                ", trainingQuestionAnswers=" + trainingQuestionAnswers +
+                ", startDateTime=" + startDateTime +
+                ", lastTimeAccessed=" + lastTimeAccessed +
+                ", status=" + status +
+                ", moduleProgresses=" + moduleProgresses +
+                ", userTraining=" + userTraining +
                 '}';
     }
 }

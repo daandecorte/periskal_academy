@@ -22,11 +22,14 @@ export class UserdetailComponent {
   currentLanguage: keyof Translated = 'ENGLISH';
   selectedStatus: string = 'ALL';
   searchQuery: string = '';
+  user: User | undefined;
 
   constructor(private route: ActivatedRoute, private languageService: LanguageService, public authService: AuthService) {
   }
   async getUserInfo() {
-    let modules = await fetch(`/api/users/${this.userId}/modules`);
+    let user=await fetch(`/api/users/${this.userId}`)
+    this.user = await user.json();
+    let modules = await fetch(`/api/users/${this.userId}/trainings`);
     this.userdetails = await modules.json();
     if(this.userdetails) {
       await console.log(this.userdetails);
@@ -44,8 +47,8 @@ export class UserdetailComponent {
   filterModules() {
     if(this.userdetails) {
       this.filteredUserDetails = this.userdetails.filter(detail => {
-        const matchesStatus = this.selectedStatus === '' || this.selectedStatus === 'ALL' || detail.module_progress?.status === this.selectedStatus;
-        const matchesTitle = this.searchQuery === '' || detail.module.title?.[this.currentLanguage].toLowerCase().includes(this.searchQuery.toLowerCase());
+        const matchesStatus = this.selectedStatus === '' || this.selectedStatus === 'ALL' || detail.training_progress?.status === this.selectedStatus;
+        const matchesTitle = this.searchQuery === '' || detail.training.title?.[this.currentLanguage].toLowerCase().includes(this.searchQuery.toLowerCase());
   
         return matchesStatus && matchesTitle;
       });
@@ -63,14 +66,14 @@ interface Exam {
   time: number;
 }
 
-interface Module {
+interface Training {
   id: number;
   active: boolean;
   description?: Translated;
   title?: Translated;
   exams: Exam[];
   tips: any[];
-  trainings: any[];
+  modules: any[];
 }
 interface ExamAttempt {
   id: number,
@@ -97,17 +100,17 @@ interface User {
 
 interface UserDetail {
   id: number;
-  module_progress: ModuleProgress
-  module: Module;
+  training_progress: TrainingProgress
+  training: Training;
   user: User;
   exam_attempts: ExamAttempt[]
 }
-interface ModuleProgress {
+interface TrainingProgress {
     id: number,
     start_date_time: string | null,
     last_time_accessed: string | null,
     status: string | null,
-    training_progress: any
+    module_progress: any
 }
 
 interface UserDetailResponse {

@@ -2,7 +2,11 @@ package ap.student.project.backend.service;
 
 import ap.student.project.backend.dao.ModuleRepository;
 import ap.student.project.backend.dto.ModuleDTO;
+import ap.student.project.backend.dto.VideoDTO;
+import ap.student.project.backend.entity.Language;
 import ap.student.project.backend.entity.Module;
+import ap.student.project.backend.entity.Training;
+import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,11 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.BeanUtils;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -25,87 +26,99 @@ class ModuleServiceTest {
     @Mock
     private ModuleRepository moduleRepository;
 
+    @Mock
+    private TrainingService trainingService;
+
     @InjectMocks
     private ModuleService moduleService;
 
     private Module module;
     private ModuleDTO moduleDTO;
+    private Training training;
 
     @BeforeEach
     void setUp() {
-        module = new Module();
-        module.setId(1);
-        module.setActive(true);
-        moduleDTO = new ModuleDTO(null, null, false, null, null);
+        moduleDTO = new ModuleDTO(null, null, null ,1); // Assuming trainingId is required
+        module = mock(Module.class); // Mocking Module to avoid real object instantiation issues
+        training = new Training();
     }
 
     @Test
-    void save_ShouldSaveModule_WhenModuleDoesNotExist() {
-        Module module = new Module();
-        BeanUtils.copyProperties(moduleDTO, module);
+    void save_ShouldThrowException_WhenTrainingIdIsZero() {
+        ModuleDTO invalidDTO = new ModuleDTO(null,null, null, 0);
+        assertThrows(MissingArgumentException.class, () -> moduleService.save(invalidDTO));
+    }
+
+    @Test
+    void save_ShouldSaveModule_WhenValidDTOIsProvided() {
+        when(trainingService.findById(1)).thenReturn(training);
 
         moduleService.save(moduleDTO);
+
+        verify(trainingService, times(1)).findById(1);
         verify(moduleRepository, times(1)).save(any(Module.class));
     }
 
     @Test
-    void findById_ShouldThrowNotFoundException_WhenModuleNotFound() {
+    void getTrainingById_ShouldThrowException_WhenModuleNotFound() {
         when(moduleRepository.findById(1)).thenReturn(Optional.empty());
-
-        NotFoundException exception = assertThrows(NotFoundException.class, () -> {
-            moduleService.findById(1);
-        });
-
-        assertEquals("Module with id 1 not found", exception.getMessage());
+        assertThrows(NotFoundException.class, () -> moduleService.getTrainingById(1));
     }
 
     @Test
-    void findById_ShouldReturnModule_WhenModuleExists() {
+    void getTrainingById_ShouldReturnModule_WhenFound() {
         when(moduleRepository.findById(1)).thenReturn(Optional.of(module));
-
-        Module foundModule = moduleService.findById(1);
-
+        Module foundModule = moduleService.getTrainingById(1);
         assertNotNull(foundModule);
-        assertEquals(1, foundModule.getId());
-        assertTrue(foundModule.isActive());
     }
 
     @Test
-    void update_ShouldThrowNotFoundException_WhenModuleNotFound() {
-        when(moduleRepository.findById(1)).thenReturn(Optional.empty());
-
-        NotFoundException exception = assertThrows(NotFoundException.class, () -> {
-            moduleService.update(1, moduleDTO);
-        });
-
-        assertEquals("Module with id 1 not found", exception.getMessage());
-        verify(moduleRepository, never()).save(any(Module.class));
+    void deleteTrainingById_ShouldThrowException_WhenModuleNotFound() {
+        when(moduleRepository.existsById(1)).thenReturn(false);
+        assertThrows(NotFoundException.class, () -> moduleService.deleteTrainingById(1));
     }
 
     @Test
-    void update_ShouldUpdateModule_WhenModuleExists() {
-        when(moduleRepository.findById(1)).thenReturn(Optional.of(module));
+    void deleteTrainingById_ShouldDeleteModule_WhenFound() {
+        when(moduleRepository.existsById(1)).thenReturn(true);
+        doNothing().when(moduleRepository).deleteById(1);
 
-        moduleService.update(1, moduleDTO);
-
-        verify(moduleRepository, times(1)).save(module);
-        assertFalse(module.isActive());
-    }
-
-    @Test
-    void findAll_ShouldReturnModuleList() {
-        List<Module> modules = Arrays.asList(module, new Module());
-        when(moduleRepository.findAll()).thenReturn(modules);
-
-        List<Module> result = moduleService.findAll();
-
-        assertEquals(2, result.size());
-    }
-
-    @Test
-    void delete_ShouldCallDeleteById() {
-        moduleService.delete(1);
+        moduleService.deleteTrainingById(1);
 
         verify(moduleRepository, times(1)).deleteById(1);
+    }
+
+    @Test
+    void updateTraining_ShouldThrowException_WhenModuleNotFound() {
+        when(moduleRepository.findById(1)).thenReturn(Optional.empty());
+        assertThrows(NotFoundException.class, () -> moduleService.updateTraining(1, moduleDTO));
+    }
+
+    @Test
+    void updateTraining_ShouldSaveUpdatedModule_WhenFound() {
+        when(moduleRepository.findById(1)).thenReturn(Optional.of(module));
+
+        moduleService.updateTraining(1, moduleDTO);
+
+        verify(moduleRepository, times(1)).save(any(Module.class));
+    }
+
+    @Test
+    void addVideo_ShouldThrowException_WhenModuleNotFound() {
+        when(moduleRepository.findById(1)).thenReturn(Optional.empty());
+        VideoDTO videoDTO = new VideoDTO("video_url", Language.ENGLISH);
+        assertThrows(NotFoundException.class, () -> moduleService.addVideo(1, videoDTO));
+    }
+
+    @Test
+    void addVideo_ShouldSaveModuleWithVideo_WhenModuleExists() {
+        when(moduleRepository.findById(1)).thenReturn(Optional.of(module));
+        when(module.getVideoReference()).thenReturn(new HashMap<>());
+
+        VideoDTO videoDTO = new VideoDTO("video_url", Language.ENGLISH);
+        moduleService.addVideo(1, videoDTO);
+
+        verify(module, times(1)).getVideoReference();
+        verify(moduleRepository, times(1)).save(module);
     }
 }

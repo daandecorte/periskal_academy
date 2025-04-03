@@ -27,19 +27,20 @@
     "START_NOW": "Jetzt starten"
   },
   "USER_DETAIL": {
-  "ASSIGN_NEW_CERTIFICATE": "Neues Zertifikat zuweisen",
-  "MODULES_PROGRESS": "Modulfortschritt",
-  "ALL_STATUS": "Alle Status",
-  "IN_PROGRESS": "In Bearbeitung",
-  "COMPLETED": "Abgeschlossen",
-  "SEARCH_MODULES": "Module suchen...",
-  "OVERALL_PROGRESS": "Gesamtfortschritt",
-  "USER_DETAIL": "Benutzerdetails",
-  "NO_EXAM_ATTEMPTS_YET": "Noch keine Prüfungsversuche",
-  "ATTEMPT": "Versuch",
-  "ASSIGNED_ON": "Zugewiesen am",
-  "LAST_ACTIVITY": "Letzte Aktivität",
-  "EXAM_STATUS": "Prüfungsstatus"
+    "ASSIGN_NEW_CERTIFICATE": "Neues Zertifikat zuweisen",
+    "ALL_STATUS": "Alle Status",
+    "IN_PROGRESS": "In Bearbeitung",
+    "COMPLETED": "Abgeschlossen",
+    "OVERALL_PROGRESS": "Gesamtfortschritt",
+    "USER_DETAIL": "Benutzerdetails",
+    "NO_EXAM_ATTEMPTS_YET": "Noch keine Prüfungsversuche",
+    "ATTEMPT": "Versuch",
+    "ASSIGNED_ON": "Zugewiesen am",
+    "LAST_ACTIVITY": "Letzte Aktivität",
+    "EXAM_STATUS": "Prüfungsstatus",
+    "TRAININGS_PROGRESS": "Fortschritt der Schulungen",
+    "SEARCH_TRAININGS": "Schulungen suchen...",
+    "NO_TRAININGS_ASSIGNED": "Diesem Benutzer sind keine Schulungen zugewiesen."
   },
   "ADMIN_EDIT_MODULES": {
     "TITLE": "Modul Bearbeiten",

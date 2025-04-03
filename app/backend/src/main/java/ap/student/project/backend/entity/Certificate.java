@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Table(name = "certificate")
 @Getter
@@ -17,15 +15,15 @@ public class Certificate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "module_id")
-    private Module module;
+    @JoinColumn(name = "training_id")
+    private Training training;
     @Column(name = "validity_period")
     private int validityPeriod;
     @Column(name = "price")
     private double price;
 
-    public Certificate(Module module, int validityPeriod, double price) {
-        this.module = module;
+    public Certificate(Training training, int validityPeriod, double price) {
+        this.training = training;
         this.validityPeriod = validityPeriod;
         this.price = price;
     }
@@ -34,7 +32,7 @@ public class Certificate {
     public String toString() {
         return "Certificate{" +
                 "id=" + id +
-                ", module=" + module +
+                ", training=" + training +
                 ", validityPeriod=" + validityPeriod +
                 ", price=" + price +
                 '}';
