@@ -43,7 +43,7 @@ public class UserModuleService {
     public UserModule findById(int id) throws NotFoundException {
         UserModule userModule = this.userModuleRepository.findById(id).orElse(null);
         if (userModule == null) {
-            throw new NotFoundException("User Module With Id " + id + "Not Found");
+            throw new NotFoundException("User Module With Id " + id + " Not Found");
         }
         return userModule;
     }

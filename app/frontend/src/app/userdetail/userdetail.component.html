@@ -42,11 +42,11 @@
                     <h4>{{detail.module.title?.[currentLanguage]}}</h4>
                     <div class="module-status status-completed">{{detail.module_progress?.status ?? "no status"}}</div>
                 </div>
-                <p>{{'USER_DETAIL.ASSIGNED_ON' | translate}}: {{detail.module_progress?.start_date_time ?? "date"}}</p>
+                <p>{{'USER_DETAIL.ASSIGNED_ON' | translate}}: {{ detail.module_progress?.start_date_time ? (detail.module_progress.start_date_time | date:'d/MM/yyyy, H:mm:ss') : 'N/A' }}</p>
                 <div class="course-progress">
                     <div class="course-progress-bar" style="width: 100%;"></div>
                 </div>
-                <p>{{'USER_DETAIL.LAST_ACTIVITY' | translate}}: {{detail.module_progress?.last_time_accessed ?? "date"}}</p>
+                <p>{{'USER_DETAIL.LAST_ACTIVITY' | translate}}: {{ detail.module_progress?.last_time_accessed ? (detail.module_progress.last_time_accessed | date:'d/MM/yyyy, H:mm:ss') : 'N/A' }}</p>
                 <div class="exam-status">
                     <h4>{{'USER_DETAIL.EXAM_STATUS' | translate}}</h4>
                     @if(detail.exam_attempts.length==0) {
