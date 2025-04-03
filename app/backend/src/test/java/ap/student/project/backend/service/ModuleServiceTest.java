@@ -36,7 +36,7 @@ class ModuleServiceTest {
         module = new Module();
         module.setId(1);
         module.setActive(true);
-        moduleDTO = new ModuleDTO(null, null, false, null, null, null);
+        moduleDTO = new ModuleDTO(null, null, false, null, null);
     }
 
     @Test

@@ -11,7 +11,6 @@ public record ModuleDTO(
         @JsonProperty("description") Map<Language, String> description,
         @JsonProperty("is_active") boolean isActive,
         @JsonProperty("trainings") List<Training> trainings,
-        @JsonProperty("exams") List<Exam> exams,
-        @JsonProperty("tips") List<Tip> tips
+        @JsonProperty("exams") List<Exam> exams
 ) {
 }
