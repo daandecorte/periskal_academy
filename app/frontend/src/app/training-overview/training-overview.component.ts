@@ -13,6 +13,7 @@ import {
   faCertificate,
   faExclamationTriangle
 } from '@fortawesome/free-solid-svg-icons';
+import { TranslateModule } from '@ngx-translate/core';
 
 interface TrainingSection {
   id: number;
@@ -26,7 +27,7 @@ interface TrainingSection {
 @Component({
   selector: 'app-training-overview',
   standalone: true,
-  imports: [CommonModule, RouterModule, FontAwesomeModule],
+  imports: [CommonModule, RouterModule, FontAwesomeModule, TranslateModule],
   templateUrl: './training-overview.component.html',
   styleUrl: './training-overview.component.css'
 })

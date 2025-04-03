@@ -27,19 +27,19 @@
     "START_NOW": "Commencer"
   },
   "USER_DETAIL": {
-  "ASSIGN_NEW_CERTIFICATE": "Attribuer un nouveau certificat",
-  "MODULES_PROGRESS": "Progression des modules",
-  "ALL_STATUS": "Tous les statuts",
-  "IN_PROGRESS": "En cours",
-  "COMPLETED": "Terminé",
-  "SEARCH_MODULES": "Rechercher des modules...",
-  "OVERALL_PROGRESS": "Progression globale",
-  "USER_DETAIL": "Détail de l'utilisateur",
-  "NO_EXAM_ATTEMPTS_YET": "Aucune tentative d'examen pour l'instant",
-  "ATTEMPT": "Tentative",
-  "ASSIGNED_ON": "Assigné le",
-  "LAST_ACTIVITY": "Dernière activité",
-  "EXAM_STATUS": "Statut de l'examen"
+    "ASSIGN_NEW_CERTIFICATE": "Attribuer un nouveau certificat",
+    "MODULES_PROGRESS": "Progression des modules",
+    "ALL_STATUS": "Tous les statuts",
+    "IN_PROGRESS": "En cours",
+    "COMPLETED": "Terminé",
+    "SEARCH_MODULES": "Rechercher des modules...",
+    "OVERALL_PROGRESS": "Progression globale",
+    "USER_DETAIL": "Détail de l'utilisateur",
+    "NO_EXAM_ATTEMPTS_YET": "Aucune tentative d'examen pour l'instant",
+    "ATTEMPT": "Tentative",
+    "ASSIGNED_ON": "Assigné le",
+    "LAST_ACTIVITY": "Dernière activité",
+    "EXAM_STATUS": "Statut de l'examen"
   },
   "ADMIN_EDIT_MODULES": {
     "TITLE": "Modifier le Module",
@@ -67,9 +67,8 @@
     "ANSWER_OPTION": "Options de réponse",
     "OPTION_PLACEHOLDER": "Option de réponse",
     "ADD_OPTION": "+ Ajouter une option"
-
-},
-"ADMIN_ADD_MODULES": {
+  },
+  "ADMIN_ADD_MODULES": {
     "EXAM_TITLE": "Paramètres de l'examen",
     "TIME_LIMIT": "Limite de temps (minutes)",
     "QUETIONS": "Questions par examen",
@@ -96,8 +95,18 @@
     "PREVIOUS": "Précédent",
     "NEXT": "Suivant",
     "PUBLISH": "Publier"
-}
-
-
-
+  },
+  "TRAINING_OVERVIEW": {
+    "ABOUT_TRAINING": "À propos de cette formation",
+    "MODULES": "Modules",
+    "MODULE_PROGRESS": "Progression du module",
+    "OF_COMPLETED": "sur {{completed}} terminés",
+    "BACK": "Retour",
+    "GO_FOR_CERTIFICATE": "Obtenir le certificat",
+    "COMPLETE_ALL_MODULES_FIRST": "Veuillez d'abord terminer tous les modules!",
+    "COMPLETED": "terminé",
+    "QUESTIONS": "questions",
+    "START": "Commencer",
+    "REVIEW": "Revoir"
+  }
 }
