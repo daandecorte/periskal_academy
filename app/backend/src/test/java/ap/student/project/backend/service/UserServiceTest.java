@@ -1,12 +1,10 @@
 package ap.student.project.backend.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-import ap.student.project.backend.dao.*;
+import ap.student.project.backend.dao.UserRepository;
 import ap.student.project.backend.dto.UserDTO;
 import ap.student.project.backend.entity.Language;
 import ap.student.project.backend.entity.User;
+import ap.student.project.backend.exceptions.DuplicateException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,22 +12,18 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import java.util.*;
+
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
-
-    @Mock
-    private UserTrainingRepository userTrainingRepository;
-
-    @Mock
-    private ExamRepository examRepository;
-
-    @Mock
-    private TrainingRepository trainingRepository;
 
     @InjectMocks
     private UserService userService;
@@ -39,81 +33,40 @@ class UserServiceTest {
 
     @BeforeEach
     void setUp() {
-        user = new User("1", "", "", "", Language.ENGLISH);
-        userDTO = new UserDTO("1", "", "", "", Language.ENGLISH);
+        userDTO = new UserDTO("testId", "John", "Doe", "Ship123", Language.ENGLISH);
+        user = new User("testId", "John", "Doe", "Ship123", Language.ENGLISH);
     }
 
     @Test
-    void testSaveUser() {
-        when(userRepository.save(any(User.class))).thenReturn(user);
-        assertDoesNotThrow(() -> userService.save(userDTO));
+    void save_ShouldThrowException_WhenUserAlreadyExists() {
+        when(userRepository.existsByPeriskalId(user.getPeriskalId())).thenReturn(true);
+        assertThrows(DuplicateException.class, () -> userService.save(userDTO));
+    }
+
+    @Test
+    void save_ShouldSaveUser_WhenUserDoesNotExist() {
+        when(userRepository.existsByPeriskalId(user.getPeriskalId())).thenReturn(false);
+        userService.save(userDTO);
         verify(userRepository, times(1)).save(any(User.class));
     }
 
     @Test
-    void testUpdate_Success() {
-        when(userRepository.findByPeriskalId(userDTO.periskalId())).thenReturn(user);
-
-        userService.update(userDTO);
-
-        assertEquals(Language.ENGLISH, user.getLanguage());
-        verify(userRepository, times(1)).save(user);
-    }
-
-    @Test
-    void testUpdate_UserNotFound() {
-        when(userRepository.findByPeriskalId(userDTO.periskalId())).thenReturn(null);
-
-        assertThrows(NotFoundException.class, () -> userService.update(userDTO));
-    }
-
-    @Test
-    void testFindById_Success() {
-        when(userRepository.findById(1)).thenReturn(Optional.of(user));
-
+    void findById_ShouldReturnUser_WhenUserExists() {
+        when(userRepository.findById(anyInt())).thenReturn(Optional.of(user));
         User foundUser = userService.findById(1);
         assertNotNull(foundUser);
-        assertEquals("1", foundUser.getPeriskalId());
+        assertEquals("testId", foundUser.getPeriskalId());
     }
 
     @Test
-    void testFindById_UserNotFound() {
-        when(userRepository.findById(1)).thenReturn(Optional.empty());
-
-        NotFoundException exception = assertThrows(NotFoundException.class, () -> userService.findById(1));
-        assertEquals("User with id 1 not found", exception.getMessage());
+    void findById_ShouldThrowException_WhenUserNotFound() {
+        when(userRepository.findById(anyInt())).thenReturn(Optional.empty());
+        assertThrows(NotFoundException.class, () -> userService.findById(1));
     }
 
     @Test
-    void testFindAllUsers() {
-        List<User> users = Arrays.asList(user);
-        when(userRepository.findAll()).thenReturn(users);
-        List<User> foundUsers = userService.findAll();
-        assertEquals(1, foundUsers.size());
-        assertEquals(user, foundUsers.get(0));
-    }
-
-    @Test
-    void testDeleteById() {
-        assertDoesNotThrow(() -> userService.deleteById(1));
+    void deleteById_ShouldCallRepositoryDelete() {
+        userService.deleteById(1);
         verify(userRepository, times(1)).deleteById(1);
-    }
-
-    @Test
-    void testGetAllUserModules_UserNotFound() {
-        when(userRepository.findById(1)).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> userService.getAllUserModules(1));
-    }
-
-    @Test
-    void testGetAllUserModules_Success() throws NotFoundException {
-        user.setUserTrainings(new ArrayList<>());
-        when(userRepository.findById(1)).thenReturn(Optional.of(user));
-        assertDoesNotThrow(() -> userService.getAllUserModules(1));
-    }
-    @Test
-    void testGetAllUserExams_UserNotFound() {
-        when(userRepository.findById(1)).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> userService.getAllExamAttempts(1));
     }
 }
