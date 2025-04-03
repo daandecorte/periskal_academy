@@ -1,1 +1,60 @@
-<p>support works!</p>
+<div class="chat-container">
+    <div class="sidebar">
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Search users...">
+        </div>
+        <div class="contacts-list">
+            <div class="contact">
+                <div class="avatar sailor-icon">J</div>
+                <div class="contact-info">
+                    <div class="contact-name">John Doe</div>
+                    <div class="contact-role">Sailor</div>
+                </div>
+                <span class="status-badge status-active">Active</span>
+            </div>
+            <div class="contact">
+                <div class="avatar fleet-manager-icon">F</div>
+                <div class="contact-info">
+                    <div class="contact-name">Fleet Manager ABC</div>
+                    <div class="contact-role">Fleet Manager</div>
+                </div>
+                <span class="status-badge status-new">New</span>
+            </div>
+            <div class="contact">
+                <div class="avatar sailor-icon">M</div>
+                <div class="contact-info">
+                    <div class="contact-name">Mike Smith</div>
+                    <div class="contact-role">Sailor</div>
+                </div>
+                <span class="status-badge status-resolved">Resolved</span>
+            </div>
+        </div>
+    </div>
+    <div class="chat-area">
+        <div class="chat-header">
+            <button class="resolve-button">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                Mark as Resolved
+            </button>
+        </div>
+        <div class="message-area">
+            <div class="message">
+                <div class="message-bubble">
+                    I'm having trouble assigning certificates to my sailors.
+                </div>
+                <div class="message-meta">2 hours ago</div>
+            </div>
+        </div>
+        <div class="input-area">
+            <input type="text" class="message-input" placeholder="Type your message...">
+            <button class="send-button">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>  
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
