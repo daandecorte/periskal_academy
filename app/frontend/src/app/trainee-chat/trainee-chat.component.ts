@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { faComments, faHeadset, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthService } from '../services/auth.service';
@@ -23,23 +23,58 @@ export class TraineeChatComponent {
   chatMemberId: number=0;
   chatId:number=0;
 
+  messageList: ChatMessage[]=[]
+  private intervalId: any;
+  private previousMessageCount=0;
+
   constructor(private authService: AuthService) {
     this.isTrainee = authService.currentUserValue?.Role.toLocaleUpperCase()=="FLEETMANAGER" || authService.currentUserValue?.Role.toLocaleUpperCase()=="SKIPPER"|| authService.currentUserValue?.Role.toLocaleUpperCase()=="INSTALLER";
+    if(this.isTrainee) {
+      this.init();
+    }
   }
-  toggleChat() {
-    this.isOpen = !this.isOpen;
-  }
-  async sendMessage() {
-    if (!this.message.trim()) return;
-    console.log('Sending message:', this.message);
-
-    this.message = '';
-
+  async init() {
     if(this.chatMemberId==0) {
       let member= await this.getChatMember();
       this.chatMemberId=member.id;
-      console.log(member);
     }
+    if(this.chatId==0) {
+      let chatId = await this.getChatId();
+      this.chatId=chatId;
+    }
+  }
+  toggleChat() {
+    this.isOpen = !this.isOpen;
+    if(this.isOpen) {
+      this.fetchMessages();
+      this.startPolling();
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 0);
+    }
+    else {
+      clearInterval(this.intervalId);
+    }
+  }
+  async sendMessage() {
+    if (!this.message.trim()) return;
+    let message: ChatMessage = {
+      chat_member_id: this.chatMemberId,
+      date_time: new Date(),
+      text_content: this.message
+    }
+    this.messageList.push(message)
+    await fetch(`/api/messages`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        chat_member_id: this.chatMemberId,
+        text_content: this.message
+      })
+    })
+    this.message = '';
 
   }
   async getChatMember() {
@@ -60,13 +95,16 @@ export class TraineeChatComponent {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({})
+        body: JSON.stringify({
+          chat_status: "NOT_STARTED"
+        })
       })
       if (!chatResponse.ok) {
         console.error('Failed to create chat');
         return null;
       }
       const newChat = await chatResponse.json();
+      this.chatId=newChat.id;
       const memberResponse = await fetch(`/api/chat/${newChat.id}/members`, {
         method: 'POST',
         headers: {
@@ -81,7 +119,6 @@ export class TraineeChatComponent {
         return null;
       }
       const newMember = await memberResponse.json();
-      console.log('New chat member created:', newMember);
       return newMember;
     }
     else if (!chatMemberResponse.ok) {
@@ -91,4 +128,65 @@ export class TraineeChatComponent {
     return await chatMemberResponse.json();
 
   }
+  async getChatId() {
+    let chatResponse = await fetch(`/api/members/${this.chatMemberId}/chat`);
+    let chatJson = await chatResponse.json();
+    return await chatJson.id;
+  }
+  startPolling() {
+    this.intervalId = setInterval(() => {
+      this.fetchMessages();
+    }, 10000);
+  }
+  async fetchMessages() {
+    try {
+      const response = await fetch(`/api/chat/${this.chatId}`);
+      if (response.ok) {
+        const data = await response.json();
+        await this.updateMessageList(data);
+      }
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+    }
+  }
+  updateMessageList(data: any) {
+    let messages: ChatMessage[]=[];
+    for(let chatMember of data.chat_members) {
+      for(let message of chatMember.messages) {
+        let newMessage: ChatMessage = {
+          chat_member_id: chatMember.id,
+          date_time: message.date_time,
+          text_content: message.text_content
+        }
+        messages.push(newMessage);
+      }
+    }
+    messages.sort(
+      (a, b) => new Date(a.date_time).getTime() - new Date(b.date_time).getTime()
+    );
+    this.messageList=messages
+  }
+
+  @ViewChild('chatBody') chatBody!: ElementRef;
+
+  ngAfterViewChecked() {
+    if(this.messageList.length!=this.previousMessageCount) {
+      this.scrollToBottom();
+    }
+    this.previousMessageCount=this.messageList.length;
+  }
+
+  scrollToBottom(): void {
+    try {
+      this.chatBody.nativeElement.scrollTop = this.chatBody.nativeElement.scrollHeight;
+    } catch (err) {
+      console.error('Scroll failed:', err);
+    }
+  }
+}
+
+interface ChatMessage {
+  chat_member_id: number;
+  date_time: Date;
+  text_content: string;
 }

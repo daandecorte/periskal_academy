@@ -17,7 +17,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ChatService {
@@ -89,5 +93,21 @@ public class ChatService {
             throw new NotFoundException("Chat member with id " + id + " not found");
         }
         return chatMember;
+    }
+    public Chat findChatByMemberId(int id) {
+        ChatMember chatMember = this.chatMemberRepository.findById(id).orElse(null);
+        if (chatMember == null) {
+            throw new NotFoundException("Chat member with id " + id + " not found");
+        }
+        return chatMember.getChat();
+    }
+    public List<Message> findAllChatMessages(int id) {
+        Chat chat = this.findById(id);
+        Set<ChatMember> chatMembers = chat.getChatMembers();
+        List<Message> messages = new ArrayList<>();
+        for (ChatMember chatMember : chatMembers) {
+            messages.addAll(chatMember.getMessages());
+        }
+        return messages.stream().sorted(Comparator.comparing(Message::getDateTime)).collect(Collectors.toList());
     }
 }

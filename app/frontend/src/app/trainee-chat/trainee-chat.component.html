@@ -12,7 +12,7 @@
         <button class="close-button" (click)="toggleChat()">&times;</button>
     </div>
 
-    <div class="chat-body">
+    <div class="chat-body" #chatBody>
         <div class="message">
             <div class="message-avatar">
                 <fa-icon [icon]="faHeadset"></fa-icon>
@@ -28,10 +28,29 @@
                 </ul>
             </div>
         </div>
+        @for(message of messageList; track $index) {
+            @if(message.chat_member_id==chatMemberId) {
+                <div class="message my-message">
+                    <div class="message-content">
+                        {{message.text_content}}
+                    </div>
+                </div>
+            }
+            @else {
+                <div class="message">
+                    <div class="message-avatar">
+                        <fa-icon [icon]="faHeadset"></fa-icon>
+                    </div>
+                    <div class="message-content">
+                        {{message.text_content}}
+                    </div>
+                </div>
+            }
+        }
     </div>
 
     <div class="chat-input">
-        <input type="text" class="input-field" placeholder="Type your question here..." [(ngModel)]="message" (keydown.enter)="sendMessage()">
+        <input type="text" class="input-field" placeholder="Type your question here..." [(ngModel)]="message" (keydown.enter)="sendMessage()" maxlength="255">
         <button class="send-button" (click)="sendMessage()">
             <fa-icon [icon]="faPaperPlane"></fa-icon>
         </button>

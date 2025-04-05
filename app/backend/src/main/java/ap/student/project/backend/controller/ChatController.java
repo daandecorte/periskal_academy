@@ -55,12 +55,36 @@ public class ChatController {
     }
     @GetMapping(value = "/chat/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getChat(@PathVariable("id") int id) {
-        return ResponseEntity.ok(this.chatService.findById(id));
+        try {
+            return ResponseEntity.ok(this.chatService.findById(id));
+        }
+        catch(NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+
     }
     @GetMapping(value = "/members/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getChatMemberById(@PathVariable("id") int id) {
         try {
             return ResponseEntity.ok(this.chatService.findMemberById(id));
+        }
+        catch(NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+    @GetMapping(value="/members/{id}/chat", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getChatByChatMemberId(@PathVariable("id") int id) {
+        try {
+            return ResponseEntity.ok(this.chatService.findChatByMemberId(id));
+        }
+        catch(NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+    @GetMapping(value = "/chat/{id}/messages", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getChatMessages(@PathVariable("id") int id) {
+        try {
+            return ResponseEntity.ok(this.chatService.findAllChatMessages(id));
         }
         catch(NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
