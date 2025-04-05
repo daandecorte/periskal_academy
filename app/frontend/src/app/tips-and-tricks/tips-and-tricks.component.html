@@ -13,8 +13,8 @@
         <fa-icon [icon]="faSearch" class="search-icon"></fa-icon>
         <input type="text" class="search-input" placeholder="Search Tips..." />
       </div>
-      <button class="add-tip-btn">
-        <fa-icon [icon]="faAdd"></fa-icon>Add Tip
+      <button class="add-tip-btn" (click)="addTopicShow()">
+        <fa-icon [icon]="faAdd"></fa-icon>Add Topic
       </button>
     </div>
     }
@@ -28,8 +28,9 @@
       </h2>
       <div>
         @if(editorUser){
-        <fa-icon [icon]="faPencil" class="edit-icon"></fa-icon>
-        <fa-icon [icon]="faTrash" class="delete-icon"></fa-icon>
+        <fa-icon [icon]="faAdd" class="add-icon add-tip"></fa-icon>
+        <fa-icon [icon]="faPencil" class="edit-icon edit-title"></fa-icon>
+        <fa-icon [icon]="faTrash" class="delete-icon delete-topic"></fa-icon>
         }
         <fa-icon
           [icon]="sectionsOpenState[0] ? faAngleUp : faAngleDown"
@@ -43,41 +44,93 @@
         </div>
         @if(editorUser){
         <div class="icon-flex">
-          <fa-icon [icon]="faPencil" class="edit-icon"></fa-icon>
-          <fa-icon [icon]="faTrash" class="delete-icon"></fa-icon>
+          <fa-icon [icon]="faPencil" class="edit-icon edit-tip"></fa-icon>
+          <fa-icon [icon]="faTrash" class="delete-icon delete-tip"></fa-icon>
         </div>
         }
       </div>
     </div>
   </div>
-
-  <div class="tips-section safety-section">
-    <div class="section-header" (click)="toggleSection($event, 1)">
-      <h2>
-        <fa-icon [icon]="faInfo" class="info-icon"></fa-icon>
-        Navigation Safety
-      </h2>
-      <div>
-        @if(editorUser){
-        <fa-icon [icon]="faPencil" class="edit-icon"></fa-icon>
-        <fa-icon [icon]="faTrash" class="delete-icon"></fa-icon>
+  <!--
+  [icon]="faInfo" class="info-icon"
+  -->
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal-container">
+      <div class="modal-header">
+        @if(titleAdd){
+        <h2>Add New Topic</h2>
+        } @else if(titleEdit){
+        <h2>Edit Topic</h2>
+        } @else if(tipAdd){
+        <h2>Add New Tip</h2>
+        } @else if(tipEdit){
+        <h2>Edit Tip</h2>
         }
-        <fa-icon
-          [icon]="sectionsOpenState[1] ? faAngleUp : faAngleDown"
-        ></fa-icon>
+        <button id="close-modal" class="close-btn" (click)="closeModal()">
+          ×
+        </button>
+      </div>
+      <div class="modal-language">
+        <button class="modal-button selected">ENGLISH</button>
+        <button class="modal-button">DUTCH</button>
+        <button class="modal-button">FRENCH</button>
+        <button class="modal-button">GERMAN</button>
+      </div>
+      <div class="modal-content">
+        @if(titleAdd || titleEdit){
+        <div class="form-group">
+          <label for="tip-module">Topic Title</label>
+          <input
+            id="tip-title"
+            type="text"
+            class="form-control"
+            placeholder="Enter your topic title here..."
+          />
+        </div>
+        } @if (tipAdd || tipEdit) {
+        <div class="form-group">
+          <label for="tip-content">Tip Text</label>
+          <textarea
+            id="tip-content"
+            class="form-control"
+            placeholder="Enter your tip here..."
+          ></textarea>
+        </div>
+        }
+        <div class="modal-actions">
+          @if(titleAdd || titleEdit){
+          <button id="save-btn" class="btn btn-save" (click)="saveTopic()">
+            Save Topic
+          </button>
+          } @if(tipAdd || tipEdit){
+          <button id="save-btn" class="btn btn-save" (click)="saveTip()">
+            Save Tip
+          </button>
+          }
+        </div>
       </div>
     </div>
-    <div class="section-content hidden">
-      <div class="tip-item">
-        <div class="text-flex">
-          Always check your vessel's documentation before departure.
-        </div>
-        @if(editorUser){
-        <div class="icon-flex">
-          <fa-icon [icon]="faPencil" class="edit-icon"></fa-icon>
-          <fa-icon [icon]="faTrash" class="delete-icon"></fa-icon>
-        </div>
+  </div>
+  <!---->
+  <div id="modal-overlay-delete" class="modal-overlay hidden">
+    <div class="modal-container modal-small">
+      <div>
+        @if(titleDelete){
+        <h4 class="modal-text-title">Delete Topic</h4>
+        } @if(tipDelete) {
+        <h4 class="modal-text-title">Delete Tip</h4>
         }
+        <p class="modal-text">This action cannot be undone. Continue?</p>
+        <div class="modal-actions-delete">
+          <button
+            id="cancel-btn"
+            class="btn btn-cancel"
+            (click)="closeModalDelete()"
+          >
+            Cancel
+          </button>
+          <button id="save-btn" class="btn btn-delete">Delete</button>
+        </div>
       </div>
     </div>
   </div>
