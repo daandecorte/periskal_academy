@@ -34,7 +34,7 @@ export class TipsAndTricksComponent implements AfterViewInit {
 
   currentUser$: Observable<IUser | null>;
   currentUserRole: string | null = null;
-  editorUser: boolean = true; // AANPASSEN
+  editorUser: boolean = false;
 
   modalOverlay!: HTMLDivElement;
   modalOverlayDelete!: HTMLDivElement;
