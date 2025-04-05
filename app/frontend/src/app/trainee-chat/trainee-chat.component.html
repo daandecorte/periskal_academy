@@ -31,11 +31,13 @@
     </div>
 
     <div class="chat-input">
-        <input type="text" class="input-field" placeholder="Type your question here...">
-        <button class="send-button">
+        <input type="text" class="input-field" placeholder="Type your question here..." [(ngModel)]="message" (keydown.enter)="sendMessage()">
+        <button class="send-button" (click)="sendMessage()">
             <fa-icon [icon]="faPaperPlane"></fa-icon>
         </button>
     </div>
 </div>
-  <button class="chat-button" *ngIf="!isOpen" (click)="toggleChat()"><fa-icon [icon]="faComments"></fa-icon></button>
+@if(isTrainee) {
+    <button class="chat-button" *ngIf="!isOpen" (click)="toggleChat()"><fa-icon [icon]="faComments"></fa-icon></button>
+}
   

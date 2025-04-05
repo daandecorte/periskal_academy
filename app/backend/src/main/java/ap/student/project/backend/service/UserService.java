@@ -2,6 +2,7 @@ package ap.student.project.backend.service;
 
 import ap.student.project.backend.dao.UserRepository;
 import ap.student.project.backend.dto.UserDTO;
+import ap.student.project.backend.entity.ChatMember;
 import ap.student.project.backend.entity.ExamAttempt;
 import ap.student.project.backend.entity.User;
 import ap.student.project.backend.entity.UserTraining;
@@ -87,6 +88,14 @@ public class UserService {
         }
         if (examAttempts.isEmpty()) throw new NotFoundException("user does not have any exam attempts");
         return examAttempts;
+    }
+    public ChatMember getChatMember(int id) throws NotFoundException {
+        User user = this.findById(id);
+        ChatMember chatMember = user.getChatMember();
+        if (chatMember == null) {
+            throw new NotFoundException("chat member not found");
+        }
+        return chatMember;
     }
 
     public User assemble(UserDTO userDTO) {

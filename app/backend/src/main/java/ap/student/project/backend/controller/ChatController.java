@@ -57,4 +57,13 @@ public class ChatController {
     public ResponseEntity getChat(@PathVariable("id") int id) {
         return ResponseEntity.ok(this.chatService.findById(id));
     }
+    @GetMapping(value = "/members/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getChatMemberById(@PathVariable("id") int id) {
+        try {
+            return ResponseEntity.ok(this.chatService.findMemberById(id));
+        }
+        catch(NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }

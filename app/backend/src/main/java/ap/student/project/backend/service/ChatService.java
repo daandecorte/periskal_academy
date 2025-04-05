@@ -83,4 +83,11 @@ public class ChatService {
         BeanUtils.copyProperties(chatDTO, chat);
         this.chatRepository.save(chat);
     }
+    public ChatMember findMemberById(int id) {
+        ChatMember chatMember = this.chatMemberRepository.findById(id).orElse(null);
+        if (chatMember == null) {
+            throw new NotFoundException("Chat member with id " + id + " not found");
+        }
+        return chatMember;
+    }
 }
