@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { faPaperPlane, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ChatMessage } from '../trainee-chat/trainee-chat.component';
+import { AuthService } from '../services/auth.service';
+import { TitleStrategy } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 export enum ChatStatus {
   NOT_STARTED,IN_PROGRESS,RESOLVED
@@ -10,7 +13,7 @@ export enum ChatStatus {
 
 @Component({
   selector: 'app-support',
-  imports: [FontAwesomeModule, CommonModule],
+  imports: [FontAwesomeModule, CommonModule, FormsModule, DatePipe],
   templateUrl: './support.component.html',
   styleUrl: './support.component.css'
 })
@@ -21,9 +24,11 @@ export class SupportComponent {
 
   chats: ChatOverview[] = []
   messageList: ChatMessage[] = []
-  currentChat: Chat = {id:0, status: ChatStatus.NOT_STARTED};
+  currentChat: ChatOverview = {id:0, status: ChatStatus.NOT_STARTED, firstname: "", lastname: "", shipname: ""};
   private intervalId: any;
   private previousMessageCount=0;
+  currentChatMemberId:number=0;
+  message: string='';
 
   statusClassMap: Record<string, string> = {
     NOT_STARTED: 'status-new',
@@ -31,7 +36,7 @@ export class SupportComponent {
     RESOLVED: 'status-resolved'
   };
 
-  constructor() {
+  constructor(private authService: AuthService) {
     this.getChats();
   }
 
@@ -40,10 +45,6 @@ export class SupportComponent {
     if (allChatsResponse.ok) {
       const data = await allChatsResponse.json();
       await this.updateChatList(data);
-      this.currentChat={
-        id: this.chats[0].id,
-        status: this.chats[0].id
-      }
     }
     
   }
@@ -51,22 +52,35 @@ export class SupportComponent {
     console.log(data)
     let chats:ChatOverview[]=[];
     for(let chat of data) {
-      let chatOverview: ChatOverview={
-        id: chat.id,
-        status: chat.chat_status,
-        firstname: chat.chat_members[0].user.firstname,
-        lastname: chat.chat_members[0].user.lastname,
-        shipname: chat.chat_members[0].user.shipname
+      let chatOverview: ChatOverview|null=null;
+      for(let chatMember of chat.chat_members) {
+        console.log(this.authService.currentUserValue?.ID, chatMember.user.periskal_id)
+        if(this.authService.currentUserValue?.ID==chatMember.user.periskal_id) {
+          this.currentChatMemberId=chatMember.id;
+        }
+        else {
+          chatOverview={
+            id: chat.id,
+            status: chat.chat_status,
+            firstname: chatMember.user.firstname,
+            lastname: chatMember.user.lastname,
+            shipname: chatMember.user.shipname
+          }
+        }
       }
-      chats.push(chatOverview);
+      if(chatOverview)
+        chats.push(chatOverview);
     }
     this.chats=chats;
   }
-  async changeChat(id: number) {
-    let currentChatResponse = await fetch(`/api/chat/${id}`)
+  async changeChat(index: number) {
+    let currentChatResponse = await fetch(`/api/chat/${this.chats[index].id}`)
     if(currentChatResponse.ok) {
       let currentChatData = await currentChatResponse.json();
       this.currentChat.id= await currentChatData.id;
+      this.currentChat.firstname=await this.chats[index].firstname
+      this.currentChat.lastname=await this.chats[index].lastname
+      this.currentChat.shipname=await this.chats[index].shipname
       this.currentChat.status= await currentChatData.chat_status
     }
     this.fetchMessages();
@@ -97,6 +111,27 @@ export class SupportComponent {
     );
     this.messageList=messages
   }
+  async sendMessage() {
+    if (!this.message.trim()) return;
+    let message: ChatMessage = {
+      chat_member_id: this.currentChatMemberId,
+      date_time: new Date(),
+      text_content: this.message
+    }
+    this.messageList.push(message)
+    await fetch(`/api/messages`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        chat_member_id: this.currentChatMemberId,
+        text_content: this.message
+      })
+    })
+    this.message = '';
+
+  }
 }
 export interface ChatOverview {
   id: number,
@@ -104,8 +139,4 @@ export interface ChatOverview {
   firstname: string, 
   lastname: string,
   shipname: string
-}
-export interface Chat {
-  id: number,
-  status: ChatStatus
 }

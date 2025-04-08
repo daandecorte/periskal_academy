@@ -5,7 +5,7 @@
         </div>
         <div class="contacts-list">
             @for(chat of chats; track $index) {
-                <div class="contact" (click)="changeChat(chat.id)">
+                <div class="contact" (click)="changeChat($index)">
                     <div class="avatar sailor-icon">{{chat.firstname[0]}}{{chat.lastname[0]}}</div>
                     <div class="contact-info">
                         <div class="contact-name">{{chat.firstname}} {{chat.lastname}}</div>
@@ -18,6 +18,8 @@
     </div>
     <div class="chat-area">
         <div class="chat-header">
+            <div class="chat-title">{{currentChat.firstname}} {{currentChat.lastname}}</div>
+            <button class="claim-button">Start ticket</button>
             <button class="resolve-button resolved">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="20 6 9 17 4 12"></polyline>
@@ -26,24 +28,18 @@
             </button>
         </div>
         <div class="message-area">
-            <div class="message">
-                <div class="message-bubble">
-                    I'm having trouble assigning certificates to my sailors.
-                </div>
-                <div class="message-meta">2 hours ago</div>
-            </div>
             @for(message of messageList; track $index) {
-                <div class="message">
-                    <div class="message-bubble">
+                <div class="message" [ngClass]="{ 'my-message': message.chat_member_id === currentChatMemberId }">
+                    <div class="message-bubble" [ngClass]="">
                         {{message.text_content}}
                     </div>
-                    <div class="message-meta">{{message.date_time}}</div>
+                    <div class="message-meta">{{message.date_time | date:'d/MM/yyyy, H:mm:ss'}}</div>
                 </div>
             }
         </div>
         <div class="input-area">
-            <input type="text" class="message-input" placeholder="Type your message...">
-            <button class="send-button">
+            <input type="text" class="message-input" placeholder="Type your message..." [(ngModel)]="message" (keydown.enter)="sendMessage()" maxlength="255">
+            <button class="send-button" (click)="sendMessage()">
                 <fa-icon [icon]="faPaperPlane"></fa-icon>
             </button>
         </div>
