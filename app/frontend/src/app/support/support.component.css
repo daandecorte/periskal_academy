@@ -164,6 +164,9 @@ body {
 .message {
     max-width: 70%;
     margin-bottom: 16px;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
 }
 
 .message-bubble {
@@ -172,6 +175,9 @@ body {
     border-radius: 12px;
     font-size: 14px;
     line-height: 1.4;
+    word-wrap: break-word;
+    overflow-wrap: break-word; 
+    word-break: break-word;
 }
 
 .message-meta {

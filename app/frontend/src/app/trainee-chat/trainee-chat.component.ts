@@ -140,7 +140,7 @@ export class TraineeChatComponent {
   }
   async fetchMessages() {
     try {
-      const response = await fetch(`/api/chat/${this.chatId}`);
+      const response = await fetch(`/api/chat/${this.chatId}/messages`);
       if (response.ok) {
         const data = await response.json();
         await this.updateMessageList(data);
@@ -151,15 +151,13 @@ export class TraineeChatComponent {
   }
   updateMessageList(data: any) {
     let messages: ChatMessage[]=[];
-    for(let chatMember of data.chat_members) {
-      for(let message of chatMember.messages) {
-        let newMessage: ChatMessage = {
-          chat_member_id: chatMember.id,
-          date_time: message.date_time,
-          text_content: message.text_content
-        }
-        messages.push(newMessage);
+    for(let message of data) {
+      let newMessage: ChatMessage = {
+        chat_member_id: message.chat_member_id,
+        date_time: message.date_time,
+        text_content: message.text_content
       }
+      messages.push(newMessage);
     }
     messages.sort(
       (a, b) => new Date(a.date_time).getTime() - new Date(b.date_time).getTime()
@@ -185,7 +183,7 @@ export class TraineeChatComponent {
   }
 }
 
-interface ChatMessage {
+export interface ChatMessage {
   chat_member_id: number;
   date_time: Date;
   text_content: string;

@@ -4,9 +4,7 @@ import ap.student.project.backend.dao.ChatMemberRepository;
 import ap.student.project.backend.dao.ChatRepository;
 import ap.student.project.backend.dao.MessageRepository;
 import ap.student.project.backend.dao.UserRepository;
-import ap.student.project.backend.dto.ChatDTO;
-import ap.student.project.backend.dto.ChatMemberDTO;
-import ap.student.project.backend.dto.MessageDTO;
+import ap.student.project.backend.dto.*;
 import ap.student.project.backend.entity.Chat;
 import ap.student.project.backend.entity.ChatMember;
 import ap.student.project.backend.entity.Message;
@@ -50,8 +48,21 @@ public class ChatService {
         }
         return chat;
     }
-    public List<Chat> findAll() {
-        return this.chatRepository.findAll();
+    public List<ChatSummaryDTO> findAll() {
+        List<Chat> chats = this.chatRepository.findAll();
+        List<ChatSummaryDTO> chatSummaries = new ArrayList<>();
+        for (Chat chat : chats) {
+            Set<ChatMember> chatMembers = chat.getChatMembers();
+            List<ChatMemberSummaryDTO> chatMemberSummaries = new ArrayList<>();
+            for (ChatMember chatMember : chatMembers) {
+                ChatMemberSummaryDTO chatMemberSummaryDTO = new ChatMemberSummaryDTO(chatMember.getId(), chatMember.getUser());
+                chatMemberSummaries.add(chatMemberSummaryDTO);
+            }
+
+            ChatSummaryDTO chatSummaryDTO = new ChatSummaryDTO(chat.getId(), chatMemberSummaries, chat.getChatStatus());
+            chatSummaries.add(chatSummaryDTO);
+        }
+        return chatSummaries;
     }
     public void addChatMember(int id, ChatMemberDTO chatMemberDTO) {
         if(chatMemberDTO.user_id()==0) {
@@ -101,13 +112,17 @@ public class ChatService {
         }
         return chatMember.getChat();
     }
-    public List<Message> findAllChatMessages(int id) {
+    public List<ChatMessageDTO> findAllChatMessages(int id) {
         Chat chat = this.findById(id);
+        List<ChatMessageDTO> chatMessages = new ArrayList<>();
         Set<ChatMember> chatMembers = chat.getChatMembers();
-        List<Message> messages = new ArrayList<>();
         for (ChatMember chatMember : chatMembers) {
-            messages.addAll(chatMember.getMessages());
+            for (Message message: chatMember.getMessages()) {
+                ChatMessageDTO chatMessageDTO = new ChatMessageDTO(chatMember.getId(), message.getDateTime(), message.getTextContent());
+                chatMessages.add(chatMessageDTO);
+            }
         }
-        return messages.stream().sorted(Comparator.comparing(Message::getDateTime)).collect(Collectors.toList());
+        chatMessages.stream().sorted(Comparator.comparing(ChatMessageDTO::dateTime)).toList();
+        return chatMessages;
     }
 }

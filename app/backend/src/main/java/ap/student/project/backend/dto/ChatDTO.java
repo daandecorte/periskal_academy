@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Set;
 
 public record ChatDTO(
-        @JsonProperty("messages") Set<Message> messages,
+        @JsonProperty("chat_members") Set<ChatMember> chatMembers,
         @JsonProperty("chat_status") ChatStatus chatStatus
 ) {
 }

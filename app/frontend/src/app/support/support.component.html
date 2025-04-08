@@ -4,30 +4,16 @@
             <input type="text" class="search-input" placeholder="Search users...">
         </div>
         <div class="contacts-list">
-            <div class="contact">
-                <div class="avatar sailor-icon">JD</div>
-                <div class="contact-info">
-                    <div class="contact-name">John Doe</div>
-                    <div class="contact-role">Sailor</div>
+            @for(chat of chats; track $index) {
+                <div class="contact" (click)="changeChat(chat.id)">
+                    <div class="avatar sailor-icon">{{chat.firstname[0]}}{{chat.lastname[0]}}</div>
+                    <div class="contact-info">
+                        <div class="contact-name">{{chat.firstname}} {{chat.lastname}}</div>
+                        <div class="contact-role">{{chat.shipname}}</div>
+                    </div>
+                    <span class="status-badge" [ngClass]="statusClassMap[chat.status]">{{ chat.status.toString().replace('_', ' ').toLocaleLowerCase() | titlecase }}</span>
                 </div>
-                <span class="status-badge status-active">Active</span>
-            </div>
-            <div class="contact">
-                <div class="avatar fleet-manager-icon">FM</div>
-                <div class="contact-info">
-                    <div class="contact-name">Fleet Manager ABC</div>
-                    <div class="contact-role">Fleet Manager</div>
-                </div>
-                <span class="status-badge status-new">New</span>
-            </div>
-            <div class="contact">
-                <div class="avatar sailor-icon">MS</div>
-                <div class="contact-info">
-                    <div class="contact-name">Mike Smith</div>
-                    <div class="contact-role">Sailor</div>
-                </div>
-                <span class="status-badge status-resolved">Resolved</span>
-            </div>
+            }
         </div>
     </div>
     <div class="chat-area">
@@ -46,6 +32,14 @@
                 </div>
                 <div class="message-meta">2 hours ago</div>
             </div>
+            @for(message of messageList; track $index) {
+                <div class="message">
+                    <div class="message-bubble">
+                        {{message.text_content}}
+                    </div>
+                    <div class="message-meta">{{message.date_time}}</div>
+                </div>
+            }
         </div>
         <div class="input-area">
             <input type="text" class="message-input" placeholder="Type your message...">
