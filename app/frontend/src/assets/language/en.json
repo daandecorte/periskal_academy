@@ -109,5 +109,36 @@
     "QUESTIONS": "questions",
     "START": "Start",
     "REVIEW": "Review"
+  },
+  "TIPS_AND_TRICKS": {
+    "TIPS_AND_TRICKS": "Tips and tricks",
+    "ALL": "All",
+    "SEARCH_TIPS": "Search Tips...",
+    "ADD_TOPIC": "Add Topic",
+    "ADD_NEW_TOPIC": "Add New Topic",
+    "EDIT_TOPIC": "Edit Topic",
+    "ADD_NEW_TIP": "Add New Tip",
+    "EDIT_TIP": "Edit Tip",
+    "TOPIC_TITLE": "Topic Title",
+    "ENTER_TOPIC_TITLE": "Enter your topic title here...",
+    "TIP_TEXT": "Tip Text",
+    "ENTER_TIP_TEXT": "Enter your tip here...",
+    "SAVE_TOPIC": "Save Topic",
+    "SAVE_TIP": "Save Tip",
+    "DELETE_TOPIC": "Delete Topic",
+    "DELETE_TIP": "Delete Tip",
+    "DELETE_MESSAGE": "This action cannot be undone. Continue?",
+    "CANCEL": "Cancel",
+    "DELETE": "Delete"
+  },
+  "USER_MANAGEMENT": {
+    "USER_MANAGEMENT": "User Management",
+    "FILTER_BY": "Filter by",
+    "NAME": "Name",
+    "SHIPNAME": "Shipname",
+    "PRODUCTS": "Products",
+    "CERTIFICATES": "Certificates",
+    "SEARCH_USERS": "Search users...",
+    "TRAININGS_PROGRESS": "TRAININGS PROGRESS"
   }
 }

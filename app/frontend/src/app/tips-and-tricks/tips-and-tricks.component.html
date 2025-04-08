@@ -1,36 +1,55 @@
 <body>
   <div class="header">
-    <div class="title">Tips and tricks</div>
-    @if(editorUser){
+    <div class="title">{{ "TIPS_AND_TRICKS.TIPS_AND_TRICKS" | translate }}</div>
+
     <div class="controls">
       <select class="dropdown">
-        <option>All</option>
-        <option>Navigation</option>
-        <option>General</option>
-        <option>Chart Display</option>
+        <option>{{ "TIPS_AND_TRICKS.ALL" | translate }}</option>
+        @for (topics of tipsSorted; track $index) {
+        <option>{{topics?.title?.[currentLanguage]}}</option>
+        }
       </select>
       <div class="search-container">
         <fa-icon [icon]="faSearch" class="search-icon"></fa-icon>
-        <input type="text" class="search-input" placeholder="Search Tips..." />
+        <input
+          type="text"
+          class="search-input"
+          [placeholder]="'TIPS_AND_TRICKS.SEARCH_TIPS' | translate"
+        />
       </div>
+      @if(editorUser){
       <button class="add-tip-btn" (click)="addTopicShow()">
-        <fa-icon [icon]="faAdd"></fa-icon>Add Topic
+        <fa-icon [icon]="faAdd"></fa-icon
+        >{{ "TIPS_AND_TRICKS.ADD_TOPIC" | translate }}
       </button>
+      }
     </div>
-    }
   </div>
 
+  @if(isLoaded){ @for(topics of tipsSorted; track $index){
   <div class="tips-section">
     <div class="section-header" (click)="toggleSection($event, 0)">
       <h2>
         <fa-icon [icon]="faGlobe" class="globe-icon"></fa-icon>
-        General
+        {{topics?.title?.[currentLanguage]}}
       </h2>
       <div>
         @if(editorUser){
-        <fa-icon [icon]="faAdd" class="add-icon add-tip"></fa-icon>
-        <fa-icon [icon]="faPencil" class="edit-icon edit-title"></fa-icon>
-        <fa-icon [icon]="faTrash" class="delete-icon delete-topic"></fa-icon>
+        <fa-icon
+          [icon]="faAdd"
+          class="add-icon add-tip"
+          (click)="addTipShow()"
+        ></fa-icon>
+        <fa-icon
+          [icon]="faPencil"
+          class="edit-icon edit-title"
+          (click)="editTitleShow(topics?.title?.[currentLanguage])"
+        ></fa-icon>
+        <fa-icon
+          [icon]="faTrash"
+          class="delete-icon delete-topic"
+          (click)="deleteTopicShow()"
+        ></fa-icon>
         }
         <fa-icon
           [icon]="sectionsOpenState[0] ? faAngleUp : faAngleDown"
@@ -38,33 +57,44 @@
       </div>
     </div>
     <div class="section-content hidden">
+      @for(tip of topics.texts; track $index){
       <div class="tip-item">
         <div class="text-flex">
-          Always check your vessel's documentation before departure.
+          {{tip?.[currentLanguage]}}
         </div>
         @if(editorUser){
         <div class="icon-flex">
-          <fa-icon [icon]="faPencil" class="edit-icon edit-tip"></fa-icon>
-          <fa-icon [icon]="faTrash" class="delete-icon delete-tip"></fa-icon>
+          <fa-icon
+            [icon]="faPencil"
+            class="edit-icon edit-tip"
+            (click)="editTipShow(tip?.[currentLanguage])"
+          ></fa-icon>
+          <fa-icon
+            [icon]="faTrash"
+            class="delete-icon delete-tip"
+            (click)="deleteTipShow()"
+          ></fa-icon>
         </div>
         }
       </div>
+      }
     </div>
   </div>
+  } }
   <!--
-  [icon]="faInfo" class="info-icon"
-  -->
+    [icon]="faInfo" class="info-icon"
+    -->
   <div id="modal-overlay" class="modal-overlay hidden">
     <div class="modal-container">
       <div class="modal-header">
         @if(titleAdd){
-        <h2>Add New Topic</h2>
+        <h2>{{ "TIPS_AND_TRICKS.ADD_NEW_TOPIC" | translate }}</h2>
         } @else if(titleEdit){
-        <h2>Edit Topic</h2>
+        <h2>{{ "TIPS_AND_TRICKS.EDIT_TOPIC" | translate }}</h2>
         } @else if(tipAdd){
-        <h2>Add New Tip</h2>
+        <h2>{{ "TIPS_AND_TRICKS.ADD_NEW_TIP" | translate }}</h2>
         } @else if(tipEdit){
-        <h2>Edit Tip</h2>
+        <h2>{{ "TIPS_AND_TRICKS.EDIT_TIP" | translate }}</h2>
         }
         <button id="close-modal" class="close-btn" (click)="closeModal()">
           ×
@@ -79,32 +109,38 @@
       <div class="modal-content">
         @if(titleAdd || titleEdit){
         <div class="form-group">
-          <label for="tip-module">Topic Title</label>
+          <label for="tip-module">{{
+            "TIPS_AND_TRICKS.TOPIC_TITLE" | translate
+          }}</label>
           <input
+            #tipTitleRef
             id="tip-title"
             type="text"
             class="form-control"
-            placeholder="Enter your topic title here..."
+            [placeholder]="'TIPS_AND_TRICKS.ENTER_TOPIC_TITLE' | translate"
           />
         </div>
         } @if (tipAdd || tipEdit) {
         <div class="form-group">
-          <label for="tip-content">Tip Text</label>
+          <label for="tip-content">{{
+            "TIPS_AND_TRICKS.TIP_TEXT" | translate
+          }}</label>
           <textarea
+            #tipContentRef
             id="tip-content"
             class="form-control"
-            placeholder="Enter your tip here..."
+            [placeholder]="'TIPS_AND_TRICKS.ENTER_TIP_TEXT' | translate"
           ></textarea>
         </div>
         }
         <div class="modal-actions">
           @if(titleAdd || titleEdit){
           <button id="save-btn" class="btn btn-save" (click)="saveTopic()">
-            Save Topic
+            {{ "TIPS_AND_TRICKS.SAVE_TOPIC" | translate }}
           </button>
           } @if(tipAdd || tipEdit){
           <button id="save-btn" class="btn btn-save" (click)="saveTip()">
-            Save Tip
+            {{ "TIPS_AND_TRICKS.SAVE_TIP" | translate }}
           </button>
           }
         </div>
@@ -116,20 +152,28 @@
     <div class="modal-container modal-small">
       <div>
         @if(titleDelete){
-        <h4 class="modal-text-title">Delete Topic</h4>
+        <h4 class="modal-text-title">
+          {{ "TIPS_AND_TRICKS.DELETE_TOPIC" | translate }}
+        </h4>
         } @if(tipDelete) {
-        <h4 class="modal-text-title">Delete Tip</h4>
+        <h4 class="modal-text-title">
+          {{ "TIPS_AND_TRICKS.DELETE_TIP" | translate }}
+        </h4>
         }
-        <p class="modal-text">This action cannot be undone. Continue?</p>
+        <p class="modal-text">
+          {{ "TIPS_AND_TRICKS.DELETE_MESSAGE" | translate }}
+        </p>
         <div class="modal-actions-delete">
           <button
             id="cancel-btn"
             class="btn btn-cancel"
             (click)="closeModalDelete()"
           >
-            Cancel
+            {{ "TIPS_AND_TRICKS.CANCEL" | translate }}
           </button>
-          <button id="save-btn" class="btn btn-delete">Delete</button>
+          <button id="save-btn" class="btn btn-delete">
+            {{ "TIPS_AND_TRICKS.DELETE" | translate }}
+          </button>
         </div>
       </div>
     </div>

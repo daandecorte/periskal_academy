@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 import { faCertificate, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { IUser, ISkipper } from '../types/user-info';
-import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-management',
-  imports: [FontAwesomeModule, FormsModule, RouterLink],
+  imports: [FontAwesomeModule, FormsModule, RouterLink, TranslatePipe],
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.css',
 })

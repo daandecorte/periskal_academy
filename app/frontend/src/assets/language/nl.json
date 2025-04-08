@@ -111,5 +111,36 @@
     "QUESTIONS": "vragen",
     "START": "Start",
     "REVIEW": "Herzien"
+  },
+  "TIPS_AND_TRICKS": {
+    "TIPS_AND_TRICKS": "Tips en trucs",
+    "ALL": "Alle",
+    "SEARCH_TIPS": "Zoek Tips...",
+    "ADD_TOPIC": "Onderwerp toevoegen",
+    "ADD_NEW_TOPIC": "Nieuw onderwerp toevoegen",
+    "EDIT_TOPIC": "Onderwerp bewerken",
+    "ADD_NEW_TIP": "Nieuwe tip toevoegen",
+    "EDIT_TIP": "Tip bewerken",
+    "TOPIC_TITLE": "Onderwerptitel",
+    "ENTER_TOPIC_TITLE": "Voer hier je onderwerpstitel in...",
+    "TIP_TEXT": "Tiptekst",
+    "ENTER_TIP_TEXT": "Voer hier je tip in...",
+    "SAVE_TOPIC": "Onderwerp opslaan",
+    "SAVE_TIP": "Tip opslaan",
+    "DELETE_TOPIC": "Onderwerp verwijderen",
+    "DELETE_TIP": "Tip verwijderen",
+    "DELETE_MESSAGE": "Deze actie kan niet ongedaan worden gemaakt. Doorgaan?",
+    "CANCEL": "Annuleren",
+    "DELETE": "Verwijderen"
+  },
+  "USER_MANAGEMENT": {
+    "USER_MANAGEMENT": "Gebruikersbeheer",
+    "FILTER_BY": "Filter op",
+    "NAME": "Naam",
+    "SHIPNAME": "Scheepsnaam",
+    "PRODUCTS": "Producten",
+    "CERTIFICATES": "Certificaten",
+    "SEARCH_USERS": "Zoek gebruikers...",
+    "TRAININGS_PROGRESS": "VOORTGANG VAN TRAININGEN"
   }
 }

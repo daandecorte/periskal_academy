@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import {
   faGlobe,
   faInfoCircle,
@@ -11,12 +11,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthService } from '../services/auth.service';
+import { LanguageService } from '../services/language.service';
+import { TranslatePipe } from '@ngx-translate/core';
 import { IUser } from '../types/user-info';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tips-and-tricks',
-  imports: [FontAwesomeModule],
+  imports: [FontAwesomeModule, TranslatePipe],
   templateUrl: './tips-and-tricks.component.html',
   styleUrl: './tips-and-tricks.component.css',
 })
@@ -30,7 +32,13 @@ export class TipsAndTricksComponent implements AfterViewInit {
   faPencil = faPencil;
   faTrash = faTrash;
 
-  sectionsOpenState: boolean[] = [false, false];
+  @ViewChild('tipContentRef') tipContentRef!: ElementRef<HTMLTextAreaElement>;
+  @ViewChild('tipTitleRef') tipTitleRef!: ElementRef<HTMLTextAreaElement>;
+  isLoaded: boolean = false;
+
+  tips: ITip[] = [];
+  tipsSorted: ITipSorted[] = [];
+  sectionsOpenState: boolean[] = [];
 
   currentUser$: Observable<IUser | null>;
   currentUserRole: string | null = null;
@@ -39,9 +47,6 @@ export class TipsAndTricksComponent implements AfterViewInit {
   modalOverlay!: HTMLDivElement;
   modalOverlayDelete!: HTMLDivElement;
 
-  saveModalBtn!: HTMLButtonElement;
-  closeModalBtn!: HTMLButtonElement;
-
   titleAdd: boolean = false;
   titleEdit: boolean = false;
   titleDelete: boolean = false;
@@ -49,7 +54,12 @@ export class TipsAndTricksComponent implements AfterViewInit {
   tipEdit: boolean = false;
   tipDelete: boolean = false;
 
-  constructor(private authService: AuthService) {
+  currentLanguage: keyof ITranslated = 'ENGLISH';
+
+  constructor(
+    private authService: AuthService,
+    private languageService: LanguageService
+  ) {
     this.currentUser$ = this.authService.currentUser$;
     this.authService.currentUser$.subscribe((user) => {
       this.currentUserRole = user ? user.Role : null;
@@ -61,68 +71,58 @@ export class TipsAndTricksComponent implements AfterViewInit {
     ) {
       this.editorUser = true;
     }
+
+    this.languageService.currentLanguage$.subscribe((language) => {
+      this.currentLanguage = language as keyof ITranslated;
+    });
   }
 
-  ngAfterViewInit() {
+  grouped: Map<string, { title: ITranslated; texts: ITranslatedId[] }> =
+    new Map();
+
+  async getTips() {
+    const result = await fetch('api/tips');
+    let tips: ITip[] = await result.json();
+    return tips;
+  }
+
+  transformTips(tips: ITip[]): ITipSorted[] {
+    for (const tip of tips) {
+      const key = tip.title.ENGLISH;
+
+      const translatedId: ITranslatedId = {
+        ID: tip.id,
+        ENGLISH: tip.text.ENGLISH,
+        FRENCH: tip.text.FRENCH,
+        DUTCH: tip.text.DUTCH,
+        GERMAN: tip.text.GERMAN,
+      };
+
+      if (!this.grouped.has(key)) {
+        this.grouped.set(key, {
+          title: tip.title,
+          texts: [translatedId],
+        });
+        this.sectionsOpenState.push(false);
+      } else {
+        this.grouped.get(key)!.texts.push(translatedId);
+      }
+    }
+
+    return Array.from(this.grouped.values());
+  }
+
+  async ngAfterViewInit() {
+    const tips = await this.getTips();
+    this.tipsSorted = this.transformTips(tips);
+    this.isLoaded = true;
+
     this.modalOverlay = document.getElementById(
       'modal-overlay'
     ) as HTMLDivElement;
     this.modalOverlayDelete = document.getElementById(
       'modal-overlay-delete'
     ) as HTMLDivElement;
-    this.closeModalBtn = document.getElementById(
-      'close-modal'
-    ) as HTMLButtonElement;
-
-    let editTitleIcons = document.getElementsByClassName(
-      'edit-title'
-    ) as HTMLCollectionOf<HTMLElement>;
-
-    for (let i = 0; i < editTitleIcons.length; i++) {
-      editTitleIcons[i].addEventListener('click', () => {
-        this.editTitleShow();
-      });
-    }
-
-    let deleteTopicIcons = document.getElementsByClassName(
-      'delete-topic'
-    ) as HTMLCollectionOf<HTMLElement>;
-
-    for (let i = 0; i < deleteTopicIcons.length; i++) {
-      deleteTopicIcons[i].addEventListener('click', () => {
-        this.deleteTopicShow();
-      });
-    }
-
-    let addTipIcons = document.getElementsByClassName(
-      'add-tip'
-    ) as HTMLCollectionOf<HTMLElement>;
-
-    for (let i = 0; i < addTipIcons.length; i++) {
-      addTipIcons[i].addEventListener('click', () => {
-        this.addTipShow();
-      });
-    }
-
-    let editTipIcons = document.getElementsByClassName(
-      'edit-tip'
-    ) as HTMLCollectionOf<HTMLElement>;
-
-    for (let i = 0; i < editTipIcons.length; i++) {
-      editTipIcons[i].addEventListener('click', () => {
-        this.editTipShow();
-      });
-    }
-
-    let deleteTipIcons = document.getElementsByClassName(
-      'delete-tip'
-    ) as HTMLCollectionOf<HTMLElement>;
-
-    for (let i = 0; i < deleteTipIcons.length; i++) {
-      deleteTipIcons[i].addEventListener('click', () => {
-        this.deleteTipShow();
-      });
-    }
 
     const buttons =
       document.querySelectorAll<HTMLButtonElement>('.modal-button');
@@ -160,12 +160,19 @@ export class TipsAndTricksComponent implements AfterViewInit {
     this.tipEdit = false;
   }
 
-  editTitleShow() {
-    this.modalOverlay.classList.remove('hidden');
+  editTitleShow(title: string | undefined) {
     this.titleAdd = false;
     this.titleEdit = true;
     this.tipAdd = false;
     this.tipEdit = false;
+
+    this.modalOverlay.classList.remove('hidden');
+
+    setTimeout(() => {
+      if (title && this.tipTitleRef) {
+        this.tipTitleRef.nativeElement.value = title;
+      }
+    }, 0);
   }
 
   addTipShow() {
@@ -176,12 +183,18 @@ export class TipsAndTricksComponent implements AfterViewInit {
     this.tipEdit = false;
   }
 
-  editTipShow() {
-    this.modalOverlay.classList.remove('hidden');
+  editTipShow(tip: string | undefined) {
     this.titleAdd = false;
     this.titleEdit = false;
     this.tipAdd = false;
     this.tipEdit = true;
+
+    this.modalOverlay.classList.remove('hidden');
+    setTimeout(() => {
+      if (tip && this.tipContentRef) {
+        this.tipContentRef.nativeElement.value = tip;
+      }
+    }, 0);
   }
 
   closeModalDelete() {
@@ -220,4 +233,30 @@ export class TipsAndTricksComponent implements AfterViewInit {
 
     this.sectionsOpenState[index] = !this.sectionsOpenState[index];
   }
+}
+
+interface ITip {
+  id: number;
+  title: ITranslated;
+  text: ITranslated;
+}
+
+interface ITranslated {
+  ENGLISH: string;
+  FRENCH: string;
+  DUTCH: string;
+  GERMAN: string;
+}
+
+interface ITipSorted {
+  title: ITranslated;
+  texts: ITranslatedId[];
+}
+
+interface ITranslatedId {
+  ID: number;
+  ENGLISH: string;
+  FRENCH: string;
+  DUTCH: string;
+  GERMAN: string;
 }

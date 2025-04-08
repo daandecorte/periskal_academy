@@ -111,5 +111,36 @@
     "QUESTIONS": "Fragen",
     "START": "Starten",
     "REVIEW": "Wiederholen"
+  },
+  "TIPS_AND_TRICKS": {
+    "TIPS_AND_TRICKS": "Tipps und Tricks",
+    "ALL": "Alle",
+    "SEARCH_TIPS": "Tipps durchsuchen...",
+    "ADD_TOPIC": "Thema hinzufügen",
+    "ADD_NEW_TOPIC": "Neues Thema hinzufügen",
+    "EDIT_TOPIC": "Thema bearbeiten",
+    "ADD_NEW_TIP": "Neuen Tipp hinzufügen",
+    "EDIT_TIP": "Tipp bearbeiten",
+    "TOPIC_TITLE": "Thementitel",
+    "ENTER_TOPIC_TITLE": "Geben Sie hier den Titel Ihres Themas ein...",
+    "TIP_TEXT": "Tipptext",
+    "ENTER_TIP_TEXT": "Geben Sie hier Ihren Tipp ein...",
+    "SAVE_TOPIC": "Thema speichern",
+    "SAVE_TIP": "Tipp speichern",
+    "DELETE_TOPIC": "Thema löschen",
+    "DELETE_TIP": "Tipp löschen",
+    "DELETE_MESSAGE": "Diese Aktion kann nicht rückgängig gemacht werden. Fortfahren?",
+    "CANCEL": "Abbrechen",
+    "DELETE": "Löschen"
+  },
+  "USER_MANAGEMENT": {
+    "USER_MANAGEMENT": "Benutzerverwaltung",
+    "FILTER_BY": "Filtern nach",
+    "NAME": "Name",
+    "SHIPNAME": "Schiffsname",
+    "PRODUCTS": "Produkte",
+    "CERTIFICATES": "Zertifikate",
+    "SEARCH_USERS": "Benutzer suchen...",
+    "TRAININGS_PROGRESS": "FORTSCHRITT DER SCHULUNGEN"
   }
 }

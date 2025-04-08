@@ -1,15 +1,23 @@
 <header>
   <nav>
     <div class="top-row">
-      <h1>User Management</h1>
+      <h1>{{ "USER_MANAGEMENT.USER_MANAGEMENT" | translate }}</h1>
     </div>
     <div class="search-container">
       <select [(ngModel)]="selectedFilter" (change)="filterUsers()">
-        <option value="default">Filter by</option>
-        <option value="name">Name</option>
-        <option value="shipname">Shipname</option>
-        <option value="products">Products</option>
-        <option value="certificates">Certificates</option>
+        <option value="default">
+          {{ "USER_MANAGEMENT.FILTER_BY" | translate }}
+        </option>
+        <option value="name">{{ "USER_MANAGEMENT.NAME" | translate }}</option>
+        <option value="shipname">
+          {{ "USER_MANAGEMENT.SHIPNAME" | translate }}
+        </option>
+        <option value="products">
+          {{ "USER_MANAGEMENT.PRODUCTS" | translate }}
+        </option>
+        <option value="certificates">
+          {{ "USER_MANAGEMENT.CERTIFICATES" | translate }}
+        </option>
       </select>
       <div class="search-input-container">
         <fa-icon [icon]="faSearch" class="search-icon"></fa-icon>
@@ -17,8 +25,8 @@
           type="text"
           [(ngModel)]="searchTerm"
           (input)="filterUsers()"
-          placeholder="Search sailors..."
           name="search-sailors"
+          [placeholder]="'USER_MANAGEMENT.SEARCH_USERS' | translate"
         />
       </div>
     </div>
@@ -26,10 +34,18 @@
       <table>
         <thead>
           <tr>
-            <th class="name-column">NAME</th>
-            <th>PRODUCTS</th>
-            <th>CERTIFICATES</th>
-            <th>TRAINING PROGRESS</th>
+            <th class="name-column">
+              {{ ("USER_MANAGEMENT.NAME" | translate).toUpperCase() }}
+            </th>
+            <th class="products-column">
+              {{ "USER_MANAGEMENT.PRODUCTS".toUpperCase() | translate }}
+            </th>
+            <th class="certificates-column">
+              {{ "USER_MANAGEMENT.CERTIFICATES".toUpperCase() | translate }}
+            </th>
+            <th class="progress-column">
+              {{ "USER_MANAGEMENT.TRAININGS_PROGRESS" | translate }}
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -54,8 +70,10 @@
               }}</span>
             </td>
             <td>
-              <div class="progress-bar">
-                <div class="progress" style="width: 85%"></div>
+              <div class="progress-container">
+                <div class="progress-bar">
+                  <div class="progress" style="width: 85%"></div>
+                </div>
               </div>
             </td>
           </tr>

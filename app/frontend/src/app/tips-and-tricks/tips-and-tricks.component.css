@@ -327,6 +327,8 @@ textarea.form-control {
 .modal-text {
   display: flex;
   justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .modal-text-title {
@@ -334,6 +336,8 @@ textarea.form-control {
 }
 
 .modal-text {
+  margin-right: 20px;
+  margin-left: 20px;
   margin-top: -10px;
 }
 
