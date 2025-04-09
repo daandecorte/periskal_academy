@@ -36,14 +36,25 @@ export class TraineeChatComponent {
   async init() {
     if(this.chatMemberId==0) {
       let member= await this.getChatMember();
-      this.chatMemberId=member.id;
+      if (!member) {
+        console.error('Failed to initialize: chat member is null');
+        return;
+      }
+      this.chatMemberId=member[0].id;
     }
     if(this.chatId==0) {
       let chatId = await this.getChatId();
+      if (!chatId) {
+        console.error('Failed to initialize: chat ID is null');
+        return;
+      }
       this.chatId=chatId;
     }
   }
-  toggleChat() {
+  async toggleChat() {
+    if(this.chatMemberId==0||this.chatId==0) {
+      this.init();
+    }
     this.isOpen = !this.isOpen;
     if(this.isOpen) {
       this.fetchMessages();
@@ -129,7 +140,15 @@ export class TraineeChatComponent {
 
   }
   async getChatId() {
+    if (!this.chatMemberId) {
+      console.error('chatMemberId is not set before calling getChatId');
+      return null;
+    }
     let chatResponse = await fetch(`/api/members/${this.chatMemberId}/chat`);
+    if (!chatResponse.ok) {
+      console.error('Failed to fetch chat ID');
+      return null;
+    }
     let chatJson = await chatResponse.json();
     return await chatJson.id;
   }

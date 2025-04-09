@@ -90,4 +90,14 @@ public class ChatController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+    @PutMapping(value = "/chat/{id}")
+    public ResponseEntity updateChat(@PathVariable("id") int id, @RequestBody ChatDTO chatDTO) {
+        try{
+            this.chatService.updateChat(id, chatDTO);
+            return ResponseEntity.ok(chatDTO);
+        }
+        catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }

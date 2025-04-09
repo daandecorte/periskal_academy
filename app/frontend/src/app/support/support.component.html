@@ -19,7 +19,9 @@
     <div class="chat-area">
         <div class="chat-header">
             <div class="chat-title">{{currentChat.firstname}} {{currentChat.lastname}}</div>
-            <button class="claim-button">Start ticket</button>
+            @if(currentChat.status.toString()=='NOT_STARTED') {
+                <button class="claim-button" (click)="claimSupportTicket()">Start ticket</button>
+            }
             <button class="resolve-button resolved">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polyline points="20 6 9 17 4 12"></polyline>

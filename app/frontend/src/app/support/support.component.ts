@@ -25,8 +25,10 @@ export class SupportComponent {
   chats: ChatOverview[] = []
   messageList: ChatMessage[] = []
   currentChat: ChatOverview = {id:0, status: ChatStatus.NOT_STARTED, firstname: "", lastname: "", shipname: ""};
+  currentChatIndex: number=0;
   private intervalId: any;
   private previousMessageCount=0;
+  currentUserId:number=0;
   currentChatMemberId:number=0;
   message: string='';
 
@@ -38,6 +40,7 @@ export class SupportComponent {
 
   constructor(private authService: AuthService) {
     this.getChats();
+    this.getUserId();
   }
 
   async getChats() {
@@ -48,6 +51,14 @@ export class SupportComponent {
     }
     
   }
+  async getUserId() {
+    let userResponse = await fetch(`/api/users/periskal_id/${this.authService.currentUserValue?.ID}`);
+    if (userResponse.ok) {
+      const data = await userResponse.json();
+      this.currentUserId = await data.id;
+    }
+    
+  }
   updateChatList(data: any) {
     console.log(data)
     let chats:ChatOverview[]=[];
@@ -55,7 +66,7 @@ export class SupportComponent {
       let chatOverview: ChatOverview|null=null;
       for(let chatMember of chat.chat_members) {
         console.log(this.authService.currentUserValue?.ID, chatMember.user.periskal_id)
-        if(this.authService.currentUserValue?.ID==chatMember.user.periskal_id) {
+        if(this.currentUserId==chatMember.user.id) {
           this.currentChatMemberId=chatMember.id;
         }
         else {
@@ -74,6 +85,7 @@ export class SupportComponent {
     this.chats=chats;
   }
   async changeChat(index: number) {
+    this.currentChatIndex=index;
     let currentChatResponse = await fetch(`/api/chat/${this.chats[index].id}`)
     if(currentChatResponse.ok) {
       let currentChatData = await currentChatResponse.json();
@@ -82,8 +94,16 @@ export class SupportComponent {
       this.currentChat.lastname=await this.chats[index].lastname
       this.currentChat.shipname=await this.chats[index].shipname
       this.currentChat.status= await currentChatData.chat_status
+      if(this.currentChat.status.toString()!='NOT_STARTED') {
+        for(let chatMember of currentChatData.chat_members) {
+            if(chatMember.user.id==this.currentUserId) {
+              this.currentChatMemberId=chatMember.id
+            }
+        }
+      }
     }
     this.fetchMessages();
+    console.log(this.currentChat);
   }
   async fetchMessages() {
     try {
@@ -131,6 +151,37 @@ export class SupportComponent {
     })
     this.message = '';
 
+  }
+  async claimSupportTicket() {
+    const updateChatResponse = await fetch(`/api/chat/${this.currentChat.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        chat_status: ChatStatus.IN_PROGRESS,
+      }),
+    })
+    if(!updateChatResponse.ok) {
+      console.error("failed to update chat status");
+    }
+    console.log(updateChatResponse);
+    const memberResponse = await fetch(`/api/chat/${this.currentChat.id}/members`,  {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: this.currentUserId,
+      }),
+    })
+    if (!memberResponse.ok) {
+      console.error('Failed to create chat member');
+    }
+    const newMember = await memberResponse.json();
+    this.currentChatMemberId=newMember.id;
+    this.getChats();
+    this.changeChat(this.currentChatIndex);
   }
 }
 export interface ChatOverview {

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -89,13 +90,13 @@ public class UserService {
         if (examAttempts.isEmpty()) throw new NotFoundException("user does not have any exam attempts");
         return examAttempts;
     }
-    public ChatMember getChatMember(int id) throws NotFoundException {
+    public List<ChatMember> getChatMember(int id) throws NotFoundException {
         User user = this.findById(id);
-        ChatMember chatMember = user.getChatMember();
-        if (chatMember == null) {
-            throw new NotFoundException("chat member not found");
+        List<ChatMember> chatMembers = user.getChatMembers();
+        if (chatMembers.isEmpty()) {
+            throw new NotFoundException("this user has no chatmembers");
         }
-        return chatMember;
+        return chatMembers;
     }
 
     public User assemble(UserDTO userDTO) {
