@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { faPaperPlane, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -31,6 +31,8 @@ export class SupportComponent {
   currentUserId:number=0;
   currentChatMemberId:number=0;
   message: string='';
+  statusFilter: ChatStatus|null = ChatStatus.IN_PROGRESS;
+  searchTerm: string='';
 
   statusClassMap: Record<string, string> = {
     NOT_STARTED: 'status-new',
@@ -64,10 +66,10 @@ export class SupportComponent {
     let chats:ChatOverview[]=[];
     for(let chat of data) {
       let chatOverview: ChatOverview|null=null;
+      let chatMemberId=0;
       for(let chatMember of chat.chat_members) {
-        console.log(this.authService.currentUserValue?.ID, chatMember.user.periskal_id)
         if(this.currentUserId==chatMember.user.id) {
-          this.currentChatMemberId=chatMember.id;
+          chatMemberId=chatMember.id;
         }
         else {
           chatOverview={
@@ -79,12 +81,19 @@ export class SupportComponent {
           }
         }
       }
-      if(chatOverview)
+      if(chatMemberId==0) {
+        if(chatOverview && chatOverview.status==ChatStatus.NOT_STARTED) {
+          chats.push(chatOverview);
+        }
+      }
+      else if(chatOverview) {
         chats.push(chatOverview);
+      }
     }
-    this.chats=chats;
+    this.chats=chats.sort((a,b) => a.status-b.status);
   }
   async changeChat(index: number) {
+    clearInterval(this.intervalId);
     this.currentChatIndex=index;
     let currentChatResponse = await fetch(`/api/chat/${this.chats[index].id}`)
     if(currentChatResponse.ok) {
@@ -103,7 +112,15 @@ export class SupportComponent {
       }
     }
     this.fetchMessages();
-    console.log(this.currentChat);
+    this.startPolling();
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 0);
+  }
+  startPolling() {
+    this.intervalId = setInterval(() => {
+      this.fetchMessages();
+    }, 10000);
   }
   async fetchMessages() {
     try {
@@ -182,6 +199,38 @@ export class SupportComponent {
     this.currentChatMemberId=newMember.id;
     this.getChats();
     this.changeChat(this.currentChatIndex);
+  }
+  @ViewChild('chatBody') chatBody!: ElementRef;
+
+  ngAfterViewChecked() {
+    if(this.messageList.length!=this.previousMessageCount) {
+      this.scrollToBottom();
+    }
+    this.previousMessageCount=this.messageList.length;
+  }
+  
+  scrollToBottom(): void {
+    try {
+      this.chatBody.nativeElement.scrollTop = this.chatBody.nativeElement.scrollHeight;
+    } catch (err) {
+      console.error('Scroll failed:', err);
+    }
+  }
+  get filteredChatIndices(): number[] {
+    return this.chats
+      .map((chat, index) => ({ chat, index }))
+      .filter(({ chat }) => {
+        console.log(chat);
+        const fullName = `${chat.firstname} ${chat.lastname}`.toLowerCase();
+        const matchesName = this.searchTerm
+          ? fullName.includes(this.searchTerm.toLowerCase())
+          : true;
+        const matchesStatus = this.statusFilter == null
+          ? true
+          : chat.status.toString() == ChatStatus[this.statusFilter];
+        return matchesName && matchesStatus;
+      })
+      .map(({ index }) => index);
   }
 }
 export interface ChatOverview {

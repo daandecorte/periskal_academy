@@ -255,3 +255,10 @@ body {
 .sailor-icon {
     color: gray;
 }
+.status-filter {
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    border-color: lightgray;
+    margin-top: 1rem;
+    width: 100%;
+}

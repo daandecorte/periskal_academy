@@ -1,17 +1,23 @@
 <div class="chat-container">
     <div class="sidebar">
         <div class="search-bar">
-            <input type="text" class="search-input" placeholder="Search users...">
+            <input type="text" [(ngModel)]="searchTerm" class="search-input" placeholder="Search by name" />
+            <select [(ngModel)]="statusFilter" class="status-filter">
+                <option [ngValue]="null">All</option>
+                <option [ngValue]="ChatStatus.NOT_STARTED">Not Claimed</option>
+                <option [ngValue]="ChatStatus.IN_PROGRESS">Claimed By Me</option>
+                <option [ngValue]="ChatStatus.RESOLVED">Done</option>
+            </select>
         </div>
         <div class="contacts-list">
-            @for(chat of chats; track $index) {
-                <div class="contact" (click)="changeChat($index)">
-                    <div class="avatar sailor-icon">{{chat.firstname[0]}}{{chat.lastname[0]}}</div>
+            @for(index of filteredChatIndices; track $index) {
+                <div class="contact" (click)="changeChat(index)">
+                    <div class="avatar sailor-icon">{{chats[index].firstname[0]}}{{chats[index].lastname[0]}}</div>
                     <div class="contact-info">
-                        <div class="contact-name">{{chat.firstname}} {{chat.lastname}}</div>
-                        <div class="contact-role">{{chat.shipname}}</div>
+                        <div class="contact-name">{{chats[index].firstname}} {{chats[index].lastname}}</div>
+                        <div class="contact-role">{{chats[index].shipname}}</div>
                     </div>
-                    <span class="status-badge" [ngClass]="statusClassMap[chat.status]">{{ chat.status.toString().replace('_', ' ').toLocaleLowerCase() | titlecase }}</span>
+                    <span class="status-badge" [ngClass]="statusClassMap[chats[index].status]">{{ chats[index].status.toString().replace('_', ' ').toLocaleLowerCase() | titlecase }}</span>
                 </div>
             }
         </div>
@@ -29,7 +35,7 @@
                 Mark as Resolved
             </button>
         </div>
-        <div class="message-area">
+        <div class="message-area" #chatBody>
             @for(message of messageList; track $index) {
                 <div class="message" [ngClass]="{ 'my-message': message.chat_member_id === currentChatMemberId }">
                     <div class="message-bubble" [ngClass]="">
