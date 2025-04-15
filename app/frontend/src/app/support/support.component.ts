@@ -41,8 +41,11 @@ export class SupportComponent {
   };
 
   constructor(private authService: AuthService) {
-    this.getChats();
-    this.getUserId();
+    this.init();
+  }
+  async init() {
+    await this.getUserId();
+    await this.getChats();
   }
 
   async getChats() {
@@ -82,7 +85,8 @@ export class SupportComponent {
         }
       }
       if(chatMemberId==0) {
-        if(chatOverview && chatOverview.status==ChatStatus.NOT_STARTED) {
+        console.log(chatOverview?.status);
+        if(chatOverview && chatOverview.status.toString()=="NOT_STARTED") {
           chats.push(chatOverview);
         }
       }
@@ -183,20 +187,49 @@ export class SupportComponent {
       console.error("failed to update chat status");
     }
     console.log(updateChatResponse);
-    const memberResponse = await fetch(`/api/chat/${this.currentChat.id}/members`,  {
-      method: 'POST',
+    const checkChatMemberResponse = await fetch(`/api/chat/${this.currentChat.id}`);
+    let chatMemberId = 0;
+    const checkChatMemberData = await checkChatMemberResponse.json();
+    for(let member of checkChatMemberData.chat_members) {
+      if(member.user.id==this.currentUserId) {
+        chatMemberId=member.id;
+      }
+    }
+    if(chatMemberId==0) {
+      const memberResponse = await fetch(`/api/chat/${this.currentChat.id}/members`,  {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: this.currentUserId,
+        }),
+      })
+      if (!memberResponse.ok) {
+        console.error('Failed to create chat member');
+      }
+      const newMember = await memberResponse.json();
+      this.currentChatMemberId=newMember.id;
+    }
+    else {
+      this.currentChatMemberId=chatMemberId;
+    }
+    this.getChats();
+    this.changeChat(this.currentChatIndex);
+  }
+  async markAsResolved() {
+    const updateChatResponse = await fetch(`/api/chat/${this.currentChat.id}`, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        user_id: this.currentUserId,
+        chat_status: ChatStatus.RESOLVED,
       }),
     })
-    if (!memberResponse.ok) {
-      console.error('Failed to create chat member');
+    if(!updateChatResponse.ok) {
+      console.error("failed to update chat status");
     }
-    const newMember = await memberResponse.json();
-    this.currentChatMemberId=newMember.id;
     this.getChats();
     this.changeChat(this.currentChatIndex);
   }
@@ -220,7 +253,6 @@ export class SupportComponent {
     return this.chats
       .map((chat, index) => ({ chat, index }))
       .filter(({ chat }) => {
-        console.log(chat);
         const fullName = `${chat.firstname} ${chat.lastname}`.toLowerCase();
         const matchesName = this.searchTerm
           ? fullName.includes(this.searchTerm.toLowerCase())

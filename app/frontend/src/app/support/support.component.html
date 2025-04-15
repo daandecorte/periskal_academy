@@ -26,14 +26,16 @@
         <div class="chat-header">
             <div class="chat-title">{{currentChat.firstname}} {{currentChat.lastname}}</div>
             @if(currentChat.status.toString()=='NOT_STARTED') {
-                <button class="claim-button" (click)="claimSupportTicket()">Start ticket</button>
+                <button class="claim-button" (click)="claimSupportTicket()">Claim ticket</button>
             }
-            <button class="resolve-button resolved">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-                Mark as Resolved
-            </button>
+            @else if(currentChat.id!=0) {
+                <button class="resolve-button" [ngClass]="{ resolved: currentChat.status.toString() == 'RESOLVED' }" (click)="markAsResolved()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Mark as Resolved
+                </button>
+            }
         </div>
         <div class="message-area" #chatBody>
             @for(message of messageList; track $index) {
@@ -46,10 +48,18 @@
             }
         </div>
         <div class="input-area">
-            <input type="text" class="message-input" placeholder="Type your message..." [(ngModel)]="message" (keydown.enter)="sendMessage()" maxlength="255">
-            <button class="send-button" (click)="sendMessage()">
-                <fa-icon [icon]="faPaperPlane"></fa-icon>
-            </button>
+            @if(currentChat.status.toString() == "IN_PROGRESS") {
+                <input type="text" class="message-input" placeholder="Type your message..." [(ngModel)]="message" (keydown.enter)="sendMessage()" maxlength="255">
+                <button class="send-button" (click)="sendMessage()">
+                    <fa-icon [icon]="faPaperPlane"></fa-icon>
+                </button>
+            }
+            @else if(currentChat.status.toString() == "RESOLVED") {
+                <div>This ticket has been resolved.</div>
+            }
+            @else if(currentChat.status.toString() == "NOT_STARTED") {
+                <div>Claim this ticket to help.</div>
+            }
         </div>
     </div>
 </div>

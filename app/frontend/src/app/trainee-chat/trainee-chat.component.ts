@@ -5,6 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthService } from '../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { HttpStatusCode } from '@angular/common/http';
+import { ChatStatus } from '../support/support.component';
 
 @Component({
   selector: 'app-trainee-chat',
@@ -69,6 +70,7 @@ export class TraineeChatComponent {
   }
   async sendMessage() {
     if (!this.message.trim()) return;
+    this.checkChatStatusResolved();
     let message: ChatMessage = {
       chat_member_id: this.chatMemberId,
       date_time: new Date(),
@@ -87,6 +89,28 @@ export class TraineeChatComponent {
     })
     this.message = '';
 
+  }
+  async checkChatStatusResolved() {
+    const chatResponse = await fetch(`/api/chat/${this.chatId}`)
+    if(!chatResponse.ok) {
+      console.error("failed to fetch chat");
+    }
+    const chatData = await chatResponse.json();
+    console.log(chatData.chat_status.toString());
+    if(chatData.chat_status.toString()=="RESOLVED") {
+      const updateChatResponse = await fetch(`/api/chat/${this.chatId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          chat_status: ChatStatus.NOT_STARTED,
+        }),
+      })
+      if(!updateChatResponse.ok) {
+        console.error("failed to update chat status");
+      }
+    }
   }
   async getChatMember() {
     let userResponse = await fetch(`/api/users/periskal_id/${this.authService.currentUserValue?.ID}`)
