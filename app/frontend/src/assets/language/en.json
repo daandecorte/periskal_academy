@@ -96,5 +96,27 @@
     "LAST_ACTIVITY": "Last Activity",
     "EXAM_STATUS":"Exam Status",
     "NO_TRAININGS_ASSIGNED": "This person has no trainings assigned."
+  },
+  "TRAINEE_CHAT": {
+    "HOW_CAN_I_HELP": "Hi there! How can I help you today?",
+    "FEEL_FREE_TO_ASK": "Feel free to ask about:",
+    "CERTIFICATE_REQUIREMENTS": "Certificate requirements",
+    "TRAINING_PROGRESS": "Training progress",
+    "TECHNICAL_SUPPORT": "Technical support",
+    "GENERAL_QUESTIONS": "General questions",
+    "PERISKAL_SUPPORT": "Periskal Support",
+    "READY_TO_HELP": "Ready to help",
+    "TYPE_YOUR_QUESTION": "Type your question here..."
+  },
+  "SUPPORT_CHAT": {
+    "NOT_CLAIMED": "Not Claimed",
+    "CLAIMED_BY_ME": "Claimed By Me",
+    "RESOLVED": "Resolved",
+    "SEARCH_BY_NAME": "Search by name",
+    "CLAIM_TICKET": "Claim Ticket",
+    "MARK_AS_RESOLVED": "Mark as Resolved",
+    "TYPE_YOUR_MESSAGE": "Type your message...",
+    "THIS_TICKET_HAS_BEEN_RESOLVED": "This ticket has been resolved.",
+    "CLAIM_THIS_TICKET_TO_HELP": "Claim this ticket to help."
   }
 }

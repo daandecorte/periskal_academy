@@ -97,7 +97,32 @@
     "PREVIOUS": "Zurück",
     "NEXT": "Weiter",
     "PUBLISH": "Veröffentlichen"
+},
+"TRAINEE_CHAT": {
+  "HOW_CAN_I_HELP": "Hallo! Wie kann ich Ihnen heute helfen?",
+  "FEEL_FREE_TO_ASK": "Fragen Sie gerne nach:",
+  "CERTIFICATE_REQUIREMENTS": "Zertifikatsanforderungen",
+  "TRAINING_PROGRESS": "Trainingsfortschritt",
+  "TECHNICAL_SUPPORT": "Technischer Support",
+  "GENERAL_QUESTIONS": "Allgemeine Fragen",
+  "PERISKAL_SUPPORT": "Periskal-Support",
+  "READY_TO_HELP": "Bereit zu helfen",
+  "TYPE_YOUR_QUESTION": "Geben Sie hier Ihre Frage ein..."
+},
+"SUPPORT_CHAT": {
+  "NOT_CLAIMED": "Nicht übernommen",
+  "CLAIMED_BY_ME": "Von mir übernommen",
+  "RESOLVED": "Gelöst",
+  "SEARCH_BY_NAME": "Nach Namen suchen",
+  "CLAIM_TICKET": "Ticket übernehmen",
+  "MARK_AS_RESOLVED": "Als gelöst markieren",
+  "TYPE_YOUR_MESSAGE": "Geben Sie Ihre Nachricht ein...",
+  "THIS_TICKET_HAS_BEEN_RESOLVED": "Dieses Ticket wurde gelöst.",
+  "CLAIM_THIS_TICKET_TO_HELP": "Übernehmen Sie dieses Ticket, um zu helfen."
 }
+
+
+
 
 
 

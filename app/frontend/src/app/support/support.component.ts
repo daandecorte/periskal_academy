@@ -6,6 +6,7 @@ import { ChatMessage } from '../trainee-chat/trainee-chat.component';
 import { AuthService } from '../services/auth.service';
 import { TitleStrategy } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 
 export enum ChatStatus {
   NOT_STARTED,IN_PROGRESS,RESOLVED
@@ -13,7 +14,7 @@ export enum ChatStatus {
 
 @Component({
   selector: 'app-support',
-  imports: [FontAwesomeModule, CommonModule, FormsModule, DatePipe],
+  imports: [FontAwesomeModule, CommonModule, FormsModule, DatePipe, TranslatePipe],
   templateUrl: './support.component.html',
   styleUrl: './support.component.css'
 })

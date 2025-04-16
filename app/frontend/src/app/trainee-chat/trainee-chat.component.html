@@ -5,8 +5,8 @@
                 <fa-icon [icon]="faHeadset"></fa-icon>
             </div>
             <div>
-                <div class="support-title">Periskal Support</div>
-                <div class="support-status">Online - Ready to help</div>
+                <div class="support-title">{{"TRAINEE_CHAT.PERISKAL_SUPPORT" | translate}}</div>
+                <div class="support-status">{{"TRAINEE_CHAT.READY_TO_HELP" | translate}}</div>
             </div>
         </div>
         <button class="close-button" (click)="toggleChat()">&times;</button>
@@ -18,13 +18,13 @@
                 <fa-icon [icon]="faHeadset"></fa-icon>
             </div>
             <div class="message-content">
-                <p>👋 Hi there! How can I help you today?</p>
-                <p>Feel free to ask about:</p>
+                <p>👋 {{"TRAINEE_CHAT.HOW_CAN_I_HELP" | translate}}</p>
+                <p>{{"TRAINEE_CHAT.FEEL_FREE_TO_ASK" | translate}}</p>
                 <ul class="topic-list">
-                    <li>Certificate requirements</li>
-                    <li>Training progress</li>
-                    <li>Technical support</li>
-                    <li>General questions</li>
+                    <li>{{"TRAINEE_CHAT.CERTIFICATE_REQUIREMENTS" | translate}}</li>
+                    <li>{{"TRAINEE_CHAT.TRAINING_PROGRESS" | translate}}</li>
+                    <li>{{"TRAINEE_CHAT.TECHNICAL_SUPPORT" | translate}}</li>
+                    <li>{{"TRAINEE_CHAT.GENERAL_QUESTIONS" | translate}}</li>
                 </ul>
             </div>
         </div>
@@ -50,7 +50,7 @@
     </div>
 
     <div class="chat-input">
-        <input type="text" class="input-field" placeholder="Type your question here..." [(ngModel)]="message" (keydown.enter)="sendMessage()" maxlength="255">
+        <input type="text" class="input-field" placeholder="{{'TRAINEE_CHAT.TYPE_YOUR_QUESTION' | translate}}" [(ngModel)]="message" (keydown.enter)="sendMessage()" maxlength="255">
         <button class="send-button" (click)="sendMessage()">
             <fa-icon [icon]="faPaperPlane"></fa-icon>
         </button>

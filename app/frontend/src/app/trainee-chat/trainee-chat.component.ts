@@ -6,10 +6,11 @@ import { AuthService } from '../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { HttpStatusCode } from '@angular/common/http';
 import { ChatStatus } from '../support/support.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-trainee-chat',
-  imports: [CommonModule, FontAwesomeModule,FormsModule],
+  imports: [CommonModule, FontAwesomeModule,FormsModule, TranslatePipe],
   templateUrl: './trainee-chat.component.html',
   styleUrl: './trainee-chat.component.css'
 })
@@ -131,7 +132,7 @@ export class TraineeChatComponent {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          chat_status: "NOT_STARTED"
+          chat_status: ChatStatus.RESOLVED
         })
       })
       if (!chatResponse.ok) {
