@@ -118,7 +118,9 @@
   "MARK_AS_RESOLVED": "Als gelöst markieren",
   "TYPE_YOUR_MESSAGE": "Geben Sie Ihre Nachricht ein...",
   "THIS_TICKET_HAS_BEEN_RESOLVED": "Dieses Ticket wurde gelöst.",
-  "CLAIM_THIS_TICKET_TO_HELP": "Übernehmen Sie dieses Ticket, um zu helfen."
+  "CLAIM_THIS_TICKET_TO_HELP": "Übernehmen Sie dieses Ticket, um zu helfen.",
+  "ALL": "Alle"
+
 }
 
 

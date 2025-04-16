@@ -117,6 +117,7 @@
     "MARK_AS_RESOLVED": "Mark as Resolved",
     "TYPE_YOUR_MESSAGE": "Type your message...",
     "THIS_TICKET_HAS_BEEN_RESOLVED": "This ticket has been resolved.",
-    "CLAIM_THIS_TICKET_TO_HELP": "Claim this ticket to help."
+    "CLAIM_THIS_TICKET_TO_HELP": "Claim this ticket to help.",
+    "ALL": "All"
   }
 }

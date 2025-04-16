@@ -69,6 +69,9 @@ export class TraineeChatComponent {
       clearInterval(this.intervalId);
     }
   }
+  ngOnDestroy() {
+    clearInterval(this.intervalId);
+  }
   async sendMessage() {
     if (!this.message.trim()) return;
     this.checkChatStatusResolved();
@@ -97,7 +100,6 @@ export class TraineeChatComponent {
       console.error("failed to fetch chat");
     }
     const chatData = await chatResponse.json();
-    console.log(chatData.chat_status.toString());
     if(chatData.chat_status.toString()=="RESOLVED") {
       const updateChatResponse = await fetch(`/api/chat/${this.chatId}`, {
         method: 'PUT',

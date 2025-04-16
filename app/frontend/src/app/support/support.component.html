@@ -3,7 +3,7 @@
         <div class="search-bar">
             <input type="text" [(ngModel)]="searchTerm" class="search-input" placeholder="{{'SUPPORT_CHAT.SEARCH_BY_NAME' | translate}}" />
             <select [(ngModel)]="statusFilter" class="status-filter">
-                <option [ngValue]="null">All</option>
+                <option [ngValue]="null">{{"SUPPORT_CHAT.ALL" | translate}}</option>
                 <option [ngValue]="ChatStatus.NOT_STARTED">{{"SUPPORT_CHAT.NOT_CLAIMED" | translate}}</option>
                 <option [ngValue]="ChatStatus.IN_PROGRESS">{{"SUPPORT_CHAT.CLAIMED_BY_ME" | translate}}</option>
                 <option [ngValue]="ChatStatus.RESOLVED">{{"SUPPORT_CHAT.RESOLVED" | translate}}</option>

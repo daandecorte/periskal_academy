@@ -68,8 +68,8 @@
     "ANSWER_OPTION": "Antwoordopties",
     "OPTION_PLACEHOLDER": "Antwoordoptie",
     "ADD_OPTION": "+ Optie toevoegen"
-},
-"ADMIN_ADD_MODULES": {
+  },
+  "ADMIN_ADD_MODULES": {
     "EXAM_TITLE": "Examensinstellingen",
     "TIME_LIMIT": "Tijdslimiet (minuten)",
     "QUETIONS": "Vragen per examen",
@@ -96,31 +96,28 @@
     "PREVIOUS": "Vorige",
     "NEXT": "Volgende",
     "PUBLISH": "Publiceren"
-},
-"TRAINEE_CHAT": {
-  "HOW_CAN_I_HELP": "Hallo! Hoe kan ik je vandaag helpen?",
-  "FEEL_FREE_TO_ASK": "Stel gerust je vragen over:",
-  "CERTIFICATE_REQUIREMENTS": "Certificaatvereisten",
-  "TRAINING_PROGRESS": "Voortgang van de training",
-  "TECHNICAL_SUPPORT": "Technische ondersteuning",
-  "GENERAL_QUESTIONS": "Algemene vragen",
-  "PERISKAL_SUPPORT": "Periskal Support",
-  "READY_TO_HELP": "Klaar om te helpen",
-  "TYPE_YOUR_QUESTION": "Typ hier je vraag..."
-},
-"SUPPORT_CHAT": {
-  "NOT_CLAIMED": "Niet opgeëist",
-  "CLAIMED_BY_ME": "Opgeëist door mij",
-  "RESOLVED": "Opgelost",
-  "SEARCH_BY_NAME": "Zoek op naam",
-  "CLAIM_TICKET": "Ticket opeisen",
-  "MARK_AS_RESOLVED": "Markeer als opgelost",
-  "TYPE_YOUR_MESSAGE": "Typ je bericht...",
-  "THIS_TICKET_HAS_BEEN_RESOLVED": "Dit ticket is opgelost.",
-  "CLAIM_THIS_TICKET_TO_HELP": "Opeis dit ticket om te helpen."
-}
-
-
-
-
+    },
+  "TRAINEE_CHAT": {
+    "HOW_CAN_I_HELP": "Hallo! Hoe kan ik je vandaag helpen?",
+    "FEEL_FREE_TO_ASK": "Stel gerust je vragen over:",
+    "CERTIFICATE_REQUIREMENTS": "Certificaatvereisten",
+    "TRAINING_PROGRESS": "Voortgang van de training",
+    "TECHNICAL_SUPPORT": "Technische ondersteuning",
+    "GENERAL_QUESTIONS": "Algemene vragen",
+    "PERISKAL_SUPPORT": "Periskal Support",
+    "READY_TO_HELP": "Klaar om te helpen",
+    "TYPE_YOUR_QUESTION": "Typ hier je vraag..."
+  },
+  "SUPPORT_CHAT": {
+    "NOT_CLAIMED": "Niet geclaimed",
+    "CLAIMED_BY_ME": "Geclaimed door mij",
+    "RESOLVED": "Opgelost",
+    "SEARCH_BY_NAME": "Zoek op naam",
+    "CLAIM_TICKET": "Ticket claimen",
+    "MARK_AS_RESOLVED": "Markeer als opgelost",
+    "TYPE_YOUR_MESSAGE": "Typ je bericht...",
+    "THIS_TICKET_HAS_BEEN_RESOLVED": "Dit ticket is opgelost.",
+    "CLAIM_THIS_TICKET_TO_HELP": "Claim dit ticket om te helpen.",
+    "ALL": "Alle"
+  }
 }

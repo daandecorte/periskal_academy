@@ -66,7 +66,6 @@ export class SupportComponent {
     
   }
   updateChatList(data: any) {
-    console.log(data)
     let chats:ChatOverview[]=[];
     for(let chat of data) {
       let chatOverview: ChatOverview|null=null;
@@ -86,7 +85,6 @@ export class SupportComponent {
         }
       }
       if(chatMemberId==0) {
-        console.log(chatOverview?.status);
         if(chatOverview && chatOverview.status.toString()=="NOT_STARTED") {
           chats.push(chatOverview);
         }
@@ -125,7 +123,11 @@ export class SupportComponent {
   startPolling() {
     this.intervalId = setInterval(() => {
       this.fetchMessages();
+      this.getChats();
     }, 10000);
+  }
+  ngOnDestroy() {
+    clearInterval(this.intervalId);
   }
   async fetchMessages() {
     try {
@@ -187,7 +189,6 @@ export class SupportComponent {
     if(!updateChatResponse.ok) {
       console.error("failed to update chat status");
     }
-    console.log(updateChatResponse);
     const checkChatMemberResponse = await fetch(`/api/chat/${this.currentChat.id}`);
     let chatMemberId = 0;
     const checkChatMemberData = await checkChatMemberResponse.json();
