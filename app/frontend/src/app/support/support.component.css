@@ -16,7 +16,7 @@ body {
 .chat-container {
     display: flex;
     width: 100%;
-    height: 90vh;
+    height: 95vh;
     background-color: #f5f5f5;
     border-radius: 8px;
     overflow: hidden;
@@ -132,21 +132,42 @@ body {
 
 .chat-header {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding: 16px;
     border-bottom: 1px solid #eaeaea;
 }
-
-.resolve-button {
+.chat-title {
+    flex-grow: 1;
+    align-self: flex-start;
+    font-size: 1.5rem;
+}
+.resolve-button.resolved {
     background-color: #28a745;
+    border: 1px solid #28a745;
+
+}
+.resolve-button {
+    background-color: red;
     color: white;
-    border: none;
+    border: 1px solid red;
     border-radius: 4px;
     padding: 6px 12px;
     font-size: 14px;
     cursor: pointer;
     display: flex;
     align-items: center;
+}
+.claim-button {
+    border: 1px solid black;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
 }
 
 .resolve-button svg {
@@ -162,6 +183,9 @@ body {
 .message {
     max-width: 70%;
     margin-bottom: 16px;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
 }
 
 .message-bubble {
@@ -170,7 +194,23 @@ body {
     border-radius: 12px;
     font-size: 14px;
     line-height: 1.4;
+    word-wrap: break-word;
+    overflow-wrap: break-word; 
+    word-break: break-word;
 }
+.my-message {
+    align-self: flex-end;
+    justify-content: flex-end;
+    margin-left: auto;
+    border-radius: 1rem;
+  }
+  .my-message .message-bubble {
+    background-color: #ffd500;
+    align-self: flex-end;
+  }
+  .my-message .message-meta {
+    align-self: flex-end;
+  }
 
 .message-meta {
     font-size: 12px;
@@ -209,11 +249,16 @@ body {
 }
 
 .fleet-manager-icon {
-    background-color: #007bff;
-    color: white;
+    color: gray;
 }
 
 .sailor-icon {
-    background-color: #dc3545;
-    color: white;
+    color: gray;
+}
+.status-filter {
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    border-color: lightgray;
+    margin-top: 1rem;
+    width: 100%;
 }

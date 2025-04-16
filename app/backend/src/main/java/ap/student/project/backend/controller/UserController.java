@@ -65,7 +65,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/users/{id}/trainings", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getModules(@PathVariable("id") int id) {
+    public ResponseEntity getTrainings(@PathVariable("id") int id) {
         try {
             return ResponseEntity.ok(this.userService.getAllUserModules(id));
         } catch (NotFoundException e) {
@@ -76,7 +76,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/users/{id}/exam_attempts", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getExams(@PathVariable("id") int id) {
+    public ResponseEntity getExamAttempts(@PathVariable("id") int id) {
         try {
             return ResponseEntity.ok(this.userService.getAllExamAttempts(id));
         } catch (NotFoundException e) {
@@ -85,8 +85,18 @@ public class UserController {
         }
 
     }
+    @GetMapping(value = "/users/{id}/chat_member", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getChatMember(@PathVariable("id") int id) {
+        try {
+            return ResponseEntity.ok(this.userService.getChatMember(id));
+        } catch (NotFoundException e) {
+            logger.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
 
-    @PutMapping("/users")
+    }
+
+    @PutMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity update(@RequestBody UserDTO userDTO) {
         try {
             this.userService.update(userDTO);

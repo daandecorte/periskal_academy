@@ -1,10 +1,13 @@
 package ap.student.project.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
 
 @Entity
 @Table(name = "chat_member")
@@ -21,10 +24,15 @@ public class ChatMember {
     private User user;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="chat_id")
+    @JsonIgnore
     private Chat chat;
+    @OneToMany(mappedBy = "chatMember", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private List<Message> messages;
 
-    public ChatMember(User user, Chat chat) {
+
+    public ChatMember(User user, Chat chat, List<Message> messages) {
         this.user = user;
         this.chat = chat;
+        this.messages = messages;
     }
 }

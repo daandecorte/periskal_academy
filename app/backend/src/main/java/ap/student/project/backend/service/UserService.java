@@ -2,6 +2,7 @@ package ap.student.project.backend.service;
 
 import ap.student.project.backend.dao.UserRepository;
 import ap.student.project.backend.dto.UserDTO;
+import ap.student.project.backend.entity.ChatMember;
 import ap.student.project.backend.entity.ExamAttempt;
 import ap.student.project.backend.entity.User;
 import ap.student.project.backend.entity.UserTraining;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -87,6 +89,14 @@ public class UserService {
         }
         if (examAttempts.isEmpty()) throw new NotFoundException("user does not have any exam attempts");
         return examAttempts;
+    }
+    public List<ChatMember> getChatMember(int id) throws NotFoundException {
+        User user = this.findById(id);
+        List<ChatMember> chatMembers = user.getChatMembers();
+        if (chatMembers.isEmpty()) {
+            throw new NotFoundException("this user has no chatmembers");
+        }
+        return chatMembers;
     }
 
     public User assemble(UserDTO userDTO) {

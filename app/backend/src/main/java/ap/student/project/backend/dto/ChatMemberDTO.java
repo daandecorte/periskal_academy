@@ -1,11 +1,9 @@
 package ap.student.project.backend.dto;
 
-import ap.student.project.backend.entity.Chat;
-import ap.student.project.backend.entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record ChatMemberDTO(
-        @JsonProperty User user,
-        @JsonProperty Chat chat
+        @JsonProperty("user_id") int user_id,
+        @JsonProperty("chat_id") int chat_id
 ) {
 }

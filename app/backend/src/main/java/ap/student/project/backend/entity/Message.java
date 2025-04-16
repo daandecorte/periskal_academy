@@ -1,5 +1,6 @@
 package ap.student.project.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,12 +24,13 @@ public class Message {
     @Column(name = "text_content")
     private String textContent;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "chat_id")
-    private Chat chat;
+    @JoinColumn(name = "chat_member_id")
+    @JsonIgnore
+    private ChatMember chatMember;
 
-    public Message(LocalDateTime dateTime, String textContent, Chat chat) {
+    public Message(LocalDateTime dateTime, String textContent, ChatMember chatMember) {
         this.dateTime = dateTime;
         this.textContent = textContent;
-        this.chat = chat;
+        this.chatMember = chatMember;
     }
 }

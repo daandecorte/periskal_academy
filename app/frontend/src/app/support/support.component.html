@@ -1,60 +1,65 @@
 <div class="chat-container">
     <div class="sidebar">
         <div class="search-bar">
-            <input type="text" class="search-input" placeholder="Search users...">
+            <input type="text" [(ngModel)]="searchTerm" class="search-input" placeholder="{{'SUPPORT_CHAT.SEARCH_BY_NAME' | translate}}" />
+            <select [(ngModel)]="statusFilter" class="status-filter">
+                <option [ngValue]="null">{{"SUPPORT_CHAT.ALL" | translate}}</option>
+                <option [ngValue]="ChatStatus.NOT_STARTED">{{"SUPPORT_CHAT.NOT_CLAIMED" | translate}}</option>
+                <option [ngValue]="ChatStatus.IN_PROGRESS">{{"SUPPORT_CHAT.CLAIMED_BY_ME" | translate}}</option>
+                <option [ngValue]="ChatStatus.RESOLVED">{{"SUPPORT_CHAT.RESOLVED" | translate}}</option>
+            </select>
         </div>
         <div class="contacts-list">
-            <div class="contact">
-                <div class="avatar sailor-icon">J</div>
-                <div class="contact-info">
-                    <div class="contact-name">John Doe</div>
-                    <div class="contact-role">Sailor</div>
+            @for(index of filteredChatIndices; track $index) {
+                <div class="contact" (click)="changeChat(index)">
+                    <div class="avatar sailor-icon">{{chats[index].firstname[0]}}{{chats[index].lastname[0]}}</div>
+                    <div class="contact-info">
+                        <div class="contact-name">{{chats[index].firstname}} {{chats[index].lastname}}</div>
+                        <div class="contact-role">{{chats[index].shipname}}</div>
+                    </div>
+                    <span class="status-badge" [ngClass]="statusClassMap[chats[index].status]">{{ chats[index].status.toString().replace('_', ' ').toLocaleLowerCase() | titlecase }}</span>
                 </div>
-                <span class="status-badge status-active">Active</span>
-            </div>
-            <div class="contact">
-                <div class="avatar fleet-manager-icon">F</div>
-                <div class="contact-info">
-                    <div class="contact-name">Fleet Manager ABC</div>
-                    <div class="contact-role">Fleet Manager</div>
-                </div>
-                <span class="status-badge status-new">New</span>
-            </div>
-            <div class="contact">
-                <div class="avatar sailor-icon">M</div>
-                <div class="contact-info">
-                    <div class="contact-name">Mike Smith</div>
-                    <div class="contact-role">Sailor</div>
-                </div>
-                <span class="status-badge status-resolved">Resolved</span>
-            </div>
+            }
         </div>
     </div>
     <div class="chat-area">
         <div class="chat-header">
-            <button class="resolve-button">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-                Mark as Resolved
-            </button>
+            <div class="chat-title">{{currentChat.firstname}} {{currentChat.lastname}}</div>
+            @if(currentChat.status.toString()=='NOT_STARTED') {
+                <button class="claim-button" (click)="claimSupportTicket()">{{"SUPPORT_CHAT.CLAIM_TICKET" | translate}}</button>
+            }
+            @else if(currentChat.id!=0) {
+                <button class="resolve-button" [ngClass]="{ resolved: currentChat.status.toString() == 'RESOLVED' }" (click)="markAsResolved()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    {{"SUPPORT_CHAT.MARK_AS_RESOLVED" | translate}}
+                </button>
+            }
         </div>
-        <div class="message-area">
-            <div class="message">
-                <div class="message-bubble">
-                    I'm having trouble assigning certificates to my sailors.
+        <div class="message-area" #chatBody>
+            @for(message of messageList; track $index) {
+                <div class="message" [ngClass]="{ 'my-message': message.chat_member_id === currentChatMemberId }">
+                    <div class="message-bubble" [ngClass]="">
+                        {{message.text_content}}
+                    </div>
+                    <div class="message-meta">{{message.date_time | date:'d/MM/yyyy, H:mm:ss'}}</div>
                 </div>
-                <div class="message-meta">2 hours ago</div>
-            </div>
+            }
         </div>
         <div class="input-area">
-            <input type="text" class="message-input" placeholder="Type your message...">
-            <button class="send-button">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>  
-                </svg>
-            </button>
+            @if(currentChat.status.toString() == "IN_PROGRESS") {
+                <input type="text" class="message-input" placeholder="{{'SUPPORT_CHAT.TYPE_YOUR_MESSAGE' | translate}}" [(ngModel)]="message" (keydown.enter)="sendMessage()" maxlength="255">
+                <button class="send-button" (click)="sendMessage()">
+                    <fa-icon [icon]="faPaperPlane"></fa-icon>
+                </button>
+            }
+            @else if(currentChat.status.toString() == "RESOLVED") {
+                <div>{{"SUPPORT_CHAT.THIS_TICKET_HAS_BEEN_RESOLVED" | translate}}</div>
+            }
+            @else if(currentChat.status.toString() == "NOT_STARTED") {
+                <div>{{"SUPPORT_CHAT.CLAIM_THIS_TICKET_TO_HELP" | translate}}</div>
+            }
         </div>
     </div>
 </div>
