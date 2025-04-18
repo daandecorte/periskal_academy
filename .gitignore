@@ -1,2 +1,9 @@
 traefik/
 jenkins/
+
+# Development environment files
+**/application-dev.properties
+**/application-local.properties
+**/environment.ts
+**/proxy.conf.json
+docker-compose.dev.yml
