@@ -6,6 +6,7 @@ import { AssignedModuleCardComponent } from '../assigned-module-card/assigned-mo
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { TraineeChatComponent } from '../trainee-chat/trainee-chat.component';
+import { LanguageService } from '../services/language.service';
 
 @Component({
   selector: 'app-modules',
@@ -21,11 +22,41 @@ export class ModulesComponent implements OnInit {
   searchTerm: string = '';
   loading: boolean = true;
   error: string | null = null;
+  currentLanguage: string = 'EN'; // Default language
 
-  constructor(protected moduleService: ModuleService) {}
+  constructor(
+    protected moduleService: ModuleService,
+    private languageService: LanguageService
+  ) {}
 
   ngOnInit(): void {
+    // Subscribe to language changes
+    this.languageService.currentLanguage$.subscribe((language) => {
+      this.currentLanguage = this.mapLanguageCode(language);
+      // Re-filter modules to update the UI with the new language
+      if (this.allModules.length > 0) {
+        this.filterModules();
+      }
+    });
+    
     this.loadModules();
+  }
+
+  mapLanguageCode(language: any): string {
+    const languageMappings: { [key: string]: string } = {
+      'ENGLISH': 'EN',
+      'FRENCH': 'FR',
+      'DUTCH': 'NL',
+      'GERMAN': 'DE'
+    };
+    
+    // If it's already a code, return it
+    if (['EN', 'FR', 'NL', 'DE'].includes(language)) {
+      return language;
+    }
+    
+    // Otherwise map the language name to code
+    return languageMappings[language] || 'EN'; // Default to EN if mapping not found
   }
 
   loadModules(): void {
@@ -53,10 +84,18 @@ export class ModulesComponent implements OnInit {
   }
 
   filterModules(): void {
+    // Filter modules using localized titles when available
     const filteredModules = this.searchTerm
-      ? this.allModules.filter(module => 
-          module.title.toLowerCase().includes(this.searchTerm.toLowerCase())
-        )
+      ? this.allModules.filter(module => {
+          let searchText = module.title.toLowerCase(); // Default to standard title
+          
+          // Use localized title if available
+          if (module.titleLocalized && module.titleLocalized[this.currentLanguage]) {
+            searchText = module.titleLocalized[this.currentLanguage].toLowerCase();
+          }
+          
+          return searchText.includes(this.searchTerm.toLowerCase());
+        })
       : this.allModules;
 
     this.modules = filteredModules;

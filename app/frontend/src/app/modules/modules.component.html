@@ -36,7 +36,7 @@
       *ngIf="assignedModules.length > 0; else noAssignedModules"
     >
       @for (module of assignedModules; track module.id) {
-      <app-assigned-module-card [module]="module"></app-assigned-module-card>
+      <app-assigned-module-card [module]="module" [currentLanguage]="currentLanguage"></app-assigned-module-card>
       }
     </div>
     <ng-template #noAssignedModules>
@@ -54,7 +54,7 @@
       *ngIf="modules.length > 0; else noModules"
     >
       @for (module of modules; track module.id) {
-      <app-module-card [module]="module"></app-module-card>
+      <app-module-card [module]="module" [currentLanguage]="currentLanguage"></app-module-card>
       }
     </div>
     <ng-template #noModules>

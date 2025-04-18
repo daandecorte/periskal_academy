@@ -14,5 +14,13 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class AssignedModuleCardComponent {
   @Input() module!: Module;
+  @Input() currentLanguage: string = 'EN';
   faLayerGroup = faLayerGroup;
+  
+  getLocalizedTitle(): string {
+    if (this.module.titleLocalized && this.module.titleLocalized[this.currentLanguage]) {
+      return this.module.titleLocalized[this.currentLanguage];
+    }
+    return this.module.title || '';
+  }
 }

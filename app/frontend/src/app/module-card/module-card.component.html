@@ -2,7 +2,7 @@
   <div class="module-header">
     <div>
       <h2 class="module-title">
-        {{ module.title }}
+        {{ getLocalizedTitle() }}
         @if (module.assigned) {
         <span class="assigned-badge">Assigned</span>
         }
@@ -11,7 +11,7 @@
     </div>
   </div>
 
-  <p class="module-description">{{ module.description }}</p>
+  <p class="module-description">{{ getLocalizedDescription() }}</p>
 
   <div class="module-info">
     <div class="training-count">

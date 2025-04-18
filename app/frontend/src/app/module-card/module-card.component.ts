@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 })
 export class ModuleCardComponent {
   @Input() module!: Module;
+  @Input() currentLanguage: string = 'EN';
 
   // Font Awesome icons
   faLayerGroup = faLayerGroup;  
@@ -28,5 +29,19 @@ export class ModuleCardComponent {
 
   goToTrainingOverview(): void {
     this.router.navigate(['/modules', this.module.id]);
+  }
+
+  getLocalizedTitle(): string {
+    if (this.module.titleLocalized && this.module.titleLocalized[this.currentLanguage]) {
+      return this.module.titleLocalized[this.currentLanguage];
+    }
+    return this.module.title || '';
+  }
+
+  getLocalizedDescription(): string {
+    if (this.module.descriptionLocalized && this.module.descriptionLocalized[this.currentLanguage]) {
+      return this.module.descriptionLocalized[this.currentLanguage];
+    }
+    return this.module.description || '';
   }
 }
