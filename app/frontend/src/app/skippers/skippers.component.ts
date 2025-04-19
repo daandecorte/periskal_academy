@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { faCertificate, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { IUser, ISkipper } from '../types/user-info';
+import { IUser } from '../types/user-info';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-skippers',
-  imports: [FontAwesomeModule, FormsModule, RouterLink],
+  imports: [FontAwesomeModule, FormsModule, RouterLink, TranslatePipe],
   templateUrl: './skippers.component.html',
   styleUrl: './skippers.component.css',
 })

@@ -3,10 +3,16 @@
     <div class="title">{{ "TIPS_AND_TRICKS.TIPS_AND_TRICKS" | translate }}</div>
 
     <div class="controls">
-      <select class="dropdown">
-        <option>{{ "TIPS_AND_TRICKS.ALL" | translate }}</option>
+      <select
+        class="dropdown"
+        [(ngModel)]="selectedTopic"
+        (change)="filterTopics()"
+      >
+        <option value="all">{{ "TIPS_AND_TRICKS.ALL" | translate }}</option>
         @for (topics of tipsSorted; track $index) {
-        <option>{{topics?.title?.[currentLanguage]}}</option>
+        <option [value]="topics.title[currentLanguage]">
+          {{ topics.title[currentLanguage] }}
+        </option>
         }
       </select>
       <div class="search-container">
@@ -15,6 +21,8 @@
           type="text"
           class="search-input"
           [placeholder]="'TIPS_AND_TRICKS.SEARCH_TIPS' | translate"
+          [(ngModel)]="searchTerm"
+          (input)="filterTopics()"
         />
       </div>
       @if(editorUser){
@@ -26,11 +34,15 @@
     </div>
   </div>
 
-  @if(isLoaded){ @for(topics of tipsSorted; track $index){
+  @if(isLoaded){ @for(topics of filteredTipsSorted; track $index){
   <div class="tips-section">
     <div class="section-header" (click)="toggleSection($event, 0)">
       <h2>
+        @if(topics.title.ENGLISH.toLowerCase() == "general"){
         <fa-icon [icon]="faGlobe" class="globe-icon"></fa-icon>
+        } @else {
+        <fa-icon [icon]="faInfo" class="info-icon"></fa-icon>
+        }
         {{topics?.title?.[currentLanguage]}}
       </h2>
       <div>
@@ -38,17 +50,17 @@
         <fa-icon
           [icon]="faAdd"
           class="add-icon add-tip"
-          (click)="addTipShow()"
+          (click)="addTipShow(topics.topic_id)"
         ></fa-icon>
         <fa-icon
           [icon]="faPencil"
           class="edit-icon edit-title"
-          (click)="editTitleShow(topics?.title?.[currentLanguage])"
+          (click)="editTopicShow(topics.topic_id)"
         ></fa-icon>
         <fa-icon
           [icon]="faTrash"
           class="delete-icon delete-topic"
-          (click)="deleteTopicShow()"
+          (click)="deleteTopicShow(topics.topic_id)"
         ></fa-icon>
         }
         <fa-icon
@@ -60,19 +72,19 @@
       @for(tip of topics.texts; track $index){
       <div class="tip-item">
         <div class="text-flex">
-          {{tip?.[currentLanguage]}}
+          {{tip?.text?.[currentLanguage]}}
         </div>
         @if(editorUser){
         <div class="icon-flex">
           <fa-icon
             [icon]="faPencil"
             class="edit-icon edit-tip"
-            (click)="editTipShow(tip?.[currentLanguage])"
+            (click)="editTipShow(tip.id)"
           ></fa-icon>
           <fa-icon
             [icon]="faTrash"
             class="delete-icon delete-tip"
-            (click)="deleteTipShow()"
+            (click)="deleteTipShow(tip.id)"
           ></fa-icon>
         </div>
         }
@@ -82,14 +94,14 @@
   </div>
   } }
   <!--
-    [icon]="faInfo" class="info-icon"
+    
     -->
   <div id="modal-overlay" class="modal-overlay hidden">
     <div class="modal-container">
       <div class="modal-header">
-        @if(titleAdd){
+        @if(topicAdd){
         <h2>{{ "TIPS_AND_TRICKS.ADD_NEW_TOPIC" | translate }}</h2>
-        } @else if(titleEdit){
+        } @else if(topicEdit){
         <h2>{{ "TIPS_AND_TRICKS.EDIT_TOPIC" | translate }}</h2>
         } @else if(tipAdd){
         <h2>{{ "TIPS_AND_TRICKS.ADD_NEW_TIP" | translate }}</h2>
@@ -101,23 +113,32 @@
         </button>
       </div>
       <div class="modal-language">
-        <button class="modal-button selected">ENGLISH</button>
-        <button class="modal-button">DUTCH</button>
-        <button class="modal-button">FRENCH</button>
-        <button class="modal-button">GERMAN</button>
+        <button class="modal-button selected" value="ENGLISH">
+          {{ ("ENGLISH" | translate).toUpperCase() }}
+        </button>
+        <button class="modal-button" value="DUTCH">
+          {{ ("DUTCH" | translate).toUpperCase() }}
+        </button>
+        <button class="modal-button" value="FRENCH">
+          {{ ("FRENCH" | translate).toUpperCase() }}
+        </button>
+        <button class="modal-button" value="GERMAN">
+          {{ ("GERMAN" | translate).toUpperCase() }}
+        </button>
       </div>
       <div class="modal-content">
-        @if(titleAdd || titleEdit){
+        @if(topicAdd || topicEdit){
         <div class="form-group">
           <label for="tip-training">{{
             "TIPS_AND_TRICKS.TOPIC_TITLE" | translate
           }}</label>
           <input
-            #tipTitleRef
+            #tipTopicRef
             id="tip-title"
             type="text"
             class="form-control"
             [placeholder]="'TIPS_AND_TRICKS.ENTER_TOPIC_TITLE' | translate"
+            (input)="topicChange()"
           />
         </div>
         } @if (tipAdd || tipEdit) {
@@ -126,15 +147,16 @@
             "TIPS_AND_TRICKS.TIP_TEXT" | translate
           }}</label>
           <textarea
-            #tipContentRef
+            #tipTextRef
             id="tip-content"
             class="form-control"
             [placeholder]="'TIPS_AND_TRICKS.ENTER_TIP_TEXT' | translate"
+            (input)="tipChange()"
           ></textarea>
         </div>
         }
         <div class="modal-actions">
-          @if(titleAdd || titleEdit){
+          @if(topicAdd || topicEdit){
           <button id="save-btn" class="btn btn-save" (click)="saveTopic()">
             {{ "TIPS_AND_TRICKS.SAVE_TOPIC" | translate }}
           </button>
@@ -151,7 +173,7 @@
   <div id="modal-overlay-delete" class="modal-overlay hidden">
     <div class="modal-container modal-small">
       <div>
-        @if(titleDelete){
+        @if(topicDelete){
         <h4 class="modal-text-title">
           {{ "TIPS_AND_TRICKS.DELETE_TOPIC" | translate }}
         </h4>
@@ -171,7 +193,7 @@
           >
             {{ "TIPS_AND_TRICKS.CANCEL" | translate }}
           </button>
-          <button id="save-btn" class="btn btn-delete">
+          <button id="save-btn" class="btn btn-delete" (click)="delete()">
             {{ "TIPS_AND_TRICKS.DELETE" | translate }}
           </button>
         </div>

@@ -6,6 +6,10 @@
   "ENTER_YOUR_PASSWORD": "Enter your password",
   "LOGIN": "Login",
   "LANGUAGE": "Language",
+  "ENGLISH": "English",
+  "DUTCH": "Dutch",
+  "FRENCH": "French",
+  "GERMAN": "German",
   "TRAININGS": {
     "TITLE": "Trainings",
     "ASSIGNED_SECTION": "Assigned by Fleet Manager",
@@ -133,11 +137,14 @@
   },
   "USER_MANAGEMENT": {
     "USER_MANAGEMENT": "User Management",
+    "SKIPPERS": "Skippers",
+    "ASSIGN_CERTIFICATE": "Assing Certificate",
     "FILTER_BY": "Filter by",
     "NAME": "Name",
     "SHIPNAME": "Shipname",
     "PRODUCTS": "Products",
     "CERTIFICATES": "Certificates",
+    "SEARCH_SKIPPERS": "Search skippers...",
     "SEARCH_USERS": "Search users...",
     "MODULES_PROGRESS": "MODULES PROGRESS"
   },

@@ -6,6 +6,10 @@
   "ENTER_YOUR_PASSWORD": "Entrez votre mot de passe",
   "LOGIN": "Connexion",
   "LANGUAGE": "Langue",
+  "ENGLISH": "Anglais",
+  "DUTCH": "Néerlandais",
+  "FRENCH": "Français",
+  "GERMAN": "Allemand",
   "TRAININGS": {
     "TITLE": "Formations",
     "ASSIGNED_SECTION": "Assignés par le gestionnaire de flotte",
@@ -133,35 +137,15 @@
   },
   "USER_MANAGEMENT": {
     "USER_MANAGEMENT": "Gestion des utilisateurs",
+    "SKIPPERS": "Capitaines",
+    "ASSIGN_CERTIFICATE": "Attribuer un certificat",
     "FILTER_BY": "Filtrer par",
     "NAME": "Nom",
     "SHIPNAME": "Nom du navire",
     "PRODUCTS": "Produits",
     "CERTIFICATES": "Certificats",
+    "SEARCH_SKIPPERS": "Rechercher des capitaines...",
     "SEARCH_USERS": "Rechercher des utilisateurs...",
-    "MODULES_PROGRESS": "PROGRÈS DES MODULES"
-  },
-  "TRAINEE_CHAT": {
-    "HOW_CAN_I_HELP": "Bonjour ! Comment puis-je vous aider aujourd'hui ?",
-    "FEEL_FREE_TO_ASK": "N'hésitez pas à poser des questions sur :",
-    "CERTIFICATE_REQUIREMENTS": "Exigences pour le certificat",
-    "MODULE_PROGRESS": "Progression du module",
-    "TECHNICAL_SUPPORT": "Support technique",
-    "GENERAL_QUESTIONS": "Questions générales",
-    "PERISKAL_SUPPORT": "Support Periskal",
-    "READY_TO_HELP": "Prêt à aider",
-    "TYPE_YOUR_QUESTION": "Tapez votre question ici..."
-  },
-  "SUPPORT_CHAT": {
-    "NOT_CLAIMED": "Non réclamé",
-    "CLAIMED_BY_ME": "Réclamé par moi",
-    "RESOLVED": "Résolu",
-    "SEARCH_BY_NAME": "Rechercher par nom",
-    "CLAIM_TICKET": "Réclamer le ticket",
-    "MARK_AS_RESOLVED": "Marquer comme résolu",
-    "TYPE_YOUR_MESSAGE": "Tapez votre message...",
-    "THIS_TICKET_HAS_BEEN_RESOLVED": "Ce ticket a été résolu.",
-    "CLAIM_THIS_TICKET_TO_HELP": "Réclamez ce ticket pour aider.",
-    "ALL": "Tous"
+    "TRAININGS_PROGRESS": "PROGRÈS DE FORMATION"
   }
 }

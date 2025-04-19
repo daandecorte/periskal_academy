@@ -1,19 +1,27 @@
 <header>
   <nav>
     <div class="top-row">
-      <h1>Sailors Management</h1>
+      <h1>{{ "USER_MANAGEMENT.SKIPPERS" | translate }}</h1>
       <button class="assign-btn">
-        <fa-icon [icon]="faCertificate" class="btn-icon"></fa-icon>Assign
-        Certificate
+        <fa-icon [icon]="faCertificate" class="btn-icon"></fa-icon>
+        {{ "USER_MANAGEMENT.ASSIGN_CERTIFICATE" | translate }}
       </button>
     </div>
     <div class="search-container">
       <select [(ngModel)]="selectedFilter" (change)="filterSkippers()">
-        <option value="default">Filter by</option>
-        <option value="name">Name</option>
-        <option value="shipname">Shipname</option>
-        <option value="products">Products</option>
-        <option value="certificates">Certificates</option>
+        <option value="default">
+          {{ "USER_MANAGEMENT.FILTER_BY" | translate }}
+        </option>
+        <option value="name">{{ "USER_MANAGEMENT.NAME" | translate }}</option>
+        <option value="shipname">
+          {{ "USER_MANAGEMENT.SHIPNAME" | translate }}
+        </option>
+        <option value="products">
+          {{ "USER_MANAGEMENT.PRODUCTS" | translate }}
+        </option>
+        <option value="certificates">
+          {{ "USER_MANAGEMENT.CERTIFICATES" | translate }}
+        </option>
       </select>
       <div class="search-input-container">
         <fa-icon [icon]="faSearch" class="search-icon"></fa-icon>
@@ -21,7 +29,7 @@
           type="text"
           [(ngModel)]="searchTerm"
           (input)="filterSkippers()"
-          placeholder="Search sailors..."
+          [placeholder]="'USER_MANAGEMENT.SEARCH_USERS' | translate"
           name="search-sailors"
         />
       </div>
@@ -30,10 +38,20 @@
       <table>
         <thead>
           <tr>
-            <th class="name-column">NAME</th>
-            <th>PRODUCTS</th>
-            <th>CERTIFICATES</th>
-            <th>MODULE PROGRESS</th>
+            <th class="name-column">
+              {{ ("USER_MANAGEMENT.NAME" | translate).toUpperCase() }}
+            </th>
+            <th>
+              {{ ("USER_MANAGEMENT.PRODUCTS" | translate).toUpperCase() }}
+            </th>
+            <th>
+              {{ ("USER_MANAGEMENT.CERTIFICATES" | translate).toUpperCase() }}
+            </th>
+            <th>
+              {{
+                ("USER_MANAGEMENT.TRAININGS_PROGRESS" | translate).toUpperCase()
+              }}
+            </th>
           </tr>
         </thead>
         <tbody>
