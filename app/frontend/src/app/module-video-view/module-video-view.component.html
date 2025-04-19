@@ -1,1 +1,31 @@
-<p>module-video-view works!</p>
+<div class="module-video-container">
+    <div class="back-nav">
+      <button class="back-button" (click)="goBackToOverview()">
+        <fa-icon [icon]="faArrowLeft"></fa-icon>
+        Back to Module Overview
+      </button>
+    </div>
+  
+    <div class="progress-indicator">
+      <div class="module-name">{{ moduleTitle }} - Video</div>
+      <div class="step-indicator">Step {{ currentStep }} of {{ totalSteps }}</div>
+    </div>
+  
+    <div class="module-content">
+      <div class="content-header">
+        <h1>{{ moduleTitle }}</h1>
+        <p>{{ moduleDescription }}</p>
+      </div>
+  
+      <!-- Video -->
+      <div class="video">
+        TODO: video player
+      </div>
+  
+      <div class="action-buttons">
+        <button class="continue-button" (click)="continueToQuestions()">
+          Continue to Questions <span class="arrow-icon">→</span>
+        </button>
+      </div>
+    </div>
+  </div>
