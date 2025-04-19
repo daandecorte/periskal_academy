@@ -1,0 +1,85 @@
+.admin-training-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.training-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.training-title {
+  font-weight: 600;
+  font-size: 18px;
+  color: #333;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  font-size: 14px;
+  padding: 4px;
+}
+
+.training-description {
+  color: #666;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.training-stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  align-items: center;
+}
+
+.status {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  background-color: #fff8c2;
+  color: #91823c;
+}
+
+.status.active {
+  background-color: #e6f7e6;
+  color: #2e7d32;
+}
+
+.module-count {
+  font-size: 14px;
+  color: #555;
+}
+
+.language-badges {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.lang-badge {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  background-color: #f0f0f0;
+  color: #333;
+  flex-grow: 1;
+  text-align: center;
+  background-color: #e6f7e6;
+}

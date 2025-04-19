@@ -31,7 +31,7 @@ export class UserManagementComponent {
     let result = await fetch('api/users');
     this.userListRaw = await result.json();
     for (const el of this.userListRaw) {
-      let moduleCount = await this.getUserModules(Number(el.id));
+      let trainingCount = await this.getUserTrainings(Number(el.id));
       //let certificateCount = await this.getUserCertificates(Number(el.id));
 
       var temp: IUserFull = {
@@ -39,7 +39,7 @@ export class UserManagementComponent {
         firstname: el.firstname || 'invalid',
         lastname: el.lastname || 'invalid',
         shipname: el.shipname || 'invalid',
-        products: `${moduleCount}`,
+        products: `${trainingCount}`,
         certificates: `-1`,
       };
 
@@ -50,8 +50,8 @@ export class UserManagementComponent {
     this.filteredUserList = this.userList;
   }
 
-  async getUserModules(id: number) {
-    var res = await fetch(`api/users/${id}/modules`);
+  async getUserTrainings(id: number) {
+    var res = await fetch(`api/users/${id}/trainings`);
     var modData: IData[] = await res.json();
     return modData.length;
   }

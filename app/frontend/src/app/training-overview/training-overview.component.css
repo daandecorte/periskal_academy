@@ -1,16 +1,16 @@
-.training-overview-container {
+.module-overview-container {
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
   font-family: Arial, sans-serif;
 }
 
-.module-header {
+.training-header {
   display: flex;
   align-items: center;
   margin-bottom: 1.5rem;
 
-  .module-icon {
+  .training-icon {
     font-size: 1.5rem;
     margin-right: 1rem;
     background-color: #ffdd00;
@@ -18,14 +18,14 @@
     border-radius: 4px;
   }
 
-  .module-title {
+  .training-title {
     font-size: 1.5rem;
     font-weight: bold;
     margin: 0;
   }
 }
 
-.module-content {
+.training-content {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -49,7 +49,7 @@
   }
 }
 
-.training-sections {
+.module-sections {
   padding: 1.5rem;
 
   h2 {
@@ -60,7 +60,7 @@
   }
 }
 
-.training-section {
+.module-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -147,7 +147,7 @@
   }
 }
 
-.module-progress {
+.training-progress {
   padding: 1.5rem;
   border-top: 1px solid #eee;
 

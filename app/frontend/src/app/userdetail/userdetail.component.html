@@ -25,15 +25,15 @@
 
 
 
-    <div class="modules-section">
+    <div class="trainings-section">
         <h3>{{"USER_DETAIL.TRAININGS_PROGRESS" | translate}}</h3>
-        <div class="modules-filters">
-            <select [(ngModel)]="selectedStatus" (change)="filterModules()">
+        <div class="trainings-filters">
+            <select [(ngModel)]="selectedStatus" (change)="filterTrainings()">
                 <option value="ALL">{{"USER_DETAIL.ALL_STATUS" | translate}}</option>
                 <option value="IN_PROGRESS">{{"USER_DETAIL.IN_PROGRESS" | translate}}</option>
                 <option value="COMPLETED">{{"USER_DETAIL.COMPLETED" | translate}}</option>
             </select>
-            <input type="text" [(ngModel)]="searchQuery" (input)="filterModules()" [placeholder]='"USER_DETAIL.SEARCH_TRAININGS" | translate'>
+            <input type="text" [(ngModel)]="searchQuery" (input)="filterTrainings()" [placeholder]='"USER_DETAIL.SEARCH_TRAININGS" | translate'>
         </div>
         @if(filteredUserDetails.length==0) {
             <div>{{"USER_DETAIL.NO_TRAININGS_ASSIGNED" | translate}}</div>
@@ -41,17 +41,17 @@
         @else {
 
             @for(detail of filteredUserDetails; track $index) {
-                <div class="module-item">
-                    <div class="module-header">
+                <div class="training-item">
+                    <div class="training-header">
                         
-                        <h4>{{detail.training.title?.[currentLanguage]}}</h4>
-                        <div class="module-status status-completed">{{detail.training_progress?.status ?? "no status"}}</div>
+                        <h4>{{detail.module.title?.[currentLanguage]}}</h4>
+                        <div class="training-status status-completed">{{detail.module_progress?.status ?? "no status"}}</div>
                     </div>
-                    <p>{{'USER_DETAIL.ASSIGNED_ON' | translate}}: {{ detail.training_progress?.start_date_time ? (detail.training_progress.start_date_time | date:'d/MM/yyyy, H:mm:ss') : 'N/A' }}</p>
+                    <p>{{'USER_DETAIL.ASSIGNED_ON' | translate}}: {{ detail.module_progress?.start_date_time ? (detail.module_progress.start_date_time | date:'d/MM/yyyy, H:mm:ss') : 'N/A' }}</p>
                     <div class="course-progress">
                         <div class="course-progress-bar" style="width: 100%;"></div>
                     </div>
-                    <p>{{'USER_DETAIL.LAST_ACTIVITY' | translate}}: {{ detail.training_progress?.last_time_accessed ? (detail.training_progress.last_time_accessed | date:'d/MM/yyyy, H:mm:ss') : 'N/A' }}</p>
+                    <p>{{'USER_DETAIL.LAST_ACTIVITY' | translate}}: {{ detail.module_progress?.last_time_accessed ? (detail.module_progress.last_time_accessed | date:'d/MM/yyyy, H:mm:ss') : 'N/A' }}</p>
                     <div class="exam-status">
                         <h4>{{'USER_DETAIL.EXAM_STATUS' | translate}}</h4>
                         @if(detail.exam_attempts.length==0) {

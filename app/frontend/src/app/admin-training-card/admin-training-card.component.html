@@ -1,0 +1,31 @@
+<div class="admin-training-card">
+  <div class="training-header">
+    <span class="training-title">{{ training.title }} Training</span>
+    <div class="actions">
+      <button
+        class="edit-btn"
+        aria-label="Edit training"
+        [routerLink]="['/edit-training']"
+      >
+        <fa-icon [icon]="faPencilAlt"></fa-icon>
+      </button>
+      <button class="delete-btn" aria-label="Delete training">
+        <fa-icon [icon]="faTrash"></fa-icon>
+      </button>
+    </div>
+  </div>
+  <p class="training-description">{{ training.description }}</p>
+
+  <div class="training-stats">
+    <span class="status" [class.active]="training.isActive">
+      {{ training.isActive ? "Active" : "Draft" }}
+    </span>
+    <span class="module-count">{{ training.moduleCount }} modules</span>
+  </div>
+
+  <div class="language-badges">
+    @for (lang of training.languages; track lang) {
+    <span class="lang-badge" [class]="lang.toLowerCase()">{{ lang }}</span>
+    }
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<div class="training-card">
+  <div class="training-header">
+    <div>
+      <h2 class="training-title">
+        {{ getLocalizedTitle() }}
+        @if (training.assigned) {
+        <span class="assigned-badge">Assigned</span>
+        }
+      </h2>
+      <p class="training-subtitle">Module Training</p>
+    </div>
+  </div>
+
+  <p class="training-description">{{ getLocalizedDescription() }}</p>
+
+  <div class="training-info">
+    <div class="module-count">
+      <span class="icon">
+        <fa-icon [icon]="faLayerGroup"></fa-icon>
+      </span>
+      {{ training.moduleCount }} Modules
+    </div>
+
+    @if (training.hasCertificate) {
+    <div class="certificate-icon">
+      <span class="icon">
+        <fa-icon [icon]="faCertificate"></fa-icon>
+      </span>
+      Certificate
+    </div>
+    }
+  </div>
+
+  @if (training.progress !== undefined) {
+  <div class="progress-container">
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width.%]="training.progress"></div>
+    </div>
+  </div>
+  }
+
+  <button class="action-button" (click)="goToModuleOverview()">
+    {{ getButtonText() }}
+  </button>
+</div>

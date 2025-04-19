@@ -1,0 +1,65 @@
+<div class="trainings-container">
+  <div class="header">
+    <h1>{{ "MODULES.TITLE" | translate }}</h1>
+    <div class="actions">
+      <div class="search-bar">
+        <input
+          type="text"
+          [placeholder]="'MODULES.SEARCH_PLACEHOLDER' | translate"
+          class="search-input"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchChange()"
+        />
+      </div>
+      <button class="data-source-toggle" (click)="toggleDataSource()">
+        {{
+          trainingService.getUseDemoData() ? "Use Backend Data" : "Use Demo Data"
+        }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading and Error States -->
+  <div *ngIf="loading" class="loading-indicator">
+    {{ "MODULES.LOADING" | translate }}
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <!-- Assigned Trainings Section -->
+  <ng-container *ngIf="!loading && !error">
+    <h2 class="section-title">{{ "MODULES.ASSIGNED_SECTION" | translate }}</h2>
+    <div
+      class="assigned-trainings"
+      *ngIf="assignedTrainings.length > 0; else noAssignedTrainings"
+    >
+      @for (training of assignedTrainings; track training.id) {
+      <app-assigned-training-card [training]="training" [currentLanguage]="currentLanguage"></app-assigned-training-card>
+      }
+    </div>
+    <ng-template #noAssignedTrainings>
+      <div class="no-results">
+        {{ "MODULES.NO_ASSIGNED_MODULES" | translate }}
+      </div>
+    </ng-template>
+
+    <!-- All Available Trainings Section -->
+    <h2 class="section-title">
+      {{ "MODULES.ALL_MODULES_SECTION" | translate }}
+    </h2>
+    <div
+      class="trainings-grid reduced-columns"
+      *ngIf="trainings.length > 0; else noTrainings"
+    >
+      @for (training of trainings; track training.id) {
+      <app-training-card [training]="training" [currentLanguage]="currentLanguage"></app-training-card>
+      }
+    </div>
+    <ng-template #noTrainings>
+      <div class="no-results">{{ "MODULES.NO_MODULES_FOUND" | translate }}</div>
+    </ng-template>
+  </ng-container>
+  <app-trainee-chat></app-trainee-chat>
+</div>

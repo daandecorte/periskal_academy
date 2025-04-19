@@ -42,7 +42,7 @@ export class SkippersComponent {
       let result = await fetch(`api/users/periskal_id/${id}`);
       let temp: IUsers = await result.json();
 
-      let moduleCount = await this.getUserModules(Number(temp.id));
+      let trainingCount = await this.getUserTrainings(Number(temp.id));
       // let certificateCount = await this.getUserCertificates(Number(temp.id));
 
       let tempF: IUserFull = {
@@ -50,7 +50,7 @@ export class SkippersComponent {
         firstname: temp.firstname,
         lastname: temp.lastname,
         shipname: temp.shipname,
-        products: `${moduleCount}`,
+        products: `${trainingCount}`,
         certificates: `-1`,
       };
 
@@ -60,8 +60,8 @@ export class SkippersComponent {
     this.filteredSkippersList = this.skippersList;
   }
 
-  async getUserModules(id: number) {
-    var res = await fetch(`api/users/${id}/modules`);
+  async getUserTrainings(id: number) {
+    var res = await fetch(`api/users/${id}/trainings`);
     var modData: IData[] = await res.json();
     return modData.length;
   }

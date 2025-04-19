@@ -1,0 +1,73 @@
+<body>
+  <div class="container">
+    <div class="body-container">
+      <!-- Form Section -->
+      <div class="form-group">
+        <label>{{ "ADMIN_EDIT_MODULES.MODULE_TITLE" | translate }}</label>
+        <input
+          type="text"
+          [placeholder]="'ADMIN_EDIT_MODULES.ENTER_MODULE_TITLE' | translate"
+        />
+
+        <label>{{ "ADMIN_EDIT_MODULES.DESCRIPTION" | translate }}</label>
+        <textarea
+          [placeholder]="'ADMIN_EDIT_MODULES.ENTER_DESCRIPTION' | translate"
+        ></textarea>
+      </div>
+
+      <!-- Training Settings -->
+      <div class="training-settings">
+        <h3>
+          {{ "ADMIN_ADD_MODULES.MODULE_SETTINGS" | translate }}
+        </h3>
+        <div class="settings-flex">
+          <div class="setting-box">
+            <span class="setting-label">
+              {{ "ADMIN_EDIT_MODULES.SWITCH" | translate }}</span
+            >
+            <div class="switch-container">
+              <label class="switch">
+                <input type="checkbox" checked />
+                <span class="slider round"></span>
+              </label>
+              <span class="status-text active">
+                {{ "ADMIN_ADD_MODULES.ACTIVE" | translate }}</span
+              >
+            </div>
+          </div>
+          <div class="setting-box">
+            <span class="setting-label">
+              {{ "ADMIN_ADD_MODULES.CERTIFICATE" | translate }}</span
+            >
+            <div class="switch-container">
+              <label class="switch">
+                <input type="checkbox" checked />
+                <span class="slider round"></span>
+              </label>
+              <span class="status-text required">
+                {{ "ADMIN_ADD_MODULES.REQUIRED" | translate }}</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Certificate Settings -->
+      <div class="certificate-settings">
+        <h3>
+          {{ "ADMIN_ADD_MODULES.CERTIFICATE_SETTINGS" | translate }}
+        </h3>
+        <div class="input-group">
+          <div class="input-box">
+            <label> {{ "ADMIN_ADD_MODULES.PERIOD" | translate }}</label>
+            <input type="number" value="5" min="0" />
+          </div>
+          <div class="input-box">
+            <label> {{ "ADMIN_ADD_MODULES.PRICE" | translate }}</label>
+            <input type="number" value="0" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

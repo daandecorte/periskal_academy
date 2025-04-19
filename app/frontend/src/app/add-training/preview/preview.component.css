@@ -1,0 +1,45 @@
+.training-overview {
+  width: 90%;
+  max-width: 900px;
+  margin: auto;
+  margin-bottom: 10px;
+  background: white;
+  padding: 20px;
+  padding-top: 15px;
+  padding-right: 40px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.training-header {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.icon {
+  margin-right: 8px;
+}
+
+.training-content {
+  padding: 10px 0;
+  background: #eee;
+  border-radius: 8px;
+  padding: 7px;
+}
+
+.training-content p {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+.status-icon {
+  margin-right: 8px;
+  color: green;
+  font-size: 16px;
+}

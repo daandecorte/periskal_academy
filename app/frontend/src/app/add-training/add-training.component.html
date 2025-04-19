@@ -1,0 +1,33 @@
+<h2>{{ "ADMIN_ADD_MODULES.TITLE" | translate }}</h2>
+<!-- Steps Indicator -->
+<div class="steps">
+  @for (step of steps; track step) { @if (steps.indexOf(step) > 0) {
+  <div class="line"></div>
+  }
+  <div class="step-container">
+    <div [class.active]="currentStep === step" class="step">
+      <div class="circle">{{ steps.indexOf(step) + 1 }}</div>
+
+      <span>{{ step | titlecase }}</span>
+    </div>
+  </div>
+  }
+</div>
+
+<div>
+  <router-outlet></router-outlet>
+</div>
+
+<!-- NavButtons -->
+<div class="next-previous">
+  @if(currentStep !== 'basic-setup'){
+  <button class="prev-btn" (click)="goToPreviousStep()">
+    &larr; {{ "ADMIN_ADD_MODULES.PREVIOUS" | translate }}</button
+  >} @if(currentStep !== 'preview'){
+  <button class="next-btn" (click)="goToNextStep()">
+    {{ "ADMIN_ADD_MODULES.NEXT" | translate }}</button
+  >} @if(currentStep === 'preview'){
+  <button class="publish-btn" (click)="publishTraining()">
+    {{ "ADMIN_ADD_MODULES.PUBLISH" | translate }}</button
+  >}
+</div>

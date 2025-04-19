@@ -63,9 +63,9 @@ export class NavbarComponent {
 
   navLinks: NavLink[] = [
     {
-      path: 'modules',
+      path: 'trainings',
       icon: this.faLayerGroup,
-      label: 'Modules',
+      label: 'Trainings',
       allowedRoles: [
         Role.SKIPPER,
         Role.INSTALLER,
@@ -73,7 +73,7 @@ export class NavbarComponent {
         Role.FLEETMANAGER,
         Role.ADMIN
       ],
-      adminPath: 'admin/modules'
+      adminPath: 'admin/trainings'
     },
     {
       path: 'certificates',

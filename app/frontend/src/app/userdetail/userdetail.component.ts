@@ -29,8 +29,8 @@ export class UserdetailComponent {
   async getUserInfo() {
     let user=await fetch(`/api/users/${this.userId}`)
     this.user = await user.json();
-    let modules = await fetch(`/api/users/${this.userId}/trainings`);
-    this.userdetails = await modules.json();
+    let trainings = await fetch(`/api/users/${this.userId}/modules`);
+    this.userdetails = await trainings.json();
     if(this.userdetails) {
       await console.log(this.userdetails);
       this.filteredUserDetails = await this.userdetails;
@@ -44,11 +44,11 @@ export class UserdetailComponent {
       this.currentLanguage = language as keyof Translated;
     });
   }
-  filterModules() {
+  filterTrainings() {
     if(this.userdetails) {
       this.filteredUserDetails = this.userdetails.filter(detail => {
-        const matchesStatus = this.selectedStatus === '' || this.selectedStatus === 'ALL' || detail.training_progress?.status === this.selectedStatus;
-        const matchesTitle = this.searchQuery === '' || detail.training.title?.[this.currentLanguage].toLowerCase().includes(this.searchQuery.toLowerCase());
+        const matchesStatus = this.selectedStatus === '' || this.selectedStatus === 'ALL' || detail.module_progress?.status === this.selectedStatus;
+        const matchesTitle = this.searchQuery === '' || detail.module.title?.[this.currentLanguage].toLowerCase().includes(this.searchQuery.toLowerCase());
   
         return matchesStatus && matchesTitle;
       });
@@ -66,14 +66,14 @@ interface Exam {
   time: number;
 }
 
-interface Training {
+interface Module {
   id: number;
   active: boolean;
   description?: Translated;
   title?: Translated;
   exams: Exam[];
   tips: any[];
-  modules: any[];
+  trainings: any[];
 }
 interface ExamAttempt {
   id: number,
@@ -100,17 +100,17 @@ interface User {
 
 interface UserDetail {
   id: number;
-  training_progress: TrainingProgress
-  training: Training;
+  module_progress: ModuleProgress
+  module: Module;
   user: User;
   exam_attempts: ExamAttempt[]
 }
-interface TrainingProgress {
+interface ModuleProgress {
     id: number,
     start_date_time: string | null,
     last_time_accessed: string | null,
     status: string | null,
-    module_progress: any
+    training_progress: any
 }
 
 interface UserDetailResponse {

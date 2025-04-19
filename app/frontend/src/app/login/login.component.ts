@@ -58,7 +58,7 @@ export class LoginComponent {
       // Continue normal flow
       let storedUser = localStorage.getItem('currentUser');
       if (storedUser) {
-        this.router.navigate(['/modules']);
+        this.router.navigate(['/trainings']);
       }
     }
 
@@ -200,7 +200,7 @@ export class LoginComponent {
 
       this.authService.setCurrentUser(userData);
       this.languageService.setLanguage(this.language);
-      this.router.navigate(['/modules']);
+      this.router.navigate(['/trainings']);
     } else {
       // Handle specific error cases
       let errorMessage = 'Authentication failed.';

@@ -6,7 +6,7 @@ import { Location } from '@angular/common';
 import { NavbarComponent } from './navbar.component';
 import { Router } from '@angular/router';
 import { CertificatesComponent } from '../certificates/certificates.component';
-import { ModulesComponent } from '../modules/modules.component';
+import { TrainingsComponent } from '../trainings/trainings.component';
 import { SkippersComponent } from '../skippers/skippers.component';
 import { SupportComponent } from '../support/support.component';
 import { TipsAndTricksComponent } from '../tips-and-tricks/tips-and-tricks.component';
@@ -22,7 +22,7 @@ describe('NavbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes(routes), NavbarComponent, CertificatesComponent, ModulesComponent, SkippersComponent, SupportComponent, TipsAndTricksComponent, UserManagementComponent],
+      imports: [RouterTestingModule.withRoutes(routes), NavbarComponent, CertificatesComponent, TrainingsComponent, SkippersComponent, SupportComponent, TipsAndTricksComponent, UserManagementComponent],
     })
     .compileComponents();
 
@@ -42,9 +42,9 @@ describe('NavbarComponent', () => {
   });
 
 
-  it('should navigate to /modules', async () => {
-    await router.navigate(['/modules']);
-    expect(location.path()).toBe('/modules');
+  it('should navigate to /trainings', async () => {
+    await router.navigate(['/trainings']);
+    expect(location.path()).toBe('/trainings');
   });
 
   it('should navigate to /certificates', async () => {
@@ -72,14 +72,14 @@ describe('NavbarComponent', () => {
     expect(location.path()).toBe('/support');
   });
 
-  it('should redirect empty path to /modules', async () => {
+  it('should redirect empty path to /trainings', async () => {
     await router.navigate(['']);
-    expect(location.path()).toBe('/modules');
+    expect(location.path()).toBe('/trainings');
   });
 
-  it('should redirect unknown path to /modules', async () => {
+  it('should redirect unknown path to /trainings', async () => {
     await router.navigate(['/unknown-route']);
-    expect(location.path()).toBe('/modules');
+    expect(location.path()).toBe('/trainings');
   });
 });
 
