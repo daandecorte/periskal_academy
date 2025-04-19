@@ -14,6 +14,7 @@ import {
   faExclamationTriangle
 } from '@fortawesome/free-solid-svg-icons';
 import { TranslateModule } from '@ngx-translate/core';
+import { LanguageService } from '../services/language.service';
 
 interface ModuleSection {
   id: number;
@@ -37,6 +38,7 @@ export class TrainingOverviewComponent implements OnInit {
   moduleSections: ModuleSection[] = [];
   trainingsCompleted: number = 0;
   totalTrainings: number = 0;
+  currentLanguage: string = 'EN'; // Default language
   
   // Font Awesome icons
   faPlayCircle = faPlayCircle;
@@ -51,14 +53,37 @@ export class TrainingOverviewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private trainingService: TrainingService
+    private trainingService: TrainingService,
+    private languageService: LanguageService
   ) {}
 
   ngOnInit(): void {
+    // Subscribe to language changes
+    this.languageService.currentLanguage$.subscribe((language) => {
+      this.currentLanguage = this.mapLanguageCode(language);
+    });
+
     this.route.params.subscribe(params => {
       this.trainingId = +params['id'];
       this.loadTrainingData();
     });
+  }
+
+  mapLanguageCode(language: any): string {
+    const languageMappings: { [key: string]: string } = {
+      'ENGLISH': 'EN',
+      'FRENCH': 'FR',
+      'DUTCH': 'NL',
+      'GERMAN': 'DE'
+    };
+
+    // If it's already a code, return it
+    if (['EN', 'FR', 'NL', 'DE'].includes(language)) {
+      return language;
+    }
+
+    // Otherwise map the language name to code
+    return languageMappings[language] || 'EN'; // Default to EN if mapping not found
   }
 
   loadTrainingData(): void {
@@ -66,7 +91,7 @@ export class TrainingOverviewComponent implements OnInit {
       training => {
         if (training) {
           this.training = training;
-          this.generateModuleSections();
+          this.loadModuleSections();
           this.calculateProgress();
         } else {
           // Handle training not found
@@ -81,8 +106,59 @@ export class TrainingOverviewComponent implements OnInit {
     );
   }
 
+  loadModuleSections(): void {
+    // Check if training has modules from the backend
+    if (this.training?.modules && this.training.modules.length > 0) {
+      // Map backend modules to our frontend model
+      this.moduleSections = this.training.modules.map((module: any) => {
+        return {
+          id: module.id,
+          title: this.getLocalizedContent(module.title),
+          description: this.getLocalizedContent(module.description),
+          completed: false, // We need to fetch completion status separately or calculate it
+          duration: this.estimateVideoDuration(module),
+          questionCount: module.questions ? module.questions.length : 0
+        };
+      });
+    } else {
+      // Fallback to demo data if no modules are available
+      this.generateModuleSections();
+    }
+  }
+
+  getLocalizedContent(contentMap: any): string {
+    if (!contentMap) return '';
+    
+    // Try current language first
+    if (contentMap[this.currentLanguage]) {
+      return contentMap[this.currentLanguage];
+    }
+    
+    // Fallback to English
+    if (contentMap['EN']) {
+      return contentMap['EN'];
+    }
+    
+    // If none of the above, take the first available
+    const values = Object.values(contentMap);
+    return values.length > 0 ? values[0] as string : '';
+  }
+
+  estimateVideoDuration(module: any): string {
+    // If we have actual duration data, use it
+    if (module.duration) {
+      return `${module.duration} min video`;
+    }
+    
+    // Otherwise make an estimate based on questions count or just return a default
+    const questionsCount = module.questions ? module.questions.length : 0;
+    const estimatedMinutes = Math.max(10, questionsCount * 3); // At least 10 min, or 3 min per question
+    
+    return `${estimatedMinutes} min video`;
+  }
+
   generateModuleSections(): void {
-    // For testing purposes
+    // Fallback to demo data
     this.moduleSections = [
       {
         id: 1,
@@ -140,5 +216,25 @@ export class TrainingOverviewComponent implements OnInit {
   getProgressPercentage(): number {
     if (this.totalTrainings === 0) return 0;
     return (this.trainingsCompleted / this.totalTrainings) * 100;
+  }
+
+  getLocalizedTitle(): string {
+    if (!this.training) return '';
+    
+    if (this.training.titleLocalized && this.training.titleLocalized[this.currentLanguage]) {
+      return this.training.titleLocalized[this.currentLanguage];
+    }
+    
+    return this.training.title;
+  }
+
+  getLocalizedDescription(): string {
+    if (!this.training) return '';
+    
+    if (this.training.descriptionLocalized && this.training.descriptionLocalized[this.currentLanguage]) {
+      return this.training.descriptionLocalized[this.currentLanguage];
+    }
+    
+    return this.training.description;
   }
 }
