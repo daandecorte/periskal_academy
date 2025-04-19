@@ -1,4 +1,4 @@
-<h2>{{ "ADMIN_ADD_MODULES.TITLE" | translate }}</h2>
+<h2>{{ "ADMIN_ADD_TRAININGS.TITLE" | translate }}</h2>
 <!-- Steps Indicator -->
 <div class="steps">
   @for (step of steps; track step) { @if (steps.indexOf(step) > 0) {
@@ -22,12 +22,12 @@
 <div class="next-previous">
   @if(currentStep !== 'basic-setup'){
   <button class="prev-btn" (click)="goToPreviousStep()">
-    &larr; {{ "ADMIN_ADD_MODULES.PREVIOUS" | translate }}</button
+    &larr; {{ "ADMIN_ADD_TRAININGS.PREVIOUS" | translate }}</button
   >} @if(currentStep !== 'preview'){
   <button class="next-btn" (click)="goToNextStep()">
-    {{ "ADMIN_ADD_MODULES.NEXT" | translate }}</button
+    {{ "ADMIN_ADD_TRAININGS.NEXT" | translate }}</button
   >} @if(currentStep === 'preview'){
   <button class="publish-btn" (click)="publishTraining()">
-    {{ "ADMIN_ADD_MODULES.PUBLISH" | translate }}</button
+    {{ "ADMIN_ADD_TRAININGS.PUBLISH" | translate }}</button
   >}
 </div>

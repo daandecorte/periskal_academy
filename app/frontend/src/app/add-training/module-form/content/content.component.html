@@ -1,16 +1,16 @@
 <form class="form-container">
   <div class="form-group">
-    <label>{{ "ADMIN_EDIT_MODULES.TRAINING_TITLE" | translate }}</label>
+    <label>{{ "ADMIN_EDIT_TRAININGS.MODULE_TITLE" | translate }}</label>
     <input type="text" class="form-control" />
   </div>
 
   <div class="form-group">
-    <label>{{ "ADMIN_EDIT_MODULES.TRAINING_DESCRIPTION" | translate }}</label>
+    <label>{{ "ADMIN_EDIT_TRAININGS.MODULE_DESCRIPTION" | translate }}</label>
     <textarea class="form-control"></textarea>
   </div>
 
   <div class="form-group">
-    <label>{{ "ADMIN_EDIT_MODULES.VIDEO" | translate }}</label>
+    <label>{{ "ADMIN_EDIT_TRAININGS.VIDEO" | translate }}</label>
     <div class="video-upload">
       <div class="language-selection">
         <button class="lang-btn" [class.active]="selectedLanguage==='DUTCH'" (click)="changeVideoLanguage('DUTCH'); $event.preventDefault()">NL</button>
@@ -20,8 +20,8 @@
       </div>
       <div class="upload-box">
         <div class="upload-icon">⬆</div>
-        <p>{{ "ADMIN_EDIT_MODULES.VIDEO_DESCRIPTION" | translate }}</p>
-        <p>{{ "ADMIN_EDIT_MODULES.VIDEO_FORMAT" | translate }}</p>
+        <p>{{ "ADMIN_EDIT_TRAININGS.VIDEO_DESCRIPTION" | translate }}</p>
+        <p>{{ "ADMIN_EDIT_TRAININGS.VIDEO_FORMAT" | translate }}</p>
         <input type="file" id="videoInput" accept="video/mp4,video/webm,video/ogg" (change)="uploadVideo()"/>
       </div>
     </div>
@@ -29,10 +29,10 @@
 
   <div class="form-actions">
     <button class="cancel-btn" [routerLink]="['/add-training/modules']">
-      {{ "ADMIN_ADD_MODULES.TRAINING_CANCEL" | translate }}
+      {{ "ADMIN_ADD_TRAININGS.MODULE_CANCEL" | translate }}
     </button>
     <button class="save-btn">
-      {{ "ADMIN_ADD_MODULES.TRAINING_SAVE" | translate }}
+      {{ "ADMIN_ADD_TRAININGS.MODULE_SAVE" | translate }}
     </button>
   </div>
 </form>

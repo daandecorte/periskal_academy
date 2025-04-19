@@ -1,11 +1,11 @@
 <div class="trainings-container">
   <div class="header">
-    <h1>{{ "ADMIN_MODULES.TITLE" | translate }}</h1>
+    <h1>{{ "ADMIN_TRAININGS.TITLE" | translate }}</h1>
     <div class="actions">
       <div class="search-bar">
         <input
           type="text"
-          [placeholder]="'ADMIN_MODULES.SEARCH_PLACEHOLDER' | translate"
+          [placeholder]="'ADMIN_TRAININGS.SEARCH_PLACEHOLDER' | translate"
           class="search-input"
           [(ngModel)]="searchTerm"
           (ngModelChange)="onSearchChange()"
@@ -18,14 +18,14 @@
       </button>
       <button class="create-training-btn" (click)="navigateToAddTraining()">
         <span class="plus-icon">+</span>
-        {{ "ADMIN_MODULES.CREATE_BUTTON" | translate }}
+        {{ "ADMIN_TRAININGS.CREATE_BUTTON" | translate }}
       </button>
     </div>
   </div>
 
   <!-- Loading and Error States -->
   <div *ngIf="loading" class="loading-indicator">
-    {{ "ADMIN_MODULES.LOADING" | translate }}
+    {{ "ADMIN_TRAININGS.LOADING" | translate }}
   </div>
 
   <div *ngIf="error" class="error-message">
@@ -35,7 +35,7 @@
   <!-- Trainings Section -->
   <ng-container *ngIf="!loading && !error">
     <h2 class="section-title">
-      {{ "ADMIN_MODULES.ALL_MODULES_SECTION" | translate }}
+      {{ "ADMIN_TRAININGS.ALL_TRAININGS_SECTION" | translate }}
     </h2>
     <div class="trainings-grid" *ngIf="trainings.length > 0; else noTrainings">
       @for (training of trainings; track training.id) {
@@ -44,7 +44,7 @@
     </div>
     <ng-template #noTrainings>
       <div class="no-results">
-        {{ "ADMIN_MODULES.NO_MODULES_FOUND" | translate }}
+        {{ "ADMIN_TRAININGS.NO_TRAININGS_FOUND" | translate }}
       </div>
     </ng-template>
   </ng-container>

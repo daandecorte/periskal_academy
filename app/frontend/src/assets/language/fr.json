@@ -6,22 +6,22 @@
   "ENTER_YOUR_PASSWORD": "Entrez votre mot de passe",
   "LOGIN": "Connexion",
   "LANGUAGE": "Langue",
-  "MODULES": {
-    "TITLE": "Modules",
+  "TRAININGS": {
+    "TITLE": "Formations",
     "ASSIGNED_SECTION": "Assignés par le gestionnaire de flotte",
-    "ALL_MODULES_SECTION": "Tous les modules disponibles",
-    "NO_ASSIGNED_MODULES": "Aucun module attribué ne correspond à votre recherche.",
-    "NO_MODULES_FOUND": "Aucun module ne correspond à votre recherche.",
-    "SEARCH_PLACEHOLDER": "Rechercher des modules..."
+    "ALL_TRAININGS_SECTION": "Toutes les formations disponibles",
+    "NO_ASSIGNED_TRAININGS": "Aucune formation attribuée ne correspond à votre recherche.",
+    "NO_TRAININGS_FOUND": "Aucune formation ne correspond à votre recherche.",
+    "SEARCH_PLACEHOLDER": "Rechercher des formations..."
   },
-  "ADMIN_MODULES": {
-    "TITLE": "Modules",
-    "SEARCH_PLACEHOLDER": "Rechercher des modules...",
-    "CREATE_BUTTON": "Créer un module",
-    "ALL_MODULES_SECTION": "Tous les modules",
-    "NO_MODULES_FOUND": "Aucun module ne correspond à votre recherche."
+  "ADMIN_TRAININGS": {
+    "TITLE": "Formations",
+    "SEARCH_PLACEHOLDER": "Rechercher des formations...",
+    "CREATE_BUTTON": "Créer une formation",
+    "ALL_TRAININGS_SECTION": "Toutes les formations",
+    "NO_TRAININGS_FOUND": "Aucune formation ne correspond à votre recherche."
   },
-  "ASSIGNED_MODULE_CARD": {
+  "ASSIGNED_TRAINING_CARD": {
     "ASSIGNED_ON": "Assigné le {{date}}",
     "INVALID_DATE": "Date invalide",
     "START_NOW": "Commencer"
@@ -40,24 +40,22 @@
     "ASSIGNED_ON": "Assigné le",
     "LAST_ACTIVITY": "Dernière activité",
     "EXAM_STATUS": "Statut de l'examen",
-    "TRAININGS_PROGRESS": "Progression des formations",
-    "SEARCH_TRAININGS": "Rechercher des formations...",
-    "NO_TRAININGS_ASSIGNED": "Aucune formation n'est attribuée à cet utilisateur."
+    "NO_MODULES_ASSIGNED": "Aucun module n'est attribué à cet utilisateur."
   },
-  "ADMIN_EDIT_MODULES": {
-    "TITLE": "Modifier le Module",
+  "ADMIN_EDIT_TRAININGS": {
+    "TITLE": "Modifier la Formation",
     "BASIC_INFO_TAB": "Informations de Base",
-    "TRAININGS_TAB": "Formations",
+    "MODULES_TAB": "Modules",
     "EXAM_TAB": "Examen",
     "SUBTITLE": "Informations de Base",
-    "SWITCH": "Statut du Module",
-    "MODULE_TITLE": "Titre du Module",
+    "SWITCH": "Statut de la Formation",
+    "TRAINING_TITLE": "Titre de la Formation",
     "DESCRIPTION": "Description",
     "SAVE_BUTTON": "Enregistrer",
-    "ENTER_MODULE_TITLE": "Saisissez le titre du module",
+    "ENTER_TRAINING_TITLE": "Saisissez le titre de la formation",
     "ENTER_DESCRIPTION": "Saisissez la description",
-    "TRAINING_TITLE": "Titre de la formation",
-    "TRAINING_DESCRIPTION": "Description de la formation",
+    "MODULE_TITLE": "Titre du module",
+    "MODULE_DESCRIPTION": "Description du module",
     "VIDEO": "Contenu vidéo",
     "VIDEO_DESCRIPTION": "Cliquez pour télécharger ou glissez-déposez",
     "VIDEO_FORMAT": "MP4, WebM ou OGG (MAX: 80MB)",
@@ -71,42 +69,42 @@
     "OPTION_PLACEHOLDER": "Option de réponse",
     "ADD_OPTION": "+ Ajouter une option"
   },
-  "ADMIN_ADD_MODULES": {
+  "ADMIN_ADD_TRAININGS": {
     "EXAM_TITLE": "Paramètres de l'examen",
     "TIME_LIMIT": "Limite de temps (minutes)",
     "QUETIONS": "Questions par examen",
     "PASSING_SCORE": "Score requis pour réussir (%)",
     "MAX_ATTEMPTS": "Nombre maximal de tentatives",
     "MAX_ATTEMPTS_DESCRIPTION": "Définir un nombre illimité de tentatives en entrant 0",
-    "MODULE_SETTINGS": "Paramètres du module",
+    "TRAINING_SETTINGS": "Paramètres de la formation",
     "ACTIVE": "Actif",
     "CERTIFICATE": "Certificat requis",
     "REQUIRED": "Obligatoire",
     "CERTIFICATE_SETTINGS": "Paramètres du certificat",
     "PERIOD": "Période de validité (années)",
     "PRICE": "Prix du certificat (€)",
-    "MODULE_OVERVIEW": "Aperçu du module",
-    "MODULE_BASIC_INFO": "Informations de base du module complètes",
-    "MODULE_TRAINING": "3 formations créées",
-    "MODULE_EXAM": "15 questions d'examen ajoutées",
-    "TRAINING_TITLE": "Formations",
-    "NO_TRAINING_DESCRIPTION": "Aucune formation ajoutée pour l’instant. Cliquez sur 'Ajouter une formation' pour créer votre première formation.",
-    "ADD_TRAINING": "+ Ajouter une formation",
-    "TRAINING_CANCEL": "Annuler",
-    "TRAINING_SAVE": "Enregistrer la formation",
-    "TITLE": "Créer un nouveau module",
+    "TRAINING_OVERVIEW": "Aperçu de la formation",
+    "TRAINING_BASIC_INFO": "Informations de base de la formation complètes",
+    "TRAINING_MODULE": "3 modules créés",
+    "TRAINING_EXAM": "15 questions d'examen ajoutées",
+    "MODULE_TITLE": "Modules",
+    "NO_MODULE_DESCRIPTION": "Aucun module ajouté pour l'instant. Cliquez sur 'Ajouter un module' pour créer votre premier module.",
+    "ADD_MODULE": "+ Ajouter un module",
+    "MODULE_CANCEL": "Annuler",
+    "MODULE_SAVE": "Enregistrer le module",
+    "TITLE": "Créer une nouvelle formation",
     "PREVIOUS": "Précédent",
     "NEXT": "Suivant",
     "PUBLISH": "Publier"
   },
-  "TRAINING_OVERVIEW": {
-    "ABOUT_TRAINING": "À propos de cette formation",
-    "MODULES": "Modules",
-    "MODULE_PROGRESS": "Progression du module",
+  "MODULE_OVERVIEW": {
+    "ABOUT_MODULE": "À propos de ce module",
+    "TRAININGS": "Formations",
+    "TRAINING_PROGRESS": "Progression de la formation",
     "OF_COMPLETED": "sur {{completed}} terminés",
     "BACK": "Retour",
     "GO_FOR_CERTIFICATE": "Obtenir le certificat",
-    "COMPLETE_ALL_MODULES_FIRST": "Veuillez d'abord terminer tous les modules!",
+    "COMPLETE_ALL_TRAININGS_FIRST": "Veuillez d'abord terminer toutes les formations!",
     "COMPLETED": "terminé",
     "QUESTIONS": "questions",
     "START": "Commencer",
@@ -141,19 +139,18 @@
     "PRODUCTS": "Produits",
     "CERTIFICATES": "Certificats",
     "SEARCH_USERS": "Rechercher des utilisateurs...",
-    "TRAININGS_PROGRESS": "PROGRÈS DE FORMATION"
+    "MODULES_PROGRESS": "PROGRÈS DES MODULES"
   },
   "TRAINEE_CHAT": {
     "HOW_CAN_I_HELP": "Bonjour ! Comment puis-je vous aider aujourd'hui ?",
     "FEEL_FREE_TO_ASK": "N'hésitez pas à poser des questions sur :",
     "CERTIFICATE_REQUIREMENTS": "Exigences pour le certificat",
-    "TRAINING_PROGRESS": "Progression de la formation",
+    "MODULE_PROGRESS": "Progression du module",
     "TECHNICAL_SUPPORT": "Support technique",
     "GENERAL_QUESTIONS": "Questions générales",
     "PERISKAL_SUPPORT": "Support Periskal",
     "READY_TO_HELP": "Prêt à aider",
     "TYPE_YOUR_QUESTION": "Tapez votre question ici..."
-
   },
   "SUPPORT_CHAT": {
     "NOT_CLAIMED": "Non réclamé",

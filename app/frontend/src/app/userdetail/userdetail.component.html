@@ -26,17 +26,17 @@
 
 
     <div class="trainings-section">
-        <h3>{{"USER_DETAIL.TRAININGS_PROGRESS" | translate}}</h3>
+        <h3>{{"USER_DETAIL.MODULES_PROGRESS" | translate}}</h3>
         <div class="trainings-filters">
             <select [(ngModel)]="selectedStatus" (change)="filterTrainings()">
                 <option value="ALL">{{"USER_DETAIL.ALL_STATUS" | translate}}</option>
                 <option value="IN_PROGRESS">{{"USER_DETAIL.IN_PROGRESS" | translate}}</option>
                 <option value="COMPLETED">{{"USER_DETAIL.COMPLETED" | translate}}</option>
             </select>
-            <input type="text" [(ngModel)]="searchQuery" (input)="filterTrainings()" [placeholder]='"USER_DETAIL.SEARCH_TRAININGS" | translate'>
+            <input type="text" [(ngModel)]="searchQuery" (input)="filterTrainings()" [placeholder]='"USER_DETAIL.SEARCH_MODULES" | translate'>
         </div>
         @if(filteredUserDetails.length==0) {
-            <div>{{"USER_DETAIL.NO_TRAININGS_ASSIGNED" | translate}}</div>
+            <div>{{"USER_DETAIL.NO_MODULES_ASSIGNED" | translate}}</div>
         }
         @else {
 

@@ -6,29 +6,29 @@
   "ENTER_YOUR_PASSWORD": "Geben Sie Ihr Passwort ein",
   "LOGIN": "Anmelden",
   "LANGUAGE": "Sprache",
-  "MODULES": {
-    "TITLE": "Module",
+  "TRAININGS": {
+    "TITLE": "Schulungen",
     "ASSIGNED_SECTION": "Zugewiesen vom Flottenmanager",
-    "ALL_MODULES_SECTION": "Alle verfügbaren Module",
-    "NO_ASSIGNED_MODULES": "Keine zugewiesenen Module entsprechen Ihrer Suche.",
-    "NO_MODULES_FOUND": "Keine Module entsprechen Ihrer Suche.",
-    "SEARCH_PLACEHOLDER": "Module suchen..."
+    "ALL_TRAININGS_SECTION": "Alle verfügbaren Schulungen",
+    "NO_ASSIGNED_TRAININGS": "Keine zugewiesenen Schulungen entsprechen Ihrer Suche.",
+    "NO_TRAININGS_FOUND": "Keine Schulungen entsprechen Ihrer Suche.",
+    "SEARCH_PLACEHOLDER": "Schulungen suchen..."
   },
-  "ADMIN_MODULES": {
-    "TITLE": "Module",
-    "SEARCH_PLACEHOLDER": "Module suchen...",
-    "CREATE_BUTTON": "Modul erstellen",
-    "ALL_MODULES_SECTION": "Alle Module",
-    "NO_MODULES_FOUND": "Keine Module entsprechen Ihrer Suche."
+  "ADMIN_TRAININGS": {
+    "TITLE": "Schulungen",
+    "SEARCH_PLACEHOLDER": "Schulungen suchen...",
+    "CREATE_BUTTON": "Schulung erstellen",
+    "ALL_TRAININGS_SECTION": "Alle Schulungen",
+    "NO_TRAININGS_FOUND": "Keine Schulungen entsprechen Ihrer Suche."
   },
-  "ASSIGNED_MODULE_CARD": {
+  "ASSIGNED_TRAINING_CARD": {
     "ASSIGNED_ON": "Zugewiesen am {{date}}",
     "INVALID_DATE": "Ungültiges Datum",
     "START_NOW": "Jetzt starten"
   },
   "USER_DETAIL": {
     "ASSIGN_NEW_CERTIFICATE": "Neues Zertifikat zuweisen",
-    "MODULES_PROGRESS": "Modulfortschritt",
+    "MODULES_PROGRESS": "Modulforschritt",
     "ALL_STATUS": "Alle Status",
     "IN_PROGRESS": "In Bearbeitung",
     "COMPLETED": "Abgeschlossen",
@@ -42,22 +42,22 @@
     "EXAM_STATUS": "Prüfungsstatus",
     "TRAININGS_PROGRESS": "Fortschritt der Schulungen",
     "SEARCH_TRAININGS": "Schulungen suchen...",
-    "NO_TRAININGS_ASSIGNED": "Diesem Benutzer sind keine Schulungen zugewiesen."
+    "NO_MODULES_ASSIGNED": "Diesem Benutzer sind keine Module zugewiesen."
   },
-  "ADMIN_EDIT_MODULES": {
-    "TITLE": "Modul Bearbeiten",
+  "ADMIN_EDIT_TRAININGS": {
+    "TITLE": "Schulung Bearbeiten",
     "BASIC_INFO_TAB": "Grundlegende Informationen",
-    "TRAININGS_TAB": "Schulungen",
+    "MODULES_TAB": "Module",
     "EXAM_TAB": "Prüfung",
     "SUBTITLE": "Grundlegende Informationen",
-    "SWITCH": "Modulstatus",
-    "MODULE_TITLE": "Modultitel",
+    "SWITCH": "Schulungsstatus",
+    "TRAINING_TITLE": "Schulungstitel",
     "DESCRIPTION": "Beschreibung",
     "SAVE_BUTTON": "Speichern",
-    "ENTER_MODULE_TITLE": "Modultitel eingeben",
+    "ENTER_TRAINING_TITLE": "Schulungstitel eingeben",
     "ENTER_DESCRIPTION": "Beschreibung eingeben",
-    "TRAINING_TITLE": "Schulungstitel",
-    "TRAINING_DESCRIPTION": "Schulungsbeschreibung",
+    "MODULE_TITLE": "Modultitel",
+    "MODULE_DESCRIPTION": "Modulbeschreibung",
     "VIDEO": "Videoinhalt",
     "VIDEO_DESCRIPTION": "Klicken zum Hochladen oder per Drag & Drop ablegen",
     "VIDEO_FORMAT": "MP4, WebM oder OGG (MAX: 80MB)",
@@ -71,42 +71,42 @@
     "OPTION_PLACEHOLDER": "Antwortoption",
     "ADD_OPTION": "+ Option hinzufügen"
   },
-  "ADMIN_ADD_MODULES": {
+  "ADMIN_ADD_TRAININGS": {
     "EXAM_TITLE": "Prüfungseinstellungen",
     "TIME_LIMIT": "Zeitlimit (Minuten)",
     "QUETIONS": "Fragen pro Prüfung",
     "PASSING_SCORE": "Erforderliche Bestehensnote (%)",
     "MAX_ATTEMPTS": "Maximale Wiederholungsversuche",
     "MAX_ATTEMPTS_DESCRIPTION": "Unbegrenzte Versuche durch Eingabe von 0 festlegen",
-    "MODULE_SETTINGS": "Moduleinstellungen",
+    "TRAINING_SETTINGS": "Schulungseinstellungen",
     "ACTIVE": "Aktiv",
     "CERTIFICATE": "Zertifikat erforderlich",
     "REQUIRED": "Erforderlich",
     "CERTIFICATE_SETTINGS": "Zertifikateinstellungen",
     "PERIOD": "Gültigkeitsdauer (Jahre)",
     "PRICE": "Zertifikatspreis (€)",
-    "MODULE_OVERVIEW": "Modulübersicht",
-    "MODULE_BASIC_INFO": "Grundlegende Modulinformationen abgeschlossen",
-    "MODULE_TRAINING": "3 Schulungen erstellt",
-    "MODULE_EXAM": "15 Prüfungsfragen hinzugefügt",
-    "TRAINING_TITLE": "Schulungen",
-    "NO_TRAINING_DESCRIPTION": "Noch keine Schulungen hinzugefügt. Klicken Sie auf 'Schulung hinzufügen', um Ihre erste Schulung zu erstellen.",
-    "ADD_TRAINING": "+ Schulung hinzufügen",
-    "TRAINING_CANCEL": "Abbrechen",
-    "TRAINING_SAVE": "Schulung speichern",
-    "TITLE": "Neues Modul erstellen",
+    "TRAINING_OVERVIEW": "Schulungsübersicht",
+    "TRAINING_BASIC_INFO": "Grundlegende Schulungsinformationen abgeschlossen",
+    "TRAINING_MODULE": "3 Module erstellt",
+    "TRAINING_EXAM": "15 Prüfungsfragen hinzugefügt",
+    "MODULE_TITLE": "Module",
+    "NO_MODULE_DESCRIPTION": "Noch keine Module hinzugefügt. Klicken Sie auf 'Modul hinzufügen', um Ihr erstes Modul zu erstellen.",
+    "ADD_MODULE": "+ Modul hinzufügen",
+    "MODULE_CANCEL": "Abbrechen",
+    "MODULE_SAVE": "Modul speichern",
+    "TITLE": "Neue Schulung erstellen",
     "PREVIOUS": "Zurück",
     "NEXT": "Weiter",
     "PUBLISH": "Veröffentlichen"
   },
-  "TRAINING_OVERVIEW": {
-    "ABOUT_TRAINING": "Über diese Schulung",
-    "MODULES": "Module",
-    "MODULE_PROGRESS": "Modulforschritt",
+  "MODULE_OVERVIEW": {
+    "ABOUT_MODULE": "Über dieses Modul",
+    "TRAININGS": "Schulungen",
+    "TRAINING_PROGRESS": "Schulungsfortschritt",
     "OF_COMPLETED": "von {{completed}} abgeschlossen",
     "BACK": "Zurück",
     "GO_FOR_CERTIFICATE": "Zum Zertifikat",
-    "COMPLETE_ALL_MODULES_FIRST": "Bitte schließen Sie zuerst alle Module ab!",
+    "COMPLETE_ALL_TRAININGS_FIRST": "Bitte schließen Sie zuerst alle Schulungen ab!",
     "COMPLETED": "abgeschlossen",
     "QUESTIONS": "Fragen",
     "START": "Starten",
@@ -141,13 +141,13 @@
     "PRODUCTS": "Produkte",
     "CERTIFICATES": "Zertifikate",
     "SEARCH_USERS": "Benutzer suchen...",
-    "TRAININGS_PROGRESS": "FORTSCHRITT DER SCHULUNGEN"
+    "MODULES_PROGRESS": "MODULFORTSCHRITT"
   },
   "TRAINEE_CHAT": {
     "HOW_CAN_I_HELP": "Hallo! Wie kann ich Ihnen heute helfen?",
     "FEEL_FREE_TO_ASK": "Fragen Sie gerne nach:",
     "CERTIFICATE_REQUIREMENTS": "Zertifikatsanforderungen",
-    "TRAINING_PROGRESS": "Trainingsfortschritt",
+    "MODULE_PROGRESS": "Modulfortschritt",
     "TECHNICAL_SUPPORT": "Technischer Support",
     "GENERAL_QUESTIONS": "Allgemeine Fragen",
     "PERISKAL_SUPPORT": "Periskal-Support",
@@ -165,6 +165,5 @@
     "THIS_TICKET_HAS_BEEN_RESOLVED": "Dieses Ticket wurde gelöst.",
     "CLAIM_THIS_TICKET_TO_HELP": "Übernehmen Sie dieses Ticket, um zu helfen.",
     "ALL": "Alle"
-
   }
 }

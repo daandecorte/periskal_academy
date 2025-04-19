@@ -1,11 +1,11 @@
 <div class="trainings-container">
   <div class="header">
-    <h1>{{ "MODULES.TITLE" | translate }}</h1>
+    <h1>{{ "TRAININGS.TITLE" | translate }}</h1>
     <div class="actions">
       <div class="search-bar">
         <input
           type="text"
-          [placeholder]="'MODULES.SEARCH_PLACEHOLDER' | translate"
+          [placeholder]="'TRAININGS.SEARCH_PLACEHOLDER' | translate"
           class="search-input"
           [(ngModel)]="searchTerm"
           (ngModelChange)="onSearchChange()"
@@ -21,7 +21,7 @@
 
   <!-- Loading and Error States -->
   <div *ngIf="loading" class="loading-indicator">
-    {{ "MODULES.LOADING" | translate }}
+    {{ "TRAININGS.LOADING" | translate }}
   </div>
 
   <div *ngIf="error" class="error-message">
@@ -30,7 +30,7 @@
 
   <!-- Assigned Trainings Section -->
   <ng-container *ngIf="!loading && !error">
-    <h2 class="section-title">{{ "MODULES.ASSIGNED_SECTION" | translate }}</h2>
+    <h2 class="section-title">{{ "TRAININGS.ASSIGNED_SECTION" | translate }}</h2>
     <div
       class="assigned-trainings"
       *ngIf="assignedTrainings.length > 0; else noAssignedTrainings"
@@ -41,13 +41,13 @@
     </div>
     <ng-template #noAssignedTrainings>
       <div class="no-results">
-        {{ "MODULES.NO_ASSIGNED_MODULES" | translate }}
+        {{ "TRAININGS.NO_ASSIGNED_TRAININGS" | translate }}
       </div>
     </ng-template>
 
     <!-- All Available Trainings Section -->
     <h2 class="section-title">
-      {{ "MODULES.ALL_MODULES_SECTION" | translate }}
+      {{ "TRAININGS.ALL_TRAININGS_SECTION" | translate }}
     </h2>
     <div
       class="trainings-grid reduced-columns"
@@ -58,7 +58,7 @@
       }
     </div>
     <ng-template #noTrainings>
-      <div class="no-results">{{ "MODULES.NO_MODULES_FOUND" | translate }}</div>
+      <div class="no-results">{{ "TRAININGS.NO_TRAININGS_FOUND" | translate }}</div>
     </ng-template>
   </ng-container>
   <app-trainee-chat></app-trainee-chat>

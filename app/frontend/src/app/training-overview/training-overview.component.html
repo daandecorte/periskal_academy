@@ -5,12 +5,12 @@
 
   <div class="training-content">
     <div class="about-section">
-      <h2>{{ "TRAINING_OVERVIEW.ABOUT_TRAINING" | translate }}</h2>
+      <h2>{{ "MODULE_OVERVIEW.ABOUT_MODULE" | translate }}</h2>
       <p>{{ training?.description }}</p>
     </div>
 
     <div class="module-sections">
-      <h2>{{ "TRAINING_OVERVIEW.MODULES" | translate }}:</h2>
+      <h2>{{ "MODULE_OVERVIEW.TRAININGS" | translate }}:</h2>
 
       @for (section of moduleSections; track section.id) {
       <div class="module-section">
@@ -21,7 +21,7 @@
               @if (section.completed) {
               <span class="status-badge">
                 <fa-icon [icon]="faCheckCircle" class="button-icon"></fa-icon>
-                {{ "TRAINING_OVERVIEW.COMPLETED" | translate }}</span
+                {{ "MODULE_OVERVIEW.COMPLETED" | translate }}</span
               >
               }
             </h3>
@@ -35,7 +35,7 @@
             <span class="meta-item">
               <fa-icon [icon]="faQuestionCircle" class="meta-icon"></fa-icon>
               {{ section.questionCount }}
-              {{ "TRAINING_OVERVIEW.QUESTIONS" | translate }}
+              {{ "MODULE_OVERVIEW.QUESTIONS" | translate }}
             </span>
           </div>
         </div>
@@ -52,8 +52,8 @@
           }
           {{
             section.completed
-              ? ("TRAINING_OVERVIEW.REVIEW" | translate)
-              : ("TRAINING_OVERVIEW.START" | translate)
+              ? ("MODULE_OVERVIEW.REVIEW" | translate)
+              : ("MODULE_OVERVIEW.START" | translate)
           }}
         </button>
       </div>
@@ -61,7 +61,7 @@
     </div>
 
     <div class="training-progress">
-      <h3>{{ "TRAINING_OVERVIEW.MODULE_PROGRESS" | translate }}</h3>
+      <h3>{{ "MODULE_OVERVIEW.TRAINING_PROGRESS" | translate }}</h3>
       <div class="progress-container">
         <div class="progress-bar">
           <div
@@ -72,7 +72,7 @@
         <div class="progress-text">
           {{ trainingsCompleted }}
           {{
-            "TRAINING_OVERVIEW.OF_COMPLETED"
+            "MODULE_OVERVIEW.OF_COMPLETED"
               | translate : { completed: totalTrainings }
           }}
         </div>
@@ -82,7 +82,7 @@
     <div class="action-buttons">
       <button class="back-button" (click)="goBack()">
         <fa-icon [icon]="faArrowLeft" class="button-icon"></fa-icon>
-        {{ "TRAINING_OVERVIEW.BACK" | translate }}
+        {{ "MODULE_OVERVIEW.BACK" | translate }}
       </button>
       <div class="tooltip-container">
         <button
@@ -91,10 +91,10 @@
           (click)="goToCertificate()"
         >
           <fa-icon [icon]="faCertificate" class="button-icon"></fa-icon>
-          {{ "TRAINING_OVERVIEW.GO_FOR_CERTIFICATE" | translate }}
+          {{ "MODULE_OVERVIEW.GO_FOR_CERTIFICATE" | translate }}
         </button>
         <div class="tooltip" *ngIf="trainingsCompleted < totalTrainings">
-          {{ "TRAINING_OVERVIEW.COMPLETE_ALL_MODULES_FIRST" | translate }}
+          {{ "MODULE_OVERVIEW.COMPLETE_ALL_TRAININGS_FIRST" | translate }}
         </div>
       </div>
     </div>

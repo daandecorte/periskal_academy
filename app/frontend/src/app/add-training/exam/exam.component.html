@@ -1,34 +1,34 @@
 <div class="container">
   <div class="exam-settings">
     <h3 class="title">
-      {{ "ADMIN_ADD_MODULES.EXAM_TITLE" | translate }}
+      {{ "ADMIN_ADD_TRAININGS.EXAM_TITLE" | translate }}
     </h3>
     <div class="settings-grid">
       <div class="setting-item">
         <label class="label">
-          {{ "ADMIN_ADD_MODULES.TIME_LIMIT" | translate }}</label
+          {{ "ADMIN_ADD_TRAININGS.TIME_LIMIT" | translate }}</label
         >
         <input type="number" class="input" value="60" min="0" />
       </div>
       <div class="setting-item">
         <label class="label">
-          {{ "ADMIN_ADD_MODULES.QUETIONS" | translate }}</label
+          {{ "ADMIN_ADD_TRAININGS.QUETIONS" | translate }}</label
         >
         <input type="number" class="input" value="10" min="0" />
       </div>
       <div class="setting-item">
         <label class="label">
-          {{ "ADMIN_ADD_MODULES.PASSING_SCORE" | translate }}</label
+          {{ "ADMIN_ADD_TRAININGS.PASSING_SCORE" | translate }}</label
         >
         <input type="number" class="input" value="80" min="0" />
       </div>
       <div class="setting-item">
         <label class="label">
-          {{ "ADMIN_ADD_MODULES.MAX_ATTEMPTS" | translate }}</label
+          {{ "ADMIN_ADD_TRAININGS.MAX_ATTEMPTS" | translate }}</label
         >
         <input type="number" class="input" value="3" min="0" />
         <small class="hint">
-          {{ "ADMIN_ADD_MODULES.MAX_ATTEMPTS_DESCRIPTION" | translate }}</small
+          {{ "ADMIN_ADD_TRAININGS.MAX_ATTEMPTS_DESCRIPTION" | translate }}</small
         >
       </div>
     </div>
@@ -37,41 +37,41 @@
   <div class="question-pool">
     <div class="button-container">
       <h3 class="title">
-        {{ "ADMIN_EDIT_MODULES.QUESTION_POOL" | translate }}
+        {{ "ADMIN_EDIT_TRAININGS.QUESTION_POOL" | translate }}
       </h3>
       <button class="add-question-btn">
-        {{ "ADMIN_EDIT_MODULES.ADD_QUESTION" | translate }}
+        {{ "ADMIN_EDIT_TRAININGS.ADD_QUESTION" | translate }}
       </button>
     </div>
 
     <div class="question-pool-container">
       <label class="label">{{
-        "ADMIN_EDIT_MODULES.QUESTION_TYPE" | translate
+        "ADMIN_EDIT_TRAININGS.QUESTION_TYPE" | translate
       }}</label>
       <select class="input">
-        <option>{{ "ADMIN_EDIT_MODULES.MULTIPLE_CHOICE" | translate }}</option>
-        <option>{{ "ADMIN_EDIT_MODULES.TRUE_FALSE" | translate }}</option>
+        <option>{{ "ADMIN_EDIT_TRAININGS.MULTIPLE_CHOICE" | translate }}</option>
+        <option>{{ "ADMIN_EDIT_TRAININGS.TRUE_FALSE" | translate }}</option>
       </select>
 
       <label class="label">{{
-        "ADMIN_EDIT_MODULES.QUESTION_TEXT" | translate
+        "ADMIN_EDIT_TRAININGS.QUESTION_TEXT" | translate
       }}</label>
       <textarea class="input"></textarea>
 
       <label class="label">{{
-        "ADMIN_EDIT_MODULES.ANSWER_OPTION" | translate
+        "ADMIN_EDIT_TRAININGS.ANSWER_OPTION" | translate
       }}</label>
       <div class="answer-option">
         <input type="radio" />
         <input
           type="text"
           class="input"
-          [placeholder]="'ADMIN_EDIT_MODULES.OPTION_PLACEHOLDER' | translate"
+          [placeholder]="'ADMIN_EDIT_TRAININGS.OPTION_PLACEHOLDER' | translate"
         />
         <button class="delete-btn">✖</button>
       </div>
       <button class="add-option-btn">
-        {{ "ADMIN_EDIT_MODULES.ADD_OPTION" | translate }}
+        {{ "ADMIN_EDIT_TRAININGS.ADD_OPTION" | translate }}
       </button>
     </div>
   </div>

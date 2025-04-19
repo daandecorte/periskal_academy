@@ -8,19 +8,19 @@
     <div class="training-title">{{ getLocalizedTitle() }}</div>
     <div class="training-date">
       {{
-        "ASSIGNED_MODULE_CARD.ASSIGNED_ON"
+        "ASSIGNED_TRAINING_CARD.ASSIGNED_ON"
           | translate
             : {
                 date:
                   training.assignedDate ||
-                  ("ASSIGNED_MODULE_CARD.INVALID_DATE" | translate)
+                  ("ASSIGNED_TRAINING_CARD.INVALID_DATE" | translate)
               }
       }}
     </div>
   </div>
   <div class="button-section">
     <button class="start-now-button">
-      {{ "ASSIGNED_MODULE_CARD.START_NOW" | translate }}
+      {{ "ASSIGNED_TRAINING_CARD.START_NOW" | translate }}
     </button>
   </div>
 </div>
