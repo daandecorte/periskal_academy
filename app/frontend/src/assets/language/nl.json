@@ -99,14 +99,14 @@
     "NEXT": "Volgende",
     "PUBLISH": "Publiceren"
   },
-  "MODULE_OVERVIEW": {
-    "ABOUT_MODULE": "Over deze module",
-    "TRAININGS": "Trainingen",
-    "TRAINING_PROGRESS": "Trainingsvoortgang",
+  "TRAINING_OVERVIEW": {
+    "ABOUT_TRAINING": "Over deze training",
+    "MODULES": "Modules",
+    "MODULE_PROGRESS": "Modulevoortgang",
     "OF_COMPLETED": "van {{completed}} voltooid",
     "BACK": "Terug",
     "GO_FOR_CERTIFICATE": "Ga voor certificaat",
-    "COMPLETE_ALL_TRAININGS_FIRST": "Voltooi eerst alle trainingen!",
+    "COMPLETE_ALL_MODULES_FIRST": "Voltooi eerst alle modules!",
     "COMPLETED": "voltooid",
     "QUESTIONS": "vragen",
     "START": "Start",

@@ -97,14 +97,14 @@
     "NEXT": "Suivant",
     "PUBLISH": "Publier"
   },
-  "MODULE_OVERVIEW": {
-    "ABOUT_MODULE": "À propos de ce module",
-    "TRAININGS": "Formations",
-    "TRAINING_PROGRESS": "Progression de la formation",
+  "TRAINING_OVERVIEW": {
+    "ABOUT_TRAINING": "À propos de cette formation",
+    "MODULES": "Modules",
+    "MODULE_PROGRESS": "Progression du module",
     "OF_COMPLETED": "sur {{completed}} terminés",
     "BACK": "Retour",
     "GO_FOR_CERTIFICATE": "Obtenir le certificat",
-    "COMPLETE_ALL_TRAININGS_FIRST": "Veuillez d'abord terminer toutes les formations!",
+    "COMPLETE_ALL_MODULES_FIRST": "Veuillez d'abord terminer tous les modules!",
     "COMPLETED": "terminé",
     "QUESTIONS": "questions",
     "START": "Commencer",
