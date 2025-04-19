@@ -97,10 +97,10 @@
     "EXAM_STATUS": "Exam Status",
     "NO_MODULES_ASSIGNED": "This person has no modules assigned."
   },
-  "MODULE_OVERVIEW": {
-    "ABOUT_MODULE": "About this Module",
-    "TRAININGS": "Trainings",
-    "TRAINING_PROGRESS": "Training Progress",
+  "TRAINING_OVERVIEW": {
+    "ABOUT_TRAINING": "About this Training",
+    "MODULES": "Modules",
+    "MODULE_PROGRESS": "Module Progress",
     "OF_COMPLETED": "of {{completed}} completed",
     "BACK": "Back",
     "GO_FOR_CERTIFICATE": "Go for Certificate",
