@@ -6,6 +6,10 @@
   "ENTER_YOUR_PASSWORD": "Voer uw wachtwoord in",
   "LOGIN": "Inloggen",
   "LANGUAGE": "Taal",
+  "ENGLISH": "Engels",
+  "DUTCH": "Nederlands",
+  "FRENCH": "Frans",
+  "GERMAN": "Duits",
   "MODULES": {
     "TITLE": "Modules",
     "ASSIGNED_SECTION": "Toegewezen door Fleet Manager",
@@ -135,11 +139,14 @@
   },
   "USER_MANAGEMENT": {
     "USER_MANAGEMENT": "Gebruikersbeheer",
+    "SKIPPERS": "Schippers",
+    "ASSIGN_CERTIFICATE": "Certificaat toewijzen",
     "FILTER_BY": "Filter op",
     "NAME": "Naam",
     "SHIPNAME": "Scheepsnaam",
     "PRODUCTS": "Producten",
     "CERTIFICATES": "Certificaten",
+    "SEARCH_SKIPPERS": "Zoek schippers...",
     "SEARCH_USERS": "Zoek gebruikers...",
     "TRAININGS_PROGRESS": "VOORTGANG VAN TRAININGEN"
   }

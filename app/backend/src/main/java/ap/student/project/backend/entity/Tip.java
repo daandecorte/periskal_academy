@@ -16,19 +16,17 @@ public class Tip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ElementCollection
-    @CollectionTable(name = "tip_titles", joinColumns = @JoinColumn(name = "tip_id"))
-    @MapKeyColumn(name = "language")
-    @Column(name = "title")
-    private Map<Language, String> title;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "topic_id")
+    private Topic topic;
     @ElementCollection
     @CollectionTable(name = "tip_texts", joinColumns = @JoinColumn(name = "tip_id"))
     @MapKeyColumn(name = "language")
     @Column(name = "text")
     private Map<Language, String> text;
 
-    public Tip(Map<Language, String> title, Map<Language, String> text) {
-        this.title = title;
+    public Tip(Topic topic,Map<Language, String> text) {
+        this.topic = topic;
         this.text = text;
     }
 
@@ -36,7 +34,6 @@ public class Tip {
     public String toString() {
         return "Tip{" +
                 "id=" + id +
-                ", title='" + title  + '\'' +
                 ", text='" + text + '\'' +
                 '}';
     }

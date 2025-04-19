@@ -6,6 +6,10 @@
   "ENTER_YOUR_PASSWORD": "Entrez votre mot de passe",
   "LOGIN": "Connexion",
   "LANGUAGE": "Langue",
+  "ENGLISH": "Anglais",
+  "DUTCH": "Néerlandais",
+  "FRENCH": "Français",
+  "GERMAN": "Allemand",
   "MODULES": {
     "TITLE": "Modules",
     "ASSIGNED_SECTION": "Assignés par le gestionnaire de flotte",
@@ -135,12 +139,15 @@
   },
   "USER_MANAGEMENT": {
     "USER_MANAGEMENT": "Gestion des utilisateurs",
+    "SKIPPERS": "Capitaines",
+    "ASSIGN_CERTIFICATE": "Attribuer un certificat",
     "FILTER_BY": "Filtrer par",
     "NAME": "Nom",
     "SHIPNAME": "Nom du navire",
     "PRODUCTS": "Produits",
     "CERTIFICATES": "Certificats",
+    "SEARCH_SKIPPERS": "Rechercher des capitaines...",
     "SEARCH_USERS": "Rechercher des utilisateurs...",
-    "TRAININGS_PROGRESS": "PROGRÈS DE FORMATION"
+    "TRAININGS_PROGRESS": "PROGRÈS DES FORMATIONS"
   }
 }

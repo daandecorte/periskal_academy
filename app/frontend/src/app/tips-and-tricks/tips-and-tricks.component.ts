@@ -15,10 +15,12 @@ import { LanguageService } from '../services/language.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IUser } from '../types/user-info';
 import { Observable } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { text } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
   selector: 'app-tips-and-tricks',
-  imports: [FontAwesomeModule, TranslatePipe],
+  imports: [FontAwesomeModule, TranslatePipe, FormsModule],
   templateUrl: './tips-and-tricks.component.html',
   styleUrl: './tips-and-tricks.component.css',
 })
@@ -32,12 +34,16 @@ export class TipsAndTricksComponent implements AfterViewInit {
   faPencil = faPencil;
   faTrash = faTrash;
 
-  @ViewChild('tipContentRef') tipContentRef!: ElementRef<HTMLTextAreaElement>;
-  @ViewChild('tipTitleRef') tipTitleRef!: ElementRef<HTMLTextAreaElement>;
+  @ViewChild('tipTopicRef') tipTopicRef!: ElementRef<HTMLTextAreaElement>;
+  @ViewChild('tipTextRef') tipTextRef!: ElementRef<HTMLTextAreaElement>;
   isLoaded: boolean = false;
 
+  topics: ITopic[] = [];
   tips: ITip[] = [];
   tipsSorted: ITipSorted[] = [];
+  filteredTipsSorted: ITipSorted[] = [];
+  searchTerm: string = '';
+  selectedTopic: string = 'all';
   sectionsOpenState: boolean[] = [];
 
   currentUser$: Observable<IUser | null>;
@@ -47,14 +53,38 @@ export class TipsAndTricksComponent implements AfterViewInit {
   modalOverlay!: HTMLDivElement;
   modalOverlayDelete!: HTMLDivElement;
 
-  titleAdd: boolean = false;
-  titleEdit: boolean = false;
-  titleDelete: boolean = false;
+  topicAdd: boolean = false;
+  topicEdit: boolean = false;
+  topicDelete: boolean = false;
   tipAdd: boolean = false;
   tipEdit: boolean = false;
   tipDelete: boolean = false;
 
   currentLanguage: keyof ITranslated = 'ENGLISH';
+  selectedButtonLanguage: keyof ITranslated = 'ENGLISH';
+
+  editId: number = 0;
+  deleteId: number = 0;
+  deleteTopic: boolean = false;
+
+  newTopic: INewTopic = {
+    title: {
+      ENGLISH: '',
+      GERMAN: '',
+      DUTCH: '',
+      FRENCH: '',
+    },
+  };
+
+  newTip: INewTip = {
+    topic_id: 0,
+    text: {
+      ENGLISH: '',
+      GERMAN: '',
+      DUTCH: '',
+      FRENCH: '',
+    },
+  };
 
   constructor(
     private authService: AuthService,
@@ -77,45 +107,8 @@ export class TipsAndTricksComponent implements AfterViewInit {
     });
   }
 
-  grouped: Map<string, { title: ITranslated; texts: ITranslatedId[] }> =
-    new Map();
-
-  async getTips() {
-    const result = await fetch('api/tips');
-    let tips: ITip[] = await result.json();
-    return tips;
-  }
-
-  transformTips(tips: ITip[]): ITipSorted[] {
-    for (const tip of tips) {
-      const key = tip.title.ENGLISH;
-
-      const translatedId: ITranslatedId = {
-        ID: tip.id,
-        ENGLISH: tip.text.ENGLISH,
-        FRENCH: tip.text.FRENCH,
-        DUTCH: tip.text.DUTCH,
-        GERMAN: tip.text.GERMAN,
-      };
-
-      if (!this.grouped.has(key)) {
-        this.grouped.set(key, {
-          title: tip.title,
-          texts: [translatedId],
-        });
-        this.sectionsOpenState.push(false);
-      } else {
-        this.grouped.get(key)!.texts.push(translatedId);
-      }
-    }
-
-    return Array.from(this.grouped.values());
-  }
-
   async ngAfterViewInit() {
-    const tips = await this.getTips();
-    this.tipsSorted = this.transformTips(tips);
-    this.isLoaded = true;
+    this.loadTopicsAndTips();
 
     this.modalOverlay = document.getElementById(
       'modal-overlay'
@@ -124,16 +117,68 @@ export class TipsAndTricksComponent implements AfterViewInit {
       'modal-overlay-delete'
     ) as HTMLDivElement;
 
-    const buttons =
+    const buttonsLanguage =
       document.querySelectorAll<HTMLButtonElement>('.modal-button');
 
-    buttons.forEach((button) => {
+    buttonsLanguage.forEach((button) => {
       button.addEventListener('click', () => {
-        buttons.forEach((btn) => btn.classList.remove('selected'));
+        buttonsLanguage.forEach((btn) => btn.classList.remove('selected'));
 
         button.classList.add('selected');
+
+        this.changeModalLanguage();
       });
     });
+  }
+
+  async loadTopicsAndTips() {
+    this.isLoaded = false;
+
+    await this.getTopics();
+    await this.getTips();
+    this.sortTips();
+
+    this.isLoaded = true;
+  }
+
+  async getTopics() {
+    const topicsRaw = await fetch('/api/topics');
+    this.topics = await topicsRaw.json();
+  }
+
+  async getTips() {
+    const result = await fetch('/api/tips');
+    this.tips = await result.json();
+  }
+
+  sortTips() {
+    this.tipsSorted = [];
+
+    for (let i = 0; i < this.topics.length; i++) {
+      this.tipsSorted.push({
+        topic_id: this.topics[i].id,
+        title: this.topics[i].title,
+        texts: [],
+      });
+      this.sectionsOpenState.push(false);
+    }
+
+    for (let i = 0; i < this.tips.length; i++) {
+      let tip: ITip = this.tips[i];
+
+      if (tip.topic == null) continue;
+
+      for (let j = 0; j < this.tipsSorted.length; j++) {
+        if (this.tipsSorted[j].topic_id == tip.topic.id) {
+          this.tipsSorted[j].texts.push({
+            id: tip.id,
+            text: tip.text,
+          });
+        }
+      }
+    }
+
+    this.filteredTipsSorted = this.tipsSorted;
   }
 
   closeModal() {
@@ -148,76 +193,258 @@ export class TipsAndTricksComponent implements AfterViewInit {
     this.modalOverlay.classList.add('hidden');
   }
 
-  saveTopic() {}
-
-  saveTip() {}
-
-  addTopicShow() {
-    this.modalOverlay.classList.remove('hidden');
-    this.titleAdd = true;
-    this.titleEdit = false;
-    this.tipAdd = false;
-    this.tipEdit = false;
-  }
-
-  editTitleShow(title: string | undefined) {
-    this.titleAdd = false;
-    this.titleEdit = true;
-    this.tipAdd = false;
-    this.tipEdit = false;
-
-    this.modalOverlay.classList.remove('hidden');
-
-    setTimeout(() => {
-      if (title && this.tipTitleRef) {
-        this.tipTitleRef.nativeElement.value = title;
-      }
-    }, 0);
-  }
-
-  addTipShow() {
-    this.modalOverlay.classList.remove('hidden');
-    this.titleAdd = false;
-    this.titleEdit = false;
-    this.tipAdd = true;
-    this.tipEdit = false;
-  }
-
-  editTipShow(tip: string | undefined) {
-    this.titleAdd = false;
-    this.titleEdit = false;
-    this.tipAdd = false;
-    this.tipEdit = true;
-
-    this.modalOverlay.classList.remove('hidden');
-    setTimeout(() => {
-      if (tip && this.tipContentRef) {
-        this.tipContentRef.nativeElement.value = tip;
-      }
-    }, 0);
-  }
-
   closeModalDelete() {
     this.modalOverlayDelete.classList.add('hidden');
   }
 
-  deleteTopicShow() {
-    this.modalOverlayDelete.classList.remove('hidden');
+  changeModalLanguage() {
+    const buttonLanguage =
+      document.querySelector<HTMLButtonElement>('.selected');
+    if (!buttonLanguage) return;
 
-    this.titleDelete = true;
-    this.tipDelete = false;
+    this.selectedButtonLanguage = buttonLanguage.value as keyof ITranslated;
+
+    if ((this.topicAdd || this.topicEdit) && this.tipTopicRef) {
+      this.tipTopicRef.nativeElement.value =
+        this.newTopic.title[this.selectedButtonLanguage] || '';
+    }
+
+    if ((this.tipAdd || this.tipEdit) && this.tipTextRef) {
+      this.tipTextRef.nativeElement.value =
+        this.newTip.text[this.selectedButtonLanguage] || '';
+    }
   }
 
-  deleteTipShow() {
+  async saveTopic() {
+    if (this.topicAdd) {
+      let result = await fetch(`/api/topics`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          title: {
+            ENGLISH: this.newTopic.title.ENGLISH,
+            GERMAN: this.newTopic.title.GERMAN,
+            DUTCH: this.newTopic.title.DUTCH,
+            FRENCH: this.newTopic.title.FRENCH,
+          },
+        }),
+      });
+      const data = await result;
+    } else if (this.topicEdit) {
+      let result = await fetch(`/api/topics/${this.editId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          title: {
+            ENGLISH: this.newTopic.title.ENGLISH,
+            GERMAN: this.newTopic.title.GERMAN,
+            DUTCH: this.newTopic.title.DUTCH,
+            FRENCH: this.newTopic.title.FRENCH,
+          },
+        }),
+      });
+      const data = await result;
+    }
+    this.closeModal();
+    this.loadTopicsAndTips();
+  }
+
+  async saveTip() {
+    if (this.tipAdd) {
+      let result = await fetch(`/api/tips`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          topic_id: this.newTip.topic_id,
+          text: {
+            ENGLISH: this.newTip.text.ENGLISH,
+            GERMAN: this.newTip.text.GERMAN,
+            DUTCH: this.newTip.text.DUTCH,
+            FRENCH: this.newTip.text.FRENCH,
+          },
+        }),
+      });
+      const data = await result;
+    } else if (this.tipEdit) {
+      let result = await fetch(`/api/tips/${this.editId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          topic_id: this.newTip.topic_id,
+          text: {
+            ENGLISH: this.newTip.text.ENGLISH,
+            GERMAN: this.newTip.text.GERMAN,
+            DUTCH: this.newTip.text.DUTCH,
+            FRENCH: this.newTip.text.FRENCH,
+          },
+        }),
+      });
+    }
+    this.closeModal();
+    this.loadTopicsAndTips();
+  }
+
+  addTopicShow() {
+    this.modalOverlay.classList.remove('hidden');
+    this.topicAdd = true;
+    this.topicEdit = false;
+    this.tipAdd = false;
+    this.tipEdit = false;
+  }
+
+  addTipShow(topic_id: number) {
+    this.modalOverlay.classList.remove('hidden');
+    this.topicAdd = false;
+    this.topicEdit = false;
+    this.tipAdd = true;
+    this.tipEdit = false;
+
+    this.newTip.topic_id = topic_id;
+  }
+
+  async editTopicShow(id: number) {
+    this.topicAdd = false;
+    this.topicEdit = true;
+    this.tipAdd = false;
+    this.tipEdit = false;
+
+    this.editId = id;
+    this.modalOverlay.classList.remove('hidden');
+
+    const result = await fetch(`/api/topics/${this.editId}`);
+    const data: ITopic = await result.json();
+
+    this.newTopic = {
+      title: data.title,
+    };
+
+    setTimeout(() => {
+      if (this.tipTopicRef) {
+        this.tipTextRef.nativeElement.value =
+          data.title[this.selectedButtonLanguage];
+      }
+    }, 0);
+  }
+
+  async editTipShow(id: number) {
+    this.topicAdd = false;
+    this.topicEdit = false;
+    this.tipAdd = false;
+    this.tipEdit = true;
+
+    this.editId = id;
+    this.modalOverlay.classList.remove('hidden');
+
+    const result = await fetch(`/api/tips/${this.editId}`);
+    const data: ITip = await result.json();
+
+    this.newTip = {
+      topic_id: data.topic.id,
+      text: data.text,
+    };
+
+    setTimeout(() => {
+      if (this.tipTextRef) {
+        this.tipTextRef.nativeElement.value =
+          data.text[this.selectedButtonLanguage];
+      }
+    }, 0);
+  }
+
+  topicChange() {
+    const buttonLanguage =
+      document.querySelector<HTMLButtonElement>('.selected');
+
+    if (buttonLanguage) {
+      const language = buttonLanguage.value as keyof ITranslated;
+      this.newTopic.title[language] = this.tipTopicRef.nativeElement.value;
+    }
+  }
+
+  tipChange() {
+    const buttonLanguage =
+      document.querySelector<HTMLButtonElement>('.selected');
+
+    if (buttonLanguage) {
+      const language = buttonLanguage.value as keyof ITranslated;
+      this.newTip.text[language] = this.tipTextRef.nativeElement.value;
+    }
+  }
+
+  deleteTopicShow(id: number) {
     this.modalOverlayDelete.classList.remove('hidden');
 
-    this.titleDelete = false;
+    this.topicDelete = true;
+    this.tipDelete = false;
+
+    this.setDelete(id, true);
+  }
+
+  deleteTipShow(id: number) {
+    this.modalOverlayDelete.classList.remove('hidden');
+
+    this.topicDelete = false;
     this.tipDelete = true;
+
+    this.setDelete(id, false);
+  }
+
+  setDelete(id: number, topic: boolean) {
+    this.deleteId = id;
+    this.deleteTopic = topic;
+  }
+
+  async delete() {
+    if (this.deleteTopic) {
+      await this.deleteTips();
+
+      await fetch(`/api/topics/${this.deleteId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    } else {
+      await fetch(`/api/tips/${this.deleteId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    }
+
+    this.closeModalDelete();
+    this.loadTopicsAndTips();
+  }
+
+  async deleteTips() {
+    for (let i = 0; i < this.tips.length; i++) {
+      if (this.tips[i].topic.id == this.deleteId) {
+        await fetch(`/api/tips/${this.tips[i].id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+      }
+    }
   }
 
   toggleSection(event: Event, index: number): void {
     if (
-      (this.tipAdd || this.titleEdit || this.titleDelete) &&
+      (this.tipAdd || this.topicEdit || this.topicDelete) &&
       (!this.modalOverlay.classList.contains('hidden') ||
         !this.modalOverlayDelete.classList.contains('hidden'))
     )
@@ -233,11 +460,44 @@ export class TipsAndTricksComponent implements AfterViewInit {
 
     this.sectionsOpenState[index] = !this.sectionsOpenState[index];
   }
+
+  filterTopics() {
+    this.filteredTipsSorted = this.tipsSorted
+      .map((topic) => {
+        const title = topic.title[this.currentLanguage]?.toLowerCase();
+        const matchesSelectedTopic =
+          this.selectedTopic && this.selectedTopic !== 'all'
+            ? title === this.selectedTopic.toLowerCase()
+            : true;
+
+        const filteredTexts = topic.texts.filter((t) =>
+          this.searchTerm
+            ? t.text[this.currentLanguage]
+                ?.toLowerCase()
+                .includes(this.searchTerm.toLowerCase())
+            : true
+        );
+
+        return matchesSelectedTopic
+          ? {
+              ...topic,
+              texts: filteredTexts,
+            }
+          : null;
+      })
+      .filter((topic) => topic !== null);
+  }
+}
+
+//#region Interfaces
+interface ITopic {
+  id: number;
+  title: ITranslated;
 }
 
 interface ITip {
   id: number;
-  title: ITranslated;
+  topic: ITopic;
   text: ITranslated;
 }
 
@@ -249,14 +509,21 @@ interface ITranslated {
 }
 
 interface ITipSorted {
+  topic_id: number;
   title: ITranslated;
-  texts: ITranslatedId[];
+  texts: {
+    id: number;
+    text: ITranslated;
+  }[];
 }
 
-interface ITranslatedId {
-  ID: number;
-  ENGLISH: string;
-  FRENCH: string;
-  DUTCH: string;
-  GERMAN: string;
+interface INewTopic {
+  title: ITranslated;
 }
+
+interface INewTip {
+  topic_id: number;
+  text: ITranslated;
+}
+
+//#endregion
