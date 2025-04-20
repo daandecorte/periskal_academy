@@ -177,5 +177,20 @@
   "STEP": "Step",
   "OF": "of",
   "CONTINUE_TO_QUESTIONS": "Continue to Questions"
+  },
+  "QUESTIONS": {
+    "QUESTION": "Question",
+    "OF": "of",
+    "STEP": "Step",
+    "REVIEW_VIDEO": "Review Video",
+    "SUBMIT_ANSWER": "Submit Answer",
+    "NEXT_QUESTION": "Next Question",
+    "TRY_AGAIN": "Try Again",
+    "CORRECT_ANSWER": "Correct! You can continue to the next question.",
+    "INCORRECT_ANSWER": "That's not correct. Please try again.",
+    "MODULE_COMPLETED": "Module Completed!",
+    "CONGRATULATIONS": "Congratulations! You have successfully completed all questions for this module.",
+    "BACK_TO_OVERVIEW": "Back to Overview",
+    "NEXT_MODULE": "Next Module"
   }
 }

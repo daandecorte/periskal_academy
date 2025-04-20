@@ -1,0 +1,103 @@
+<div class="questions-container">
+    <div class="back-nav">
+      <button class="back-button" (click)="goBackToVideo()">
+        <fa-icon [icon]="faVideo"></fa-icon>
+        {{ "QUESTIONS.REVIEW_VIDEO" | translate }}
+      </button>
+    </div>
+  
+    <div class="progress-indicator">
+      <div class="module-name">{{ moduleTitle }} - {{ "QUESTIONS.QUESTION" | translate }} {{ currentQuestionIndex + 1 }}</div>
+      <div class="step-indicator">{{ "QUESTIONS.STEP" | translate }} {{ currentStep }} {{ "QUESTIONS.OF" | translate }} {{ totalSteps }}</div>
+    </div>
+  
+    <div class="module-content" *ngIf="!isModuleCompleted">
+      <div class="question-wrapper">
+        <div class="question-icon">
+          <span class="icon">?</span>
+        </div>
+        <div class="question-content">
+          <h2>{{ "QUESTIONS.QUESTION" | translate }} {{ currentQuestionIndex + 1 }} {{ "QUESTIONS.OF" | translate }} {{ questions.length }}</h2>
+          <div class="question-text">
+            {{ getLocalizedContent(currentQuestion?.text) }}
+          </div>
+        </div>
+        <div class="review-link">
+          <button class="review-button" (click)="goBackToVideo()">
+            {{ "QUESTIONS.REVIEW_VIDEO" | translate }}
+          </button>
+        </div>
+      </div>
+  
+      <div class="options-container">
+        <div 
+          *ngFor="let option of currentQuestion?.questionOptions"
+          class="option"
+          [class.selected]="selectedOptionId === option.id"
+          [class.correct]="isAnswerSubmitted && option.isCorrect"
+          [class.incorrect]="isAnswerSubmitted && selectedOptionId === option.id && !option.isCorrect"
+          (click)="selectOption(option.id)"
+        >
+          <div class="option-radio">
+            <input 
+              type="radio" 
+              [checked]="selectedOptionId === option.id" 
+              [disabled]="isAnswerSubmitted"
+              (click)="$event.stopPropagation()"
+            >
+          </div>
+          <div class="option-text">{{ getLocalizedContent(option.text) }}</div>
+        </div>
+      </div>
+  
+      <div class="feedback-message" *ngIf="isAnswerSubmitted">
+        <div *ngIf="isAnswerCorrect" class="correct-message">
+          {{ "QUESTIONS.CORRECT_ANSWER" | translate }}
+        </div>
+        <div *ngIf="!isAnswerCorrect" class="incorrect-message">
+          {{ "QUESTIONS.INCORRECT_ANSWER" | translate }}
+        </div>
+      </div>
+  
+      <div class="action-buttons">
+        <button 
+          *ngIf="!isAnswerSubmitted" 
+          class="submit-button" 
+          [disabled]="selectedOptionId === null" 
+          (click)="submitAnswer()"
+        >
+          {{ "QUESTIONS.SUBMIT_ANSWER" | translate }}
+        </button>
+        <button 
+          *ngIf="isAnswerSubmitted && isAnswerCorrect" 
+          class="next-button"
+          (click)="nextQuestion()"
+        >
+          {{ "QUESTIONS.NEXT_QUESTION" | translate }} <span class="arrow-icon">→</span>
+        </button>
+        <button 
+          *ngIf="isAnswerSubmitted && !isAnswerCorrect" 
+          class="try-again-button"
+          (click)="isAnswerSubmitted = false"
+        >
+          {{ "QUESTIONS.TRY_AGAIN" | translate }}
+        </button>
+      </div>
+    </div>
+  
+    <!-- Module Completion Screen -->
+    <div class="module-content completion-screen" *ngIf="isModuleCompleted">
+      <div class="completion-message">
+        <h1>{{ "QUESTIONS.MODULE_COMPLETED" | translate }}</h1>
+        <p>{{ "QUESTIONS.CONGRATULATIONS" | translate }}</p>
+      </div>
+      <div class="action-buttons">
+        <button class="overview-button" (click)="goBackToOverview()">
+          {{ "QUESTIONS.BACK_TO_OVERVIEW" | translate }}
+        </button>
+        <button class="next-module-button" (click)="goToNextModule()">
+          {{ "QUESTIONS.NEXT_MODULE" | translate }} <span class="arrow-icon">→</span>
+        </button>
+      </div>
+    </div>
+  </div>

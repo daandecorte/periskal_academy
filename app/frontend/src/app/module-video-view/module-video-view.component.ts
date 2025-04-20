@@ -128,7 +128,6 @@ setModuleData(module: any): void {
   }
 
   continueToQuestions(): void {
-    // TODO: questions
-    // this.router.navigate(['/trainings', this.trainingId, 'module', this.moduleId, 'questions']);
+    this.router.navigate(['/trainings', this.trainingId, 'module', this.moduleId, 'questions', 0]);
   }
 }
