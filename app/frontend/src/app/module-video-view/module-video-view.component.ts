@@ -90,17 +90,15 @@ export class ModuleVideoViewComponent implements OnInit {
     );
   }
 
-  setModuleData(module: any): void {
-    // Set title based on current language
+setModuleData(module: any): void {
     this.moduleTitle = this.getLocalizedContent(module.title);
     this.moduleDescription = this.getLocalizedContent(module.description);
     
-    // Set video URL
+    // Set video URL based on current language
     if (module.videoReference) {
       this.videoUrl = this.getLocalizedContent(module.videoReference);
-    }
-    
-    // Set question count for total steps if available?? idk
+    }    
+    // Set question count for total steps?? idk
     if (module.questions && module.questions.length > 0) {
       this.totalSteps = module.questions.length + 1; // +1 for video step
     }
@@ -108,6 +106,7 @@ export class ModuleVideoViewComponent implements OnInit {
 
   getLocalizedContent(contentMap: any): string {
     if (!contentMap) return '';
+    if (typeof contentMap === 'string') return contentMap;
     
     // Try current language first
     if (contentMap[this.currentLanguage]) {

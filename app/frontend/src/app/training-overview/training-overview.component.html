@@ -1,12 +1,12 @@
 <div class="module-overview-container">
   <div class="training-header">
-    <h1 class="training-title">{{ training?.title }}</h1>
+    <h1 class="training-title">{{ getLocalizedTitle() }}</h1>
   </div>
 
   <div class="training-content">
     <div class="about-section">
       <h2>{{ "TRAINING_OVERVIEW.ABOUT_TRAINING" | translate }}</h2>
-      <p>{{ training?.description }}</p>
+      <p>{{ getLocalizedDescription() }}</p>
     </div>
 
     <div class="module-sections">

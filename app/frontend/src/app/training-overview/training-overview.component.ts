@@ -61,6 +61,10 @@ export class TrainingOverviewComponent implements OnInit {
     // Subscribe to language changes
     this.languageService.currentLanguage$.subscribe((language) => {
       this.currentLanguage = this.mapLanguageCode(language);
+      // Refresh content when language changes
+      if (this.training) {
+        this.loadModuleSections();
+      }
     });
 
     this.route.params.subscribe(params => {
@@ -128,6 +132,7 @@ export class TrainingOverviewComponent implements OnInit {
 
   getLocalizedContent(contentMap: any): string {
     if (!contentMap) return '';
+    if (typeof contentMap === 'string') return contentMap;
     
     // Try current language first
     if (contentMap[this.currentLanguage]) {
@@ -145,12 +150,12 @@ export class TrainingOverviewComponent implements OnInit {
   }
 
   estimateVideoDuration(module: any): string {
-    // If we have actual duration data, use it
     if (module.duration) {
       return `${module.duration} min video`;
     }
     
-    // Otherwise make an estimate based on questions count or just return a default
+    // Make an estimate based on questions count or just return a default idk
+    // TODO: probably look at this again later cause idk lol
     const questionsCount = module.questions ? module.questions.length : 0;
     const estimatedMinutes = Math.max(10, questionsCount * 3); // At least 10 min, or 3 min per question
     
