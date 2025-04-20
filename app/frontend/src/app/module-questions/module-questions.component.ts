@@ -235,6 +235,14 @@ export class ModuleQuestionsComponent implements OnInit {
     
     if (this.currentQuestionIndex < this.questions.length) {
       this.currentQuestion = this.questions[this.currentQuestionIndex];
+      
+      // Create a copy of the question options and shuffle them
+      if (this.currentQuestion && this.currentQuestion.questionOptions) {
+        this.currentQuestion = {
+          ...this.currentQuestion,
+          questionOptions: this.shuffleOptions([...this.currentQuestion.questionOptions])
+        };
+      }
     } else {
       this.isModuleCompleted = true;
     }
