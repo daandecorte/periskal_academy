@@ -187,9 +187,9 @@ export class ModuleQuestionsComponent implements OnInit {
         id: 2,
         text: {
           'EN': 'Another question?',
-          'FR': 'Quel est l\'objectif des services Angular?',
-          'NL': 'Wat is het doel van Angular-services?',
-          'DE': 'Was ist der Zweck von Angular-Diensten?'
+          'FR': 'Another question?',
+          'NL': 'Another question?',
+          'DE': 'Another question?'
         },
         questionOptions: [
           {
