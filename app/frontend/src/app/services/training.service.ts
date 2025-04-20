@@ -170,7 +170,6 @@ private mapBackendTrainings(backendTrainings: any[]): Training[] {
       });
     }
     
-    // Don't use a hardcoded default language - we'll retrieve this dynamically in components
     const titleKeys = Object.keys(titleLocalized);
     const defaultTitle = titleKeys.length > 0 ? titleLocalized[titleKeys[0]] : 'Untitled Training';
     
@@ -213,11 +212,31 @@ private processModules(modules: any[]): any[] {
   if (!modules || modules.length === 0) return [];
   
   return modules.map(module => {
-    // Process module data but don't pre-select a language
-    // This ensures we keep all language options available
-    return {
-      ...module,
-    };
+    if (module.title) {
+      const titleLocalized: LocalizedStrings = {};
+      Object.entries(module.title).forEach(([lang, value]) => {
+        titleLocalized[this.convertLanguageToString(lang)] = value as string;
+      });
+      module.title = titleLocalized;
+    }
+    
+    if (module.description) {
+      const descriptionLocalized: LocalizedStrings = {};
+      Object.entries(module.description).forEach(([lang, value]) => {
+        descriptionLocalized[this.convertLanguageToString(lang)] = value as string;
+      });
+      module.description = descriptionLocalized;
+    }
+    
+    if (module.videoReference) {
+      const videoLocalized: LocalizedStrings = {};
+      Object.entries(module.videoReference).forEach(([lang, value]) => {
+        videoLocalized[this.convertLanguageToString(lang)] = value as string;
+      });
+      module.videoReference = videoLocalized;
+    }
+    
+    return module;
   });
 }
 
