@@ -165,5 +165,12 @@
     "THIS_TICKET_HAS_BEEN_RESOLVED": "Dit ticket is opgelost.",
     "CLAIM_THIS_TICKET_TO_HELP": "Claim dit ticket om te helpen.",
     "ALL": "Alle"
+  },
+  "MODULE_VIDEO": {
+  "BACK_TO_OVERVIEW": "Terug naar moduloverzicht",
+  "VIDEO": "Video",
+  "STEP": "Stap",
+  "OF": "van",
+  "CONTINUE_TO_QUESTIONS": "Doorgaan naar vragen"
   }
 }

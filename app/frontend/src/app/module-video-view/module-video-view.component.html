@@ -1,31 +1,31 @@
 <div class="module-video-container">
-    <div class="back-nav">
-      <button class="back-button" (click)="goBackToOverview()">
-        <fa-icon [icon]="faArrowLeft"></fa-icon>
-        Back to Module Overview
+  <div class="back-nav">
+    <button class="back-button" (click)="goBackToOverview()">
+      <fa-icon [icon]="faArrowLeft"></fa-icon>
+      {{ "MODULE_VIDEO.BACK_TO_OVERVIEW" | translate }}
+    </button>
+  </div>
+
+  <div class="progress-indicator">
+    <div class="module-name">{{ moduleTitle }} - {{ "MODULE_VIDEO.VIDEO" | translate }}</div>
+    <div class="step-indicator">{{ "MODULE_VIDEO.STEP" | translate }} {{ currentStep }} {{ "MODULE_VIDEO.OF" | translate }} {{ totalSteps }}</div>
+  </div>
+
+  <div class="module-content">
+    <div class="content-header">
+      <h1>{{ moduleTitle }}</h1>
+      <p>{{ moduleDescription }}</p>
+    </div>
+
+    <!-- Video -->
+    <div class="video">
+      TODO: video player
+    </div>
+
+    <div class="action-buttons">
+      <button class="continue-button" (click)="continueToQuestions()">
+        {{ "MODULE_VIDEO.CONTINUE_TO_QUESTIONS" | translate }} <span class="arrow-icon">→</span>
       </button>
     </div>
-  
-    <div class="progress-indicator">
-      <div class="module-name">{{ moduleTitle }} - Video</div>
-      <div class="step-indicator">Step {{ currentStep }} of {{ totalSteps }}</div>
-    </div>
-  
-    <div class="module-content">
-      <div class="content-header">
-        <h1>{{ moduleTitle }}</h1>
-        <p>{{ moduleDescription }}</p>
-      </div>
-  
-      <!-- Video -->
-      <div class="video">
-        TODO: video player
-      </div>
-  
-      <div class="action-buttons">
-        <button class="continue-button" (click)="continueToQuestions()">
-          Continue to Questions <span class="arrow-icon">→</span>
-        </button>
-      </div>
-    </div>
   </div>
+</div>

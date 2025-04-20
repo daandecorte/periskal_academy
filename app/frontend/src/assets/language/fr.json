@@ -163,5 +163,12 @@
     "THIS_TICKET_HAS_BEEN_RESOLVED": "Ce ticket a été résolu.",
     "CLAIM_THIS_TICKET_TO_HELP": "Réclamez ce ticket pour aider.",
     "ALL": "Tous"
+  },
+  "MODULE_VIDEO": {
+  "BACK_TO_OVERVIEW": "Retour à l'aperçu du module",
+  "VIDEO": "Vidéo",
+  "STEP": "Étape",
+  "OF": "sur",
+  "CONTINUE_TO_QUESTIONS": "Continuer vers les questions"
   }
 }
