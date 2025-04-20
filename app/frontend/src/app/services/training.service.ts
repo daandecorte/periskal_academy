@@ -37,7 +37,7 @@ export interface Training {
   providedIn: 'root'
 })
 export class TrainingService {
-  private useDemoData = true; // Toggle for switching between hardcoded demo data and backend data
+  private useDemoData = false; // Toggle for switching between hardcoded demo data and backend data
   private apiUrl = '/api/trainings';
 
   private demoTrainings: Training[] = [
@@ -148,42 +148,108 @@ export class TrainingService {
   }
 
   // Method to map backend data to Training interface
-  private mapBackendTrainings(backendTrainings: any[]): Training[] {
-    return backendTrainings.map(backendTraining => {
-      // Store the localized data
-      const titleLocalized = backendTraining.title || { 'EN': 'Untitled Training' };
-      const descriptionLocalized = backendTraining.description || { 'EN': 'No description available' };
-      
-      // Get default language or first available language
-      const defaultLanguage = 'EN';
-      const titleText = titleLocalized[defaultLanguage] || Object.values(titleLocalized)[0] || 'Untitled Training';
-      const descriptionText = descriptionLocalized[defaultLanguage] || Object.values(descriptionLocalized)[0] || 'No description available';
-      
-      // Create a Training object with required fields
-      const training: Training = {
-        id: backendTraining.id,
-        title: titleText, // String for backward compatibility
-        description: descriptionText, // String for backward compatibility
-        titleLocalized: titleLocalized, // Store the full localized data
-        descriptionLocalized: descriptionLocalized, // Store the full localized data
-        moduleCount: backendTraining.modules ? backendTraining.modules.length : 0,
-        hasCertificate: backendTraining.exams && backendTraining.exams.length > 0,
-        status: 'not_started',
-        isActive: backendTraining.isActive !== undefined ? backendTraining.isActive : false,
-        modules: backendTraining.modules,
-        exams: backendTraining.exams,
-        tips: backendTraining.tips
-      };
+private mapBackendTrainings(backendTrainings: any[]): Training[] {
+  return backendTrainings.map(backendTraining => {
+    // Convert Language enum to string keys for titleLocalized and descriptionLocalized
+    const titleLocalized: LocalizedStrings = {};
+    const descriptionLocalized: LocalizedStrings = {};
+    
+    // Handle title mapping
+    if (backendTraining.title) {
+      Object.entries(backendTraining.title).forEach(([lang, value]) => {
+        // Convert Language enum to string
+        titleLocalized[this.convertLanguageToString(lang)] = value as string;
+      });
+    }
+    
+    // Handle description mapping
+    if (backendTraining.description) {
+      Object.entries(backendTraining.description).forEach(([lang, value]) => {
+        // Convert Language enum to string
+        descriptionLocalized[this.convertLanguageToString(lang)] = value as string;
+      });
+    }
+    
+    const titleKeys = Object.keys(titleLocalized);
+    const defaultTitle = titleKeys.length > 0 ? titleLocalized[titleKeys[0]] : 'Untitled Training';
+    
+    const descriptionKeys = Object.keys(descriptionLocalized);
+    const defaultDescription = descriptionKeys.length > 0 ? descriptionLocalized[descriptionKeys[0]] : 'No description available';
+    
+    // Create a Training object with required fields
+    const training: Training = {
+      id: backendTraining.id,
+      title: defaultTitle, // This will be overridden by getLocalizedTitle in components
+      description: defaultDescription, // This will be overridden by getLocalizedDescription in components
+      titleLocalized: titleLocalized,
+      descriptionLocalized: descriptionLocalized,
+      moduleCount: backendTraining.modules ? backendTraining.modules.length : 0,
+      hasCertificate: backendTraining.exams && backendTraining.exams.length > 0,
+      status: 'not_started', // Default status
+      isActive: backendTraining.isActive !== undefined ? backendTraining.isActive : false,
+      modules: this.processModules(backendTraining.modules),
+      exams: backendTraining.exams,
+      tips: backendTraining.tips
+    };
 
-      // This still needs to be properly implemented using the new progress controller!!
-      if (backendTraining.progress !== undefined) training.progress = backendTraining.progress;
-      if (backendTraining.assigned !== undefined) training.assigned = backendTraining.assigned;
-      if (backendTraining.assignedDate) training.assignedDate = backendTraining.assignedDate;
-      if (backendTraining.languages) training.languages = backendTraining.languages;
-      if (backendTraining.trainingType) training.trainingType = backendTraining.trainingType;
+    // Calculate available languages
+    if (backendTraining.title) {
+      training.languages = Object.keys(backendTraining.title).map(lang => 
+        this.convertLanguageToString(lang)
+      );
+    }
 
-      return training;
-    });
+    if (backendTraining.progress !== undefined) training.progress = backendTraining.progress;
+    if (backendTraining.assigned !== undefined) training.assigned = backendTraining.assigned;
+    if (backendTraining.assignedDate) training.assignedDate = backendTraining.assignedDate;
+    if (backendTraining.trainingType) training.trainingType = backendTraining.trainingType;
+
+    return training;
+  });
+}
+
+private processModules(modules: any[]): any[] {
+  if (!modules || modules.length === 0) return [];
+  
+  return modules.map(module => {
+    if (module.title) {
+      const titleLocalized: LocalizedStrings = {};
+      Object.entries(module.title).forEach(([lang, value]) => {
+        titleLocalized[this.convertLanguageToString(lang)] = value as string;
+      });
+      module.title = titleLocalized;
+    }
+    
+    if (module.description) {
+      const descriptionLocalized: LocalizedStrings = {};
+      Object.entries(module.description).forEach(([lang, value]) => {
+        descriptionLocalized[this.convertLanguageToString(lang)] = value as string;
+      });
+      module.description = descriptionLocalized;
+    }
+    
+    if (module.videoReference) {
+      const videoLocalized: LocalizedStrings = {};
+      Object.entries(module.videoReference).forEach(([lang, value]) => {
+        videoLocalized[this.convertLanguageToString(lang)] = value as string;
+      });
+      module.videoReference = videoLocalized;
+    }
+    
+    return module;
+  });
+}
+
+  // Helper method to convert Language enum to string
+  private convertLanguageToString(lang: string): string {
+    const languageMap: { [key: string]: string } = {
+      'ENGLISH': 'EN',
+      'FRENCH': 'FR',
+      'DUTCH': 'NL',
+      'GERMAN': 'DE'
+    };
+    
+    return languageMap[lang] || lang;
   }
 
  // Method to get a single training by ID

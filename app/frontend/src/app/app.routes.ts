@@ -23,6 +23,7 @@ import { BasicInfoComponent } from './admin-edit-training/basic-info/basic-info.
 import { EditModulesComponent } from './admin-edit-training/edit-modules/edit-modules.component';
 import { UserdetailComponent } from './userdetail/userdetail.component';
 import { TrainingOverviewComponent } from './training-overview/training-overview.component';
+import { ModuleVideoViewComponent } from './module-video-view/module-video-view.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -111,8 +112,9 @@ export const routes: Routes = [
     ]
   },
   { path: 'trainings/:id', component: TrainingOverviewComponent },
-  { path: 'trainings/:id/module/:sectionId', redirectTo: 'trainings/:id' }, // Placeholder for future implementation
-  { path: 'TEMP_training_PLACEHOLDERs/:id/certificate', redirectTo: 'trainings/:id' }, // Placeholder for future implementation
+  { path: 'trainings/:id/module/:sectionId', component: ModuleVideoViewComponent },
+  { path: 'trainings/:id/module/:sectionId/questions', redirectTo: 'trainings/:id' }, // Placeholder for questions component
+  { path: 'training/:id/certificate', redirectTo: 'trainings/:id' }, // Placeholder for future implementation
   { path: '', redirectTo: 'trainings', pathMatch: 'full' },
   { path: '**', redirectTo: 'trainings', pathMatch: 'full' },
 ];
