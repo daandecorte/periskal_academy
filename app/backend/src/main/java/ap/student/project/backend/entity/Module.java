@@ -19,7 +19,7 @@ public class Module {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ElementCollection
-    @CollectionTable(name = "module_titles", joinColumns = @JoinColumn(name = "training_id"))
+    @CollectionTable(name = "module_titles", joinColumns = @JoinColumn(name = "training_id", referencedColumnName = "id"))
     @MapKeyColumn(name = "language")
     @Column(name = "title")
     private Map<Language, String> title;
