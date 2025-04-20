@@ -240,6 +240,15 @@ export class ModuleQuestionsComponent implements OnInit {
     }
   }
 
+   // Shuffle the answer options
+   shuffleOptions(options: any[]): any[] {
+    for (let i = options.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [options[i], options[j]] = [options[j], options[i]];
+    }
+    return options;
+  }
+
   getLocalizedContent(contentMap: any): string {
     if (!contentMap) return '';
     if (typeof contentMap === 'string') return contentMap;
@@ -293,6 +302,14 @@ export class ModuleQuestionsComponent implements OnInit {
       );
     }
   }
+
+  getStepIndicatorText(): string {
+    if (this.isModuleCompleted) {
+      return "completed";
+    }
+    return `${this.currentStep} ${this.getLocalizedContent({ 'EN': 'of', 'FR': 'de', 'NL': 'van', 'DE': 'von' })} ${this.totalSteps}`;
+  }
+
 
   goBackToVideo(): void {
     this.router.navigate(['/trainings', this.trainingId, 'module', this.moduleId]);
