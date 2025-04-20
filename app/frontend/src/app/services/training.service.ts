@@ -8,16 +8,34 @@ export interface LocalizedStrings {
   [language: string]: string;
 }
 
+export interface QuestionOption {
+  id: number;
+  text: string;
+  isCorrect: boolean;
+}
+
+export interface Question {
+  id: number;
+  text: any;
+  questionType: 'MULTIPLE_CHOICE' | 'TRUE_FALSE';
+  questionOptions?: QuestionOption[];
+}
+
+export interface Module {
+  id: number;
+  title: any;
+  description: any;
+  videoReference?: any;
+  questions?: Question[];
+}
+
 export interface Training {
   id: number;
-  // Keep the original title as string for backward compatibility for now, fix this later
   title: string;
-  // Keep the original description as string for backward compatibility for now, fix this later
   description: string;
-  // Add the multilingual versions as separate properties
   titleLocalized?: LocalizedStrings;
   descriptionLocalized?: LocalizedStrings;
-  modules?: any[];
+  modules?: Module[];
   exams?: any[];
   tips?: any[];
   isActive: boolean;
@@ -208,10 +226,11 @@ private mapBackendTrainings(backendTrainings: any[]): Training[] {
   });
 }
 
-private processModules(modules: any[]): any[] {
+private processModules(modules: any[]): Module[] {
   if (!modules || modules.length === 0) return [];
   
   return modules.map(module => {
+    // Process module titles
     if (module.title) {
       const titleLocalized: LocalizedStrings = {};
       Object.entries(module.title).forEach(([lang, value]) => {
@@ -220,6 +239,7 @@ private processModules(modules: any[]): any[] {
       module.title = titleLocalized;
     }
     
+    // Process module descriptions
     if (module.description) {
       const descriptionLocalized: LocalizedStrings = {};
       Object.entries(module.description).forEach(([lang, value]) => {
@@ -228,6 +248,7 @@ private processModules(modules: any[]): any[] {
       module.description = descriptionLocalized;
     }
     
+    // Process module video references
     if (module.videoReference) {
       const videoLocalized: LocalizedStrings = {};
       Object.entries(module.videoReference).forEach(([lang, value]) => {
@@ -236,7 +257,39 @@ private processModules(modules: any[]): any[] {
       module.videoReference = videoLocalized;
     }
     
-    return module;
+    // Process module questions
+    if (module.questions && module.questions.length > 0) {
+      module.questions = module.questions.map((question: any): Question => {
+        if (question.text) {
+          const textLocalized: LocalizedStrings = {};
+          Object.entries(question.text).forEach(([lang, value]) => {
+            textLocalized[this.convertLanguageToString(lang)] = value as string;
+          });
+          question.text = textLocalized;
+        }
+        
+        if (question.questionOptions) {
+          question.questionOptions = question.questionOptions.map((option: any): QuestionOption => {
+            return {
+              id: option.id,
+              text: option.text,
+              isCorrect: option.isCorrect
+            };
+          });
+        }
+        
+        return {
+          id: question.id,
+          text: question.text,
+          questionType: question.questionType,
+          questionOptions: question.questionOptions || []
+        };
+      });
+    } else {
+      module.questions = [];
+    }
+    
+    return module as Module;
   });
 }
 
