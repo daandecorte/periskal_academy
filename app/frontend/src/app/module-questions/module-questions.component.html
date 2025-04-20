@@ -36,7 +36,6 @@
         *ngFor="let option of currentQuestion?.questionOptions"
         class="option"
         [class.selected]="selectedOptionId === option.id"
-        [class.correct]="isAnswerSubmitted && option.isCorrect"
         [class.incorrect]="isAnswerSubmitted && selectedOptionId === option.id && !option.isCorrect"
         (click)="selectOption(option.id)"
       >
