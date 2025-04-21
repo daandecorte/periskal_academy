@@ -21,11 +21,15 @@ public class Certificate {
     private int validityPeriod;
     @Column(name = "price")
     private double price;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Certificate(Training training, int validityPeriod, double price) {
+    public Certificate(Training training, int validityPeriod, double price, User user) {
         this.training = training;
         this.validityPeriod = validityPeriod;
         this.price = price;
+        this.user = user;
     }
 
     @Override
@@ -35,6 +39,7 @@ public class Certificate {
                 ", training=" + training +
                 ", validityPeriod=" + validityPeriod +
                 ", price=" + price +
+                ", user=" + user +
                 '}';
     }
 }
