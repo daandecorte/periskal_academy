@@ -87,20 +87,21 @@
   },
   "USER_DETAIL": {
     "ASSIGN_NEW_CERTIFICATE": "Assign New Certificate",
-    "MODULES_PROGRESS": "Modules Progress",
+    "TRAININGS_PROGRESS": "Trainings Progress",
     "ALL_STATUS": "All Status",
     "IN_PROGRESS": "In Progress",
     "COMPLETED": "Completed",
-    "SEARCH_MODULES": "Search Modules...",
+    "SEARCH_TRAININGS": "Search Trainings...",
     "OVERALL_PROGRESS": "Overall Progress",
     "USER_DETAIL": "User Detail",
-    "NO_EXAM_ATTEMPTS_YET": "No Exam Attempts Yet",
+    "NO_EXAM_ATTEMPTS_YET":"No Exam Attempts Yet",
     "ATTEMPT": "Attempt",
     "ASSIGNED_ON": "Assigned On",
     "LAST_ACTIVITY": "Last Activity",
-    "EXAM_STATUS": "Exam Status",
-    "NO_MODULES_ASSIGNED": "This person has no modules assigned."
+    "EXAM_STATUS":"Exam Status",
+    "NO_TRAININGS_ASSIGNED": "This person has no trainings assigned."
   },
+
   "TRAINING_OVERVIEW": {
     "ABOUT_TRAINING": "About this Training",
     "MODULES": "Modules",

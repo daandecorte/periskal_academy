@@ -32,11 +32,9 @@
   },
   "USER_DETAIL": {
     "ASSIGN_NEW_CERTIFICATE": "Nieuw certificaat toewijzen",
-    "MODULES_PROGRESS": "Voortgang van modules",
     "ALL_STATUS": "Alle statussen",
     "IN_PROGRESS": "Bezig",
     "COMPLETED": "Voltooid",
-    "SEARCH_MODULES": "Modules zoeken...",
     "OVERALL_PROGRESS": "Totale voortgang",
     "USER_DETAIL": "Gebruikersgegevens",
     "NO_EXAM_ATTEMPTS_YET": "Nog geen examenpogingen",
@@ -46,8 +44,10 @@
     "EXAM_STATUS": "Examenstatus",
     "TRAININGS_PROGRESS": "Voortgang van trainingen",
     "SEARCH_TRAININGS": "Zoek trainingen...",
-    "NO_MODULES_ASSIGNED": "Deze gebruiker heeft geen modules toegewezen."
+    "NO_TRAININGS_ASSIGNED": "Deze gebruiker heeft geen trainingen toegewezen."
   },
+
+
   "ADMIN_EDIT_TRAININGS": {
     "TITLE": "Training Bewerken",
     "BASIC_INFO_TAB": "Basisinformatie",

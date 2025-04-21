@@ -32,11 +32,9 @@
   },
   "USER_DETAIL": {
     "ASSIGN_NEW_CERTIFICATE": "Neues Zertifikat zuweisen",
-    "MODULES_PROGRESS": "Modulforschritt",
     "ALL_STATUS": "Alle Status",
     "IN_PROGRESS": "In Bearbeitung",
     "COMPLETED": "Abgeschlossen",
-    "SEARCH_MODULES": "Module suchen...",
     "OVERALL_PROGRESS": "Gesamtfortschritt",
     "USER_DETAIL": "Benutzerdetails",
     "NO_EXAM_ATTEMPTS_YET": "Noch keine Prüfungsversuche",
@@ -46,8 +44,9 @@
     "EXAM_STATUS": "Prüfungsstatus",
     "TRAININGS_PROGRESS": "Fortschritt der Schulungen",
     "SEARCH_TRAININGS": "Schulungen suchen...",
-    "NO_MODULES_ASSIGNED": "Diesem Benutzer sind keine Module zugewiesen."
+    "NO_TRAININGS_ASSIGNED": "Diesem Benutzer sind keine Schulungen zugewiesen."
   },
+
   "ADMIN_EDIT_TRAININGS": {
     "TITLE": "Schulung Bearbeiten",
     "BASIC_INFO_TAB": "Grundlegende Informationen",
