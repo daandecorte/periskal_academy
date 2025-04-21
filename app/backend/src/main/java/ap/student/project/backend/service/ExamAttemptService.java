@@ -20,7 +20,7 @@ public class ExamAttemptService {
         this.userTrainingService = userTrainingService;
     }
 
-    public void save(ExamAttemptDTO examAttemptDTO) {
+    public ExamAttempt save(ExamAttemptDTO examAttemptDTO) {
         ExamAttempt examAttempt = new ExamAttempt();
         if(examAttemptDTO.userTrainingId()==0) {
             throw new MissingArgumentException("user_training_id is missing");
@@ -28,7 +28,7 @@ public class ExamAttemptService {
         UserTraining userTraining = userTrainingService.findById(examAttemptDTO.userTrainingId());
         examAttempt.setUserTraining(userTraining);
         BeanUtils.copyProperties(examAttemptDTO, examAttempt);
-        examAttemptRepository.save(examAttempt);
+        return examAttemptRepository.save(examAttempt);
     }
 
     public List<ExamAttempt> findAll() {
