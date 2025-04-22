@@ -2,6 +2,7 @@ package ap.student.project.backend.controller;
 
 import ap.student.project.backend.dto.CertificateDTO;
 import ap.student.project.backend.entity.Certificate;
+import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import ap.student.project.backend.service.CertificateService;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,9 @@ public class CertificateController {
         catch(NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
+        catch (MissingArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
     @GetMapping(value = "/certificates/{id}")
     public ResponseEntity getCertificate(@PathVariable("id") int id) {
@@ -43,15 +47,7 @@ public class CertificateController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-    @GetMapping(value = "/certificates/user/{id}")
-    public ResponseEntity getCertificateByUserId(@PathVariable("id") int id) {
-        try {
-            return ResponseEntity.ok(this.certificateService.findByUserId(id));
-        }
-        catch(NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-    }
+
     @GetMapping(value = "/certificates/training/{id}")
     public ResponseEntity getCertificateByTrainingId(@PathVariable("id") int id) {
         try {

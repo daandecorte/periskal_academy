@@ -5,6 +5,8 @@ import ap.student.project.backend.dto.CertificateDTO;
 import ap.student.project.backend.entity.Certificate;
 import ap.student.project.backend.entity.Training;
 import ap.student.project.backend.entity.User;
+import ap.student.project.backend.entity.UserCertificate;
+import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -14,11 +16,9 @@ import java.util.List;
 @Service
 public class CertificateService {
     private final CertificateRepository certificateRepository;
-    private final UserService userService;
     private final TrainingService trainingService;
-    public CertificateService(CertificateRepository certificateRepository, UserService userService, TrainingService trainingService) {
+    public CertificateService(CertificateRepository certificateRepository, TrainingService trainingService) {
         this.certificateRepository = certificateRepository;
-        this.userService = userService;
         this.trainingService = trainingService;
     }
     public List<Certificate> getAllCertificates() {
@@ -26,10 +26,11 @@ public class CertificateService {
     }
     public Certificate save(CertificateDTO certificateDTO) {
         Certificate certificate = new Certificate();
-        User user = this.userService.findById(certificateDTO.user_id());
+        if(certificateDTO.training_id()==0) {
+            throw new MissingArgumentException("training_id is missing");
+        }
         Training training = this.trainingService.findById(certificateDTO.training_id());
 
-        certificate.setUser(user);
         certificate.setTraining(training);
 
         BeanUtils.copyProperties(certificateDTO, certificate);
@@ -43,13 +44,7 @@ public class CertificateService {
         }
         return certificate;
     }
-    public List<Certificate> findByUserId(int id) {
-        User user = this.userService.findById(id);
-        if(user.getCertificates().isEmpty()) {
-            throw new NotFoundException("User with id " + id + " has no certificates");
-        }
-        return user.getCertificates();
-    }
+
     public List<Certificate> findByTrainingId(int id) {
         Training training = this.trainingService.findById(id);
         if(training.getCertificates().isEmpty()) {

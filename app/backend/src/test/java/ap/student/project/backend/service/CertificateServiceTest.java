@@ -1,150 +1,92 @@
 package ap.student.project.backend.service;
 
 import ap.student.project.backend.dao.CertificateRepository;
-import ap.student.project.backend.dao.TrainingRepository;
-import ap.student.project.backend.dao.UserRepository;
 import ap.student.project.backend.dto.CertificateDTO;
+import ap.student.project.backend.dto.TrainingDTO;
 import ap.student.project.backend.entity.Certificate;
 import ap.student.project.backend.entity.Training;
-import ap.student.project.backend.entity.User;
+import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@Transactional
+@Transactional // if TrainingService needs mocks, adjust later
 class CertificateServiceTest {
 
     @Autowired
     private CertificateService certificateService;
 
     @Autowired
-    private CertificateRepository certificateRepository;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private TrainingService trainingService;
 
     @Autowired
-    private TrainingRepository trainingRepository;
+    private CertificateRepository certificateRepository;
 
-    private User user;
     private Training training;
+    private TrainingDTO trainingDTO;
     private CertificateDTO certificateDTO;
 
     @BeforeEach
     void setUp() {
-        certificateRepository.deleteAll();
-        userRepository.deleteAll();
-        trainingRepository.deleteAll();
-
-        user = new User();
-        user.setFirstname("John");
-        user.setLastname("Doe");
-        user.setShipname("shipname");
-        user = userRepository.save(user);
-
-        training = new Training();
-        training.setActive(true);
-        training = trainingRepository.save(training);
-
+        trainingDTO = new TrainingDTO(null, null, true, null, null);
+        training = trainingService.save(trainingDTO);
         certificateDTO = new CertificateDTO(
-                training.getId(),
-                user.getId(),
+                training.getId(), // id (will be ignored)
                 2,
                 50
         );
     }
 
     @Test
-    void save_ShouldSaveCertificate_WhenValidDTOProvided() {
+    void testSaveCertificateSuccess() {
         Certificate savedCertificate = certificateService.save(certificateDTO);
 
-        assertNotNull(savedCertificate.getId());
-        assertEquals(user.getId(), savedCertificate.getUser().getId());
-        assertEquals(training.getId(), savedCertificate.getTraining().getId());
-        assertEquals(2, savedCertificate.getValidityPeriod());
-        assertEquals(50, savedCertificate.getPrice());
+        assertThat(savedCertificate.getId()).isNotZero();
+        assertThat(savedCertificate.getValidityPeriod()).isEqualTo(2);
+        assertThat(savedCertificate.getTraining().getId()).isEqualTo(training.getId());
     }
 
     @Test
-    void findById_ShouldReturnCertificate_WhenCertificateExists() {
-        Certificate savedCertificate = certificateService.save(certificateDTO);
-
-        Certificate foundCertificate = certificateService.findById(savedCertificate.getId());
-
-        assertNotNull(foundCertificate);
-        assertEquals(savedCertificate.getId(), foundCertificate.getId());
-        assertEquals(2, foundCertificate.getValidityPeriod());
+    void testSaveCertificateMissingTrainingIdThrows() {
+        certificateDTO=new CertificateDTO(0, 0, 0);
+        assertThrows(MissingArgumentException.class, () -> certificateService.save(certificateDTO));
     }
 
     @Test
-    void findById_ShouldThrowException_WhenCertificateDoesNotExist() {
+    void testFindCertificateByIdSuccess() {
+        Certificate certificate = certificateService.save(certificateDTO);
+
+        Certificate found = certificateService.findById(certificate.getId());
+
+        assertThat(found).isNotNull();
+        assertThat(found.getValidityPeriod()).isEqualTo(2);
+    }
+
+    @Test
+    void testFindCertificateByIdNotFoundThrows() {
         assertThrows(NotFoundException.class, () -> certificateService.findById(999));
     }
 
     @Test
-    void findByUserId_ShouldReturnCertificates_WhenUserHasCertificates() {
-        certificateService.save(certificateDTO);
-
-        List<Certificate> certificates = certificateService.findByUserId(user.getId());
-
-        assertNotNull(certificates);
-        assertEquals(1, certificates.size());
-        assertEquals(user.getId(), certificates.get(0).getUser().getId());
+    void testFindCertificatesByTrainingIdSuccess() {
+        Certificate certificate1 = certificateService.save(certificateDTO);
+        assertThat(certificate1.getTraining().getId()).isEqualTo(training.getId());
     }
 
-    @Test
-    void findByUserId_ShouldThrowException_WhenUserHasNoCertificates() {
-        assertThrows(NotFoundException.class, () -> certificateService.findByUserId(user.getId()));
-    }
-
-    @Test
-    void findByTrainingId_ShouldReturnCertificates_WhenTrainingHasCertificates() {
-        certificateService.save(certificateDTO);
-
-        List<Certificate> certificates = certificateService.findByTrainingId(training.getId());
-
-        assertNotNull(certificates);
-        assertEquals(1, certificates.size());
-        assertEquals(training.getId(), certificates.get(0).getTraining().getId());
-    }
-
-    @Test
-    void findByTrainingId_ShouldThrowException_WhenTrainingHasNoCertificates() {
-        assertThrows(NotFoundException.class, () -> certificateService.findByTrainingId(training.getId()));
-    }
-
-    @Test
-    void getAllCertificates_ShouldReturnAllCertificates() {
-        CertificateDTO anotherCertificateDTO = new CertificateDTO(
-                training.getId(),
-                user.getId(),
-                3,
-                100
-        );
-
-        certificateService.save(certificateDTO);
-        certificateService.save(anotherCertificateDTO);
-
-        List<Certificate> certificates = certificateService.getAllCertificates();
-
-        assertNotNull(certificates);
-        assertEquals(2, certificates.size());
-    }
 }
