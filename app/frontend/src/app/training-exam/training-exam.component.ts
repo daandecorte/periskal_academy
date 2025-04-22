@@ -31,8 +31,8 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   isAnswerSubmitted: boolean = false;
   isExamCompleted: boolean = false;
   
-  // Progress tracking
-  totalQuestions: number = 10;
+  // Progress tracking - will be set based on actual questions loaded
+  totalQuestions: number = 0;
   
   // Timer
   timeRemainingInSeconds: number = 60 * 60; // 60 minutes
@@ -44,6 +44,10 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   
   // Current language
   currentLanguage: string = 'EN';
+
+  // Exam results
+  examScore?: number;
+  examPassed?: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -92,6 +96,10 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   loadExamData(): void {
     // Hardcoded data for now
     this.questions = this.getHardcodedQuestions();
+    
+    // Update total questions based on the actual number of questions loaded
+    this.totalQuestions = this.questions.length;
+    
     this.setCurrentQuestion();
   }
 
@@ -200,7 +208,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
           }
         ]
       },
-      // Add more questions to match your total of 10
+      // Add more questions to match your total
       {
         id: 3,
         text: {
@@ -252,7 +260,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
           }
         ]
       },
-      // Add more questions to reach 10 total
+      // Add more questions as needed
     ];
   }
 
@@ -280,6 +288,12 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     } else {
       this.isExamCompleted = true;
     }
+  }
+
+  // Calculate progress percentage based on current question index
+  getProgressPercentage(): number {
+    if (this.totalQuestions === 0) return 0;
+    return ((this.currentQuestionIndex + 1) / this.totalQuestions * 100);
   }
 
   // Shuffle the answer options
@@ -363,6 +377,29 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
 
   submitExam(): void {
     this.isExamCompleted = true;
-    // Additional logic for submitting exam results would go here
+
+    //Send to backend to validate  
+    
+    /* Example of what would happen
+    const examSubmission = {
+      examId: this.examId,
+      userId: getCurrentUserId(), // Get from your auth service
+      answers: Array.from(this.userAnswers.entries()).map(([questionId, answerId]) => ({
+        questionId,
+        answerId
+      })),
+      timeSpent: (60 * 60) - this.timeRemainingInSeconds // Time in seconds
+    };
+    
+    this.examService.submitExam(examSubmission).subscribe(
+      result => {
+        this.examScore = result.score;
+        this.examPassed = result.passed;
+      },
+      error => {
+        // Handle error
+      }
+    );
+    */
   }
 }

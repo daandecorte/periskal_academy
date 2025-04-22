@@ -13,7 +13,7 @@
   <div class="progress-indicator">
     <div class="exam-progress">Question {{ currentQuestionIndex + 1 }} of {{ totalQuestions }}</div>
     <div class="progress-bar">
-      <div class="progress-fill" [style.width]="((currentQuestionIndex + 1) / totalQuestions * 100) + '%'"></div>
+      <div class="progress-fill" [style.width]="getProgressPercentage() + '%'"></div>
     </div>
   </div>
 
@@ -73,11 +73,17 @@
   <div class="exam-content completion-screen" *ngIf="isExamCompleted">
     <div class="completion-message">
       <h1>Exam Completed</h1>
-      <p>Congratulations! You have successfully completed the Navigation Safety Certification Exam.</p>
+      <p *ngIf="examScore !== undefined">
+        Your score: {{ examScore }}% 
+        <span *ngIf="examPassed" class="pass-badge">PASS</span>
+        <span *ngIf="!examPassed" class="fail-badge">FAIL</span>
+      </p>
+      <p>Congratulations! You have successfully completed the exam.</p>
+      <p>SCORE.</p>
     </div>
     <div class="action-buttons">
       <button class="overview-button" (click)="goBackToOverview()">
-        Back to Exams
+        Back to Trainings
       </button>
     </div>
   </div>
