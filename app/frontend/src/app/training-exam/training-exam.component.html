@@ -1,0 +1,100 @@
+<div class="exam-container">
+    <div class="exam-header">
+      <div class="exam-title">
+        <h1>{{ examTitle }}</h1>
+        <p>{{ examDescription }}</p>
+      </div>
+      <div class="timer-container">
+        <div class="timer-label">Time Remaining</div>
+        <div class="timer-value">{{ formatTimeRemaining() }}</div>
+      </div>
+    </div>
+  
+    <div class="progress-indicator">
+      <div class="exam-progress">Question {{ currentQuestionIndex + 1 }} of {{ totalQuestions }}</div>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width]="((currentQuestionIndex + 1) / totalQuestions * 100) + '%'"></div>
+      </div>
+    </div>
+  
+    <div class="exam-content" *ngIf="!isExamCompleted">
+      <div class="question-wrapper">
+        <div class="question-icon">
+          <span class="icon">?</span>
+        </div>
+        <div class="question-content">
+          <h2>Question {{ currentQuestionIndex + 1 }}</h2>
+          <div class="question-text">
+            {{ getLocalizedContent(currentQuestion?.text) }}
+          </div>
+        </div>
+      </div>
+  
+      <div class="options-container">
+        <div 
+          *ngFor="let option of currentQuestion?.questionOptions"
+          class="option"
+          [class.selected]="selectedOptionId === option.id"
+          [class.incorrect]="isAnswerSubmitted && selectedOptionId === option.id && !option.isCorrect"
+          (click)="selectOption(option.id)"
+        >
+          <div class="option-radio">
+            <input 
+              type="radio" 
+              [checked]="selectedOptionId === option.id" 
+              [disabled]="isAnswerSubmitted"
+              (click)="$event.stopPropagation()"
+            >
+          </div>
+          <div class="option-text">{{ getLocalizedContent(option.text) }}</div>
+        </div>
+      </div>
+  
+      <div class="feedback-message" *ngIf="isAnswerSubmitted">
+        <div *ngIf="isAnswerCorrect" class="correct-message">
+          Correct! Good job.
+        </div>
+        <div *ngIf="!isAnswerCorrect" class="incorrect-message">
+          That's not correct. Please try again.
+        </div>
+      </div>
+  
+      <div class="action-buttons">
+        <button 
+          *ngIf="!isAnswerSubmitted" 
+          class="submit-button" 
+          [disabled]="selectedOptionId === null" 
+          (click)="submitAnswer()"
+        >
+          Submit Answer
+        </button>
+        <button 
+          *ngIf="isAnswerSubmitted && isAnswerCorrect" 
+          class="next-button"
+          (click)="nextQuestion()"
+        >
+          Next Question <span class="arrow-icon">→</span>
+        </button>
+        <button 
+          *ngIf="isAnswerSubmitted && !isAnswerCorrect" 
+          class="try-again-button"
+          (click)="isAnswerSubmitted = false"
+        >
+          Try Again
+        </button>
+      </div>
+    </div>
+  
+    <!-- Exam Completion Screen -->
+    <div class="exam-content completion-screen" *ngIf="isExamCompleted">
+      <div class="completion-message">
+        <h1>Exam Completed</h1>
+        <p>Congratulations! You have successfully completed the Navigation Safety Certification Exam.</p>
+      </div>
+      <div class="action-buttons">
+        <button class="overview-button" (click)="goBackToOverview()">
+          Back to Exams
+        </button>
+      </div>
+    </div>
+  </div>

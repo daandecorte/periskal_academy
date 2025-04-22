@@ -1,0 +1,270 @@
+.exam-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .exam-header {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border: 1px solid #e6e6e6;
+  }
+  
+  .exam-title h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .exam-title p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .timer-container {
+    text-align: right;
+  }
+  
+  .timer-label {
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 4px;
+  }
+  
+  .timer-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .progress-indicator {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #e6e6e6;
+  }
+  
+  .exam-progress {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+  }
+  
+  .progress-bar {
+    height: 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background-color: #ffc107;
+    transition: width 0.3s ease;
+  }
+  
+  .exam-content {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #e6e6e6;
+  }
+  
+  .question-wrapper {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .question-icon {
+    flex: 0 0 40px;
+    height: 40px;
+    background-color: #ffc107;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+  }
+  
+  .question-icon .icon {
+    font-size: 20px;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .question-content {
+    flex: 1;
+  }
+  
+  .question-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .question-text {
+    color: #666;
+    line-height: 1.5;
+  }
+  
+  .options-container {
+    margin-bottom: 24px;
+  }
+  
+  .option {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .option:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .option.selected {
+    border-color: #0056b3;
+    background-color: #e6f0ff;
+  }
+  
+  .option.correct {
+    border-color: #28a745;
+    background-color: #d4edda;
+  }
+  
+  .option.incorrect {
+    border-color: #dc3545;
+    background-color: #f8d7da;
+  }
+  
+  .option-radio {
+    margin-right: 12px;
+  }
+  
+  .option-text {
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .feedback-message {
+    margin-bottom: 24px;
+    padding: 12px 16px;
+    border-radius: 5px;
+  }
+  
+  .correct-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+  
+  .incorrect-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+  
+  .action-buttons {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .submit-button, .next-button, .try-again-button, .overview-button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submit-button {
+    background-color: #ffc107;
+    color: #333;
+    border: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+  }
+  
+  .submit-button:hover {
+    background-color: #e0a800;
+  }
+  
+  .submit-button:disabled {
+    background-color: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+  }
+  
+  .next-button {
+    background-color: #ffc107;
+    color: #333;
+    border: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .next-button:hover {
+    background-color: #e0a800;
+  }
+  
+  .try-again-button {
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #e6e6e6;
+  }
+  
+  .try-again-button:hover {
+    background-color: #e9ecef;
+  }
+  
+  .overview-button {
+    background-color: #f8f9fa;
+    color: #333;
+    border: 1px solid #e6e6e6;
+    margin-right: 12px;
+  }
+  
+  .overview-button:hover {
+    background-color: #e9ecef;
+  }
+  
+  .arrow-icon {
+    font-size: 18px;
+  }
+  
+  /* Completion Screen Styles */
+  .completion-screen {
+    text-align: center;
+    padding: 48px 24px;
+  }
+  
+  .completion-message h1 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 16px;
+  }
+  
+  .completion-message p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 32px;
+  }

@@ -25,6 +25,7 @@ import { UserdetailComponent } from './userdetail/userdetail.component';
 import { TrainingOverviewComponent } from './training-overview/training-overview.component';
 import { ModuleVideoViewComponent } from './module-video-view/module-video-view.component';
 import { ModuleQuestionsComponent } from './module-questions/module-questions.component';
+import { TrainingExamComponent } from './training-exam/training-exam.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -116,7 +117,8 @@ export const routes: Routes = [
   { path: 'trainings/:id/module/:sectionId', component: ModuleVideoViewComponent },
   { path: 'trainings/:id/module/:sectionId/questions/:questionIndex', component: ModuleQuestionsComponent },
   { path: 'trainings/:id/module/:sectionId/questions', redirectTo: 'trainings/:id/module/:sectionId/questions/0' },
-  { path: 'trainings/:id/module/:sectionId/questions', redirectTo: 'trainings/:id/module/:sectionId/questions/0' },
+  { path: 'exams/:id/:questionIndex', component: TrainingExamComponent },
+  { path: 'exams/:id', redirectTo: 'exams/:id/0' },
   { path: 'training/:id/certificate', redirectTo: 'trainings/:id' }, // Placeholder for future implementation
   { path: '', redirectTo: 'trainings', pathMatch: 'full' },
   { path: '**', redirectTo: 'trainings', pathMatch: 'full' },
