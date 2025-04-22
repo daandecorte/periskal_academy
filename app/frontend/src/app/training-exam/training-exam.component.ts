@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { interval, Subscription } from 'rxjs';
 
 @Component({
@@ -24,9 +24,11 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   currentQuestion: any = null;
   selectedOptionId: number | null = null;
   
+  // Store user answers for each question
+  userAnswers: Map<number, number> = new Map();
+  
   // Status flags
   isAnswerSubmitted: boolean = false;
-  isAnswerCorrect: boolean = false;
   isExamCompleted: boolean = false;
   
   // Progress tracking
@@ -38,6 +40,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   
   // Font Awesome icons
   faArrowLeft = faArrowLeft;
+  faArrowRight = faArrowRight;
   
   // Current language
   currentLanguage: string = 'EN';
@@ -254,10 +257,8 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   }
 
   setCurrentQuestion(): void {
-    // Reset answer state
-    this.selectedOptionId = null;
+    // Reset answer state for new display
     this.isAnswerSubmitted = false;
-    this.isAnswerCorrect = false;
     
     if (this.currentQuestionIndex < this.questions.length) {
       this.currentQuestion = this.questions[this.currentQuestionIndex];
@@ -268,6 +269,13 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
           ...this.currentQuestion,
           questionOptions: this.shuffleOptions([...this.currentQuestion.questionOptions])
         };
+      }
+      
+      // Restore previously selected answer if exists
+      if (this.userAnswers.has(this.currentQuestion.id)) {
+        this.selectedOptionId = this.userAnswers.get(this.currentQuestion.id) || null;
+      } else {
+        this.selectedOptionId = null;
       }
     } else {
       this.isExamCompleted = true;
@@ -305,27 +313,40 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   selectOption(optionId: number): void {
     if (!this.isAnswerSubmitted) {
       this.selectedOptionId = optionId;
+      
+      // Save the user's answer
+      if (this.currentQuestion) {
+        this.userAnswers.set(this.currentQuestion.id, optionId);
+      }
     }
   }
 
   submitAnswer(): void {
     if (this.selectedOptionId === null) return;
     
-    this.isAnswerSubmitted = true;
-    
-    // Find selected option
-    const selectedOption = this.currentQuestion.questionOptions.find(
-      (option: any) => option.id === this.selectedOptionId
-    );
-    
-    if (selectedOption) {
-      this.isAnswerCorrect = selectedOption.isCorrect;
-    }
+    // Immediately proceed to the next question without showing if answer is correct
+    this.nextQuestion();
   }
 
   nextQuestion(): void {
-    if (this.isAnswerCorrect) {
+    if (this.currentQuestionIndex < this.questions.length - 1) {
       this.currentQuestionIndex++;
+      this.setCurrentQuestion();
+      
+      // Update URL
+      this.router.navigate(
+        ['/exams', this.examId, this.currentQuestionIndex],
+        { replaceUrl: true }
+      );
+    } else {
+      // If this was the last question, complete the exam
+      this.submitExam();
+    }
+  }
+
+  previousQuestion(): void {
+    if (this.currentQuestionIndex > 0) {
+      this.currentQuestionIndex--;
       this.setCurrentQuestion();
       
       // Update URL
