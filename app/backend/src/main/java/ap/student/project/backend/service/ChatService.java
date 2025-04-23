@@ -64,7 +64,7 @@ public class ChatService {
         }
         return chatSummaries;
     }
-    public void addChatMember(int id, ChatMemberDTO chatMemberDTO) {
+    public ChatMember addChatMember(int id, ChatMemberDTO chatMemberDTO) {
         if(chatMemberDTO.user_id()==0) {
             throw new MissingArgumentException("user_id is missing");
         }
@@ -73,7 +73,7 @@ public class ChatService {
         ChatMember chatMember = new ChatMember();
         chatMember.setChat(chat);
         chatMember.setUser(user);
-        this.chatMemberRepository.save(chatMember);
+        return this.chatMemberRepository.save(chatMember);
     }
     public void addMessage(MessageDTO messageDTO) {
         if(messageDTO.chat_member_id()==0) {

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,13 +31,13 @@ public class User {
     private Language language;
     @OneToMany( mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JsonIgnore
-    private List<UserTraining> userTrainings;
+    private List<UserTraining> userTrainings = new ArrayList<>();
     @OneToMany( mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JsonIgnore
-    private List<ChatMember> chatMembers;
+    private List<ChatMember> chatMembers = new ArrayList<>();
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JsonIgnore
-    private List<UserCertificate> userCertificates;
+    private List<UserCertificate> userCertificates = new ArrayList<>();
 
     public User(String periskalId, String firstname, String lastname, String shipname, Language language) {
         this.periskalId = periskalId;
