@@ -1,0 +1,68 @@
+<div class="modal-overlay" id="certificateModal">
+  <div class="modal">
+    @if(passed){
+    <div class="success-icon">
+      <span class="check-mark"><fa-icon [icon]="faCheck"></fa-icon></span>
+    </div>
+    <div class="certificate-title">
+      {{ "EXAM_RESULT.CONGRATS" | translate }}
+    </div>
+    <div class="certificate-message">
+      {{ "EXAM_RESULT.CONGRATS_MESSAGE_1" | translate }}
+      Navigation Safety
+      {{ "EXAM_RESULT.CONGRATS_MESSAGE_2" | translate }}
+    </div>
+    <div class="certificate-details">
+      <div class="details-title">
+        {{ "EXAM_RESULT.SCORE" | translate }} {{ score }}%
+      </div>
+      <div class="detail-item">
+        <fa-icon
+          [icon]="faCalendar"
+          style="color: #15803d; margin-right: 5px"
+        ></fa-icon>
+        {{ "EXAM_RESULT.ISSUE_DATE" | translate }}19-12-2024
+      </div>
+      <div class="detail-item">
+        <fa-icon
+          [icon]="faClock"
+          style="color: #15803d; margin-right: 5px"
+        ></fa-icon>
+        {{ "EXAM_RESULT.VALID_FOR" | translate }}1 year
+      </div>
+    </div>
+    } @else {
+    <div class="success-icon" style="background-color: #fee2e2">
+      <span class="check-mark"
+        ><fa-icon [icon]="faClose" style="color: #db211d"></fa-icon
+      ></span>
+    </div>
+    <div class="certificate-title">{{ "EXAM_RESULT.FAIL" | translate }}</div>
+    <div class="certificate-message">
+      {{ "EXAM_RESULT.FAIL_MESSAGE" | translate }}
+    </div>
+    <div class="certificate-details" style="background-color: #fef2f2">
+      <div class="details-title" style="color: #a43037">
+        {{ "EXAM_RESULT.SCORE" | translate }}0/50
+      </div>
+      <div class="detail-item" style="color: #cd4f4d">
+        {{ "EXAM_RESULT.FAIL_MESSAGE_REVIEW" | translate }}
+      </div>
+    </div>
+    }
+
+    <div class="buttons-container">
+      <button class="btn btn-primary" (click)="primaryClicked()">
+        @if(passed){
+        <fa-icon [icon]="faDownload" style="margin-right: 8px"></fa-icon>
+        {{ "EXAM_RESULT.DOWNLOAD_CERTIFICATE" | translate }} } @else {
+        <fa-icon [icon]="faBookOpen" style="margin-right: 8px"></fa-icon>
+        {{ "EXAM_RESULT.RETURN_TO_MODULE" | translate }} }
+      </button>
+      <button class="btn btn-secondary" (click)="secondaryClicked()">
+        <fa-icon [icon]="faHome" style="margin-right: 8px"></fa-icon>
+        {{ "EXAM_RESULT.BACK_TO_TRAININGS" | translate }}
+      </button>
+    </div>
+  </div>
+</div>

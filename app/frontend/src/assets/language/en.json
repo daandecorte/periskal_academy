@@ -170,5 +170,19 @@
     "THIS_TICKET_HAS_BEEN_RESOLVED": "This ticket has been resolved.",
     "CLAIM_THIS_TICKET_TO_HELP": "Claim this ticket to help.",
     "ALL": "All"
+  },
+  "EXAM_RESULT": {
+    "CONGRATS": "Congratulations!",
+    "CONGRATS_MESSAGE_1": "You have successfully passed the ",
+    "CONGRATS_MESSAGE_2": " exam!",
+    "SCORE": "Your score was ",
+    "ISSUE_DATE": "Issue Date: ",
+    "VALID_FOR": "Valid for ",
+    "FAIL": "Exam Failed",
+    "FAIL_MESSAGE": "Unfortunately you did not achieve the required passing score.",
+    "FAIL_MESSAGE_REVIEW": "You should review the material before attempting the exam again.",
+    "DOWNLOAD_CERTIFICATE": "Download Certificate",
+    "RETURN_TO_MODULE": "Return to Module",
+    "BACK_TO_TRAININGS": "Back to Trainings"
   }
 }

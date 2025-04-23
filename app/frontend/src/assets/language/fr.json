@@ -147,5 +147,19 @@
     "SEARCH_SKIPPERS": "Rechercher des capitaines...",
     "SEARCH_USERS": "Rechercher des utilisateurs...",
     "TRAININGS_PROGRESS": "PROGRÈS DE FORMATION"
+  },
+  "EXAM_RESULT": {
+    "CONGRATS": "Félicitations !",
+    "CONGRATS_MESSAGE_1": "Vous avez réussi l'examen de ",
+    "CONGRATS_MESSAGE_2": " !",
+    "SCORE": "Votre score était de ",
+    "ISSUE_DATE": "Date d'émission : ",
+    "VALID_FOR": "Valide pendant ",
+    "FAIL": "Échec de l'examen",
+    "FAIL_MESSAGE": "Malheureusement, vous n'avez pas obtenu la note minimale requise.",
+    "FAIL_MESSAGE_REVIEW": "Vous devriez revoir le matériel avant de repasser l'examen.",
+    "DOWNLOAD_CERTIFICATE": "Télécharger le certificat",
+    "RETURN_TO_MODULE": "Retour au module",
+    "BACK_TO_TRAININGS": "Retour aux formations"
   }
 }

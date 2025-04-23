@@ -172,5 +172,19 @@
     "THIS_TICKET_HAS_BEEN_RESOLVED": "Dit ticket is opgelost.",
     "CLAIM_THIS_TICKET_TO_HELP": "Claim dit ticket om te helpen.",
     "ALL": "Alle"
+  },
+  "EXAM_RESULT": {
+    "CONGRATS": "Gefeliciteerd!",
+    "CONGRATS_MESSAGE_1": "Je bent geslaagd voor het examen ",
+    "CONGRATS_MESSAGE_2": "!",
+    "SCORE": "Je score was ",
+    "ISSUE_DATE": "Uitgiftedatum: ",
+    "VALID_FOR": "Geldig voor ",
+    "FAIL": "Examen niet gehaald",
+    "FAIL_MESSAGE": "Helaas heb je niet de vereiste score behaald.",
+    "FAIL_MESSAGE_REVIEW": "Je zou het lesmateriaal opnieuw moeten bekijken voordat je het examen opnieuw doet.",
+    "DOWNLOAD_CERTIFICATE": "Certificaat downloaden",
+    "RETURN_TO_MODULE": "Terug naar module",
+    "BACK_TO_TRAININGS": "Terug naar trainingen"
   }
 }
