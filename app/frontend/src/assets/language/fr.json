@@ -72,7 +72,11 @@
     "QUESTION_TEXT": "Texte de la question",
     "ANSWER_OPTION": "Options de réponse",
     "OPTION_PLACEHOLDER": "Option de réponse",
-    "ADD_OPTION": "+ Ajouter une option"
+    "ADD_OPTION": "+ Ajouter une option",
+    "FIELD_REQUIRED": "Ce champ est obligatoire",
+    "EDITING_LANGUAGE": "Langue d'édition",
+    "SAVING": "Enregistrement en cours",
+    "CANCEL": "Annuler"
   },
   "ADMIN_ADD_TRAININGS": {
     "EXAM_TITLE": "Paramètres de l'examen",

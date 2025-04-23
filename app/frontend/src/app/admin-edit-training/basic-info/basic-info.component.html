@@ -1,33 +1,74 @@
 <div class="form-group">
-  <div class="flex">
-    <h3>{{ "ADMIN_EDIT_TRAININGS.SUBTITLE" | translate }}</h3>
-    <div class="setting-box">
-      <span class="setting-label">
-        {{ "ADMIN_EDIT_TRAININGS.SWITCH" | translate }}</span
-      >
-      <div class="switch-container">
-        <label class="switch">
-          <input type="checkbox" checked />
-          <span class="slider round"></span>
-        </label>
+  <div *ngIf="loading" class="loading-container">
+    <p>{{ "ADMIN_EDIT_TRAININGS.LOADING" | translate }}</p>
+  </div>
+
+  <div *ngIf="error" class="error-container">
+    <p>{{ "ADMIN_EDIT_TRAININGS.ERROR_LOADING_TRAINING" | translate }}</p>
+  </div>
+
+  <form *ngIf="!loading && !error && training" [formGroup]="trainingForm" (ngSubmit)="onSubmit()">
+    <div class="flex">
+      <h3>{{ "ADMIN_EDIT_TRAININGS.SUBTITLE" | translate }}</h3>
+      <div class="setting-box">
+        <span class="setting-label">
+          {{ "ADMIN_EDIT_TRAININGS.SWITCH" | translate }}</span>
+        <div class="switch-container">
+          <label class="switch">
+            <input type="checkbox" formControlName="isActive" />
+            <span class="slider round"></span>
+          </label>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="group">
-    <label> {{ "ADMIN_EDIT_TRAININGS.TRAINING_TITLE" | translate }}</label>
-    <input
-      type="text"
-      [placeholder]="'ADMIN_EDIT_TRAININGS.ENTER_TRAINING_TITLE' | translate"
-    />
 
-    <label> {{ "ADMIN_EDIT_TRAININGS.DESCRIPTION" | translate }}</label>
-    <textarea
-      [placeholder]="'ADMIN_EDIT_TRAININGS.ENTER_DESCRIPTION' | translate"
-    ></textarea>
-  </div>
-  <div class="btn">
-    <button class="save-btn" [routerLink]="['/admin/trainings']">
-      {{ "ADMIN_EDIT_TRAININGS.SAVE_BUTTON" | translate }}
-    </button>
-  </div>
+    <div class="language-selector">
+      <p>{{ "ADMIN_EDIT_TRAININGS.EDITING_LANGUAGE" | translate }}:</p>
+      <div class="language-buttons">
+        <button 
+          type="button" 
+          *ngFor="let lang of availableLanguages" 
+          [class.active]="currentLanguage === lang"
+          (click)="changeLanguage(lang)"
+        >
+          {{lang}}
+        </button>
+      </div>
+    </div>
+    
+    <div class="group">
+      <label> {{ "ADMIN_EDIT_TRAININGS.TRAINING_TITLE" | translate }}</label>
+      <input
+        type="text"
+        formControlName="title"
+        [placeholder]="'ADMIN_EDIT_TRAININGS.ENTER_TRAINING_TITLE' | translate"
+      />
+      <div *ngIf="trainingForm.get('title')?.invalid && trainingForm.get('title')?.touched" class="error-message">
+        {{ "ADMIN_EDIT_TRAININGS.FIELD_REQUIRED" | translate }}
+      </div>
+
+      <label> {{ "ADMIN_EDIT_TRAININGS.DESCRIPTION" | translate }}</label>
+      <textarea
+        formControlName="description"
+        [placeholder]="'ADMIN_EDIT_TRAININGS.ENTER_DESCRIPTION' | translate"
+      ></textarea>
+      <div *ngIf="trainingForm.get('description')?.invalid && trainingForm.get('description')?.touched" class="error-message">
+        {{ "ADMIN_EDIT_TRAININGS.FIELD_REQUIRED" | translate }}
+      </div>
+    </div>
+
+    <div *ngIf="saveError" class="error-container">
+      <p>{{ "ADMIN_EDIT_TRAININGS.ERROR_SAVING" | translate }}</p>
+    </div>
+
+    <div class="btn">
+      <button type="submit" class="save-btn" [disabled]="saving">
+        <span *ngIf="!saving">{{ "ADMIN_EDIT_TRAININGS.SAVE_BUTTON" | translate }}</span>
+        <span *ngIf="saving">{{ "ADMIN_EDIT_TRAININGS.SAVING" | translate }}...</span>
+      </button>
+      <button type="button" class="cancel-btn" [routerLink]="['/admin/trainings']">
+        {{ "ADMIN_EDIT_TRAININGS.CANCEL" | translate }}
+      </button>
+    </div>
+  </form>
 </div>

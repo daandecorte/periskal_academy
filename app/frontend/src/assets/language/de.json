@@ -72,7 +72,11 @@
     "QUESTION_TEXT": "Fragetext",
     "ANSWER_OPTION": "Antwortoptionen",
     "OPTION_PLACEHOLDER": "Antwortoption",
-    "ADD_OPTION": "+ Option hinzufügen"
+    "ADD_OPTION": "+ Option hinzufügen",
+    "FIELD_REQUIRED": "Dieses Feld ist erforderlich",
+    "EDITING_LANGUAGE": "Bearbeitungssprache",
+    "SAVING": "Wird gespeichert",
+    "CANCEL": "Abbrechen"
   },
   "ADMIN_ADD_TRAININGS": {
     "EXAM_TITLE": "Prüfungseinstellungen",

@@ -73,7 +73,11 @@
     "QUESTION_TEXT": "Vraagtekst",
     "ANSWER_OPTION": "Antwoordopties",
     "OPTION_PLACEHOLDER": "Antwoordoptie",
-    "ADD_OPTION": "+ Optie toevoegen"
+    "ADD_OPTION": "+ Optie toevoegen",
+    "FIELD_REQUIRED": "Dit veld is verplicht",
+    "EDITING_LANGUAGE": "Bewerktaal",
+    "SAVING": "Bezig met opslaan",
+    "CANCEL": "Annuleren"
   },
   "ADMIN_ADD_TRAININGS": {
     "EXAM_TITLE": "Examensinstellingen",
