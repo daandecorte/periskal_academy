@@ -17,10 +17,10 @@ public class TrainingService {
         this.trainingRepository = trainingRepository;
     }
 
-    public void save(TrainingDTO trainingDTO) {
+    public Training save(TrainingDTO trainingDTO) {
         Training training = new Training();
         BeanUtils.copyProperties(trainingDTO, training);
-        trainingRepository.save(training);
+        return trainingRepository.save(training);
     }
     public Training findById(int id) {
         Training training = trainingRepository.findById(id).orElse(null);

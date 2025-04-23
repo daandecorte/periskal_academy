@@ -24,12 +24,12 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void save(UserDTO userDTO) throws DuplicateException {
+    public User save(UserDTO userDTO) throws DuplicateException {
         User user = assemble(userDTO);
         if (userRepository.existsByPeriskalId(user.getPeriskalId())) {
             throw new DuplicateException("User with userid " + user.getPeriskalId() + " already exists");
         }
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     public void update(UserDTO userDTO) throws NotFoundException {

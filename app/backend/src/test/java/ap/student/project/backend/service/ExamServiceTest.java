@@ -2,139 +2,172 @@ package ap.student.project.backend.service;
 
 import ap.student.project.backend.dao.ExamRepository;
 import ap.student.project.backend.dao.QuestionRepository;
+import ap.student.project.backend.dao.TrainingRepository;
 import ap.student.project.backend.dto.ExamDTO;
 import ap.student.project.backend.dto.QuestionDTO;
 import ap.student.project.backend.entity.Exam;
-import ap.student.project.backend.entity.Training;
+import ap.student.project.backend.entity.Language;
 import ap.student.project.backend.entity.Question;
+import ap.student.project.backend.entity.Training;
 import ap.student.project.backend.exceptions.ListFullException;
 import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+@ActiveProfiles("test")
+@Transactional
 class ExamServiceTest {
 
-    @Mock
-    private ExamRepository examRepository;
-
-    @Mock
-    private QuestionRepository questionRepository;
-
-    @Mock
-    private TrainingService trainingService;
-
-    @InjectMocks
+    @Autowired
     private ExamService examService;
 
-    private ExamDTO examDTO;
-    private Exam exam;
-    private Training training;
+    @Autowired
+    private TrainingService trainingService;
+
+    @Autowired
+    private ExamRepository examRepository;
+
+    @Autowired
+    private QuestionRepository questionRepository;
+
+    @Autowired
+    private TrainingRepository trainingRepository;
+
+    private Training testTraining;
+    private Exam testExam;
 
     @BeforeEach
     void setUp() {
-        examDTO = new ExamDTO(1, 1, 1, 1, 1); // Assuming trainingId is needed
-        exam = new Exam();
-        training = new Training();
+        questionRepository.deleteAll();
+        examRepository.deleteAll();
+        trainingRepository.deleteAll();
+
+        Map<Language, String> title = new HashMap<>();
+        title.put(Language.ENGLISH, "Test Training Title");
+        title.put(Language.DUTCH, "Test Training Titel");
+
+        Map<Language, String> description = new HashMap<>();
+        description.put(Language.ENGLISH, "Test Description");
+        description.put(Language.DUTCH, "Test Beschrijving");
+
+        testTraining = new Training(title, description, true, null, null);
+        testTraining = trainingRepository.save(testTraining);
+
+        // Create and save an exam
+        testExam = new Exam(70, 3, 60, 2, new ArrayList<Question>(), testTraining); // passingScore, maxAttempts, time, questionAmount, training
+        testExam = examRepository.save(testExam);
     }
 
     @Test
     void save_ShouldThrowException_WhenTrainingIdIsZero() {
-        ExamDTO invalidDTO = new ExamDTO(1, 1, 1, 1, 0);
+        ExamDTO invalidDTO = new ExamDTO(70, 3, 60, 2, 0);
         assertThrows(MissingArgumentException.class, () -> examService.save(invalidDTO));
     }
 
     @Test
     void save_ShouldThrowException_WhenTrainingNotFound() {
-        when(trainingService.findById(1)).thenReturn(null);
-        assertThrows(NotFoundException.class, () -> examService.save(examDTO));
+        ExamDTO invalidDTO = new ExamDTO(70, 3, 60, 2, 9999);
+        assertThrows(NotFoundException.class, () -> examService.save(invalidDTO));
     }
 
     @Test
     void save_ShouldSaveExam_WhenValidDTOIsProvided() {
-        when(trainingService.findById(1)).thenReturn(training);
-
+        ExamDTO examDTO = new ExamDTO(80, 2, 45, 5, testTraining.getId());
         examService.save(examDTO);
 
-        verify(trainingService, times(1)).findById(1);
-        verify(examRepository, times(1)).save(any(Exam.class));
-    }
-
-    @Test
-    void findById_ShouldThrowException_WhenExamNotFound() {
-        when(examRepository.findById(1)).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> examService.findById(1));
+        List<Exam> exams = examService.findAll();
+        assertEquals(2, exams.size()); // original + new
     }
 
     @Test
     void findById_ShouldReturnExam_WhenFound() {
-        when(examRepository.findById(1)).thenReturn(Optional.of(exam));
-        Exam foundExam = examService.findById(1);
+        Exam foundExam = examService.findById(testExam.getId());
+
         assertNotNull(foundExam);
+        assertEquals(testExam.getId(), foundExam.getId());
     }
 
     @Test
-    void update_ShouldThrowException_WhenExamNotFound() {
-        when(examRepository.findById(1)).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> examService.update(1, examDTO));
+    void findById_ShouldThrowException_WhenExamNotFound() {
+        assertThrows(NotFoundException.class, () -> examService.findById(9999));
     }
 
     @Test
     void update_ShouldSaveUpdatedExam_WhenFound() {
-        when(examRepository.findById(1)).thenReturn(Optional.of(exam));
+        ExamDTO updatedDTO = new ExamDTO(90, 5, 90, 10, testTraining.getId());
+        examService.update(testExam.getId(), updatedDTO);
 
-        examService.update(1, examDTO);
+        Exam updatedExam = examService.findById(testExam.getId());
+        assertEquals(90, updatedExam.getPassingScore());
+        assertEquals(5, updatedExam.getMaxAttempts());
+    }
 
-        verify(examRepository, times(1)).save(any(Exam.class));
+    @Test
+    void update_ShouldThrowException_WhenExamNotFound() {
+        ExamDTO examDTO = new ExamDTO(80, 2, 45, 5, testTraining.getId());
+        assertThrows(NotFoundException.class, () -> examService.update(9999, examDTO));
     }
 
     @Test
     void delete_ShouldDeleteExam() {
-        doNothing().when(examRepository).deleteById(1);
-        examService.delete(1);
-        verify(examRepository, times(1)).deleteById(1);
+        examService.delete(testExam.getId());
+
+        Optional<Exam> deletedExam = examRepository.findById(testExam.getId());
+        assertFalse(deletedExam.isPresent());
     }
 
     @Test
     void findAll_ShouldReturnListOfExams() {
-        when(examRepository.findAll()).thenReturn(List.of(exam));
-        List<Exam> result = examService.findAll();
-        assertEquals(1, result.size());
-        verify(examRepository, times(1)).findAll();
+        List<Exam> exams = examService.findAll();
+        assertEquals(1, exams.size());
     }
 
     @Test
-    void addQuestion_ShouldThrowException_WhenExamNotFound() {
-        when(examRepository.findById(1)).thenReturn(Optional.empty());
+    void addQuestion_ShouldAddQuestion_WhenExamIsNotFull() {
         QuestionDTO questionDTO = new QuestionDTO(null, null, null);
-        assertThrows(NotFoundException.class, () -> examService.addQuestion(1, questionDTO));
+
+        examService.addQuestion(testExam.getId(), questionDTO);
+
+        List<Question> questions = questionRepository.findAll();
+        assertEquals(1, questions.size());
     }
 
     @Test
     void addQuestion_ShouldThrowException_WhenExamIsFull() {
-        Exam mockExam = mock(Exam.class);
-        when(examRepository.findById(1)).thenReturn(Optional.of(mockExam));
-        when(mockExam.getQuestions()).thenReturn(List.of(new Question(), new Question()));
-        when(mockExam.getQuestionAmount()).thenReturn(2);
+        // Add maximum allowed questions
+        for (int i = 0; i < testExam.getQuestionAmount(); i++) {
+            QuestionDTO questionDTO = new QuestionDTO(null, null, null);
+            examService.addQuestion(testExam.getId(), questionDTO);
+        }
 
+        testExam = examRepository.findById(testExam.getId()).orElseThrow();
+
+        QuestionDTO extraQuestion = new QuestionDTO(null, null, null);
+
+        assertThrows(ListFullException.class, () -> examService.addQuestion(testExam.getId(), extraQuestion));
+    }
+
+    @Test
+    void findAllQuestionsByExamId_ShouldReturnQuestions() {
         QuestionDTO questionDTO = new QuestionDTO(null, null, null);
-        assertThrows(ListFullException.class, () -> examService.addQuestion(1, questionDTO));
+        examService.addQuestion(testExam.getId(), questionDTO);
+        testExam = examRepository.findById(testExam.getId()).orElseThrow();
+        List<Question> questions = examService.findAllQuestionsByExamId(testExam.getId());
+        assertEquals(1, questions.size());
     }
 
     @Test
     void findAllQuestionsByExamId_ShouldThrowException_WhenExamNotFound() {
-        when(examRepository.findById(1)).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> examService.findAllQuestionsByExamId(1));
+        assertThrows(NotFoundException.class, () -> examService.findAllQuestionsByExamId(9999));
     }
 }

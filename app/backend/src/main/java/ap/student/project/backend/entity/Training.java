@@ -1,5 +1,6 @@
 package ap.student.project.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,9 @@ public class Training {
     private List<Module> modules;
     @OneToMany(mappedBy = "training", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Exam> exams;
+    @OneToMany(mappedBy = "training", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JsonIgnore
+    private List<Certificate> certificates;
 
     public Training(Map<Language, String> title, Map<Language, String> description, boolean isActive, List<Module> modules, List<Exam> exams) {
         this.title = title;

@@ -11,7 +11,7 @@ public record UserCertificateDTO(
         @JsonProperty("issue_date") LocalDateTime issueDate,
         @JsonProperty("expiry_date") LocalDateTime expiryDate,
         @JsonProperty("status") CertificateStatus status,
-        @JsonProperty("user") User user,
-        @JsonProperty("certificate") Certificate certificate
+        @JsonProperty("user_id") int user_id,
+        @JsonProperty("certificate_id") int certificate_id
         ) {
 }
