@@ -6,6 +6,9 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { TrainingService, Training, LocalizedStrings } from '../../services/training.service';
 import { TrainingEditService, TrainingUpdateDTO } from '../../services/training-edit.service';
 
+// TODO: implement editing multiple languages at once
+// Currently, only one language can be edited at a time, and switching editing language will get rid of any unsaved edits to another language, I did not have the time to implement editing multiple languages at once
+
 @Component({
   selector: 'app-basic-info',
   standalone: true,
@@ -21,8 +24,8 @@ export class BasicInfoComponent implements OnInit {
   saving = false;
   error = false;
   saveError = false;
-  currentLanguage = 'EN'; // Default language
-  availableLanguages = ['EN', 'FR', 'NL', 'DE']; // Available languages in your app
+  currentLanguage = 'EN';
+  availableLanguages = ['EN', 'FR', 'NL', 'DE'];
 
   constructor(
     private fb: FormBuilder,
