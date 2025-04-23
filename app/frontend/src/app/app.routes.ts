@@ -102,7 +102,8 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: 'edit-training',
+  {
+    path: 'edit-training/:id',
     component: AdminEditTrainingComponent,
     //canActivate: [RoleGuard],
     data: { roles: [Role.ADMIN] },
