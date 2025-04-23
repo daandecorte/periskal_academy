@@ -176,12 +176,26 @@
     "CLAIM_THIS_TICKET_TO_HELP": "Übernehmen Sie dieses Ticket, um zu helfen.",
     "ALL": "Alle"
   },
+  "EXAM_RESULT": {
+    "CONGRATS": "Herzlichen Glückwunsch!",
+    "CONGRATS_MESSAGE_1": "Sie haben die Prüfung ",
+    "CONGRATS_MESSAGE_2": " erfolgreich bestanden!",
+    "SCORE": "Ihre Punktzahl war ",
+    "ISSUE_DATE": "Ausgabedatum: ",
+    "VALID_FOR": "Gültig für ",
+    "FAIL": "Prüfung nicht bestanden",
+    "FAIL_MESSAGE": "Leider haben Sie die erforderliche Punktzahl nicht erreicht.",
+    "FAIL_MESSAGE_REVIEW": "Sie sollten das Material erneut durchgehen, bevor Sie die Prüfung wiederholen.",
+    "DOWNLOAD_CERTIFICATE": "Zertifikat herunterladen",
+    "RETURN_TO_MODULE": "Zurück zum Modul",
+    "BACK_TO_TRAININGS": "Zurück zu den Schulungen"
+  },
   "MODULE_VIDEO": {
-  "BACK_TO_OVERVIEW": "Zurück zur Modulübersicht",
-  "VIDEO": "Video",
-  "STEP": "Schritt",
-  "OF": "von",
-  "CONTINUE_TO_QUESTIONS": "Weiter zu den Fragen"
+    "BACK_TO_OVERVIEW": "Zurück zur Modulübersicht",
+    "VIDEO": "Video",
+    "STEP": "Schritt",
+    "OF": "von",
+    "CONTINUE_TO_QUESTIONS": "Weiter zu den Fragen"
   },
   "QUESTIONS": {
     "QUESTION": "Frage",
@@ -199,7 +213,7 @@
     "BACK_TO_OVERVIEW": "Zurück zur Übersicht",
     "NEXT_MODULE": "Nächstes Modul"
   },
-    "EXAM": {
+  "EXAM": {
     "TIME_REMAINING": "Verbleibende Zeit",
     "QUESTION_PROGRESS": "Frage {{current}} von {{total}}",
     "PREVIOUS_QUESTION": "Vorherige Frage",

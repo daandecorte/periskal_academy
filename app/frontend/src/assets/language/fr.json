@@ -178,11 +178,11 @@
     "ALL": "Tous"
   },
   "MODULE_VIDEO": {
-  "BACK_TO_OVERVIEW": "Retour à l'aperçu du module",
-  "VIDEO": "Vidéo",
-  "STEP": "Étape",
-  "OF": "sur",
-  "CONTINUE_TO_QUESTIONS": "Continuer vers les questions"
+    "BACK_TO_OVERVIEW": "Retour à l'aperçu du module",
+    "VIDEO": "Vidéo",
+    "STEP": "Étape",
+    "OF": "sur",
+    "CONTINUE_TO_QUESTIONS": "Continuer vers les questions"
   },
   "QUESTIONS": {
     "QUESTION": "Question",
@@ -200,7 +200,7 @@
     "BACK_TO_OVERVIEW": "Retour à l'aperçu",
     "NEXT_MODULE": "Module suivant"
   },
-    "EXAM": {
+  "EXAM": {
     "TIME_REMAINING": "Temps restant",
     "QUESTION_PROGRESS": "Question {{current}} sur {{total}}",
     "PREVIOUS_QUESTION": "Question précédente",
@@ -211,6 +211,20 @@
     "FAIL": "ECHEC",
     "COMPLETION_MESSAGE": "Félicitations ! Vous avez réussi l'examen.",
     "SCORE_LABEL": "SCORE",
+    "BACK_TO_TRAININGS": "Retour aux formations"
+  },
+  "EXAM_RESULT": {
+    "CONGRATS": "Félicitations !",
+    "CONGRATS_MESSAGE_1": "Vous avez réussi l'examen de ",
+    "CONGRATS_MESSAGE_2": " !",
+    "SCORE": "Votre score était de ",
+    "ISSUE_DATE": "Date d'émission : ",
+    "VALID_FOR": "Valide pendant ",
+    "FAIL": "Échec de l'examen",
+    "FAIL_MESSAGE": "Malheureusement, vous n'avez pas obtenu la note minimale requise.",
+    "FAIL_MESSAGE_REVIEW": "Vous devriez revoir le matériel avant de repasser l'examen.",
+    "DOWNLOAD_CERTIFICATE": "Télécharger le certificat",
+    "RETURN_TO_MODULE": "Retour au module",
     "BACK_TO_TRAININGS": "Retour aux formations"
   }
 }

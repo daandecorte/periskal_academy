@@ -98,11 +98,11 @@
     "SEARCH_TRAININGS": "Search Trainings...",
     "OVERALL_PROGRESS": "Overall Progress",
     "USER_DETAIL": "User Detail",
-    "NO_EXAM_ATTEMPTS_YET":"No Exam Attempts Yet",
+    "NO_EXAM_ATTEMPTS_YET": "No Exam Attempts Yet",
     "ATTEMPT": "Attempt",
     "ASSIGNED_ON": "Assigned On",
     "LAST_ACTIVITY": "Last Activity",
-    "EXAM_STATUS":"Exam Status",
+    "EXAM_STATUS": "Exam Status",
     "NO_TRAININGS_ASSIGNED": "This person has no trainings assigned."
   },
 
@@ -177,11 +177,11 @@
     "ALL": "All"
   },
   "MODULE_VIDEO": {
-  "BACK_TO_OVERVIEW": "Back to Module Overview",
-  "VIDEO": "Video",
-  "STEP": "Step",
-  "OF": "of",
-  "CONTINUE_TO_QUESTIONS": "Continue to Questions"
+    "BACK_TO_OVERVIEW": "Back to Module Overview",
+    "VIDEO": "Video",
+    "STEP": "Step",
+    "OF": "of",
+    "CONTINUE_TO_QUESTIONS": "Continue to Questions"
   },
   "QUESTIONS": {
     "QUESTION": "Question",
@@ -199,7 +199,7 @@
     "BACK_TO_OVERVIEW": "Back to Overview",
     "NEXT_MODULE": "Next Module"
   },
-    "EXAM": {
+  "EXAM": {
     "TIME_REMAINING": "Time Remaining",
     "QUESTION_PROGRESS": "Question {{current}} of {{total}}",
     "PREVIOUS_QUESTION": "Previous Question",
@@ -210,6 +210,20 @@
     "FAIL": "FAIL",
     "COMPLETION_MESSAGE": "Congratulations! You have successfully completed the exam.",
     "SCORE_LABEL": "SCORE",
+    "BACK_TO_TRAININGS": "Back to Trainings"
+  },
+  "EXAM_RESULT": {
+    "CONGRATS": "Congratulations!",
+    "CONGRATS_MESSAGE_1": "You have successfully passed the ",
+    "CONGRATS_MESSAGE_2": " exam!",
+    "SCORE": "Your score was ",
+    "ISSUE_DATE": "Issue Date: ",
+    "VALID_FOR": "Valid for ",
+    "FAIL": "Exam Failed",
+    "FAIL_MESSAGE": "Unfortunately you did not achieve the required passing score.",
+    "FAIL_MESSAGE_REVIEW": "You should review the material before attempting the exam again.",
+    "DOWNLOAD_CERTIFICATE": "Download Certificate",
+    "RETURN_TO_MODULE": "Return to Module",
     "BACK_TO_TRAININGS": "Back to Trainings"
   }
 }

@@ -16,11 +16,11 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { IUser } from '../types/user-info';
 import { Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { text } from '@fortawesome/fontawesome-svg-core';
+import { ExamResultComponent } from '../add-training/exam-result/exam-result.component';
 
 @Component({
   selector: 'app-tips-and-tricks',
-  imports: [FontAwesomeModule, TranslatePipe, FormsModule],
+  imports: [FontAwesomeModule, TranslatePipe, FormsModule, ExamResultComponent],
   templateUrl: './tips-and-tricks.component.html',
   styleUrl: './tips-and-tricks.component.css',
 })
@@ -186,6 +186,25 @@ export class TipsAndTricksComponent implements AfterViewInit {
     const tipText = document.getElementById(
       'tip-content'
     ) as HTMLTextAreaElement;
+
+    this.newTopic = {
+      title: {
+        ENGLISH: '',
+        GERMAN: '',
+        DUTCH: '',
+        FRENCH: '',
+      },
+    };
+
+    this.newTip = {
+      topic_id: 0,
+      text: {
+        ENGLISH: '',
+        GERMAN: '',
+        DUTCH: '',
+        FRENCH: '',
+      },
+    };
 
     if (tipText) tipText.value = '';
     if (tipTitle) tipTitle.value = '';
