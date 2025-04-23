@@ -1,6 +1,6 @@
 <div class="admin-training-card">
   <div class="training-header">
-    <span class="training-title">{{ training.title }} Training</span>
+    <span class="training-title">{{ getLocalizedTitle() }} Training</span>
     <div class="actions">
       <button
         class="edit-btn"
@@ -14,7 +14,7 @@
       </button>
     </div>
   </div>
-  <p class="training-description">{{ training.description }}</p>
+  <p class="training-description">{{ getLocalizedDescription() }}</p>
 
   <div class="training-stats">
     <span class="status" [class.active]="training.isActive">

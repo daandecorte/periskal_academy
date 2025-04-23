@@ -17,7 +17,22 @@ import { RouterLink } from '@angular/router';
 })
 export class AdminTrainingCardComponent {
   @Input() training!: Training;
+  @Input() currentLanguage: string = 'EN';
 
   faPencilAlt = faPencilAlt;
   faTrash = faTrash;
+
+  getLocalizedTitle(): string {
+    if (this.training.titleLocalized && this.training.titleLocalized[this.currentLanguage]) {
+      return this.training.titleLocalized[this.currentLanguage];
+    }
+    return this.training.title || '';
+  }
+
+  getLocalizedDescription(): string {
+    if (this.training.descriptionLocalized && this.training.descriptionLocalized[this.currentLanguage]) {
+      return this.training.descriptionLocalized[this.currentLanguage];
+    }
+    return this.training.description || '';
+  }
 }
