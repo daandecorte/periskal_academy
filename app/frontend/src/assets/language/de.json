@@ -194,5 +194,18 @@
     "CONGRATULATIONS": "Herzlichen Glückwunsch! Sie haben alle Fragen dieses Moduls erfolgreich beantwortet.",
     "BACK_TO_OVERVIEW": "Zurück zur Übersicht",
     "NEXT_MODULE": "Nächstes Modul"
+  },
+    "EXAM": {
+    "TIME_REMAINING": "Verbleibende Zeit",
+    "QUESTION_PROGRESS": "Frage {{current}} von {{total}}",
+    "PREVIOUS_QUESTION": "Vorherige Frage",
+    "NEXT_QUESTION": "Nächste Frage",
+    "COMPLETED_TITLE": "Prüfung abgeschlossen",
+    "YOUR_SCORE": "Ihre Punktzahl: {{score}}%",
+    "PASS": "BESTANDEN",
+    "FAIL": "DURCHGEFALLEN",
+    "COMPLETION_MESSAGE": "Herzlichen Glückwunsch! Sie haben die Prüfung erfolgreich abgeschlossen.",
+    "SCORE_LABEL": "PUNKTZAHL",
+    "BACK_TO_TRAININGS": "Zurück zu Schulungen"
   }
 }

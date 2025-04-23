@@ -9,6 +9,8 @@ import { interval, Subscription } from 'rxjs';
 import { ExamService, Exam, ExamSubmission, ExamQuestionAnswer } from '../services/exam.service';
 import { AuthService } from '../services/auth.service';
 
+// TODO: relocate shared code between this and module questions component
+
 @Component({
   selector: 'app-exam',
   imports: [CommonModule, RouterModule, FontAwesomeModule, TranslateModule],

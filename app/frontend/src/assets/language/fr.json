@@ -195,5 +195,18 @@
     "CONGRATULATIONS": "Félicitations! Vous avez répondu à toutes les questions de ce module.",
     "BACK_TO_OVERVIEW": "Retour à l'aperçu",
     "NEXT_MODULE": "Module suivant"
+  },
+    "EXAM": {
+    "TIME_REMAINING": "Temps restant",
+    "QUESTION_PROGRESS": "Question {{current}} sur {{total}}",
+    "PREVIOUS_QUESTION": "Question précédente",
+    "NEXT_QUESTION": "Question suivante",
+    "COMPLETED_TITLE": "Examen terminé",
+    "YOUR_SCORE": "Votre score : {{score}}%",
+    "PASS": "REUSSI",
+    "FAIL": "ECHEC",
+    "COMPLETION_MESSAGE": "Félicitations ! Vous avez réussi l'examen.",
+    "SCORE_LABEL": "SCORE",
+    "BACK_TO_TRAININGS": "Retour aux formations"
   }
 }

@@ -5,13 +5,15 @@
       <p>{{ examDescription }}</p>
     </div>
     <div class="timer-container">
-      <div class="timer-label">Time Remaining</div>
+      <div class="timer-label">{{ "EXAM.TIME_REMAINING" | translate }}</div>
       <div class="timer-value">{{ formatTimeRemaining() }}</div>
     </div>
   </div>
 
   <div class="progress-indicator">
-    <div class="exam-progress">Question {{ currentQuestionIndex + 1 }} of {{ totalQuestions }}</div>
+    <div class="exam-progress">
+      {{ "EXAM.QUESTION_PROGRESS" | translate: { current: currentQuestionIndex + 1, total: totalQuestions } }}
+    </div>
     <div class="progress-bar">
       <div class="progress-fill" [style.width]="getProgressPercentage() + '%'"></div>
     </div>
@@ -23,7 +25,7 @@
         <span class="icon">?</span>
       </div>
       <div class="question-content">
-        <h2>Question {{ currentQuestionIndex + 1 }}</h2>
+        <h2>{{ "QUESTIONS.QUESTION" | translate }} {{ currentQuestionIndex + 1 }}</h2>
         <div class="question-text">
           {{ getLocalizedContent(currentQuestion?.text) }}
         </div>
@@ -54,7 +56,7 @@
         [disabled]="currentQuestionIndex === 0"
         (click)="previousQuestion()"
       >
-        <span class="arrow-icon">←</span> Previous Question
+        <span class="arrow-icon">←</span> {{ "EXAM.PREVIOUS_QUESTION" | translate }}
       </button>
       
       <div class="action-buttons-right">
@@ -63,7 +65,7 @@
           class="submit-button" 
           (click)="submitAnswer()"
         >
-          Next Question <span class="arrow-icon">→</span>
+          {{ "EXAM.NEXT_QUESTION" | translate }} <span class="arrow-icon">→</span>
         </button>
       </div>
     </div>
@@ -72,18 +74,18 @@
   <!-- Exam Completion Screen -->
   <div class="exam-content completion-screen" *ngIf="isExamCompleted">
     <div class="completion-message">
-      <h1>Exam Completed</h1>
+      <h1>{{ "EXAM.COMPLETED_TITLE" | translate }}</h1>
       <p *ngIf="examScore !== undefined">
-        Your score: {{ examScore }}% 
-        <span *ngIf="examPassed" class="pass-badge">PASS</span>
-        <span *ngIf="!examPassed" class="fail-badge">FAIL</span>
+        {{ "EXAM.YOUR_SCORE" | translate: { score: examScore } }} 
+        <span *ngIf="examPassed" class="pass-badge">{{ "EXAM.PASS" | translate }}</span>
+        <span *ngIf="!examPassed" class="fail-badge">{{ "EXAM.FAIL" | translate }}</span>
       </p>
-      <p>Congratulations! You have successfully completed the exam.</p>
-      <p>SCORE.</p>
+      <p>{{ "EXAM.COMPLETION_MESSAGE" | translate }}</p>
+      <p>{{ "EXAM.SCORE_LABEL" | translate }}</p>
     </div>
     <div class="action-buttons">
       <button class="overview-button" (click)="goBackToOverview()">
-        Back to Trainings
+        {{ "EXAM.BACK_TO_TRAININGS" | translate }}
       </button>
     </div>
   </div>
