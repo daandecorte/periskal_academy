@@ -1,10 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule, ActivatedRoute } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { interval, Subscription } from 'rxjs';
+import { ExamService, Exam, ExamSubmission, ExamQuestionAnswer } from '../services/exam.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-exam',
@@ -15,8 +18,9 @@ import { interval, Subscription } from 'rxjs';
 export class TrainingExamComponent implements OnInit, OnDestroy {
   // Exam information
   examId: number = 0;
-  examTitle: string = 'Navigation Safety Certification Exam';
-  examDescription: string = 'Complete all questions to receive your certificate';
+  exam?: Exam;
+  examTitle: string = 'Loading...';
+  examDescription: string = 'Please wait while the exam loads...';
   
   // Question handling
   currentQuestionIndex: number = 0;
@@ -28,6 +32,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   userAnswers: Map<number, number> = new Map();
   
   // Status flags
+  isLoading: boolean = true;
   isAnswerSubmitted: boolean = false;
   isExamCompleted: boolean = false;
   
@@ -35,7 +40,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   totalQuestions: number = 0;
   
   // Timer
-  timeRemainingInSeconds: number = 60 * 60; // 60 minutes
+  timeRemainingInSeconds: number = 0; // Will be set from exam.time
   timerSubscription?: Subscription;
   
   // Font Awesome icons
@@ -49,12 +54,23 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   examScore?: number;
   examPassed?: boolean;
 
+  // User information
+  currentUserId: number = 0;
+
   constructor(
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private examService: ExamService,
+    private authService: AuthService // Assuming you have this
   ) {}
 
   ngOnInit(): void {
+    // Get current user ID
+    this.currentUserId = this.getCurrentUserId();
+    
+    // Get current language preference
+    this.getCurrentLanguage();
+    
     this.route.params.subscribe(params => {
       this.examId = +params['id'] || 0;
       
@@ -66,7 +82,6 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
       }
       
       this.loadExamData();
-      this.startTimer();
     });
   }
 
@@ -74,6 +89,16 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe();
     }
+  }
+
+  getCurrentUserId(): number {
+    // Implement based on your auth system
+    return 1; // Placeholder for demo
+  }
+
+  getCurrentLanguage(): void {
+    // Implement based on your language preferences system
+    this.currentLanguage = 'EN'; // Default to English
   }
 
   startTimer(): void {
@@ -94,174 +119,33 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   }
 
   loadExamData(): void {
-    // Hardcoded data for now
-    this.questions = this.getHardcodedQuestions();
+    this.isLoading = true;
     
-    // Update total questions based on the actual number of questions loaded
-    this.totalQuestions = this.questions.length;
-    
-    this.setCurrentQuestion();
-  }
-
-  getHardcodedQuestions(): any[] {
-    // Sample exam questions
-    return [
-      {
-        id: 1,
-        text: {
-          'EN': 'How often should safety equipment be inspected?',
-          'FR': 'À quelle fréquence l\'équipement de sécurité doit-il être inspecté?',
-          'NL': 'Hoe vaak moet veiligheidsuitrusting worden geïnspecteerd?',
-          'DE': 'Wie oft sollten Sicherheitsausrüstungen überprüft werden?',
-        },
-        questionOptions: [
-          {
-            id: 101,
-            text: {
-              'EN': 'Once a year',
-              'FR': 'Une fois par an',
-              'NL': 'Een keer per jaar',
-              'DE': 'Einmal im Jahr',
-            },
-            isCorrect: false
-          },
-          {
-            id: 102,
-            text: {
-              'EN': 'Only when malfunctioning',
-              'FR': 'Seulement en cas de dysfonctionnement',
-              'NL': 'Alleen bij storing',
-              'DE': 'Nur bei Fehlfunktion',
-            },
-            isCorrect: false
-          },
-          {
-            id: 103,
-            text: {
-              'EN': 'Monthly',
-              'FR': 'Mensuel',
-              'NL': 'Maandelijks',
-              'DE': 'Monatlich',
-            },
-            isCorrect: false
-          },
-          {
-            id: 104,
-            text: {
-              'EN': 'Daily before operation',
-              'FR': 'Quotidiennement avant l\'opération',
-              'NL': 'Dagelijks voor gebruik',
-              'DE': 'Täglich vor dem Betrieb',
-            },
-            isCorrect: true
-          }
-        ]
+    this.examService.getExamById(this.examId).subscribe({
+      next: (exam) => {
+        this.exam = exam;
+        this.examTitle = this.getLocalizedContent(exam.titleLocalized);
+        this.examDescription = this.getLocalizedContent(exam.descriptionLocalized);
+        this.questions = [...exam.questions];
+        this.totalQuestions = this.questions.length;
+        
+        // Set timer based on exam time (convert minutes to seconds)
+        this.timeRemainingInSeconds = exam.time * 60;
+        
+        // Initialize question display
+        this.setCurrentQuestion();
+        
+        // Start timer
+        this.startTimer();
+        
+        this.isLoading = false;
       },
-      {
-        id: 2,
-        text: {
-          'EN': 'What is the minimum safe distance to maintain from other vessels?',
-          'FR': 'Quelle est la distance minimale de sécurité à maintenir par rapport aux autres navires?',
-          'NL': 'Wat is de minimale veilige afstand die moet worden aangehouden van andere vaartuigen?',
-          'DE': 'Was ist der Mindestsicherheitsabstand zu anderen Schiffen?',
-        },
-        questionOptions: [
-          {
-            id: 201,
-            text: {
-              'EN': '50 meters',
-              'FR': '50 mètres',
-              'NL': '50 meter',
-              'DE': '50 Meter',
-            },
-            isCorrect: false
-          },
-          {
-            id: 202,
-            text: {
-              'EN': '100 meters',
-              'FR': '100 mètres',
-              'NL': '100 meter',
-              'DE': '100 Meter',
-            },
-            isCorrect: true
-          },
-          {
-            id: 203,
-            text: {
-              'EN': '150 meters',
-              'FR': '150 mètres',
-              'NL': '150 meter',
-              'DE': '150 Meter',
-            },
-            isCorrect: false
-          },
-          {
-            id: 204,
-            text: {
-              'EN': '200 meters',
-              'FR': '200 mètres',
-              'NL': '200 meter',
-              'DE': '200 Meter',
-            },
-            isCorrect: false
-          }
-        ]
-      },
-      // Add more questions to match your total
-      {
-        id: 3,
-        text: {
-          'EN': 'What should you do in case of a man overboard situation?',
-          'FR': 'Que devez-vous faire en cas de situation d\'homme à la mer?',
-          'NL': 'Wat moet u doen in geval van man overboord?',
-          'DE': 'Was sollten Sie im Falle einer Mann-über-Bord-Situation tun?',
-        },
-        questionOptions: [
-          {
-            id: 301,
-            text: {
-              'EN': 'Continue your course and call for help',
-              'FR': 'Continuez votre route et appelez à l\'aide',
-              'NL': 'Vervolg je koers en roep om hulp',
-              'DE': 'Setzen Sie Ihren Kurs fort und rufen Sie um Hilfe',
-            },
-            isCorrect: false
-          },
-          {
-            id: 302,
-            text: {
-              'EN': 'Stop the vessel and wait for rescue services',
-              'FR': 'Arrêtez le navire et attendez les services de secours',
-              'NL': 'Stop het vaartuig en wacht op reddingsdiensten',
-              'DE': 'Stoppen Sie das Schiff und warten Sie auf Rettungsdienste',
-            },
-            isCorrect: false
-          },
-          {
-            id: 303,
-            text: {
-              'EN': 'Shout "Man overboard", throw a life buoy, keep the person in sight, and maneuver to rescue',
-              'FR': 'Criez "Homme à la mer", lancez une bouée de sauvetage, gardez la personne en vue et manœuvrez pour secourir',
-              'NL': 'Roep "Man overboord", gooi een reddingsboei, houd de persoon in zicht en manoeuvreer om te redden',
-              'DE': 'Rufen Sie "Mann über Bord", werfen Sie einen Rettungsring, behalten Sie die Person im Auge und manövrieren Sie zur Rettung',
-            },
-            isCorrect: true
-          },
-          {
-            id: 304,
-            text: {
-              'EN': 'Accelerate to get help as quickly as possible',
-              'FR': 'Accélérez pour obtenir de l\'aide le plus rapidement possible',
-              'NL': 'Versnel om zo snel mogelijk hulp te krijgen',
-              'DE': 'Beschleunigen Sie, um so schnell wie möglich Hilfe zu holen',
-            },
-            isCorrect: false
-          }
-        ]
-      },
-      // Add more questions as needed
-    ];
+      error: (err) => {
+        console.error('Error loading exam:', err);
+        this.isLoading = false;
+        // Handle error
+      }
+    });
   }
 
   setCurrentQuestion(): void {
@@ -372,34 +256,43 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   }
 
   goBackToOverview(): void {
-    this.router.navigate(['/exams']);
+    this.router.navigate(['/trainings']);
   }
 
   submitExam(): void {
     this.isExamCompleted = true;
 
-    //Send to backend to validate  
+    // Stop the timer
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
     
-    /* Example of what would happen
-    const examSubmission = {
+    // Prepare answers for submission
+    const answers: ExamQuestionAnswer[] = [];
+    this.userAnswers.forEach((optionId, questionId) => {
+      answers.push({
+        questionId: questionId,
+        optionId: optionId
+      });
+    });
+    
+    // Create submission object
+    const examSubmission: ExamSubmission = {
       examId: this.examId,
-      userId: getCurrentUserId(), // Get from your auth service
-      answers: Array.from(this.userAnswers.entries()).map(([questionId, answerId]) => ({
-        questionId,
-        answerId
-      })),
-      timeSpent: (60 * 60) - this.timeRemainingInSeconds // Time in seconds
+      userId: this.currentUserId,
+      answers: answers,
     };
     
-    this.examService.submitExam(examSubmission).subscribe(
-      result => {
+    // Submit to backend
+    this.examService.submitExam(examSubmission).subscribe({
+      next: (result) => {
         this.examScore = result.score;
         this.examPassed = result.passed;
       },
-      error => {
-        // Handle error
+      error: (error) => {
+        console.error('Error submitting exam:', error);
+        // Handle error - maybe show error message
       }
-    );
-    */
+    });
   }
 }
