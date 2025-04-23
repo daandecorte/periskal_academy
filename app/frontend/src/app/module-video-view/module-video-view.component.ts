@@ -16,8 +16,9 @@ import { LanguageService } from '../services/language.service';
 export class ModuleVideoViewComponent implements OnInit {
   trainingId: number = 0;
   moduleId: number = 0;
-  currentStep: number = 1;
-  totalSteps: number = 5;
+  currentStep: number = 1; // Video is always step 1
+  totalSteps: number = 1; // Default to 1 (video + 0 question)
+  questionCount: number = 0;
 
   moduleTitle: string = '';
   moduleDescription: string = '';
@@ -85,23 +86,45 @@ export class ModuleVideoViewComponent implements OnInit {
       },
       error => {
         console.error('Error loading module data:', error);
-        this.goBackToOverview();
+        // Try to use hardcoded data for demo purposes
+        this.moduleTitle = "Demo Module";
+        this.moduleDescription = "This is a demo module description.";
+        this.videoUrl = "https://example.com/demo-video.mp4";
+        this.questionCount = 2; // Default to 2 questions
+        this.totalSteps = this.questionCount + 1; // Video + 2 questions = 3 steps total
       }
     );
   }
 
-setModuleData(module: any): void {
+  setModuleData(module: any): void {
     this.moduleTitle = this.getLocalizedContent(module.title);
     this.moduleDescription = this.getLocalizedContent(module.description);
     
     // Set video URL based on current language
     if (module.videoReference) {
       this.videoUrl = this.getLocalizedContent(module.videoReference);
-    }    
-    // Set question count for total steps?? idk
-    if (module.questions && module.questions.length > 0) {
-      this.totalSteps = module.questions.length + 1; // +1 for video step
     }
+    
+    // Set question count for total steps
+    if (module.questions && module.questions.length > 0) {
+      this.questionCount = module.questions.length;
+      this.totalSteps = this.questionCount + 1; // Video + questions count
+    } else {
+      // If no questions are available, set to zero
+      this.questionCount = 0; // Default to 0 question
+      this.totalSteps = 1;
+    }
+  }
+
+  // Calculate progress percentage for the progress bar
+  getProgressPercentage(): number {
+    if (this.totalSteps === 0) return 0;
+    return ((this.currentStep) / this.totalSteps * 100);
+  }
+
+  // Get the step indicator text in the same format as the question component
+  getStepIndicatorText(): string {
+    return `${this.currentStep} ${this.getLocalizedContent({ 'EN': 'of', 'FR': 'de', 'NL': 'van', 'DE': 'von' })} ${this.totalSteps}`;
   }
 
   getLocalizedContent(contentMap: any): string {

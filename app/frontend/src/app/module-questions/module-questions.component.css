@@ -28,12 +28,28 @@
 .progress-indicator {
   background-color: #f8f9fa;
   padding: 15px;
-  border-radius: 5px;
+  border-radius: 5px 5px 0 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border: 1px solid #e6e6e6;
+  border-bottom: none;
+}
+
+.progress-bar {
+  height: 10px;
+  background-color: #e9ecef;
+  overflow: hidden;
   margin-bottom: 20px;
   border: 1px solid #e6e6e6;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #ffc107;
+  transition: width 0.3s ease;
 }
 
 .module-name {
@@ -172,10 +188,16 @@
 
 .action-buttons {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.action-buttons-right {
+  display: flex;
   justify-content: flex-end;
 }
 
-.submit-button, .next-button, .try-again-button, .overview-button, .next-module-button {
+.previous-button, .submit-button, .next-button, .try-again-button, .overview-button, .next-module-button {
   padding: 10px 20px;
   border-radius: 5px;
   font-size: 16px;
@@ -184,13 +206,29 @@
   transition: background-color 0.3s;
 }
 
+.previous-button {
+  background-color: #f8f9fa;
+  color: #333;
+  border: 1px solid #e6e6e6;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.previous-button:hover {
+  background-color: #e9ecef;
+}
+
+.previous-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .submit-button {
   background-color: #ffc107;
   color: #333;
   border: none;
   font-weight: bold;
-  display: flex;
-  align-items: center;
 }
 
 .submit-button:hover {

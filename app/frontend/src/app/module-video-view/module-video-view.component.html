@@ -1,4 +1,4 @@
-<div class="module-video-container">
+<div class="questions-container">
   <div class="back-nav">
     <button class="back-button" (click)="goBackToOverview()">
       <fa-icon [icon]="faArrowLeft"></fa-icon>
@@ -8,7 +8,13 @@
 
   <div class="progress-indicator">
     <div class="module-name">{{ moduleTitle }} - {{ "MODULE_VIDEO.VIDEO" | translate }}</div>
-    <div class="step-indicator">{{ "MODULE_VIDEO.STEP" | translate }} {{ currentStep }} {{ "MODULE_VIDEO.OF" | translate }} {{ totalSteps }}</div>
+    <div class="step-indicator">
+      {{ "MODULE_VIDEO.STEP" | translate }} {{ getStepIndicatorText() }}
+    </div>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress-fill" [style.width]="getProgressPercentage() + '%'"></div>
   </div>
 
   <div class="module-content">

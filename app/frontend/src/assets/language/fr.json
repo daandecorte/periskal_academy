@@ -185,13 +185,14 @@
     "OF": "sur",
     "STEP": "Étape",
     "REVIEW_VIDEO": "Revoir la vidéo",
-    "SUBMIT_ANSWER": "Soumettre la réponse",
+    "CHECK_ANSWER": "Vérifier la réponse",
+    "PREVIOUS_QUESTION": "Question précédente",
     "NEXT_QUESTION": "Question suivante",
     "TRY_AGAIN": "Réessayer",
-    "CORRECT_ANSWER": "Correct ! Veuillez passer à la question suivante.",
+    "CORRECT_ANSWER": "Correct! Veuillez continuer avec la question suivante.",
     "INCORRECT_ANSWER": "Votre réponse est incorrecte. Veuillez réessayer.",
-    "MODULE_COMPLETED": "Module terminé !",
-    "CONGRATULATIONS": "Félicitations ! Vous avez répondu à toutes les questions de ce module avec succès.",
+    "MODULE_COMPLETED": "Module terminé!",
+    "CONGRATULATIONS": "Félicitations! Vous avez répondu à toutes les questions de ce module.",
     "BACK_TO_OVERVIEW": "Retour à l'aperçu",
     "NEXT_MODULE": "Module suivant"
   }

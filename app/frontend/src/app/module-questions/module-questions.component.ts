@@ -7,11 +7,6 @@ import { faArrowLeft, faVideo } from '@fortawesome/free-solid-svg-icons';
 import { TrainingService } from '../services/training.service';
 import { LanguageService } from '../services/language.service';
 
-// The backend for the questions does not yet work and this code will always fall back on demo data for now
-// I have literally tried everything but as soon as I add questions to the database, completely unrelated things start breaking and I don't know why
-// Maybe it's because training and module are being confused in the backend? Maybe something goes wrong in the training service? Maybe it's something else. I don't know.
-// And so basically I gave up actually sorry
-
 @Component({
   selector: 'app-module-questions',
   imports: [CommonModule, RouterModule, FontAwesomeModule, TranslateModule],
@@ -25,6 +20,10 @@ export class ModuleQuestionsComponent implements OnInit {
   questions: any[] = [];
   currentQuestion: any = null;
   selectedOptionId: number | null = null;
+  
+  // Store user answers for each question
+  userAnswers: Map<number, number> = new Map();
+  userCorrectAnswers: Map<number, boolean> = new Map();
   
   // Status flags
   isAnswerSubmitted: boolean = false;
@@ -228,11 +227,7 @@ export class ModuleQuestionsComponent implements OnInit {
   }
 
   setCurrentQuestion(): void {
-    // Reset answer state
-    this.selectedOptionId = null;
-    this.isAnswerSubmitted = false;
-    this.isAnswerCorrect = false;
-    
+    // Reset answer state for new display if there's no previous answer
     if (this.currentQuestionIndex < this.questions.length) {
       this.currentQuestion = this.questions[this.currentQuestionIndex];
       
@@ -243,13 +238,36 @@ export class ModuleQuestionsComponent implements OnInit {
           questionOptions: this.shuffleOptions([...this.currentQuestion.questionOptions])
         };
       }
+      
+      // Restore previously selected answer if exists
+      if (this.userAnswers.has(this.currentQuestion.id)) {
+        this.selectedOptionId = this.userAnswers.get(this.currentQuestion.id) || null;
+        // If the user has already answered this question, show the feedback
+        if (this.userCorrectAnswers.has(this.currentQuestion.id)) {
+          this.isAnswerSubmitted = true;
+          this.isAnswerCorrect = this.userCorrectAnswers.get(this.currentQuestion.id) || false;
+        } else {
+          this.isAnswerSubmitted = false;
+          this.isAnswerCorrect = false;
+        }
+      } else {
+        this.selectedOptionId = null;
+        this.isAnswerSubmitted = false;
+        this.isAnswerCorrect = false;
+      }
     } else {
       this.isModuleCompleted = true;
     }
   }
 
-   // Shuffle the answer options
-   shuffleOptions(options: any[]): any[] {
+  // Calculate progress percentage based on current question index
+  getProgressPercentage(): number {
+    if (this.totalSteps === 0) return 0;
+    return ((this.currentStep) / this.totalSteps * 100);
+  }
+
+  // Shuffle the answer options
+  shuffleOptions(options: any[]): any[] {
     for (let i = options.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [options[i], options[j]] = [options[j], options[i]];
@@ -279,6 +297,11 @@ export class ModuleQuestionsComponent implements OnInit {
   selectOption(optionId: number): void {
     if (!this.isAnswerSubmitted) {
       this.selectedOptionId = optionId;
+      
+      // Save the user's answer
+      if (this.currentQuestion) {
+        this.userAnswers.set(this.currentQuestion.id, optionId);
+      }
     }
   }
 
@@ -294,6 +317,8 @@ export class ModuleQuestionsComponent implements OnInit {
     
     if (selectedOption) {
       this.isAnswerCorrect = selectedOption.isCorrect;
+      // Save whether the answer was correct
+      this.userCorrectAnswers.set(this.currentQuestion.id, this.isAnswerCorrect);
     }
   }
 
@@ -311,13 +336,26 @@ export class ModuleQuestionsComponent implements OnInit {
     }
   }
 
+  previousQuestion(): void {
+    if (this.currentQuestionIndex > 0) {
+      this.currentQuestionIndex--;
+      this.currentStep--;
+      this.setCurrentQuestion();
+      
+      // Update URL
+      this.router.navigate(
+        ['/trainings', this.trainingId, 'module', this.moduleId, 'questions', this.currentQuestionIndex],
+        { replaceUrl: true }
+      );
+    }
+  }
+
   getStepIndicatorText(): string {
     if (this.isModuleCompleted) {
       return "completed";
     }
     return `${this.currentStep} ${this.getLocalizedContent({ 'EN': 'of', 'FR': 'de', 'NL': 'van', 'DE': 'von' })} ${this.totalSteps}`;
   }
-
 
   goBackToVideo(): void {
     this.router.navigate(['/trainings', this.trainingId, 'module', this.moduleId]);

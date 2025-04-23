@@ -13,6 +13,10 @@
     </div>
   </div>
 
+  <div class="progress-bar">
+    <div class="progress-fill" [style.width]="getProgressPercentage() + '%'"></div>
+  </div>
+
   <div class="module-content" *ngIf="!isModuleCompleted">
     <div class="question-wrapper">
       <div class="question-icon">
@@ -57,27 +61,37 @@
 
     <div class="action-buttons">
       <button 
-        *ngIf="!isAnswerSubmitted" 
-        class="submit-button" 
-        [disabled]="selectedOptionId === null" 
-        (click)="submitAnswer()"
+        class="previous-button" 
+        [disabled]="currentQuestionIndex === 0"
+        (click)="previousQuestion()"
       >
-        {{ "QUESTIONS.SUBMIT_ANSWER" | translate }}
+        <span class="arrow-icon">←</span> {{ "QUESTIONS.PREVIOUS_QUESTION" | translate }}
       </button>
-      <button 
-        *ngIf="isAnswerSubmitted && isAnswerCorrect" 
-        class="next-button"
-        (click)="nextQuestion()"
-      >
-        {{ "QUESTIONS.NEXT_QUESTION" | translate }} <span class="arrow-icon">→</span>
-      </button>
-      <button 
-        *ngIf="isAnswerSubmitted && !isAnswerCorrect" 
-        class="try-again-button"
-        (click)="isAnswerSubmitted = false"
-      >
-        {{ "QUESTIONS.TRY_AGAIN" | translate }}
-      </button>
+      
+      <div class="action-buttons-right">
+        <button 
+          *ngIf="!isAnswerSubmitted" 
+          class="submit-button" 
+          [disabled]="selectedOptionId === null" 
+          (click)="submitAnswer()"
+        >
+          {{ "QUESTIONS.CHECK_ANSWER" | translate }}
+        </button>
+        <button 
+          *ngIf="isAnswerSubmitted && isAnswerCorrect" 
+          class="next-button"
+          (click)="nextQuestion()"
+        >
+          {{ "QUESTIONS.NEXT_QUESTION" | translate }} <span class="arrow-icon">→</span>
+        </button>
+        <button 
+          *ngIf="isAnswerSubmitted && !isAnswerCorrect" 
+          class="try-again-button"
+          (click)="isAnswerSubmitted = false"
+        >
+          {{ "QUESTIONS.TRY_AGAIN" | translate }}
+        </button>
+      </div>
     </div>
   </div>
 
