@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,7 +28,7 @@ public class ChatMember {
     @JsonIgnore
     private Chat chat;
     @OneToMany(mappedBy = "chatMember", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    private List<Message> messages;
+    private List<Message> messages = new ArrayList<>();
 
 
     public ChatMember(User user, Chat chat, List<Message> messages) {
