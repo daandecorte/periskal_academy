@@ -1,5 +1,6 @@
 package ap.student.project.backend.service;
 
+import ap.student.project.backend.dao.UserRepository;
 import ap.student.project.backend.dto.CertificateDTO;
 import ap.student.project.backend.dto.TrainingDTO;
 import ap.student.project.backend.dto.UserCertificateDTO;
@@ -7,6 +8,7 @@ import ap.student.project.backend.dto.UserDTO;
 import ap.student.project.backend.entity.*;
 import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,25 +45,25 @@ class UserCertificateServiceTest {
     private User user;
     private Certificate certificate;
     private TrainingDTO trainingDTO;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private EntityManager entityManager;
 
     @BeforeEach
     void setup() {
-        // Create and save User
         userDTO = new UserDTO("a", "b", "c", "c", Language.ENGLISH);
         user = userService.save(userDTO);
 
-        // Create and save Training
         trainingDTO = new TrainingDTO(null, null, true, null, null);
         Training training = trainingService.save(trainingDTO);
 
-        // Create and save Certificate
         certificateDTO = new CertificateDTO(training.getId(), 1, 1);
         certificate = certificateService.save(certificateDTO);
     }
 
     @Test
     void save_ShouldPersistUserCertificate() {
-        // Arrange
         UserCertificateDTO dto = new UserCertificateDTO(
                 LocalDateTime.now(),
                 LocalDateTime.now().plusYears(1),
@@ -69,10 +72,8 @@ class UserCertificateServiceTest {
                 certificate.getId()
         );
 
-        // Act
         UserCertificate saved = userCertificateService.save(dto);
 
-        // Assert
         assertThat(saved).isNotNull();
         assertThat(saved.getUser().getId()).isEqualTo(user.getId());
         assertThat(saved.getCertificate().getId()).isEqualTo(certificate.getId());
@@ -153,26 +154,32 @@ class UserCertificateServiceTest {
 
     @Test
     void findByUserId_ShouldReturnCertificatesForUser() {
+        user.setUserCertificates(new ArrayList<>());
+        User savedUser = userRepository.save(user);
+
         UserCertificateDTO dto = new UserCertificateDTO(
                 LocalDateTime.now(),
                 LocalDateTime.now().plusYears(1),
                 CertificateStatus.VALID,
-                user.getId(),
+                savedUser.getId(),
                 certificate.getId()
         );
+
         userCertificateService.save(dto);
 
-        List<UserCertificate> userCertificates = userCertificateService.findByUserId(user.getId());
+        entityManager.flush();
+        entityManager.clear();
+
+        List<UserCertificate> userCertificates = userCertificateService.findByUserId(savedUser.getId());
 
         assertThat(userCertificates).isNotEmpty();
     }
 
     @Test
     void findByUserId_ShouldThrowNotFoundException_WhenNoCertificates() {
-        // Create a second user with no certificates
         UserDTO anotherUserDTO = new UserDTO("d", "e", "f", "f", Language.ENGLISH);
         User anotherUser = userService.save(anotherUserDTO);
-
+        anotherUser.setUserCertificates(new ArrayList<>());
         assertThatThrownBy(() -> userCertificateService.findByUserId(anotherUser.getId()))
                 .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("User with id " + anotherUser.getId() + " has no certificates");

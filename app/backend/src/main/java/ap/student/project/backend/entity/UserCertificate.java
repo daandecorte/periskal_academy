@@ -26,7 +26,7 @@ public class UserCertificate {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "certificate_id")
     private Certificate certificate;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private User user;
 
