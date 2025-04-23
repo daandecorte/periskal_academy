@@ -5,7 +5,9 @@ import { catchError, map } from 'rxjs/operators';
 // Reusing LocalizedStrings from the Training Service, TODO: relocate things later
 import { LocalizedStrings } from './training.service';
 
-//This service will still need a few changes to the backend to properly work but it works with demo data for now
+// This service will still need a few changes to the backend to properly work but it works with demo data for now
+// Languages for the demo data somehow got broken along the way and I can't find how to fix it, my guess is a problem in the training service
+// But I thought it really didn't matter cause it's demo data anyway
 
 export interface QuestionOption {
   id: number;

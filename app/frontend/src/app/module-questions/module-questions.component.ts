@@ -154,9 +154,9 @@ export class ModuleQuestionsComponent implements OnInit {
             id: 101,
             text: {
               'EN': 'Answer 1',
-              'FR': 'Answer 1',
-              'NL': 'Answer 1',
-              'DE': 'Answer 1',
+              'FR': 'Answer French 1',
+              'NL': 'Answer Dutch 1',
+              'DE': 'Answer German 1',
             },
             isCorrect: false
           },
