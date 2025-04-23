@@ -110,3 +110,20 @@ input:checked + .slider:before {
   display: flex;
   justify-content: flex-end;
 }
+
+.cancel-btn {
+  background-color: #f5f5f5;
+  border: 1px solid #cccccc;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+.language-tabs {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}

@@ -55,7 +55,11 @@
     "QUESTION_TEXT": "Question Text",
     "ANSWER_OPTION": "Answer Options",
     "OPTION_PLACEHOLDER": "Answer option",
-    "ADD_OPTION": "+ Add Option"
+    "ADD_OPTION": "+ Add Option",
+    "FIELD_REQUIRED": "This field is required",
+    "EDITING_LANGUAGE": "Editing language",
+    "SAVING": "Saving",
+    "CANCEL": "Cancel"
   },
   "ADMIN_ADD_TRAININGS": {
     "EXAM_TITLE": "Exam Settings",
