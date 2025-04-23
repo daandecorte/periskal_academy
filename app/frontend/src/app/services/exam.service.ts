@@ -5,6 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 // Reusing LocalizedStrings from the Training Service, TODO: relocate things later
 import { LocalizedStrings } from './training.service';
 
+//This service will still need a few changes to the backend to properly work but it works with demo data for now
 
 export interface QuestionOption {
   id: number;
@@ -125,8 +126,9 @@ export class ExamService {
   submitExam(submission: ExamSubmission): Observable<ExamResult> {
     if (this.useDemoData) {
       // Simulate exam evaluation
+      // This might need changes depending on how the backend will work
       const result: ExamResult = {
-        score: 75, // Example score
+        score: 75, // Example
         passed: true
       };
       return of(result);
