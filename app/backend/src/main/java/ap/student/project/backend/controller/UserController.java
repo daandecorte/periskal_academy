@@ -58,12 +58,6 @@ public class UserController {
         }
     }
 
-    @DeleteMapping(value = "/users/{id}")
-    public ResponseEntity delete(@PathVariable("id") int id) {
-        this.userService.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }
-
     @GetMapping(value = "/users/{id}/trainings", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getTrainings(@PathVariable("id") int id) {
         try {

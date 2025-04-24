@@ -84,9 +84,4 @@ public class ExamController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
     }
-    @DeleteMapping(value = "/exams/{id}")
-    public ResponseEntity deleteExam(@PathVariable int id) {
-        this.examService.delete(id);
-        return ResponseEntity.noContent().build();
-    }
 }

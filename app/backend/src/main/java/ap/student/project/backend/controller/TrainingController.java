@@ -51,10 +51,4 @@ public class TrainingController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-
-    @DeleteMapping("/trainings/{id}")
-    public ResponseEntity deleteModule(@PathVariable("id") int id) {
-        trainingService.delete(id);
-        return ResponseEntity.noContent().build();
-    }
 }
