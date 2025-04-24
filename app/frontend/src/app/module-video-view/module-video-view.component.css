@@ -123,3 +123,40 @@
 .arrow-icon {
   font-size: 18px;
 }
+
+/* Video player styles */
+.video-container {
+  position: relative;
+  margin: 20px 0;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio by default */
+  overflow: hidden;
+}
+
+.video-container video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Ensures the video fills the container while maintaining aspect ratio */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+/* For larger screens, increase the height */
+@media (min-width: 768px) {
+  .video-container {
+    padding-bottom: 56.25%; /* Maintain 16:9 aspect ratio */
+    max-height: calc(100vh - 300px); /* Limit height based on viewport */
+  }
+}
+
+/* For very large screens */
+@media (min-width: 1200px) {
+  .video-container {
+    max-width: 100%;
+    margin: 20px auto;
+  }
+}
