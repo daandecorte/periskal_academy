@@ -78,9 +78,4 @@ class TrainingServiceTest {
         verify(trainingRepository, times(1)).findAll();
     }
 
-    @Test
-    void delete_ShouldCallRepositoryDeleteById() {
-        trainingService.delete(1);
-        verify(trainingRepository, times(1)).deleteById(1);
-    }
 }

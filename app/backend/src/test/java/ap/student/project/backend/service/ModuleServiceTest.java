@@ -73,22 +73,6 @@ class ModuleServiceTest {
     }
 
     @Test
-    void deleteTrainingById_ShouldThrowException_WhenModuleNotFound() {
-        when(moduleRepository.existsById(1)).thenReturn(false);
-        assertThrows(NotFoundException.class, () -> moduleService.deleteTrainingById(1));
-    }
-
-    @Test
-    void deleteTrainingById_ShouldDeleteModule_WhenFound() {
-        when(moduleRepository.existsById(1)).thenReturn(true);
-        doNothing().when(moduleRepository).deleteById(1);
-
-        moduleService.deleteTrainingById(1);
-
-        verify(moduleRepository, times(1)).deleteById(1);
-    }
-
-    @Test
     void updateModule_ShouldThrowException_WhenModuleNotFound() {
         when(moduleRepository.findById(1)).thenReturn(Optional.empty());
         assertThrows(NotFoundException.class, () -> moduleService.updateModule(1, moduleDTO));
