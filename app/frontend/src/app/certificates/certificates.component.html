@@ -1,23 +1,27 @@
 <h1>Assign Certificate</h1>
 <div class="progress-steps">
     <div class="progress-line"></div>
-    <div class="step active">
+    <div class="step" [ngClass]="{ 'active': currentIndex === 0 }">
         <div class="step-number">1</div>
         <div class="step-label">Select Module</div>
     </div>
-    <div class="step">
+    <div class="step" [ngClass]="{ 'active': currentIndex === 1 }">
         <div class="step-number">2</div>
         <div class="step-label">Select Sailors</div>
     </div>
-    <div class="step">
+    <div class="step" [ngClass]="{ 'active': currentIndex === 2 }">
         <div class="step-number">3</div>
         <div class="step-label">Accept Terms</div>
+    </div>
+    <div class="step" [ngClass]="{ 'active': currentIndex === 3 }">
+        <div class="step-number">4</div>
+        <div class="step-label">Send Info</div>
     </div>
 </div>
 @if(paths[currentIndex]=="select-module") {
     <app-select-module></app-select-module>
 }
-@else if(paths[currentIndex]=="assing-sailor") {
+@else if(paths[currentIndex]=="assign-sailor") {
     <app-assign-sailor></app-assign-sailor>
 }
 @else if(paths[currentIndex]=="accept-terms") {
@@ -27,7 +31,14 @@
     <app-send-info></app-send-info>
 }
 <div class="button-container">
-    <button class="btn btn-primary" (click)="nextStep()">
+        <button class="btn btn-primary" (click)="previousStep()" [disabled]="currentIndex==0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 5 5 12 12 19"></polyline>
+            </svg>
+            Previous
+        </button>
+    <button class="btn btn-primary" (click)="nextStep()" [disabled]="currentIndex>=paths.length-1">
         Next
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px;">
             <line x1="5" y1="12" x2="19" y2="12"></line>
