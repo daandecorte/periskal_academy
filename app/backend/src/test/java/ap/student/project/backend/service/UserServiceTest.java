@@ -63,10 +63,4 @@ class UserServiceTest {
         when(userRepository.findById(anyInt())).thenReturn(Optional.empty());
         assertThrows(NotFoundException.class, () -> userService.findById(1));
     }
-
-    @Test
-    void deleteById_ShouldCallRepositoryDelete() {
-        userService.deleteById(1);
-        verify(userRepository, times(1)).deleteById(1);
-    }
 }

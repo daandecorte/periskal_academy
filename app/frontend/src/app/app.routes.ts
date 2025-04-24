@@ -26,6 +26,10 @@ import { TrainingOverviewComponent } from './training-overview/training-overview
 import { ModuleVideoViewComponent } from './module-video-view/module-video-view.component';
 import { ModuleQuestionsComponent } from './module-questions/module-questions.component';
 import { TrainingExamComponent } from './training-exam/training-exam.component';
+import { SelectModuleComponent } from './certificates/select-module/select-module.component';
+import { SendInfoComponent } from './certificates/send-info/send-info.component';
+import { AcceptTermsComponent } from './certificates/accept-terms/accept-terms.component';
+import { AssignSailorComponent } from './certificates/assign-sailor/assign-sailor.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },

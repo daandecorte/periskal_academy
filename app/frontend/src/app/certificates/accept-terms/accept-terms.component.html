@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="card billing-details">
+        <!-- Order Summary Section -->
+        <div class="summary-section">
+            <h3 class="section-title">Order Summary</h3>
+            <div class="summary-row">
+                <div class="summary-label">Navigation Safety Certificate (3 sailors)</div>
+                <div class="summary-value">€225.00</div>
+            </div>
+            <div class="summary-row">
+                <div class="summary-label">Price per sailor</div>
+                <div class="summary-value">€75.00</div>
+            </div>
+            <div class="total-row">
+                <div class="total-label">Total Amount</div>
+                <div class="total-value">€225.00</div>
+            </div>
+        </div>
+        
+        <!-- Terms and Conditions Section -->
+        <div class="terms-section">
+            <h3 class="section-title">Terms and Conditions</h3>
+            <div class="terms-content">
+                Terms content...
+            </div>
+            
+            <!-- Checkbox -->
+            <div class="checkbox-container">
+                <input type="checkbox" id="accept-terms" [checked]="accepted" (click)="acceptTerms()">
+                <label for="accept-terms" class="checkbox-label">I accept the terms and conditions</label>
+            </div>
+        </div>
+        
+    </div>
+</div>
