@@ -44,7 +44,8 @@ public class UserCertificateController {
     @PostMapping(value = "/user-certificates", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createUserCertificate(@RequestBody UserCertificateDTO userCertificateDTO) {
         try {
-            return ResponseEntity.ok(this.userCertificateService.save(userCertificateDTO));
+            UserCertificate userCertificate = this.userCertificateService.save(userCertificateDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(userCertificate);
         }
         catch(NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

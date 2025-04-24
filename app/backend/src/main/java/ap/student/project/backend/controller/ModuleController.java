@@ -1,6 +1,7 @@
 package ap.student.project.backend.controller;
 
 import ap.student.project.backend.dto.ModuleDTO;
+import ap.student.project.backend.dto.QuestionDTO;
 import ap.student.project.backend.dto.VideoDTO;
 import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
@@ -61,17 +62,6 @@ public class ModuleController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-    @DeleteMapping(value = "/modules/{id}")
-    public ResponseEntity deleteTraining(@PathVariable Integer id) {
-        try {
-            moduleService.deleteTrainingById(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-    }
     @PostMapping(value = "/modules/{id}/video")
     public ResponseEntity addVideo(@PathVariable Integer id, @RequestBody VideoDTO videoDTO) {
         try {
@@ -83,5 +73,22 @@ public class ModuleController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-
+    @PostMapping(value = "/modules/{id}/questions")
+    public ResponseEntity addQuestion(@PathVariable("id") int id, @RequestBody QuestionDTO questionDTO) {
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(moduleService.addQuestion(id, questionDTO));
+        }
+        catch(NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+    @GetMapping(value = "/modules/{id}/questions")
+    public ResponseEntity getQuestion(@PathVariable("id") int id) {
+        try {
+            return ResponseEntity.ok(this.moduleService.getQuestionsByModuleId(id));
+        }
+        catch(NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }

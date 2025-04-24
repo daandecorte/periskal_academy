@@ -1,5 +1,6 @@
 package ap.student.project.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class QuestionOption {
     private boolean isCorrect;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "question_id")
+    @JsonIgnore
     private Question question;
 
     public QuestionOption(String text, boolean isCorrect, Question question) {

@@ -5,6 +5,7 @@ import ap.student.project.backend.dao.QuestionRepository;
 import ap.student.project.backend.dto.ExamDTO;
 import ap.student.project.backend.dto.QuestionDTO;
 import ap.student.project.backend.entity.Exam;
+import ap.student.project.backend.entity.QuestionOption;
 import ap.student.project.backend.entity.Training;
 import ap.student.project.backend.entity.Question;
 import ap.student.project.backend.exceptions.ListFullException;
@@ -73,6 +74,11 @@ public class ExamService {
             Question question = new Question();
             BeanUtils.copyProperties(questionDTO, question);
             question.setExam(exam);
+            List<QuestionOption> questionOptions = questionDTO.questionOptions();
+            for (QuestionOption questionOption : questionOptions) {
+                questionOption.setQuestion(question);
+            }
+            question.setQuestionOptions(questionOptions);
             if (exam.getQuestions().size() < exam.getQuestionAmount()) {
                 questionRepository.save(question);
             } else {

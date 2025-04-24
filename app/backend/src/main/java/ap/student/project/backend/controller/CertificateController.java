@@ -29,7 +29,7 @@ public class CertificateController {
     public ResponseEntity addCertificate(@RequestBody CertificateDTO certificateDTO) {
         try {
             Certificate certificate = this.certificateService.save(certificateDTO);
-            return ResponseEntity.ok(certificate);
+            return ResponseEntity.status(HttpStatus.CREATED).body(certificate);
         }
         catch(NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

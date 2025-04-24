@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 public record QuestionOptionDTO(
-        @JsonProperty("text") String text,
-        @JsonProperty("is_correct") boolean isCorrect
+        //@JsonProperty("text") String text,
+        //@JsonProperty("is_correct") boolean isCorrect
 ) {
 }
