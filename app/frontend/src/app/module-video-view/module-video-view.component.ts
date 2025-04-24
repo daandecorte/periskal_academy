@@ -139,7 +139,9 @@ export class ModuleVideoViewComponent implements OnInit, OnDestroy {
     
     // Set video URL based on current language
     if (module.videoReference) {
-      //this.videoUrl = this.getLocalizedContent(module.videoReference);
+      this.videoUrl = this.getLocalizedContent(module.videoReference);
+    } else {
+      //This is for testing and should be removed later
       this.videoUrl = "https://academyws.periskal.com/Downloads/groep7/TEST.mp4";
     }
     
