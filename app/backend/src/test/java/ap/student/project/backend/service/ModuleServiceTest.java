@@ -60,15 +60,15 @@ class ModuleServiceTest {
     }
 
     @Test
-    void getTrainingById_ShouldThrowException_WhenModuleNotFound() {
+    void getModuleById_ShouldThrowException_WhenModuleNotFound() {
         when(moduleRepository.findById(1)).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> moduleService.getTrainingById(1));
+        assertThrows(NotFoundException.class, () -> moduleService.getModuleById(1));
     }
 
     @Test
-    void getTrainingById_ShouldReturnModule_WhenFound() {
+    void getModuleById_ShouldReturnModule_WhenFound() {
         when(moduleRepository.findById(1)).thenReturn(Optional.of(module));
-        Module foundModule = moduleService.getTrainingById(1);
+        Module foundModule = moduleService.getModuleById(1);
         assertNotNull(foundModule);
     }
 
@@ -89,16 +89,16 @@ class ModuleServiceTest {
     }
 
     @Test
-    void updateTraining_ShouldThrowException_WhenModuleNotFound() {
+    void updateModule_ShouldThrowException_WhenModuleNotFound() {
         when(moduleRepository.findById(1)).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> moduleService.updateTraining(1, moduleDTO));
+        assertThrows(NotFoundException.class, () -> moduleService.updateModule(1, moduleDTO));
     }
 
     @Test
-    void updateTraining_ShouldSaveUpdatedModule_WhenFound() {
+    void updateModule_ShouldSaveUpdatedModule_WhenFound() {
         when(moduleRepository.findById(1)).thenReturn(Optional.of(module));
 
-        moduleService.updateTraining(1, moduleDTO);
+        moduleService.updateModule(1, moduleDTO);
 
         verify(moduleRepository, times(1)).save(any(Module.class));
     }

@@ -23,11 +23,11 @@ public class ModuleController {
         this.moduleService = moduleService;
     }
     @GetMapping(value = "/modules", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getAllTrainings() {
-        return ResponseEntity.ok(moduleService.getAllTrainings());
+    public ResponseEntity getAllModules() {
+        return ResponseEntity.ok(moduleService.getAllModules());
     }
     @PostMapping(value = "/modules", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity addTraining(@RequestBody ModuleDTO moduleDTO) {
+    public ResponseEntity addModule(@RequestBody ModuleDTO moduleDTO) {
         try {
             this.moduleService.save(moduleDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(moduleDTO);
@@ -42,9 +42,9 @@ public class ModuleController {
         }
     }
     @GetMapping(value = "/modules/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getTrainingById(@PathVariable Integer id) {
+    public ResponseEntity getModuleById(@PathVariable Integer id) {
         try {
-            return ResponseEntity.ok(moduleService.getTrainingById(id));
+            return ResponseEntity.ok(moduleService.getModuleById(id));
         }
         catch (NotFoundException e) {
             logger.error(e.getMessage());
@@ -52,9 +52,9 @@ public class ModuleController {
         }
     }
     @PutMapping(value = "/modules/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity updateTraining(@PathVariable Integer id, @RequestBody ModuleDTO moduleDTO) {
+    public ResponseEntity updateModule(@PathVariable Integer id, @RequestBody ModuleDTO moduleDTO) {
         try {
-            this.moduleService.updateTraining(id, moduleDTO);
+            this.moduleService.updateModule(id, moduleDTO);
             return ResponseEntity.ok(moduleDTO);
         }
         catch(NotFoundException e) {

@@ -26,7 +26,7 @@ public class ModuleService {
         this.trainingService = trainingService;
         this.questionRepository = questionRepository;
     }
-    public List<Module> getAllTrainings() {
+    public List<Module> getAllModules() {
         return moduleRepository.findAll();
     }
     public void save(ModuleDTO moduleDTO) {
@@ -39,20 +39,14 @@ public class ModuleService {
         BeanUtils.copyProperties(moduleDTO, module);
         moduleRepository.save(module);
     }
-    public Module getTrainingById(int id) {
+    public Module getModuleById(int id) {
         Module module = moduleRepository.findById(id).orElse(null);
         if (module == null) {
             throw new NotFoundException("Module with id " + id + " not found");
         }
         return module;
     }
-    public void deleteTrainingById(int id) {
-        if(moduleRepository.existsById(id)) {
-            moduleRepository.deleteById(id);
-        }
-        else throw new NotFoundException("Module with id " + id + " not found");
-    }
-    public void updateTraining(int id, ModuleDTO moduleDTO) {
+    public void updateModule(int id, ModuleDTO moduleDTO) {
         Module module = moduleRepository.findById(id).orElse(null);
         if (module == null) {
             throw new NotFoundException("Module with id " + id + " not found");

@@ -40,7 +40,4 @@ public class TrainingService {
     public List<Training> findAll() {
         return trainingRepository.findAll();
     }
-    public void delete(int id) {
-        trainingRepository.deleteById(id);
-    }
 }

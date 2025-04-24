@@ -65,11 +65,7 @@ public class UserService {
     public List<User> findAll() {
         return userRepository.findAll();
     }
-
-    public void deleteById(int id) {
-        userRepository.deleteById(id);
-    }
-
+    
     public List<UserTraining> getAllUserModules(int id) throws NotFoundException {
         User user = userRepository.findById(id).orElse(null);
         if (user == null) throw new NotFoundException("user not found");
