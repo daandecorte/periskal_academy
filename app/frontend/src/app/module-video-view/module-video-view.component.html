@@ -7,14 +7,19 @@
   </div>
 
   <div class="progress-indicator">
-    <div class="module-name">{{ moduleTitle }} - {{ "MODULE_VIDEO.VIDEO" | translate }}</div>
+    <div class="module-name">
+      {{ moduleTitle }} - {{ "MODULE_VIDEO.VIDEO" | translate }}
+    </div>
     <div class="step-indicator">
       {{ "MODULE_VIDEO.STEP" | translate }} {{ getStepIndicatorText() }}
     </div>
   </div>
 
   <div class="progress-bar">
-    <div class="progress-fill" [style.width]="getProgressPercentage() + '%'"></div>
+    <div
+      class="progress-fill"
+      [style.width]="getProgressPercentage() + '%'"
+    ></div>
   </div>
 
   <div class="module-content">
@@ -24,13 +29,34 @@
     </div>
 
     <!-- Video -->
-    <div class="video">
-      TODO: video player
+    <div class="video-container">
+      <video
+        #videoPlayer
+        [src]="videoUrl"
+        controls
+        (timeupdate)="updateVideoProgress($event)"
+        (pause)="saveVideoProgress()"
+        (ended)="videoCompleted = true; saveVideoProgress()"
+      >
+        Your browser does not support the video tag. Please try using a
+        different browser.
+      </video>
+
+      <div class="video-progress-indicator" *ngIf="videoCompleted">
+        <div class="completion-badge">
+          {{ "MODULE_VIDEO.VIDEO_COMPLETED" | translate }}
+        </div>
+      </div>
     </div>
 
     <div class="action-buttons">
-      <button class="continue-button" (click)="continueToQuestions()">
-        {{ "MODULE_VIDEO.CONTINUE_TO_QUESTIONS" | translate }} <span class="arrow-icon">→</span>
+      <button
+        class="continue-button"
+        (click)="continueToQuestions()"
+        [disabled]="questionCount === 0"
+      >
+        {{ "MODULE_VIDEO.CONTINUE_TO_QUESTIONS" | translate }}
+        <span class="arrow-icon">→</span>
       </button>
     </div>
   </div>
