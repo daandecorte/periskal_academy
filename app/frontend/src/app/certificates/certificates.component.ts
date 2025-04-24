@@ -33,4 +33,7 @@ export class CertificatesComponent {
   onUpdateAcceptTerms(accepted: boolean) {
     this.termsAccepted = accepted;
   }
+  complete() {
+    this.router.navigate(["/trainings"])
+  }
 }
