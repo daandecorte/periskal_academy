@@ -1,11 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CertificatesComponent } from '../certificates.component';
 
 @Component({
   selector: 'app-accept-terms',
-  imports: [],
   templateUrl: './accept-terms.component.html',
-  styleUrl: './accept-terms.component.css'
+  styleUrls: ['./accept-terms.component.css'],
 })
 export class AcceptTermsComponent {
+  @Input() public accepted = false;
+  @Output() accept = new EventEmitter<boolean>();
 
+  acceptTerms() {
+    this.accept.emit(!this.accepted);
+  }
 }

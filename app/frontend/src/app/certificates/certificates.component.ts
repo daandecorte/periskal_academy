@@ -19,17 +19,18 @@ export class CertificatesComponent {
   paths = ["select-module", "assign-sailor", "accept-terms", "send-info"];
   currentIndex:number=0;
   private routerSubscription!: Subscription;
+  termsAccepted = false;
 
-  constructor(private router:Router, private route:ActivatedRoute) {
-
-  }
+  constructor(private router:Router, private route:ActivatedRoute) {}
 
   nextStep() {
     this.currentIndex++;
-    this.router.navigate([`/certificates/${this.paths[this.currentIndex]}`]);
   }
   previousStep() {
     this.currentIndex--;
-    this.router.navigate([`/certificates/${this.paths[this.currentIndex]}`]);
+  }
+
+  onUpdateAcceptTerms(accepted: boolean) {
+    this.termsAccepted = accepted;
   }
 }

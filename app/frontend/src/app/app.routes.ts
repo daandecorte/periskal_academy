@@ -52,13 +52,6 @@ export const routes: Routes = [
     component: CertificatesComponent,
     //canActivate: [RoleGuard],
     data: { roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT] },
-    children: [
-      { path: '', redirectTo: 'select-module', pathMatch: 'full' },
-      { path: 'select-module', component: SelectModuleComponent },
-      { path: 'assign-sailor', component: AssignSailorComponent },
-      { path: 'accept-terms', component: AcceptTermsComponent },
-      { path: 'send-info', component: SendInfoComponent },
-    ],
   },
   {
     path: 'tips-and-tricks',

@@ -25,7 +25,7 @@
     <app-assign-sailor></app-assign-sailor>
 }
 @else if(paths[currentIndex]=="accept-terms") {
-    <app-accept-terms></app-accept-terms>
+    <app-accept-terms (accept)="onUpdateAcceptTerms($event)" [accepted]="termsAccepted" ></app-accept-terms>
 }
 @else if(paths[currentIndex]=="send-info") {
     <app-send-info></app-send-info>
@@ -39,7 +39,7 @@
             Previous
         </button>
         @if(currentIndex<paths.length-1) {
-            <button class="btn btn-primary" (click)="nextStep()">
+            <button class="btn btn-primary" (click)="nextStep()" [disabled]="termsAccepted==false&&currentIndex==2">
                 Next
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 8px;">
                     <line x1="5" y1="12" x2="19" y2="12"></line>
