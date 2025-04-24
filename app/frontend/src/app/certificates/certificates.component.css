@@ -1,0 +1,88 @@
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+/* Progress Steps */
+.progress-steps {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    position: relative;
+    padding: 0 100px;
+}
+
+.progress-line {
+    position: absolute;
+    top: 25px;
+    left: 170px;
+    right: 170px;
+    height: 2px;
+    background-color: #e0e0e0;
+    z-index: 1;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    flex: 1;
+}
+
+.step-number {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+    background-color: #e0e0e0;
+    color: #888;
+}
+
+.step.active .step-number {
+    background-color: #ffcc00;
+    color: #000;
+}
+
+.step-label {
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+}
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+.btn-primary {
+    background-color: #ffcc00;
+    color: #000;
+}
+
+.btn-primary:hover {
+    background-color: #e6b800;
+}

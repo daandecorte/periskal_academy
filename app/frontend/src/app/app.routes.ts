@@ -26,6 +26,10 @@ import { TrainingOverviewComponent } from './training-overview/training-overview
 import { ModuleVideoViewComponent } from './module-video-view/module-video-view.component';
 import { ModuleQuestionsComponent } from './module-questions/module-questions.component';
 import { TrainingExamComponent } from './training-exam/training-exam.component';
+import { SelectModuleComponent } from './certificates/select-module/select-module.component';
+import { SendInfoComponent } from './certificates/send-info/send-info.component';
+import { AcceptTermsComponent } from './certificates/accept-terms/accept-terms.component';
+import { AssignSailorComponent } from './certificates/assign-sailor/assign-sailor.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -48,6 +52,13 @@ export const routes: Routes = [
     component: CertificatesComponent,
     //canActivate: [RoleGuard],
     data: { roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT] },
+    children: [
+      { path: '', redirectTo: 'select-module', pathMatch: 'full' },
+      { path: 'select-module', component: SelectModuleComponent },
+      { path: 'assign-sailor', component: AssignSailorComponent },
+      { path: 'accept-terms', component: AcceptTermsComponent },
+      { path: 'send-info', component: SendInfoComponent },
+    ],
   },
   {
     path: 'tips-and-tricks',
