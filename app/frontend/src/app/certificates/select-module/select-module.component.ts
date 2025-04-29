@@ -1,12 +1,49 @@
 import { Component } from '@angular/core';
-import { TraineeChatComponent } from "../../trainee-chat/trainee-chat.component";
-
+import { Training } from '../../services/training.service';
+import { LanguageService } from '../../services/language.service';
+import { CertificateService } from '../../services/certificate.service';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-select-module',
-  imports: [TraineeChatComponent],
+  imports: [CommonModule],
   templateUrl: './select-module.component.html',
   styleUrl: './select-module.component.css'
 })
 export class SelectModuleComponent {
-
+  Language=Language
+  certificates: Certificate[]=[];
+  constructor(public service: CertificateService, public languageService: LanguageService) {
+    this.init();
+  }
+  async init() {
+    let certificateData = await fetch("/api/certificates")
+    this.certificates= await certificateData.json();
+    console.log(this.certificates)
+  }
+  toggleCertificate(index: number) {
+    let certificateIndex = this.service.selectedCertificates.findIndex(c=>c.id==this.certificates[index].id)
+    if(certificateIndex!=-1) {
+      this.service.selectedCertificates.splice(certificateIndex, 1);
+    }
+    else this.service.selectedCertificates.push(this.certificates[index])
+  }
+  isSelected(id: number) {
+    return this.service.selectedCertificates.some(c => c.id == id);
+  }
+}
+export interface Certificate {
+  id: number,
+  training: {
+    id: number,
+    title: any,
+    description: any, 
+    modules: [],
+    exams: [],
+    active: boolean
+  },
+  validity_period: number,
+  price: number
+}
+export enum Language {
+  ENGLISH, FRENCH, DUTCH, GERMAN
 }

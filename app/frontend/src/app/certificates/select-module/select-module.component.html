@@ -1,7 +1,7 @@
 <div class="container">
     <!-- Certificate Selection Card -->
     <div class="card">
-        <h2 class="card-title">Select Module Certificate</h2>
+        <h2 class="card-title">Select Training Certificate</h2>
         
         <!-- Search -->
         <div class="search-container">
@@ -57,6 +57,20 @@
                     <span class="certificate-value">€90.00</span>
                 </div>
             </div>
+            @for(certificate of certificates; track $index) {
+                <div class="certificate-card" [ngClass]="{ 'selected': isSelected(certificate.id)}" (click)="toggleCertificate($index)">
+                    <h3 class="certificate-title">{{certificate.training.title[languageService.getLanguage()]}}</h3>
+                    <p class="certificate-description">{{certificate.training.description[languageService.getLanguage()]}}</p>
+                    <div class="certificate-detail">
+                        <span>Duration:</span>
+                        <span class="certificate-value">{{certificate.validity_period}} Years</span>
+                    </div>
+                    <div class="certificate-detail">
+                        <span>Price per sailor:</span>
+                        <span class="certificate-value">€{{certificate.price}}</span>
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </div>
