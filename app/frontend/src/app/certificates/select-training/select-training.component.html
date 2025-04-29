@@ -1,0 +1,38 @@
+<div class="container">
+    <!-- Certificate Selection Card -->
+    <div class="card">
+        <h2 class="card-title">Select Training Certificate</h2>
+        
+        <!-- Search -->
+        <div class="search-container">
+            <div class="search-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </div>
+            <input type="text" class="search-input" placeholder="Search certificates...">
+        </div>
+        
+        <!-- Certificates Grid -->
+        <div class="certificate-grid">
+            @for(certificate of certificates; track $index) {
+                <div class="certificate-card" [ngClass]="{ 'selected': isSelected(certificate.id)}" (click)="toggleCertificate($index)">
+                    <div class="card-content">
+                        <h3 class="certificate-title">{{certificate.training.title[languageService.getLanguage()]}}</h3>
+                        <p class="certificate-description">{{certificate.training.description[languageService.getLanguage()]}}</p>
+                        <div class="certificate-detail">
+                            <span>Duration:</span>
+                            <span class="certificate-value">{{certificate.validity_period}} Years</span>
+                        </div>
+                        <div class="certificate-detail">
+                            <span>Price per sailor:</span>
+                            <span class="certificate-value">€{{certificate.price}}</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

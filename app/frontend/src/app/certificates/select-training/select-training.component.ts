@@ -4,12 +4,12 @@ import { LanguageService } from '../../services/language.service';
 import { CertificateService } from '../../services/certificate.service';
 import { CommonModule } from '@angular/common';
 @Component({
-  selector: 'app-select-module',
+  selector: 'app-select-training',
   imports: [CommonModule],
-  templateUrl: './select-module.component.html',
-  styleUrl: './select-module.component.css'
+  templateUrl: './select-training.component.html',
+  styleUrl: './select-training.component.css'
 })
-export class SelectModuleComponent {
+export class SelectTrainingComponent {
   Language=Language
   certificates: Certificate[]=[];
   constructor(public service: CertificateService, public languageService: LanguageService) {

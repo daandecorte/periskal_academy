@@ -110,7 +110,7 @@ export class SkippersComponent {
   }
 }
 
-interface IUsers {
+export interface IUsers {
   id: string;
   firstname: string;
   lastname: string;

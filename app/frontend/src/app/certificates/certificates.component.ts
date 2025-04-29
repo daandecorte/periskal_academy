@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SelectModuleComponent } from "./select-module/select-module.component";
+import { SelectTrainingComponent } from './select-training/select-training.component';
 import { TraineeChatComponent } from '../trainee-chat/trainee-chat.component';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-certificates',
-  imports: [FormsModule, CommonModule, SelectModuleComponent, TraineeChatComponent, AssignSailorComponent, AcceptTermsComponent, SendInfoComponent],
+  imports: [FormsModule, CommonModule, SelectTrainingComponent, TraineeChatComponent, AssignSailorComponent, AcceptTermsComponent, SendInfoComponent],
   templateUrl: './certificates.component.html',
   styleUrl: './certificates.component.css'
 })

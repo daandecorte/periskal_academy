@@ -14,30 +14,14 @@
         
         <!-- sailors Grid -->
         <div class="sailor-grid">
-            <!-- sailor 1 -->
-            <div class="sailor-card">
-                <div class="sailor-title">
-                    <fa-icon class="user-icon" [icon]="faUser"></fa-icon>
-                    <p>Brian</p>
+            @for (user of userList; track $index) {
+                <div class="sailor-card">
+                    <div class="sailor-title">
+                        <fa-icon class="user-icon" [icon]="faUser"></fa-icon>
+                        <p>{{user.firstname}} {{user.lastname}}</p>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- sailor 2 -->
-            <div class="sailor-card">
-                <div class="sailor-title">
-                    <fa-icon class="user-icon" [icon]="faUser"></fa-icon>
-                    <p>Brian</p>
-                </div>
-            </div>
-            
-            <!-- sailor 3 -->
-            <div class="sailor-card">
-                <div class="sailor-title">
-                    <fa-icon class="user-icon" [icon]="faUser"></fa-icon>
-                    <p>Brian</p>
-                </div>
-            </div>
-            
+            }
         </div>
     </div>
 </div>
