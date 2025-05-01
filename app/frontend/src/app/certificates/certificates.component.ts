@@ -7,7 +7,8 @@ import { AssignSailorComponent } from "./assign-sailor/assign-sailor.component";
 import { AcceptTermsComponent } from "./accept-terms/accept-terms.component";
 import { SendInfoComponent } from "./send-info/send-info.component";
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import emailjs from 'emailjs-com';
 
 @Component({
   selector: 'app-certificates',
@@ -34,6 +35,30 @@ export class CertificatesComponent {
     this.termsAccepted = accepted;
   }
   complete() {
+    this.sendEmail();
     this.router.navigate(["/trainings"])
+  }
+  sendEmail() {
+    const templateParams = {
+      from_name: 'Periskal Certificates',
+      to_name: 'Periskal Billing',
+      message: 'test',
+      price: '3 euro'
+    };
+    emailjs.send(
+      'service_apxfrbq',
+      'template_qz2zssu',
+      templateParams,
+      'Iem59IEE2DjHe7Qtn'
+    ).then(
+      (response) => {
+        console.log('SUCCESS!', response.status, response.text);
+        alert('Email sent successfully!');
+      },
+      (error) => {
+        console.log('FAILED...', error);
+        alert('Failed to send email.');
+      }
+    );
   }
 }

@@ -15,7 +15,7 @@
         <!-- sailors Grid -->
         <div class="sailor-grid">
             @for (user of userList; track $index) {
-                <div class="sailor-card">
+                <div class="sailor-card" [ngClass]="{ 'selected': isSelected(user.id)}" (click)="toggleUserSelect($index)">
                     <div class="sailor-title">
                         <fa-icon class="user-icon" [icon]="faUser"></fa-icon>
                         <p>{{user.firstname}} {{user.lastname}}</p>

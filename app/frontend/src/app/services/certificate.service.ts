@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Certificate } from '../certificates/select-training/select-training.component';
+import { IUsers } from '../skippers/skippers.component';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class CertificateService {
     email: "",
   };
   selectedCertificates: Certificate[] = []
-  selectedUsers: number[] = []
+  selectedUsers: IUsers[] = []
   constructor() { }
 }
 export interface BillingInfo {

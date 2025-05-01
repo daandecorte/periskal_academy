@@ -3,17 +3,15 @@
         <!-- Order Summary Section -->
         <div class="summary-section">
             <h3 class="section-title">Order Summary</h3>
-            <div class="summary-row">
-                <div class="summary-label">Navigation Safety Certificate (3 sailors)</div>
-                <div class="summary-value">€225.00</div>
-            </div>
-            <div class="summary-row">
-                <div class="summary-label">Price per sailor</div>
-                <div class="summary-value">€75.00</div>
-            </div>
+            @for(certificate of service.selectedCertificates; track $index) {
+                <div class="summary-row">
+                    <div class="summary-label">{{certificate.training.title[languageService.getLanguage()]}} Certificate: {{service.selectedUsers.length}} sailor(s)</div>
+                    <div class="summary-value">{{certificate.price | currency : 'EUR'}}</div>
+                </div>
+            }
             <div class="total-row">
                 <div class="total-label">Total Amount</div>
-                <div class="total-value">€225.00</div>
+                <div class="total-value">{{totalPrice() | currency: 'EUR'}}</div>
             </div>
         </div>
         
@@ -21,7 +19,7 @@
         <div class="terms-section">
             <h3 class="section-title">Terms and Conditions</h3>
             <div class="terms-content">
-                Terms content...
+                <a href="#">Read the terms and conditions.</a>
             </div>
             
             <!-- Checkbox -->

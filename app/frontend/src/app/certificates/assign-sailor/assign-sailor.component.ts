@@ -6,10 +6,11 @@ import { IUser } from '../../types/user-info';
 import { Observable } from 'rxjs';
 import { IUsers } from '../../skippers/skippers.component';
 import { CertificateService } from '../../services/certificate.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-assign-sailor',
-  imports: [FontAwesomeModule],
+  imports: [FontAwesomeModule, CommonModule],
   templateUrl: './assign-sailor.component.html',
   styleUrl: './assign-sailor.component.css'
 })
@@ -35,10 +36,15 @@ export class AssignSailorComponent {
     });
   }
   toggleUserSelect(index: number) {
-
+    let userIndex=this.service.selectedUsers.findIndex(u=> u.id==this.userList[index].id);
+    console.log(userIndex + " " + this.userList[index].id)
+    if(userIndex!=-1) {
+      this.service.selectedUsers.splice(userIndex, 1);
+    }
+    else this.service.selectedUsers.push(this.userList[index]);
   }
-  isSelected(id: number) {
-
+  isSelected(id: string) {
+    return this.service.selectedUsers.some(u=>u.id == id);
   }
 
   async getUsers() {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CertificateService } from '../../services/certificate.service';
-
+import emailjs from 'emailjs-com';
 @Component({
   selector: 'app-send-info',
   imports: [FormsModule],
