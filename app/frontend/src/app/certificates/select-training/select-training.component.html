@@ -11,12 +11,12 @@
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
             </div>
-            <input type="text" class="search-input" placeholder="Search certificates...">
+            <input type="text" (input)="filterCertificates()" [(ngModel)]="searchQuery" class="search-input" placeholder="Search certificates...">
         </div>
         
         <!-- Certificates Grid -->
         <div class="certificate-grid">
-            @for(certificate of certificates; track $index) {
+            @for(certificate of filteredCertificates; track $index) {
                 <div class="certificate-card" [ngClass]="{ 'selected': isSelected(certificate.id)}" (click)="toggleCertificate($index)">
                     <div class="card-content">
                         <h3 class="certificate-title">{{certificate.training.title[languageService.getLanguage()]}}</h3>

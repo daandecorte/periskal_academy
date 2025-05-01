@@ -7,10 +7,11 @@ import { Observable } from 'rxjs';
 import { IUsers } from '../../skippers/skippers.component';
 import { CertificateService } from '../../services/certificate.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-assign-sailor',
-  imports: [FontAwesomeModule, CommonModule],
+  imports: [FontAwesomeModule, CommonModule, FormsModule],
   templateUrl: './assign-sailor.component.html',
   styleUrl: './assign-sailor.component.css'
 })
@@ -19,6 +20,8 @@ export class AssignSailorComponent {
   currentUser: Observable<IUser | null>;
   userListPerId: string[] = [];
   userList: IUsers[] = [];
+  filteredUsers: IUsers[] = [];
+  searchQuery='';
   constructor(private authService: AuthService, public service: CertificateService) {
     this.currentUser = this.authService.currentUser$;
     this.authService.currentUser$.subscribe((user) => {
@@ -61,12 +64,20 @@ export class AssignSailorComponent {
 
       this.userList.push(user);
     }
+    this.filteredUsers=this.userList;
   }
   async getAllUsers() {
     let res = await fetch("api/users");
     let data: IUsers[] = await res.json();
     for(let user of data) {
       this.userList.push(user);
+    }
+  }
+  filterUsers() {
+    if(this.userList) {
+        this.filteredUsers = this.userList.filter(user => { const matchesTitle = this.searchQuery === '' || `${user.firstname} ${user.lastname}`.toLowerCase().includes(this.searchQuery.toLowerCase());
+        return matchesTitle;
+      });
     }
   }
 }
