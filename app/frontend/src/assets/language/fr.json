@@ -226,5 +226,57 @@
     "DOWNLOAD_CERTIFICATE": "Télécharger le certificat",
     "RETURN_TO_MODULE": "Retour au module",
     "BACK_TO_TRAININGS": "Retour aux formations"
-  }
+  },
+  "CERTIFICATES": {
+  "NEXT": "Suivant",
+  "PREVIOUS": "Précédent",
+  "FINISH": "Terminer",
+  "SELECT_TRAINING": "Sélectionner une formation",
+  "SELECT_SAILORS": "Sélectionner des marins",
+  "ACCEPT_TERMS": "Accepter les conditions",
+  "SEND_INFO": "Envoyer les informations",
+  "ASSIGN_CERTIFICATE": "Attribuer un certificat",
+  "SELECT_TRAINING_CERTIFICATE": "Sélectionner un certificat de formation",
+  "SEARCH_CERTIFICATES": "Rechercher des certificats...",
+  "DURATION": "Durée",
+  "YEARS": "Années",
+  "PRICE_PER_SAILOR": "Prix par marin",
+  "SELECT_SAILOR": "Sélectionner un marin",
+  "SEARCH_SAILORS": "Rechercher des marins...",
+  "ORDER_SUMMARY": "Résumé de la commande",
+  "USERS_SELECTED": "Utilisateurs sélectionnés",
+  "TOTAL_AMOUNT": "Montant total",
+  "TERMS_AND_CONDITIONS": "Conditions générales",
+  "READ_THE_TERMS_AND_CONDITIONS": "Lire les conditions générales.",
+  "I_ACCEPT_TERMS": "J'accepte les conditions générales",
+  "INFO_SENT_SUCCESS": "Informations envoyées avec succès !",
+  "INFO_SENT_FAILED": "Échec de l'envoi des informations, veuillez réessayer ou contacter le support."
+
+},"BILLING": {
+  "ENTER_BILLING_DETAILS": "Saisir les informations de facturation",
+  "BILLING_INFORMATION": "Informations de facturation",
+  "COMPANY_NAME": "Nom de l'entreprise",
+  "ENTER_COMPANY_NAME": "Entrez le nom de l'entreprise",
+  "VAT_NUMBER": "Numéro de TVA",
+  "ENTER_VAT_NUMBER": "Entrez le numéro de TVA",
+  "STREET_ADDRESS": "Adresse",
+  "ENTER_STREET_ADDRESS": "Entrez l'adresse",
+  "CITY": "Ville",
+  "ENTER_CITY": "Entrez la ville",
+  "POSTAL_CODE": "Code postal",
+  "ENTER_POSTAL_CODE": "Entrez le code postal",
+  "COUNTRY": "Pays",
+  "ENTER_COUNTRY": "Entrez le pays",
+  "STATE_PROVINCE": "État/Province",
+  "ENTER_STATE_PROVINCE": "Entrez l'état ou la province (le cas échéant)",
+  "CONTACT_INFORMATION": "Informations de contact",
+  "CONTACT_NAME": "Nom du contact",
+  "ENTER_FULL_NAME": "Entrez le nom complet",
+  "PHONE_NUMBER": "Numéro de téléphone",
+  "ENTER_PHONE_NUMBER": "Entrez le numéro de téléphone",
+  "EMAIL_ADDRESS": "Adresse e-mail",
+  "ENTER_EMAIL_ADDRESS": "Entrez l'adresse e-mail"
+}
+
+
 }

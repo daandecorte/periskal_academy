@@ -2,7 +2,7 @@
     <div class="card billing-details">
         <!-- Order Summary Section -->
         <div class="summary-section">
-            <h3 class="section-title">Order Summary</h3>
+            <h3 class="section-title">{{"CERTIFICATES.ORDER_SUMMARY" | translate}}</h3>
             @for(certificate of service.selectedCertificates; track $index) {
                 <div class="summary-row">
                     <div class="summary-label">{{certificate.training.title[languageService.getLanguage()]}} Certificate</div>
@@ -10,26 +10,26 @@
                 </div>
             }
             <div class="total-row">
-                <div class="summary-label">Users Selected: {{service.selectedUsers.length}}</div>
+                <div class="summary-label">{{"CERTIFICATES.USERS_SELECTED" | translate}}: {{service.selectedUsers.length}}</div>
                 <div class="summary-value">x {{service.selectedUsers.length}}</div>
             </div>
             <div class="total-row">
-                <div class="total-label">Total Amount</div>
+                <div class="total-label">{{"CERTIFICATES.TOTAL_AMOUNT" | translate}}</div>
                 <div class="total-value">{{service.totalPrice() | currency: 'EUR'}}</div>
             </div>
         </div>
         
         <!-- Terms and Conditions Section -->
         <div class="terms-section">
-            <h3 class="section-title">Terms and Conditions</h3>
+            <h3 class="section-title">{{"CERTIFICATES.TERMS_AND_CONDITIONS" | translate}}</h3>
             <div class="terms-content">
-                <a href="#">Read the terms and conditions.</a>
+                <a href="#">{{"CERTIFICATES.READ_THE_TERMS_AND_CONDITIONS" | translate}}</a>
             </div>
             
             <!-- Checkbox -->
             <div class="checkbox-container">
                 <input type="checkbox" id="accept-terms" [checked]="accepted" (click)="acceptTerms()">
-                <label for="accept-terms" class="checkbox-label">I accept the terms and conditions</label>
+                <label for="accept-terms" class="checkbox-label">{{"CERTIFICATES.I_ACCEPT_TERMS" | translate}}</label>
             </div>
         </div>
         

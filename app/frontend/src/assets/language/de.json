@@ -225,5 +225,57 @@
     "COMPLETION_MESSAGE": "Herzlichen Glückwunsch! Sie haben die Prüfung erfolgreich abgeschlossen.",
     "SCORE_LABEL": "PUNKTZAHL",
     "BACK_TO_TRAININGS": "Zurück zu Schulungen"
-  }
+  },
+  "CERTIFICATES": {
+  "NEXT": "Weiter",
+  "PREVIOUS": "Zurück",
+  "FINISH": "Fertigstellen",
+  "SELECT_TRAINING": "Training auswählen",
+  "SELECT_SAILORS": "Seeleute auswählen",
+  "ACCEPT_TERMS": "Bedingungen akzeptieren",
+  "SEND_INFO": "Informationen senden",
+  "ASSIGN_CERTIFICATE": "Zertifikat zuweisen",
+  "SELECT_TRAINING_CERTIFICATE": "Trainingszertifikat auswählen",
+  "SEARCH_CERTIFICATES": "Zertifikate suchen...",
+  "DURATION": "Dauer",
+  "YEARS": "Jahre",
+  "PRICE_PER_SAILOR": "Preis pro Seemann",
+  "SELECT_SAILOR": "Seemann auswählen",
+  "SEARCH_SAILORS": "Seeleute suchen...",
+  "ORDER_SUMMARY": "Bestellübersicht",
+  "USERS_SELECTED": "Benutzer ausgewählt",
+  "TOTAL_AMOUNT": "Gesamtbetrag",
+  "TERMS_AND_CONDITIONS": "Allgemeine Geschäftsbedingungen",
+  "READ_THE_TERMS_AND_CONDITIONS": "Lesen Sie die Allgemeinen Geschäftsbedingungen.",
+  "I_ACCEPT_TERMS": "Ich akzeptiere die Allgemeinen Geschäftsbedingungen",
+  "INFO_SENT_SUCCESS": "Information erfolgreich gesendet!",
+  "INFO_SENT_FAILED": "Senden der Information fehlgeschlagen. Bitte erneut versuchen oder den Support kontaktieren."
+
+},
+"BILLING": {
+  "ENTER_BILLING_DETAILS": "Rechnungsdetails eingeben",
+  "BILLING_INFORMATION": "Rechnungsinformationen",
+  "COMPANY_NAME": "Firmenname",
+  "ENTER_COMPANY_NAME": "Firmennamen eingeben",
+  "VAT_NUMBER": "Umsatzsteuer-ID",
+  "ENTER_VAT_NUMBER": "Umsatzsteuer-ID eingeben",
+  "STREET_ADDRESS": "Straße und Hausnummer",
+  "ENTER_STREET_ADDRESS": "Straßenadresse eingeben",
+  "CITY": "Stadt",
+  "ENTER_CITY": "Stadt eingeben",
+  "POSTAL_CODE": "Postleitzahl",
+  "ENTER_POSTAL_CODE": "Postleitzahl eingeben",
+  "COUNTRY": "Land",
+  "ENTER_COUNTRY": "Land eingeben",
+  "STATE_PROVINCE": "Bundesland/Provinz",
+  "ENTER_STATE_PROVINCE": "Bundesland oder Provinz eingeben (falls zutreffend)",
+  "CONTACT_INFORMATION": "Kontaktinformationen",
+  "CONTACT_NAME": "Kontaktname",
+  "ENTER_FULL_NAME": "Vollständigen Namen eingeben",
+  "PHONE_NUMBER": "Telefonnummer",
+  "ENTER_PHONE_NUMBER": "Telefonnummer eingeben",
+  "EMAIL_ADDRESS": "E-Mail-Adresse",
+  "ENTER_EMAIL_ADDRESS": "E-Mail-Adresse eingeben"
+}
+
 }

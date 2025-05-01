@@ -3,12 +3,13 @@ import { CertificatesComponent } from '../certificates.component';
 import { CertificateService } from '../../services/certificate.service';
 import { LanguageService } from '../../services/language.service';
 import { CurrencyPipe } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-accept-terms',
   templateUrl: './accept-terms.component.html',
   styleUrls: ['./accept-terms.component.css'],
-  imports: [CurrencyPipe], 
+  imports: [CurrencyPipe, TranslatePipe], 
   standalone: true
 })
 export class AcceptTermsComponent {

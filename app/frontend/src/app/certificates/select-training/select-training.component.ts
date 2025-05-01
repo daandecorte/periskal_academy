@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { Training } from '../../services/training.service';
 import { LanguageService } from '../../services/language.service';
 import { CertificateService } from '../../services/certificate.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 @Component({
   selector: 'app-select-training',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslatePipe],
   templateUrl: './select-training.component.html',
   styleUrl: './select-training.component.css'
 })

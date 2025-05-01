@@ -11,10 +11,11 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 import emailjs from 'emailjs-com';
 import { BillingInfo, CertificateService } from '../services/certificate.service';
 import { Serializer } from '@angular/compiler';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-certificates',
-  imports: [FormsModule, CommonModule, SelectTrainingComponent, TraineeChatComponent, AssignSailorComponent, AcceptTermsComponent, SendInfoComponent],
+  imports: [FormsModule, CommonModule, SelectTrainingComponent, TraineeChatComponent, AssignSailorComponent, AcceptTermsComponent, SendInfoComponent, TranslatePipe],
   templateUrl: './certificates.component.html',
   styleUrl: './certificates.component.css'
 })
@@ -24,7 +25,7 @@ export class CertificatesComponent {
   private routerSubscription!: Subscription;
   termsAccepted = false;
 
-  constructor(private router:Router, private route:ActivatedRoute, private service: CertificateService) {}
+  constructor(private router:Router, private route:ActivatedRoute, private service: CertificateService, private translate: TranslateService) {}
 
   nextStep() {
     this.currentIndex++;
@@ -65,7 +66,7 @@ export class CertificatesComponent {
       templateParams,
       'Iem59IEE2DjHe7Qtn'
     ).then(
-      (response) => {
+      async (response) => {
         this.service.billingInfo = {
           company: "",
           vat: "",
@@ -80,10 +81,14 @@ export class CertificatesComponent {
         };
         this.service.selectedCertificates=[];
         this.service.selectedUsers=[];
-        alert('Information sent successfully!');
+        //alert('Information sent successfully!');
+        const msg = await this.translate.get('CERTIFICATES.INFO_SENT_SUCCESS').toPromise();
+        alert(msg);
       },
-      (error) => {
-        alert('Failed to send information, try again or contact support.');
+      async (error) => {
+        //alert('Failed to send information, try again or contact support.');
+        const msg = await this.translate.get('CERTIFICATES.INFO_SENT_FAILED').toPromise();
+        alert(msg);
       }
     );
   }

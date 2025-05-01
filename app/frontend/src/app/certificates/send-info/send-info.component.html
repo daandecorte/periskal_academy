@@ -1,79 +1,68 @@
 <div class="container">
     <div class="card">
-        <h2 class="card-title">Enter Billing Details</h2>
+        <h2 class="card-title">{{"BILLING.ENTER_BILLING_DETAILS" | translate}}</h2>
         <form>
             <!-- Billing Information -->
             <div class="form-section">
-                <h3 class="section-title">Billing Information</h3>
+                <h3 class="section-title">{{"BILLING.BILLING_INFORMATION" | translate}}</h3>
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="required" for="company-name">Company Name</label>
-                        <input name="company" type="text" id="company-name" [(ngModel)]="service.billingInfo.company" class="form-control" placeholder="Enter company name" required>
+                        <label class="required" for="company-name">{{"BILLING.COMPANY_NAME" | translate}}</label>
+                        <input name="company" type="text" id="company-name" [(ngModel)]="service.billingInfo.company" class="form-control" [placeholder]="'BILLING.ENTER_COMPANY_NAME' | translate" required>
                     </div>
                     <div class="form-group">
-                        <label class="required" for="vat-number">VAT Number</label>
-                        <input name="vat" [(ngModel)]="service.billingInfo.vat" type="text" id="vat-number" class="form-control" placeholder="Enter VAT number" required>
+                        <label class="required" for="vat-number">{{"BILLING.VAT_NUMBER" | translate}}</label>
+                        <input name="vat" [(ngModel)]="service.billingInfo.vat" type="text" id="vat-number" class="form-control" [placeholder]="'BILLING.ENTER_VAT_NUMBER' | translate" required>
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group full-width">
-                        <label class="required" for="billing-address">Street Address</label>
-                        <input name="street" [(ngModel)]="service.billingInfo.street" type="text" id="billing-address" class="form-control" placeholder="Enter street address" required>
+                        <label class="required" for="billing-address">{{"BILLING.STREET_ADDRESS" | translate}}</label>
+                        <input name="street" [(ngModel)]="service.billingInfo.street" type="text" id="billing-address" class="form-control" [placeholder]="'BILLING.ENTER_STREET_ADDRESS' | translate" required>
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="required" for="city">City</label>
-                        <input name="city" [(ngModel)]="service.billingInfo.city" type="text" id="city" class="form-control" placeholder="Enter city" required>
+                        <label class="required" for="city">{{"BILLING.CITY" | translate}}</label>
+                        <input name="city" [(ngModel)]="service.billingInfo.city" type="text" id="city" class="form-control" [placeholder]="'BILLING.ENTER_CITY' | translate" required>
                     </div>
                     <div class="form-group">
-                        <label class="required" for="postal-code">Postal Code</label>
-                        <input name="postal" [(ngModel)]="service.billingInfo.postal" type="text" id="postal-code" class="form-control" placeholder="Enter postal code" required>
+                        <label class="required" for="postal-code">{{"BILLING.POSTAL_CODE" | translate}}</label>
+                        <input name="postal" [(ngModel)]="service.billingInfo.postal" type="text" id="postal-code" class="form-control" [placeholder]="'BILLING.ENTER_POSTAL_CODE' | translate" required>
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="required" for="country">Country</label>
-                        <select name="country" [(ngModel)]="service.billingInfo.country" id="country" class="form-control" required>
-                            <option value="" disabled selected>Select country</option>
-                            <option value="BE">Belgium</option>
-                            <option value="DK">Denmark</option>
-                            <option value="DE">Germany</option>
-                            <option value="FR">France</option>
-                            <option value="NL">Netherlands</option>
-                            <option value="PT">Portugal</option>
-                            <option value="ES">Spain</option>
-                            <option value="SE">Sweden</option>
-                            <option value="GB">United Kingdom</option>
-                        </select>
+                        <label class="required" for="country">{{"BILLING.COUNTRY" | translate}}</label>
+                        <input name="country" [(ngModel)]="service.billingInfo.country" type="text" id="country" class="form-control" [placeholder]="'BILLING.ENTER_COUNTRY' | translate" required>
                     </div>
                     <div class="form-group">
-                        <label for="state">State/Province</label>
-                        <input name="state" [(ngModel)]="service.billingInfo.state" type="text" id="state" class="form-control" placeholder="Enter state/province (if applicable)">
+                        <label for="state">{{"BILLING.STATE_PROVINCE" | translate}}</label>
+                        <input name="state" [(ngModel)]="service.billingInfo.state" type="text" id="state" class="form-control" [placeholder]="'BILLING.ENTER_STATE_PROVINCE' | translate">
                     </div>
                 </div>
             </div>
             
             <!-- Contact Information -->
             <div class="form-section">
-                <h3 class="section-title">Contact Information</h3>
+                <h3 class="section-title">{{"BILLING.CONTACT_INFORMATION" | translate}}</h3>
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="required" for="contact-name">Contact Name</label>
-                        <input name="name" [(ngModel)]="service.billingInfo.name" type="text" id="contact-name" class="form-control" placeholder="Enter full name" required>
+                        <label class="required" for="contact-name">{{"BILLING.CONTACT_NAME" | translate}}</label>
+                        <input name="name" [(ngModel)]="service.billingInfo.name" type="text" id="contact-name" class="form-control" [placeholder]="'BILLING.ENTER_FULL_NAME' | translate" required>
                     </div>
                     <div class="form-group">
-                        <label class="required" for="phone">Phone Number</label>
-                        <input name="phone" [(ngModel)]="service.billingInfo.phone" type="tel" id="phone" class="form-control" placeholder="Enter phone number" required>
+                        <label class="required" for="phone">{{"BILLING.PHONE_NUMBER" | translate}}</label>
+                        <input name="phone" [(ngModel)]="service.billingInfo.phone" type="tel" id="phone" class="form-control" [placeholder]="'BILLING.ENTER_PHONE_NUMBER' | translate" required>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label class="required" for="email">Email Address</label>
-                        <input name="email" [(ngModel)]="service.billingInfo.email" type="email" id="email" class="form-control" placeholder="Enter email address" required>
+                        <label class="required" for="email">{{"BILLING.EMAIL_ADDRESS" | translate}}</label>
+                        <input name="email" [(ngModel)]="service.billingInfo.email" type="email" id="email" class="form-control" [placeholder]="'BILLING.ENTER_EMAIL_ADDRESS' | translate" required>
                     </div>
                 </div>
             </div>

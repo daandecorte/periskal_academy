@@ -1,6 +1,6 @@
 <div class="container">
     <div class="card">
-        <h2 class="card-title">Select Sailor</h2>
+        <h2 class="card-title">{{"CERTIFICATES.SELECT_SAILOR" | translate}}</h2>
         
         <div class="search-container">
             <div class="search-icon">
@@ -9,7 +9,7 @@
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
             </div>
-            <input type="text" class="search-input" [(ngModel)]="searchQuery" (input)="filterUsers()" placeholder="Search Sailors...">
+            <input type="text" class="search-input" [(ngModel)]="searchQuery" (input)="filterUsers()" [placeholder]="'CERTIFICATES.SEARCH_SAILORS' | translate">
         </div>
         
         <!-- sailors Grid -->

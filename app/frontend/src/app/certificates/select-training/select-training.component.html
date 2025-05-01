@@ -1,7 +1,7 @@
 <div class="container">
     <!-- Certificate Selection Card -->
     <div class="card">
-        <h2 class="card-title">Select Training Certificate</h2>
+        <h2 class="card-title">{{"CERTIFICATES.SELECT_TRAINING_CERTIFICATE" | translate}}</h2>
         
         <!-- Search -->
         <div class="search-container">
@@ -11,7 +11,7 @@
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
             </div>
-            <input type="text" (input)="filterCertificates()" [(ngModel)]="searchQuery" class="search-input" placeholder="Search certificates...">
+            <input type="text" (input)="filterCertificates()" [(ngModel)]="searchQuery" class="search-input" [placeholder]="'CERTIFICATES.SEARCH_CERTIFICATES' | translate">
         </div>
         
         <!-- Certificates Grid -->
@@ -22,11 +22,11 @@
                         <h3 class="certificate-title">{{certificate.training.title[languageService.getLanguage()]}}</h3>
                         <p class="certificate-description">{{certificate.training.description[languageService.getLanguage()]}}</p>
                         <div class="certificate-detail">
-                            <span>Duration:</span>
-                            <span class="certificate-value">{{certificate.validity_period}} Years</span>
+                            <span>{{"CERTIFICATES.DURATION" | translate}}:</span>
+                            <span class="certificate-value">{{certificate.validity_period}} {{"CERTIFICATES.YEARS" | translate}}</span>
                         </div>
                         <div class="certificate-detail">
-                            <span>Price per sailor:</span>
+                            <span>{{"CERTIFICATES.PRICE_PER_SAILOR" | translate}}:</span>
                             <span class="certificate-value">€{{certificate.price}}</span>
                         </div>
                     </div>

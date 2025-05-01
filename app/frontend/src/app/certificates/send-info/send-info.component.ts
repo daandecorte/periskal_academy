@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CertificateService } from '../../services/certificate.service';
 import emailjs from 'emailjs-com';
+import { TranslatePipe } from '@ngx-translate/core';
 @Component({
   selector: 'app-send-info',
-  imports: [FormsModule],
+  imports: [FormsModule, TranslatePipe],
   templateUrl: './send-info.component.html',
   styleUrl: './send-info.component.css'
 })

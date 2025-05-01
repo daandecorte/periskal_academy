@@ -8,10 +8,11 @@ import { IUsers } from '../../skippers/skippers.component';
 import { CertificateService } from '../../services/certificate.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-assign-sailor',
-  imports: [FontAwesomeModule, CommonModule, FormsModule],
+  imports: [FontAwesomeModule, CommonModule, FormsModule, TranslatePipe],
   templateUrl: './assign-sailor.component.html',
   styleUrl: './assign-sailor.component.css'
 })
