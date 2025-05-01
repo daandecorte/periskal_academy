@@ -19,8 +19,4 @@ export class AcceptTermsComponent {
     this.accept.emit(!this.accepted);
   }
   constructor(public service: CertificateService, public languageService: LanguageService) {}
-  totalPrice() {
-    let price = this.service.selectedCertificates.reduce((accumulator, current)=> accumulator+current.price, 0);
-    return price*this.service.selectedUsers.length;
-  }
 }

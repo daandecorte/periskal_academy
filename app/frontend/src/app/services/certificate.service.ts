@@ -21,6 +21,10 @@ export class CertificateService {
   selectedCertificates: Certificate[] = []
   selectedUsers: IUsers[] = []
   constructor() { }
+  totalPrice() {
+    let price = this.selectedCertificates.reduce((accumulator, current)=> accumulator+current.price, 0);
+    return price*this.selectedUsers.length;
+  }
 }
 export interface BillingInfo {
   company: string;

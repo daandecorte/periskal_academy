@@ -9,6 +9,8 @@ import { SendInfoComponent } from "./send-info/send-info.component";
 import { FormsModule } from '@angular/forms';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import emailjs from 'emailjs-com';
+import { BillingInfo, CertificateService } from '../services/certificate.service';
+import { Serializer } from '@angular/compiler';
 
 @Component({
   selector: 'app-certificates',
@@ -22,7 +24,7 @@ export class CertificatesComponent {
   private routerSubscription!: Subscription;
   termsAccepted = false;
 
-  constructor(private router:Router, private route:ActivatedRoute) {}
+  constructor(private router:Router, private route:ActivatedRoute, private service: CertificateService) {}
 
   nextStep() {
     this.currentIndex++;
@@ -39,12 +41,24 @@ export class CertificatesComponent {
     this.router.navigate(["/trainings"])
   }
   sendEmail() {
-    const templateParams = {
-      from_name: 'Periskal Certificates',
-      to_name: 'Periskal Billing',
-      message: 'test',
-      price: '3 euro'
-    };
+    const templateParams: {
+      orders: { name: string; price: number }[];
+      users: {name: string, id: number}[];
+      total_price: number;
+      details: BillingInfo;
+    } = {
+      orders: [],
+      users: [],
+      total_price: this.service.totalPrice(),
+      details: this.service.billingInfo
+    }
+    for(let certificate of this.service.selectedCertificates) {
+      templateParams.orders.push({name: certificate.training.title['ENGLISH'], price: certificate.price})
+    }
+    for(let user of this.service.selectedUsers) { 
+      templateParams.users.push({name: user.firstname+" "+user.lastname, id: parseInt(user.id)})
+    }
+    console.log(templateParams)
     emailjs.send(
       'service_apxfrbq',
       'template_qz2zssu',
@@ -52,12 +66,24 @@ export class CertificatesComponent {
       'Iem59IEE2DjHe7Qtn'
     ).then(
       (response) => {
-        console.log('SUCCESS!', response.status, response.text);
-        alert('Email sent successfully!');
+        this.service.billingInfo = {
+          company: "",
+          vat: "",
+          street: "",
+          city: "",
+          postal: "",
+          country: "",
+          state: "",
+          name: "",
+          phone: "",
+          email: "",
+        };
+        this.service.selectedCertificates=[];
+        this.service.selectedUsers=[];
+        alert('Information sent successfully!');
       },
       (error) => {
-        console.log('FAILED...', error);
-        alert('Failed to send email.');
+        alert('Failed to send information, try again or contact support.');
       }
     );
   }

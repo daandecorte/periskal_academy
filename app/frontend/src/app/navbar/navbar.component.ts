@@ -79,7 +79,7 @@ export class NavbarComponent {
       path: 'certificates',
       icon: this.faCertificate,
       label: 'Certificates',
-      allowedRoles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT],
+      allowedRoles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT, Role.FLEETMANAGER],
     },
     {
       path: 'tips-and-tricks',
