@@ -1,12 +1,103 @@
 import { Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
+import { NewTrainingService } from '../new-training.service';
 
 @Component({
   selector: 'app-preview',
-  imports: [TranslateModule],
+  imports: [TranslateModule, FontAwesomeModule],
   templateUrl: './preview.component.html',
-  styleUrl: './preview.component.css'
+  styleUrl: './preview.component.css',
 })
 export class PreviewComponent {
+  faLock = faLock;
 
+  basicTrainingReady: boolean = false;
+  modulesReady: boolean = false;
+  examReady: boolean = false;
+
+  constructor(private trainingService: NewTrainingService) {
+    this.checkBasicTraining();
+    this.checkModules();
+    this.checkExam();
+  }
+
+  checkBasicTraining() {
+    const training = this.trainingService.newTraining;
+
+    this.basicTrainingReady =
+      this.isTranslatedFilled(training.title) &&
+      this.isTranslatedFilled(training.description);
+  }
+
+  checkModules() {
+    const modules = this.trainingService.newTraining.modules;
+
+    if (modules.length == 0) return;
+
+    for (let i = 0; i < modules.length; i++) {
+      if (!this.isTranslatedFilled(modules[i].title)) return;
+      if (!this.isTranslatedFilled(modules[i].description)) return;
+      //Logic for checking module content
+
+      const questions = modules[i].questions;
+      for (let j = 0; j < questions.length; j++) {
+        if (!this.isTranslatedFilled(questions[j].text)) return;
+
+        const questionOptions = questions[j].questionOptions;
+        for (let k = 0; k < questionOptions.length; k++) {
+          if (!this.isTranslatedFilled(questionOptions[k].text)) return;
+        }
+      }
+    }
+
+    this.modulesReady = true;
+  }
+
+  checkExam() {
+    const exam = this.trainingService.newTraining.exam;
+
+    if (exam.time == 0) return;
+    if (exam.questionAmount > exam.questions.length) return;
+
+    const questions = exam.questions;
+    for (let j = 0; j < questions.length; j++) {
+      if (!this.isTranslatedFilled(questions[j].text)) return;
+
+      const questionOptions = questions[j].questionOptions;
+      for (let k = 0; k < questionOptions.length; k++) {
+        if (!this.isTranslatedFilled(questionOptions[k].text)) return;
+      }
+    }
+
+    this.examReady = true;
+  }
+
+  private isTranslatedFilled(translated: ITranslated): boolean {
+    return Object.values(translated).every((value) => value.trim() !== '');
+  }
+
+  isActive: boolean = false;
+
+  get allReady(): boolean {
+    return this.basicTrainingReady && this.modulesReady && this.examReady;
+  }
+
+  toggleActive(event: Event) {
+    const input = event.target as HTMLInputElement;
+
+    if (this.allReady) {
+      this.isActive = input.checked;
+    } else {
+      input.checked = false;
+    }
+  }
+}
+
+interface ITranslated {
+  ENGLISH: string;
+  FRENCH: string;
+  DUTCH: string;
+  GERMAN: string;
 }

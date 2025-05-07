@@ -8,6 +8,7 @@
   padding-right: 40px;
   border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Title styling */
@@ -17,7 +18,7 @@
 }
 
 /* Section for no module message */
-.message-no-module {
+.message-no-trainig {
   margin-top: 16px;
   border-width: 1px;
   border-color: #e0e0e0;
@@ -33,7 +34,7 @@
 /* Button Styling */
 .btn {
   background-color: #fbbf24;
-  color: white;
+  color: black;
   padding: 8px 12px;
   border: none;
   border-radius: 6px;
@@ -45,4 +46,169 @@
 .flex {
   display: flex;
   justify-content: flex-end;
+}
+
+.module-card {
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  padding: 10px;
+  border-left: 4px solid #fbbf24;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.module-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.module-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.module-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.module-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.btn-icon:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.edit-btn .material-icons,
+.delete-btn .material-icons {
+  color: #999;
+}
+
+.module-description {
+  font-size: 14px;
+  color: #555;
+  margin: 8px 0 16px;
+  line-height: 1.5;
+}
+
+.module-footer {
+  justify-content: space-between;
+  font-size: 12px;
+  color: #777;
+}
+
+.module-items,
+.module-duration {
+  display: flex;
+  align-items: center;
+}
+
+.module-items::before {
+  font-family: "Material Icons";
+  margin-right: 4px;
+  font-size: 16px;
+}
+
+.module-duration::before {
+  font-family: "Material Icons";
+  margin-right: 4px;
+  font-size: 16px;
+}
+
+.serperation {
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-container {
+  background-color: white;
+  border-radius: 8px;
+  width: 530px;
+  max-width: 90%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.modal-small {
+  width: 365px;
+}
+
+.modal-text-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.modal-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-top: -10px;
+}
+
+.modal-actions-delete {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.btn-cancel {
+  background-color: white;
+  border: 1px solid #ddd;
+  color: #666;
+}
+
+.btn-delete {
+  background-color: #ffdf00;
+  color: #333;
+  font-weight: 600;
+}
+
+.btn-delete:hover {
+  background-color: #eacf00;
+}
+
+.btn-cancel:hover {
+  background-color: #f5f5f5;
+}
+
+.hidden {
+  display: none;
 }

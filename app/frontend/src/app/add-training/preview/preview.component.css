@@ -22,6 +22,7 @@
 
 .icon {
   margin-right: 8px;
+  color: gray;
 }
 
 .training-content {
@@ -42,4 +43,95 @@
   margin-right: 8px;
   color: green;
   font-size: 16px;
+}
+
+.settings-flex {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 5px;
+}
+
+/* Individuele settings-box */
+.setting-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  /*background: #f9f9f9;*/
+}
+
+/* Bigger distance between text and switch */
+.setting-label {
+  flex: 1;
+  text-align: left;
+}
+
+/* Switch and status on 1 line */
+.switch-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Switch Button */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 21px;
+  margin-top: 1px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  background-color: #ccc;
+  border-radius: 20px;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 15px;
+  width: 15px;
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #22c55e;
+}
+
+input:checked + .slider:before {
+  transform: translateX(18px);
+}
+
+.slider.round {
+  border-radius: 20px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.training-settings {
+  margin-top: 15px;
 }
