@@ -5,10 +5,6 @@ import { catchError, map } from 'rxjs/operators';
 // Reusing LocalizedStrings from the Training Service, TODO: relocate things later
 import { LocalizedStrings } from './training.service';
 
-// This service will still need a few changes to the backend to properly work but it works with demo data for now
-// Languages for the demo data somehow got broken along the way and I can't find how to fix it, my guess is a problem in the training service
-// But I thought it really didn't matter cause it's demo data anyway
-
 export interface QuestionOption {
   id: number;
   text: LocalizedStrings;
@@ -128,11 +124,24 @@ export class ExamService {
   submitExam(submission: ExamSubmission): Observable<ExamResult> {
     if (this.useDemoData) {
       // Simulate exam evaluation
-      // This might need changes depending on how the backend will work
+      // Calculate score based on demo exam correct answers
+      const correctAnswers = submission.answers.filter(answer => {
+        const question = this.demoExam.questions.find(q => q.id === answer.questionId);
+        if (!question) return false;
+        
+        const option = question.questionOptions.find(o => o.id === answer.optionId);
+        return option ? option.isCorrect : false;
+      }).length;
+      
+      const totalQuestions = this.demoExam.questions.length;
+      const score = (totalQuestions > 0) ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
+      const passed = score >= this.demoExam.passingScore;
+      
       const result: ExamResult = {
-        score: 75, // Example
-        passed: true
+        score: score,
+        passed: passed
       };
+      
       return of(result);
     } else {
       return this.http.post<ExamResult>(`${this.apiUrl}/submit`, submission).pipe(
