@@ -16,11 +16,10 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { IUser } from '../types/user-info';
 import { Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { ExamResultComponent } from '../add-training/exam-result/exam-result.component';
 
 @Component({
   selector: 'app-tips-and-tricks',
-  imports: [FontAwesomeModule, TranslatePipe, FormsModule, ExamResultComponent],
+  imports: [FontAwesomeModule, TranslatePipe, FormsModule],
   templateUrl: './tips-and-tricks.component.html',
   styleUrl: './tips-and-tricks.component.css',
 })

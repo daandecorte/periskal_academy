@@ -23,9 +23,6 @@ public class Question {
     @MapKeyColumn(name = "language")
     @Column(name = "text")
     private Map<Language, String> text;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "question_type")
-    private QuestionType questionType;
     @OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<QuestionOption> questionOptions;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -37,9 +34,8 @@ public class Question {
     @JsonIgnore
     private Module module;
 
-    public Question(Map<Language, String> text, QuestionType questionType, List<QuestionOption> questionOptions, Exam exam, Module module) {
+    public Question(Map<Language, String> text, List<QuestionOption> questionOptions, Exam exam, Module module) {
         this.text = text;
-        this.questionType = questionType;
         this.questionOptions = questionOptions;
         this.exam = exam;
         this.module = module;
@@ -50,7 +46,6 @@ public class Question {
         return "Question{" +
                 "id=" + id +
                 ", text=" + text +
-                ", questionType=" + questionType +
                 ", questionOptions=" + questionOptions +
                 ", exam=" + exam +
                 ", module=" + module +

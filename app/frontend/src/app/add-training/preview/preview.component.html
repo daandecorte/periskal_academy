@@ -1,22 +1,59 @@
 <div class="training-overview">
   <div class="training-header">
-    <span class="icon">🔒</span>
+    <fa-icon [icon]="faLock" class="icon"></fa-icon>
     <span class="title">
       {{ "ADMIN_ADD_TRAININGS.TRAINING_OVERVIEW" | translate }}</span
     >
   </div>
   <div class="training-content">
     <p>
+      @if(basicTrainingReady){
       <span class="status-icon">✅</span>
+      } @else {
+      <span class="status-icon">❌</span>
+      }
       {{ "ADMIN_ADD_TRAININGS.TRAINING_BASIC_INFO" | translate }}
     </p>
     <p>
+      @if(modulesReady){
       <span class="status-icon">✅</span>
+      } @else {
+      <span class="status-icon">❌</span>
+      }
       {{ "ADMIN_ADD_TRAININGS.TRAINING_MODULE" | translate }}
     </p>
     <p>
+      @if(examReady){
       <span class="status-icon">✅</span>
+      } @else {
+      <span class="status-icon">❌</span>
+      }
       {{ "ADMIN_ADD_TRAININGS.TRAINING_EXAM" | translate }}
     </p>
+  </div>
+
+  <!-- Training Settings -->
+  <div class="training-settings">
+    <div class="settings-flex">
+      <div class="setting-box">
+        <span class="setting-label">
+          {{ "ADMIN_EDIT_TRAININGS.SWITCH" | translate }}</span
+        >
+        <div class="switch-container">
+          <label class="switch">
+            <input
+              type="checkbox"
+              [checked]="isActive"
+              [disabled]="!allReady"
+              (change)="toggleActive($event)"
+            />
+            <span class="slider round"></span>
+          </label>
+          <span class="status-text active">
+            {{ "ADMIN_ADD_TRAININGS.ACTIVE" | translate }}</span
+          >
+        </div>
+      </div>
+    </div>
   </div>
 </div>

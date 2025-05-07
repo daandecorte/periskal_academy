@@ -38,6 +38,7 @@ body {
 /* Tabs styling */
 .tabs {
   display: flex;
+  justify-content: space-around;
   border-bottom: 2px solid #ddd;
   margin-bottom: 15px;
 }
@@ -60,4 +61,53 @@ a {
 .active {
   border-bottom: 2px solid #facc15;
   font-weight: bold;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  border-top: 2px solid #ddd;
+  padding-top: 20px;
+  margin-top: 10px;
+}
+
+.cancel-btn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  color: #888;
+}
+
+.save-btn {
+  background: #fbbf24;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  color: black;
+}
+
+.modal-language {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0px 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+.modal-button {
+  border: none;
+  background: none;
+}
+.modal-button:hover {
+  color: #787878;
+  cursor: pointer;
+}
+.modal-button.selected {
+  text-decoration: underline;
+  font-weight: 600;
 }

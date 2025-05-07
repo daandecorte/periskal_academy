@@ -1,28 +1,59 @@
 <div class="question-pool">
-  <label>{{ "ADMIN_EDIT_TRAININGS.QUESTION_POOL" | translate }}</label>
-  <select class="input">
-    <option>{{ "ADMIN_EDIT_TRAININGS.MULTIPLE_CHOICE" | translate }}</option>
-    <option>{{ "ADMIN_EDIT_TRAININGS.TRUE_FALSE" | translate }}</option>
-  </select>
+  <label class="margin-top title">{{
+    "ADMIN_EDIT_TRAININGS.QUESTION_POOL" | translate
+  }}</label>
 
-  <label>{{ "ADMIN_EDIT_TRAININGS.QUESTION_TEXT" | translate }}</label>
-  <textarea class="input"></textarea>
+  @for(question of trainingService.newModule.questions; track questionIndex; let
+  questionIndex = $index){
+  <label
+    class="margin-top"
+    style="display: flex; justify-content: space-between"
+    >{{ "ADMIN_EDIT_TRAININGS.QUESTION_TEXT" | translate }}
+    <button
+      class="delete-question-btn"
+      style="background-color: transparent; border: none"
+      (click)="deleteQuestion(questionIndex)"
+    >
+      <fa-icon [icon]="faTrash" style="color: gray"></fa-icon>
+    </button>
+  </label>
+  <textarea
+    #questionRef
+    class="input"
+    [placeholder]="'ADMIN_EDIT_TRAININGS.ENTER_QUESTION' | translate"
+    style="font-family: Arial, Helvetica, sans-serif"
+    (input)="questionChange(questionIndex)"
+  ></textarea>
 
   <label>{{ "ADMIN_EDIT_TRAININGS.ANSWER_OPTION" | translate }}</label>
+  @for (option of question.questionOptions; track optionIndex; let optionIndex =
+  $index) {
   <div class="answer-option">
     <input type="radio" />
     <input
+      #answerRef
       type="text"
       class="input"
       [placeholder]="'ADMIN_EDIT_TRAININGS.OPTION_PLACEHOLDER' | translate"
+      (input)="answerChange(optionIndex, questionIndex)"
     />
-    <button class="delete-btn">✖</button>
+    <button
+      class="delete-btn"
+      (click)="deleteQuestionOption(questionIndex, optionIndex)"
+    >
+      ✖
+    </button>
   </div>
-  <div class="button-container">
-    <button class="add-option-btn">
+  }
+  <div class="button-container border-down">
+    <button class="add-option-btn" (click)="addQuestionOption(questionIndex)">
       {{ "ADMIN_EDIT_TRAININGS.ADD_OPTION" | translate }}
     </button>
-    <button class="add-question-btn">
+  </div>
+  }
+
+  <div class="button-container">
+    <button class="add-question-btn" (click)="questionAdd()">
       {{ "ADMIN_EDIT_TRAININGS.ADD_QUESTION" | translate }}
     </button>
   </div>

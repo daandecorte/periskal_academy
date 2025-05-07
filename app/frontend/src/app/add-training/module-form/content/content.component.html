@@ -1,38 +1,113 @@
 <form class="form-container">
   <div class="form-group">
     <label>{{ "ADMIN_EDIT_TRAININGS.MODULE_TITLE" | translate }}</label>
-    <input type="text" class="form-control" />
+    <input
+      #titleRef
+      type="text"
+      class="form-control"
+      (change)="titleChange()"
+      [placeholder]="'ADMIN_EDIT_TRAININGS.ENTER_MODULE_TITLE' | translate"
+    />
   </div>
-
   <div class="form-group">
     <label>{{ "ADMIN_EDIT_TRAININGS.MODULE_DESCRIPTION" | translate }}</label>
-    <textarea class="form-control"></textarea>
+    <textarea
+      #descriptionRef
+      class="form-control"
+      (change)="descriptionChange()"
+      [placeholder]="'ADMIN_EDIT_TRAININGS.ENTER_DESCRIPTION' | translate"
+      style="font-family: Arial, Helvetica, sans-serif"
+    ></textarea>
   </div>
-
   <div class="form-group">
     <label>{{ "ADMIN_EDIT_TRAININGS.VIDEO" | translate }}</label>
+    @for (content of trainingService.newModule.content; track $index) {
+    @if(content.contentType === ContentType.TEXT){
+    <textarea
+      #contentRef
+      class="form-control form-height"
+      (input)="textChange($index)"
+      maxlength="250"
+    ></textarea>
+    } @else if(content.contentType === ContentType.PICTURE){
     <div class="video-upload">
-      <div class="language-selection">
-        <button class="lang-btn" [class.active]="selectedLanguage==='DUTCH'" (click)="changeVideoLanguage('DUTCH'); $event.preventDefault()">NL</button>
-        <button class="lang-btn" [class.active]="selectedLanguage==='FRENCH'" (click)="changeVideoLanguage('FRENCH'); $event.preventDefault()">FR</button>
-        <button class="lang-btn" [class.active]="selectedLanguage==='GERMAN'" (click)="changeVideoLanguage('GERMAN'); $event.preventDefault()">DE</button>
-        <button class="lang-btn" [class.active]="selectedLanguage==='ENGLISH'" (click)="changeVideoLanguage('ENGLISH'); $event.preventDefault()">EN</button>
-      </div>
+      @if(selectedImagePreview[$index][selectedLanguage] == ""){
       <div class="upload-box">
-        <div class="upload-icon">⬆</div>
+        <fa-icon [icon]="faUpload" class="upload-icon"></fa-icon>
+        <p>{{ "ADMIN_EDIT_TRAININGS.VIDEO_DESCRIPTION" | translate }}</p>
+        <p>{{ "ADMIN_EDIT_TRAININGS.IMAGE_FORMAT" | translate }}</p>
+        <input
+          #contentRef
+          #imageRef
+          type="file"
+          id="imageInput"
+          accept="image/png,image/jpeg"
+          (change)="imageChange($index, $event)"
+        />
+      </div>
+      } @else{
+      <div style="position: relative">
+        <button
+          class="delete-image-btn"
+          type="button"
+          (click)="removeImage($index)"
+        >
+          <fa-icon [icon]="faTimes"></fa-icon>
+        </button>
+        <img
+          [src]="selectedImagePreview[$index][selectedLanguage]"
+          alt="Selected image"
+          class="picture-preview"
+          style="display: block"
+        />
+      </div>
+      }
+    </div>
+    } @else if(content.contentType === ContentType.VIDEO){
+    <div class="video-upload">
+      @if(selectedVideoPreview[$index][selectedLanguage] == ""){
+      <div class="upload-box">
+        <fa-icon [icon]="faUpload" class="upload-icon"></fa-icon>
         <p>{{ "ADMIN_EDIT_TRAININGS.VIDEO_DESCRIPTION" | translate }}</p>
         <p>{{ "ADMIN_EDIT_TRAININGS.VIDEO_FORMAT" | translate }}</p>
-        <input type="file" id="videoInput" accept="video/mp4,video/webm,video/ogg" (change)="uploadVideo()"/>
+        <input
+          #contentRef
+          #videoRef
+          type="file"
+          id="videoInput"
+          accept="video/mp4,video/webm,video/ogg"
+          (change)="videoChange($index, $event)"
+        />
       </div>
+      } @else{
+      <div style="position: relative">
+        <button
+          class="delete-image-btn"
+          type="button"
+          (click)="removeVideo($index)"
+        >
+          <fa-icon [icon]="faTimes"></fa-icon>
+        </button>
+        <video
+          [src]="selectedVideoPreview[$index][selectedLanguage]"
+          controls
+          class="video-preview"
+          style="display: block; max-width: 100%"
+        ></video>
+      </div>
+      }
     </div>
+    } }
   </div>
-
-  <div class="form-actions">
-    <button class="cancel-btn" [routerLink]="['/add-training/modules']">
-      {{ "ADMIN_ADD_TRAININGS.MODULE_CANCEL" | translate }}
+  <div class="btn-content-add">
+    <button type="button" class="btn-add-text" (click)="addTextField()">
+      Add text
     </button>
-    <button class="save-btn">
-      {{ "ADMIN_ADD_TRAININGS.MODULE_SAVE" | translate }}
+    <button type="button" class="btn-add-pic" (click)="addPictureField()">
+      Add picture
+    </button>
+    <button type="button" class="btn-add-vid" (click)="addVideoField()">
+      Add video
     </button>
   </div>
 </form>

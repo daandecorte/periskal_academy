@@ -8,27 +8,54 @@
         <label class="label">
           {{ "ADMIN_ADD_TRAININGS.TIME_LIMIT" | translate }}</label
         >
-        <input type="number" class="input" value="60" min="0" />
+        <input
+          #timeRef
+          type="number"
+          class="input"
+          min="0"
+          (input)="changeTimeLimit()"
+        />
       </div>
       <div class="setting-item">
         <label class="label">
           {{ "ADMIN_ADD_TRAININGS.QUETIONS" | translate }}</label
         >
-        <input type="number" class="input" value="10" min="0" />
+        <input
+          #questionsPerExamRef
+          type="number"
+          class="input"
+          min="0"
+          (change)="changeQuestionsPerExam()"
+        />
       </div>
       <div class="setting-item">
         <label class="label">
           {{ "ADMIN_ADD_TRAININGS.PASSING_SCORE" | translate }}</label
         >
-        <input type="number" class="input" value="80" min="0" />
+        <input
+          #passingScoreRef
+          type="number"
+          class="input"
+          min="0"
+          max="100"
+          (input)="changePassingScore()"
+        />
       </div>
       <div class="setting-item">
         <label class="label">
           {{ "ADMIN_ADD_TRAININGS.MAX_ATTEMPTS" | translate }}</label
         >
-        <input type="number" class="input" value="3" min="0" />
+        <input
+          #retryAttemptsRef
+          type="number"
+          class="input"
+          min="0"
+          (input)="changeRetryAttempts()"
+        />
         <small class="hint">
-          {{ "ADMIN_ADD_TRAININGS.MAX_ATTEMPTS_DESCRIPTION" | translate }}</small
+          {{
+            "ADMIN_ADD_TRAININGS.MAX_ATTEMPTS_DESCRIPTION" | translate
+          }}</small
         >
       </div>
     </div>
@@ -39,40 +66,81 @@
       <h3 class="title">
         {{ "ADMIN_EDIT_TRAININGS.QUESTION_POOL" | translate }}
       </h3>
-      <button class="add-question-btn">
+      <button class="add-question-btn" (click)="questionAdd()">
         {{ "ADMIN_EDIT_TRAININGS.ADD_QUESTION" | translate }}
       </button>
     </div>
 
     <div class="question-pool-container">
-      <label class="label">{{
-        "ADMIN_EDIT_TRAININGS.QUESTION_TYPE" | translate
-      }}</label>
-      <select class="input">
-        <option>{{ "ADMIN_EDIT_TRAININGS.MULTIPLE_CHOICE" | translate }}</option>
-        <option>{{ "ADMIN_EDIT_TRAININGS.TRUE_FALSE" | translate }}</option>
-      </select>
-
-      <label class="label">{{
-        "ADMIN_EDIT_TRAININGS.QUESTION_TEXT" | translate
-      }}</label>
-      <textarea class="input"></textarea>
-
-      <label class="label">{{
-        "ADMIN_EDIT_TRAININGS.ANSWER_OPTION" | translate
-      }}</label>
-      <div class="answer-option">
-        <input type="radio" />
-        <input
-          type="text"
-          class="input"
-          [placeholder]="'ADMIN_EDIT_TRAININGS.OPTION_PLACEHOLDER' | translate"
-        />
-        <button class="delete-btn">✖</button>
+      <div class="modal-language">
+        <button class="modal-button selected" value="ENGLISH">
+          {{ ("ENGLISH" | translate).toUpperCase() }}
+        </button>
+        <button class="modal-button" value="DUTCH">
+          {{ ("DUTCH" | translate).toUpperCase() }}
+        </button>
+        <button class="modal-button" value="FRENCH">
+          {{ ("FRENCH" | translate).toUpperCase() }}
+        </button>
+        <button class="modal-button" value="GERMAN">
+          {{ ("GERMAN" | translate).toUpperCase() }}
+        </button>
       </div>
-      <button class="add-option-btn">
-        {{ "ADMIN_EDIT_TRAININGS.ADD_OPTION" | translate }}
-      </button>
+
+      @for (question of trainingService.newTraining.exam.questions; track
+      questionIndex; let questionIndex = $index) {
+      <div class="question-container">
+        <label
+          class="label question-text"
+          style="display: flex; justify-content: space-between"
+          >{{ "ADMIN_EDIT_TRAININGS.QUESTION_TEXT" | translate }}
+          <button
+            class="delete-question-btn"
+            style="background-color: transparent; border: none"
+            (click)="deleteQuestion(questionIndex)"
+          >
+            <fa-icon [icon]="faTrash" style="color: gray"></fa-icon></button
+        ></label>
+        <textarea
+          #questionRef
+          class="input"
+          [placeholder]="'ADMIN_EDIT_TRAININGS.ENTER_QUESTION' | translate"
+          style="font-family: Arial, Helvetica, sans-serif"
+          (input)="questionChange(questionIndex)"
+        ></textarea>
+
+        <label class="label">{{
+          "ADMIN_EDIT_TRAININGS.ANSWER_OPTION" | translate
+        }}</label>
+        @for(options of question.questionOptions; track optionIndex; let
+        optionIndex = $index){
+        <div class="answer-option">
+          <input type="radio" />
+          <input
+            #answerRef
+            type="text"
+            class="input"
+            [placeholder]="
+              'ADMIN_EDIT_TRAININGS.OPTION_PLACEHOLDER' | translate
+            "
+            (input)="answerChange(questionIndex, optionIndex)"
+          />
+          <button
+            class="delete-btn"
+            (click)="deleteQuestionOption(questionIndex, optionIndex)"
+          >
+            ✖
+          </button>
+        </div>
+        }
+        <button
+          class="add-option-btn"
+          (click)="addQuestionOption(questionIndex)"
+        >
+          {{ "ADMIN_EDIT_TRAININGS.ADD_OPTION" | translate }}
+        </button>
+      </div>
+      }
     </div>
   </div>
 </div>

@@ -1,27 +1,42 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterModule,
+  RouterOutlet,
+} from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { filter, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-training',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule, TranslateModule],
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    CommonModule,
+    TranslateModule,
+  ],
   templateUrl: './add-training.component.html',
-  styleUrl: './add-training.component.css'
+  styleUrl: './add-training.component.css',
 })
 export class AddTrainingComponent {
   steps = ['basic-setup', 'modules', 'exam', 'preview'];
-  currentStep: string = this.steps[0]; 
+  currentStep: string = this.steps[0];
   private routerSubscription!: Subscription;
 
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.routerSubscription = this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
+      .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
-        const currentPath = this.route.snapshot.firstChild?.url[0]?.path || this.steps[0];
+        const currentPath =
+          this.route.snapshot.firstChild?.url[0]?.path || this.steps[0];
         if (this.steps.includes(currentPath)) {
           this.currentStep = currentPath;
         }
@@ -53,5 +68,4 @@ export class AddTrainingComponent {
       this.routerSubscription.unsubscribe();
     }
   }
-  
 }

@@ -19,8 +19,32 @@
       </a>
     </div>
 
+    <div class="modal-language">
+      <button class="modal-button selected" value="ENGLISH">
+        {{ ("ENGLISH" | translate).toUpperCase() }}
+      </button>
+      <button class="modal-button" value="DUTCH">
+        {{ ("DUTCH" | translate).toUpperCase() }}
+      </button>
+      <button class="modal-button" value="FRENCH">
+        {{ ("FRENCH" | translate).toUpperCase() }}
+      </button>
+      <button class="modal-button" value="GERMAN">
+        {{ ("GERMAN" | translate).toUpperCase() }}
+      </button>
+    </div>
+
     <div class="form-group">
       <router-outlet></router-outlet>
+    </div>
+
+    <div class="form-actions">
+      <button class="cancel-btn" [routerLink]="['/add-training/modules']">
+        {{ "ADMIN_ADD_TRAININGS.MODULE_CANCEL" | translate }}
+      </button>
+      <button class="save-btn" (click)="saveModule()">
+        {{ "ADMIN_ADD_TRAININGS.MODULE_SAVE" | translate }}
+      </button>
     </div>
   </div>
 </body>
