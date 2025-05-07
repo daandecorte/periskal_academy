@@ -38,10 +38,17 @@
         </p>
         <div class="module-footer">
           <span class="module-items"
-            >Items: 0 video(s), 0 picture(s), 0 text(s)</span
+            >{{ "ADMIN_ADD_TRAININGS.ITEMS" | translate }}
+            {{ contentCount[$index].texts }}
+            {{ "ADMIN_ADD_TRAININGS.TEXTS" | translate }},
+            {{ contentCount[$index].pictures }}
+            {{ "ADMIN_ADD_TRAININGS.PICTURES" | translate }},
+            {{ contentCount[$index].videos }}
+            {{ "ADMIN_ADD_TRAININGS.VIDEOS" | translate }}</span
           >
           <span class="module-duration"
-            >Questions: {{ module.questions.length }}
+            >{{ "ADMIN_ADD_TRAININGS.QUESTIONS" | translate }}:
+            {{ module.questions.length }}
           </span>
         </div>
       </div>
@@ -61,18 +68,22 @@
   <div id="modal-overlay-delete" class="modal-overlay hidden">
     <div class="modal-container modal-small">
       <div>
-        <h4 class="modal-text-title">Delete Module</h4>
-        <p class="modal-text">Are you sure you want to delete this module?</p>
+        <h4 class="modal-text-title">
+          {{ "ADMIN_ADD_TRAININGS.DELETE_MODULE" | translate }}
+        </h4>
+        <p class="modal-text">
+          {{ "ADMIN_ADD_TRAININGS.DELETE_MODULE_MESSAGE" | translate }}
+        </p>
         <div class="modal-actions-delete">
           <button
             id="cancel-btn"
             class="btn btn-cancel"
             (click)="cancelDelete()"
           >
-            Cancel
+            {{ "ADMIN_EDIT_TRAININGS.CANCEL" | translate }}
           </button>
           <button id="save-btn" class="btn btn-delete" (click)="deleteModule()">
-            Delete
+            {{ "ADMIN_ADD_TRAININGS.DELETE" | translate }}
           </button>
         </div>
       </div>

@@ -1,7 +1,7 @@
 <body>
   <div class="modal">
     <div class="modal-header">
-      <h2>Add New Module</h2>
+      <h2>{{ "ADMIN_ADD_TRAININGS.ADD_NEW_MODULE" | translate }}</h2>
     </div>
 
     <div class="tabs">
@@ -9,13 +9,13 @@
         [routerLink]="['/add-training/modules', 'new', 'content']"
         [routerLinkActive]="'active'"
       >
-        Content
+        {{ "ADMIN_ADD_TRAININGS.CONTENT" | translate }}
       </a>
       <a
         [routerLink]="['/add-training/modules', 'new', 'questions']"
         [routerLinkActive]="'active'"
       >
-        Questions
+        {{ "ADMIN_ADD_TRAININGS.QUESTIONS" | translate }}
       </a>
     </div>
 

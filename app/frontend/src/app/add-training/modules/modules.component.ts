@@ -17,10 +17,13 @@ export class ModulesComponent {
   faEdit = faEdit;
 
   modules: IModule[] = [];
+  contentCount: IContentCount[] = [];
   currentLanguage: keyof ITranslated = 'ENGLISH';
 
   modalOverlayDelete!: HTMLDivElement;
   deleteId: number = -1;
+
+  ContentType = ContentType;
 
   constructor(
     private trainingService: NewTrainingService,
@@ -31,6 +34,24 @@ export class ModulesComponent {
 
     this.languageService.currentLanguage$.subscribe((language) => {
       this.currentLanguage = language as keyof ITranslated;
+    });
+
+    this.modules.forEach((module) => {
+      let textsCount = 0;
+      let picturesCount = 0;
+      let videosCount = 0;
+
+      module.content.forEach((el) => {
+        if (el.contentType == ContentType.TEXT) textsCount++;
+        if (el.contentType == ContentType.PICTURE) picturesCount++;
+        if (el.contentType == ContentType.VIDEO) videosCount++;
+      });
+
+      this.contentCount.push({
+        texts: textsCount,
+        pictures: picturesCount,
+        videos: videosCount,
+      });
     });
   }
 
@@ -68,6 +89,12 @@ interface ITranslated {
   FRENCH: string;
   DUTCH: string;
   GERMAN: string;
+}
+
+interface IContentCount {
+  texts: number;
+  pictures: number;
+  videos: number;
 }
 
 interface IModule {

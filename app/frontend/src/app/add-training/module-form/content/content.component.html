@@ -20,7 +20,7 @@
     ></textarea>
   </div>
   <div class="form-group">
-    <label>{{ "ADMIN_EDIT_TRAININGS.VIDEO" | translate }}</label>
+    <label>{{ "ADMIN_EDIT_TRAININGS.MODULE_CONTENT" | translate }}</label>
     @for (content of trainingService.newModule.content; track $index) {
     @if(content.contentType === ContentType.TEXT){
     <textarea
