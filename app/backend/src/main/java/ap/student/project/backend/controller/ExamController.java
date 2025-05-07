@@ -1,6 +1,8 @@
 package ap.student.project.backend.controller;
 
 import ap.student.project.backend.dto.ExamDTO;
+import ap.student.project.backend.dto.ExamResultDTO;
+import ap.student.project.backend.dto.ExamSubmissionDTO;
 import ap.student.project.backend.dto.QuestionDTO;
 import ap.student.project.backend.exceptions.DuplicateException;
 import ap.student.project.backend.exceptions.ListFullException;
@@ -82,6 +84,20 @@ public class ExamController {
         catch(ListFullException e) {
             logger.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
+    }
+
+     @PostMapping(value = "/exams/submit", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity submitExam(@RequestBody ExamSubmissionDTO submissionDTO) {
+        try {
+            ExamResultDTO result = this.examService.evaluateExam(submissionDTO);
+            return ResponseEntity.ok(result);
+        } catch (NotFoundException e) {
+            logger.error(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            logger.error("Error submitting exam: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing exam submission");
         }
     }
 }

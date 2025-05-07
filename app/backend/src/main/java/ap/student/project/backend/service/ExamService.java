@@ -1,8 +1,12 @@
 package ap.student.project.backend.service;
 
 import ap.student.project.backend.dao.ExamRepository;
+import ap.student.project.backend.dao.QuestionOptionRepository;
 import ap.student.project.backend.dao.QuestionRepository;
+import ap.student.project.backend.dto.ExamAnswerDTO;
 import ap.student.project.backend.dto.ExamDTO;
+import ap.student.project.backend.dto.ExamResultDTO;
+import ap.student.project.backend.dto.ExamSubmissionDTO;
 import ap.student.project.backend.dto.QuestionDTO;
 import ap.student.project.backend.entity.Exam;
 import ap.student.project.backend.entity.QuestionOption;
@@ -14,19 +18,23 @@ import ap.student.project.backend.exceptions.NotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ap.student.project.backend.dao.QuestionOptionRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ExamService {
     private final ExamRepository examRepository;
     private final QuestionRepository questionRepository;
     private final TrainingService trainingService;
+    private final QuestionOptionRepository questionOptionRepository;
 
-    public ExamService(ExamRepository examRepository, QuestionRepository questionRepository, TrainingService trainingService) {
+    public ExamService(ExamRepository examRepository, QuestionRepository questionRepository, TrainingService trainingService, QuestionOptionRepository questionOptionRepository) {
         this.examRepository = examRepository;
         this.questionRepository = questionRepository;
         this.trainingService = trainingService;
+        this.questionOptionRepository = questionOptionRepository;
     }
 
     public void save(ExamDTO examDTO) throws MissingArgumentException, NotFoundException {
@@ -67,6 +75,7 @@ public class ExamService {
     public void delete(int id) {
         examRepository.deleteById(id);
     }
+
     @Transactional
     public void addQuestion(int id, QuestionDTO questionDTO) {
         try {
@@ -96,5 +105,39 @@ public class ExamService {
         catch (NotFoundException e) {
             throw new NotFoundException("Exam with id " + id + " not found");
         }
+    }
+
+    public ExamResultDTO evaluateExam(ExamSubmissionDTO submissionDTO) throws NotFoundException {
+        // Find the exam
+        Exam exam = findById(submissionDTO.getExamId());
+        
+        // Count correct answers
+        int correctAnswers = 0;
+        int totalQuestions = submissionDTO.getAnswers().size();
+        
+        for (ExamAnswerDTO answerDTO : submissionDTO.getAnswers()) {
+            Optional<Question> questionOptional = questionRepository.findById(answerDTO.getQuestionId());
+            if (questionOptional.isEmpty()) {
+                continue; // Skip this answer if question not found
+            }
+            
+            Optional<QuestionOption> optionOptional = questionOptionRepository.findById(answerDTO.getOptionId());
+            if (optionOptional.isEmpty()) {
+                continue; // Skip this answer if option not found
+            }
+            
+            QuestionOption selectedOption = optionOptional.get();
+            if (selectedOption.isCorrect()) {
+                correctAnswers++;
+            }
+        }
+        
+        // Calculate score as percentage
+        int score = (totalQuestions > 0) ? (correctAnswers * 100) / totalQuestions : 0;
+        
+        // Determine if passed
+        boolean passed = score >= exam.getPassingScore();
+        
+        return new ExamResultDTO(score, passed);
     }
 }
