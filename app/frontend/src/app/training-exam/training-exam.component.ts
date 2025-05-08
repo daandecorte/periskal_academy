@@ -313,7 +313,8 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         console.error('Error submitting exam:', error);
-        this.examSubmissionError = 'Failed to submit exam. Please check your internet connection. Contact our support team if you keep encountering issues.';
+        // TODO: properly handle error
+        this.examSubmissionError = 'DEBUG: submitting fails when using demo data (exam id 0 is used as a fallback but is not found in database)';
         this.isSubmitting = false;
       }
     });
