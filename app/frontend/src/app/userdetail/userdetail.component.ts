@@ -1,6 +1,6 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageService } from '../services/language.service';
 import { Subscription } from 'rxjs';
@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-userdetail',
-  imports: [CommonModule, TranslatePipe, FormsModule, DatePipe],
+  imports: [CommonModule, TranslatePipe, FormsModule, DatePipe, RouterLink],
   templateUrl: './userdetail.component.html',
   styleUrl: './userdetail.component.css'
 })

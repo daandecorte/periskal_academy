@@ -26,10 +26,7 @@ import { TrainingOverviewComponent } from './training-overview/training-overview
 import { ModuleVideoViewComponent } from './module-video-view/module-video-view.component';
 import { ModuleQuestionsComponent } from './module-questions/module-questions.component';
 import { TrainingExamComponent } from './training-exam/training-exam.component';
-import { SelectTrainingComponent } from './certificates/select-training/select-training.component';
-import { SendInfoComponent } from './certificates/send-info/send-info.component';
-import { AcceptTermsComponent } from './certificates/accept-terms/accept-terms.component';
-import { AssignSailorComponent } from './certificates/assign-sailor/assign-sailor.component';
+import { AdminCertificatesComponent } from './admin-certificates/admin-certificates.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -51,7 +48,13 @@ export const routes: Routes = [
     path: 'certificates',
     component: CertificatesComponent,
     //canActivate: [RoleGuard],
-    data: { roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT] },
+    data: { roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT, Role.FLEETMANAGER] },
+  },
+  {
+    path: 'admin/certificates',
+    component: AdminCertificatesComponent,
+    //canActivate: [RoleGuard],
+    data: { roles: [Role.ADMIN] },
   },
   {
     path: 'tips-and-tricks',
