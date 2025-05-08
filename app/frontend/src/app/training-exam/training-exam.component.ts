@@ -4,9 +4,9 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
-import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight} from '@fortawesome/free-solid-svg-icons';
 import { interval, Subscription } from 'rxjs';
-import { ExamService, Exam, ExamSubmission, ExamQuestionAnswer } from '../services/exam.service';
+import { ExamService, Exam, ExamSubmission, ExamQuestionAnswer, ExamResult } from '../services/exam.service';
 import { AuthService } from '../services/auth.service';
 
 // TODO: relocate shared code between this and module questions component
@@ -21,8 +21,8 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   // Exam information
   examId: number = 0;
   exam?: Exam;
-  examTitle: string = 'Loading...';
-  examDescription: string = 'Please wait while the exam loads...';
+  examTitle: string = "";
+  examDescription: string = "";
   
   // Question handling
   currentQuestionIndex: number = 0;
@@ -37,9 +37,11 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   isLoading: boolean = true;
   isAnswerSubmitted: boolean = false;
   isExamCompleted: boolean = false;
+  isSubmitting: boolean = false;
   
   // Progress tracking - will be set based on actual questions loaded
   totalQuestions: number = 0;
+  answeredQuestions: number = 0;
   
   // Timer
   timeRemainingInSeconds: number = 0; // Will be set from exam.time
@@ -55,6 +57,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   // Exam results
   examScore?: number;
   examPassed?: boolean;
+  examSubmissionError: string = '';
 
   // User information
   currentUserId: number = 0;
@@ -63,7 +66,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private examService: ExamService,
-    private authService: AuthService // Assuming you have this
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -94,12 +97,12 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   }
 
   getCurrentUserId(): number {
-    // Implement based on your auth system
+    // Implement based on auth system
+    //return this.authService.getCurrentUserId()
     return 1; // Placeholder for demo
   }
 
   getCurrentLanguage(): void {
-    // Implement based on your language preferences system
     this.currentLanguage = 'EN'; // Default to English
   }
 
@@ -146,6 +149,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
         console.error('Error loading exam:', err);
         this.isLoading = false;
         // Handle error
+        this.examSubmissionError = 'Failed to load exam. Please try again later.';
       }
     });
   }
@@ -180,6 +184,11 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   getProgressPercentage(): number {
     if (this.totalQuestions === 0) return 0;
     return ((this.currentQuestionIndex + 1) / this.totalQuestions * 100);
+  }
+
+   // Update the number of answered questions
+   updateAnsweredQuestionsCount(): void {
+    this.answeredQuestions = this.userAnswers.size;
   }
 
   // Shuffle the answer options
@@ -262,6 +271,10 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   }
 
   submitExam(): void {
+    // Prevent multiple submissions
+    if (this.isSubmitting) return;
+    
+    this.isSubmitting = true;
     this.isExamCompleted = true;
 
     // Stop the timer
@@ -278,6 +291,11 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
       });
     });
     
+    // Check if all questions were answered
+    if (answers.length < this.totalQuestions) {
+      console.warn(`Not all questions were answered. Expected: ${this.totalQuestions}, Got: ${answers.length}`);
+    }
+    
     // Create submission object
     const examSubmission: ExamSubmission = {
       examId: this.examId,
@@ -287,13 +305,16 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     
     // Submit to backend
     this.examService.submitExam(examSubmission).subscribe({
-      next: (result) => {
+      next: (result: ExamResult) => {
         this.examScore = result.score;
         this.examPassed = result.passed;
+        this.isSubmitting = false;
+        
       },
       error: (error) => {
         console.error('Error submitting exam:', error);
-        // Handle error - maybe show error message
+        this.examSubmissionError = 'Failed to submit exam. Please try again.';
+        this.isSubmitting = false;
       }
     });
   }
