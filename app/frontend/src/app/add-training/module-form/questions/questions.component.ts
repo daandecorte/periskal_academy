@@ -154,6 +154,15 @@ export class QuestionsComponent {
       });
     }
   }
+
+  answerChoose(indexQ: number, indexO: number) {
+    const questionOptions =
+      this.trainingService.newModule.questions[indexQ].questionOptions;
+    questionOptions.forEach((option) => {
+      option.isCorrect = false;
+    });
+    questionOptions[indexO].isCorrect = true;
+  }
 }
 
 interface ITranslated {

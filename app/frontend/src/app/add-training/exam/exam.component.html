@@ -115,7 +115,14 @@
         @for(options of question.questionOptions; track optionIndex; let
         optionIndex = $index){
         <div class="answer-option">
-          <input type="radio" />
+          <input
+            type="radio"
+            (change)="answerChoose(questionIndex, optionIndex)"
+            [checked]="
+              trainingService.newTraining.exam.questions[questionIndex]
+                .questionOptions[optionIndex].isCorrect
+            "
+          />
           <input
             #answerRef
             type="text"

@@ -7,7 +7,6 @@
   <div class="step-container">
     <div [class.active]="currentStep === step" class="step">
       <div class="circle">{{ steps.indexOf(step) + 1 }}</div>
-
       <span>{{ step | titlecase }}</span>
     </div>
   </div>

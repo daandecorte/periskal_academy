@@ -27,7 +27,9 @@
       #contentRef
       class="form-control form-height"
       (input)="textChange($index)"
-      maxlength="250"
+      maxlength="500"
+      [placeholder]="'ADMIN_ADD_TRAININGS.ENTER_CONTENT_TEXT' | translate"
+      style="font-family: Arial, Helvetica, sans-serif"
     ></textarea>
     } @else if(content.contentType === ContentType.PICTURE){
     <div class="video-upload">

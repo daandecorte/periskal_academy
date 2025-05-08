@@ -65,6 +65,7 @@
     "MODULE_DESCRIPTION": "Modulebeschrijving",
     "MODULE_CONTENT": "Module-inhoud",
     "VIDEO_DESCRIPTION": "Klik om te uploaden of sleep en zet neer",
+    "IMAGE_FORMAT": "PNG of JPEG (MAX: 80 MB)",
     "VIDEO_FORMAT": "MP4, WebM of OGG (MAX: 80MB)",
     "QUESTION_POOL": "Vragenbank",
     "ADD_QUESTION": "+ Vraag toevoegen",
@@ -95,9 +96,9 @@
     "PERIOD": "Geldigheidsperiode (jaren)",
     "PRICE": "Certificaatprijs (€)",
     "TRAINING_OVERVIEW": "Trainingsoverzicht",
-    "TRAINING_BASIC_INFO": "Basis trainingsinformatie voltooid",
-    "TRAINING_MODULE": "3 modules aangemaakt",
-    "TRAINING_EXAM": "15 examenvragen toegevoegd",
+    "TRAINING_BASIC_INFO": "Basisconfiguratie",
+    "TRAINING_MODULE": "Modules",
+    "TRAINING_EXAM": "Examen",
     "MODULE_TITLE": "Modules",
     "NO_MODULE_DESCRIPTION": "Nog geen modules toegevoegd. Klik op 'Module toevoegen' om je eerste module te maken.",
     "ADD_MODULE": "+ Module toevoegen",
@@ -116,7 +117,8 @@
     "DELETE_MODULE_MESSAGE": "Weet je zeker dat je deze module wilt verwijderen?",
     "DELETE": "Verwijderen",
     "ADD_NEW_MODULE": "Nieuw module toevoegen",
-    "CONTENT": "Inhoud"
+    "CONTENT": "Inhoud",
+    "ENTER_CONTENT_TEXT": "Voer inhoudstekst in"
   },
   "TRAINING_OVERVIEW": {
     "ABOUT_TRAINING": "Over deze training",

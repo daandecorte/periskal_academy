@@ -65,6 +65,7 @@
     "MODULE_DESCRIPTION": "Description du module",
     "MODULE_CONTENT": "Contenu du module",
     "VIDEO_DESCRIPTION": "Cliquez pour télécharger ou glissez-déposez",
+    "IMAGE_FORMAT": "PNG ou JPEG (MAX : 80 Mo)",
     "VIDEO_FORMAT": "MP4, WebM ou OGG (MAX: 80MB)",
     "QUESTION_POOL": "Banque de questions",
     "ADD_QUESTION": "+ Ajouter une question",
@@ -95,9 +96,9 @@
     "PERIOD": "Période de validité (années)",
     "PRICE": "Prix du certificat (€)",
     "TRAINING_OVERVIEW": "Aperçu de la formation",
-    "TRAINING_BASIC_INFO": "Informations de base de la formation complètes",
-    "TRAINING_MODULE": "3 modules créés",
-    "TRAINING_EXAM": "15 questions d'examen ajoutées",
+    "TRAINING_BASIC_INFO": "Configuration de base",
+    "TRAINING_MODULE": "Modules",
+    "TRAINING_EXAM": "Examen",
     "MODULE_TITLE": "Modules",
     "NO_MODULE_DESCRIPTION": "Aucun module ajouté pour l'instant. Cliquez sur 'Ajouter un module' pour créer votre premier module.",
     "ADD_MODULE": "+ Ajouter un module",
@@ -116,7 +117,8 @@
     "DELETE_MODULE_MESSAGE": "Êtes-vous sûr de vouloir supprimer ce module ?",
     "DELETE": "Supprimer",
     "ADD_NEW_MODULE": "Ajouter un nouveau module",
-    "CONTENT": "Contenu"
+    "CONTENT": "Contenu",
+    "ENTER_CONTENT_TEXT": "Saisissez le texte du contenu"
   },
   "TRAINING_OVERVIEW": {
     "ABOUT_TRAINING": "À propos de cette formation",

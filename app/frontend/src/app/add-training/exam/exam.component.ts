@@ -10,10 +10,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NewTrainingService } from '../new-training.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-exam',
-  imports: [TranslateModule, FontAwesomeModule],
+  imports: [TranslateModule, FontAwesomeModule, FormsModule],
   templateUrl: './exam.component.html',
   styleUrl: './exam.component.css',
 })
@@ -224,6 +225,15 @@ export class ExamComponent {
         this.cdr.detectChanges();
       });
     }
+  }
+
+  answerChoose(indexQ: number, indexO: number) {
+    const questionOptions =
+      this.trainingService.newTraining.exam.questions[indexQ].questionOptions;
+    questionOptions.forEach((option) => {
+      option.isCorrect = false;
+    });
+    questionOptions[indexO].isCorrect = true;
   }
 }
 

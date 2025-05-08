@@ -48,6 +48,7 @@
     "MODULE_DESCRIPTION": "Module Description",
     "MODULE_CONTENT": "Module Content",
     "VIDEO_DESCRIPTION": "Click to upload or drag and drop",
+    "IMAGE_FORMAT": "PNG or JPEG (MAX: 80MB)",
     "VIDEO_FORMAT": "MP4, WebM or OGG (MAX: 80MB)",
     "QUESTION_POOL": "Question Pool",
     "ADD_QUESTION": "+ Add Question",
@@ -78,9 +79,9 @@
     "PERIOD": "Validity Period (Years)",
     "PRICE": "Certificate Price (€)",
     "TRAINING_OVERVIEW": "Training Overview",
-    "TRAINING_BASIC_INFO": "Basic training information complete",
-    "TRAINING_MODULE": "3 Modules created",
-    "TRAINING_EXAM": "15 exam questions added",
+    "TRAINING_BASIC_INFO": "Basic-setup",
+    "TRAINING_MODULE": "Modules",
+    "TRAINING_EXAM": "Exam",
     "MODULE_TITLE": "Modules",
     "NO_MODULE_DESCRIPTION": "No modules added yet. Click 'Add Module' to create your first module.",
     "ADD_MODULE": "+ Add Module",
@@ -99,7 +100,8 @@
     "DELETE_MODULE_MESSAGE": "Are you sure you want to delete this module?",
     "DELETE": "Delete",
     "ADD_NEW_MODULE": "Add New Module",
-    "CONTENT": "Content"
+    "CONTENT": "Content",
+    "ENTER_CONTENT_TEXT": "Enter content text"
   },
   "USER_DETAIL": {
     "ASSIGN_NEW_CERTIFICATE": "Assign New Certificate",
