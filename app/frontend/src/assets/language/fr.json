@@ -290,5 +290,13 @@
     "ENTER_PHONE_NUMBER": "Entrez le numéro de téléphone",
     "EMAIL_ADDRESS": "Adresse e-mail",
     "ENTER_EMAIL_ADDRESS": "Entrez l'adresse e-mail"
+  },
+  "ADMIN-CERTIFICATE": {
+    "CERTIFICATE_MANAGEMENT": "Gestion des certificats",
+    "SEARCH_CERTIFICATES": "Rechercher des certificats...",
+    "VALIDITY": "Validité",
+    "YEARS": "Années",
+    "CERTIFICATES": "Certificats",
+    "ASSIGN_SELECTION": "Attribuer la sélection"
   }
 }

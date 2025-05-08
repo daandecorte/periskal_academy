@@ -289,5 +289,13 @@
     "ENTER_PHONE_NUMBER": "Voer het telefoonnummer in",
     "EMAIL_ADDRESS": "E-mailadres",
     "ENTER_EMAIL_ADDRESS": "Voer het e-mailadres in"
+  },
+  "ADMIN_CERTIFICATES": {
+    "CERTIFICATE_MANAGEMENT": "Certificaatbeheer",
+    "SEARCH_CERTIFICATES": "Zoek certificaten...",
+    "VALIDITY": "Geldigheid",
+    "YEARS": "Jaren",
+    "CERTIFICATES": "Certificaten",
+    "ASSIGN_SELECTION": "Selectie toewijzen"
   }
 }

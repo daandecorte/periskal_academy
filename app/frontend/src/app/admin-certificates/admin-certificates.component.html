@@ -1,13 +1,13 @@
 <div class="container">
     <div class="header">
-        <h1>Certificate Management</h1>
+        <h1>{{"ADMIN_CERTIFICATES.CERTIFICATE_MANAGEMENT" | translate}}</h1>
     </div>
     <div class="search-container">
         <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input type="text" class="search-input" placeholder="Search certificates..." (input)="filterList()" [(ngModel)]="filter">
+        <input type="text" class="search-input" [placeholder]="'ADMIN_CERTIFICATES.SEARCH_CERTIFICATES' | translate" (input)="filterList()" [(ngModel)]="filter">
     </div>
     <div class="certificates-list">
         @for(certificate of filteredCertificates; track $index) {
@@ -21,28 +21,17 @@
                             <circle cx="12" cy="12" r="10"></circle>
                             <polyline points="12 6 12 12 16 14"></polyline>
                         </svg>
-                        Validity: {{certificate.validity_period}} years
+                        {{"ADMIN_CERTIFICATES.VALIDITY" | translate}}: {{certificate.validity_period}} {{"ADMIN_CERTIFICATES.YEARS" | translate}}
                     </div>
                 </div>
             </div>
         }
     </div>
-    <div class="empty-state">
-        <h3>No certificates found</h3>
-        <p>Try adjusting your search or add a new certificate</p>
-        <button class="btn btn-primary">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-            Add Certificate
-        </button>
-    </div>
     <div class="footer">
-        <div class="certificate-count">{{filteredCertificates.length}} certificates</div>
+        <div class="certificate-count">{{filteredCertificates.length}} {{"ADMIN_CERTIFICATES.CERTIFICATES" | translate}}</div>
         <div class="action-buttons">
             <button class="btn btn-secondary" (click)="postSelection()">
-                + Assign Selection
+                + {{"ADMIN_CERTIFICATES.ASSIGN_SELECTION" | translate}}
             </button>
         </div>
     </div>

@@ -289,5 +289,13 @@
     "ENTER_PHONE_NUMBER": "Enter phone number",
     "EMAIL_ADDRESS": "Email Address",
     "ENTER_EMAIL_ADDRESS": "Enter email address"
+  },
+  "ADMIN_CERTIFICATES": {
+    "CERTIFICATE_MANAGEMENT": "Certificate Management",
+    "SEARCH_CERTIFICATES": "Search Certificates...",
+    "VALIDITY": "Validity",
+    "YEARS": "Years",
+    "CERTIFICATES": "Certificates",
+    "ASSIGN_SELECTION": "Assign Selection"
   }
 }

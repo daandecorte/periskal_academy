@@ -4,10 +4,11 @@ import { LanguageService } from '../services/language.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Route, Router, TitleStrategy } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-admin-certificates',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslatePipe],
   templateUrl: './admin-certificates.component.html',
   styleUrl: './admin-certificates.component.css'
 })
