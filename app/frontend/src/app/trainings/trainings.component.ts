@@ -65,7 +65,8 @@ export class TrainingsComponent implements OnInit {
     
     this.trainingService.getTrainings().subscribe({
       next: (trainings) => {
-        this.allTrainings = trainings;
+        // Filter out inactive trainings right when we receive them
+        this.allTrainings = trainings.filter(training => training.isActive);
         this.filterTrainings();
         this.loading = false;
       },

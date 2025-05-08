@@ -204,7 +204,7 @@ private mapBackendTrainings(backendTrainings: any[]): Training[] {
       moduleCount: backendTraining.modules ? backendTraining.modules.length : 0,
       hasCertificate: backendTraining.exams && backendTraining.exams.length > 0,
       status: 'not_started', // Default status
-      isActive: backendTraining.isActive !== undefined ? backendTraining.isActive : false,
+      isActive: backendTraining.isActive !== undefined ? backendTraining.isActive : true,
       modules: this.processModules(backendTraining.modules),
       exams: backendTraining.exams,
       tips: backendTraining.tips
