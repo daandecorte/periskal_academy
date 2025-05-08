@@ -8,12 +8,11 @@ import { faArrowLeft, faArrowRight} from '@fortawesome/free-solid-svg-icons';
 import { interval, Subscription } from 'rxjs';
 import { ExamService, Exam, ExamSubmission, ExamQuestionAnswer, ExamResult } from '../services/exam.service';
 import { AuthService } from '../services/auth.service';
-
-// TODO: relocate shared code between this and module questions component
+import { ExamResultComponent } from '../exam-result/exam-result.component';
 
 @Component({
   selector: 'app-exam',
-  imports: [CommonModule, RouterModule, FontAwesomeModule, TranslateModule],
+  imports: [CommonModule, RouterModule, FontAwesomeModule, TranslateModule, ExamResultComponent],
   templateUrl: './training-exam.component.html',
   styleUrl: './training-exam.component.css'
 })
@@ -309,7 +308,6 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
         this.examScore = result.score;
         this.examPassed = result.passed;
         this.isSubmitting = false;
-        
       },
       error: (error) => {
         console.error('Error submitting exam:', error);

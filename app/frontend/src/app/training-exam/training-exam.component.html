@@ -96,29 +96,13 @@
       </div>
     </div>
 
-    <!-- Display results once available -->
-    <div
-      class="completion-message"
+    <!-- Replace the results screen with ExamResultComponent -->
+    <app-exam-result
       *ngIf="!isSubmitting && examScore !== undefined"
+      [passed]="examPassed || false"
+      [score]="examScore || 0"
     >
-      <div class="results-container">
-        <div class="score-display">
-          <div
-            class="score-circle"
-            [ngClass]="{ pass: examPassed, fail: !examPassed }"
-          >
-            {{ examScore }}%
-          </div>
-        </div>
-      </div>
-
-      <div class="results-details">
-        <p>{{ "EXAM.YOUR_SCORE" | translate : { score: examScore } }}</p>
-        <p *ngIf="examPassed">{{ "EXAM.PASS_MESSAGE" | translate }}</p>
-        <p *ngIf="!examPassed">{{ "EXAM.FAIL_MESSAGE" | translate }}</p>
-        {{ "EXAM.RETRY_MESSAGE" | translate : { attempts: exam?.maxAttempts } }}
-      </div>
-    </div>
+    </app-exam-result>
 
     <!-- Error state in results -->
     <div
@@ -126,13 +110,11 @@
       *ngIf="!isSubmitting && examSubmissionError"
     >
       <p>{{ examSubmissionError }}</p>
-      <div class="action-buttons"></div>
-    </div>
-
-    <div class="action-buttons">
-      <button class="overview-button" (click)="goBackToOverview()">
-        {{ "EXAM.BACK_TO_TRAININGS" | translate }}
-      </button>
+      <div class="action-buttons">
+        <button class="overview-button" (click)="goBackToOverview()">
+          {{ "EXAM.BACK_TO_TRAININGS" | translate }}
+        </button>
+      </div>
     </div>
   </div>
 </div>

@@ -31,10 +31,11 @@ export class ExamResultComponent {
   faBookOpen = faBookOpen;
 
   @Input() passed: boolean = false;
+  @Input() score: number = 0;
 
   currentUser$: Observable<IUser | null>;
   currentUser!: IUser;
-  score!: number;
+  //score!: number;
 
   constructor(private authService: AuthService, private router: Router) {
     this.currentUser$ = this.authService.currentUser$;
