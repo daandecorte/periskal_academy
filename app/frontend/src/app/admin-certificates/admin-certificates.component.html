@@ -1,13 +1,6 @@
 <div class="container">
     <div class="header">
         <h1>Certificate Management</h1>
-        <button class="add-button">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-            Upload Certificate
-        </button>
     </div>
     <div class="search-container">
         <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -49,7 +42,7 @@
     <div class="footer">
         <div class="certificate-count">5 certificates</div>
         <div class="action-buttons">
-            <button class="btn btn-secondary">
+            <button class="btn btn-secondary" (click)="postSelection()">
                 + Assign Selection
             </button>
         </div>

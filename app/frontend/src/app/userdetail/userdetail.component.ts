@@ -62,7 +62,7 @@ interface Exam {
   max_attempts: number;
   passing_score: number;
   question_amount: number;
-  questions: any[]; // Use a proper type if available
+  questions: any[];
   time: number;
 }
 

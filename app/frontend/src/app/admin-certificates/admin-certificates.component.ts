@@ -3,7 +3,7 @@ import { init } from 'emailjs-com';
 import { Certificate } from '../certificates/select-training/select-training.component';
 import { LanguageService } from '../services/language.service';
 import { CommonModule } from '@angular/common';
-import { TitleStrategy } from '@angular/router';
+import { ActivatedRoute, Route, Router, TitleStrategy } from '@angular/router';
 
 @Component({
   selector: 'app-admin-certificates',
@@ -15,7 +15,9 @@ export class AdminCertificatesComponent {
   certificates: Certificate[] = [];
   filteredCertificates:Certificate[] = [];
   selectedCertificates:Certificate[] = [];
-  constructor(public languageService: LanguageService) {
+  userId: number;
+  constructor(public languageService: LanguageService, private router: Router, private route: ActivatedRoute) {
+    this.userId = parseInt(this.route.snapshot.paramMap.get('id') ?? "");
     this.init();
   }
   async init() {
@@ -25,17 +27,38 @@ export class AdminCertificatesComponent {
     this.filteredCertificates = this.certificates;
   }
   select(id: number) {
-    const index = this.filteredCertificates.findIndex(c=>c.id==id);
-    if(index!=-1) {
-      const index = this.selectedCertificates.findIndex(c=>c.id==this.filteredCertificates[index].id)
-      this.selectedCertificates.splice(index, 1);
-      console.log(index);
+    const index = this.selectedCertificates.findIndex(c => c.id === id);
+    if (index !== -1) {
+      const idx = this.selectedCertificates.findIndex(c => c.id === this.filteredCertificates[index].id);
+      this.selectedCertificates.splice(idx, 1);
+    } else {
+      const cert = this.filteredCertificates.find(c => c.id === id);
+      if (cert) {
+        this.selectedCertificates.push(cert);
+      }
     }
-    this.selectedCertificates.push(this.filteredCertificates[index]);
   }
 
   public isSelected(id:number): boolean {
     return this.selectedCertificates.some(c=> c.id==id);
+  }
+  async postSelection() {
+    this.selectedCertificates.forEach( async c=> {
+      let response = await fetch("/api/user-certificates", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: this.userId,
+          certificate_id: c.id,
+          issue_date: new Date().toISOString(),
+          expiry_date: new Date(new Date().setFullYear(new Date().getFullYear() + c.validity_period)).toISOString(),
+          status: "VALID"
+        })
+      });
+    })
+    this.router.navigate([`/userdetail/`+this.userId]);
   }
 
 }
