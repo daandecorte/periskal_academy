@@ -31,7 +31,9 @@ public class UserCertificateService {
         }
         userCertificate.setUser(userService.findById(userCertificateDTO.user_id()));
         userCertificate.setCertificate(certificateService.findById(userCertificateDTO.certificate_id()));
-        BeanUtils.copyProperties(userCertificateDTO, userCertificate);
+        userCertificate.setStatus(userCertificateDTO.status());
+        userCertificate.setIssueDate(userCertificateDTO.issueDate());
+        userCertificate.setExpiryDate(userCertificateDTO.expiryDate());
         return userCertificateRepository.save(userCertificate);
     }
     public List<UserCertificate> findAll() {
