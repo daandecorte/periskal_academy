@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Periskal Certificate of Qualification</title>
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 210mm;
+            height: 297mm;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .certificate-container {
+            position: relative;
+            width: 210mm;
+            height: 297mm;
+            overflow: hidden;
+        }
+
+        .left-border {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 100%;
+            background-color: #f5f5f5;
+            border-right: 1px solid #ccc;
+        }
+
+        .right-border {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 60px;
+            height: 100%;
+            background-color: #f9cd2e;
+        }
+
+        .content {
+            padding: 20mm 30mm 40mm 30mm;
+        }
+
+        .certificate-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #f9cd2e;
+            margin-bottom: 3rem;
+        }
+
+        .product-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #cc0000;
+            margin-bottom: 10px;
+        }
+
+        .product-info {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 3rem;
+        }
+
+        .certificate-text {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 60px;
+        }
+
+        .signature {
+            font-family: 'Script MT', cursive;
+            font-size: 32px;
+            color: #446655;
+            margin-top: 5rem;
+            margin-bottom: 8rem;
+        }
+
+        .signature-info {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .signature-right {
+            font-size: 12px;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 20mm;
+            left: 30mm;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .image-wrapper {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .image-wrapper img {
+            display: inline-block;
+            max-width: 140mm;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="certificate-container">
+    <div class="left-border"></div>
+    <div class="right-border"></div>
+
+    <div class="image-wrapper">
+        <img src="periskalLogo.png" alt=""/>
+    </div>
+
+    <div class="content">
+        <div class="certificate-title">CERTIFICATE<br/>OF QUALIFICATION</div>
+
+        <div class="product-title">PRODUCT :</div>
+        <div class="product-info">${training}</div>
+
+        <div class="certificate-text">
+            I, undersigned, Marc Persoons, managing director of Periskal bv confirm that the
+            following Employees of HGK Shipping have followed the "Train the Trainer Course" for
+            the Periskal Inland ECDIS Viewer including the route planning module on ${date}.
+        </div>
+
+        <div class="signature">${name}</div>
+
+        <div class="signature-info">
+            <div><strong>Marc Persoons</strong><br/>(Authentication)</div>
+            <div class="signature-right">
+                Digitally signed by Marc Persoons<br/>
+                Date: ${date}
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        PERISKAL bv<br/>
+        Den Heuvel 11, 2990 Wuustwezel, Belgium<br/>
+        Phone +32 3 669 57 36
+    </div>
+</div>
+</body>
+</html>
