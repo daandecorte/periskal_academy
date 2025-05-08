@@ -291,7 +291,7 @@
     "EMAIL_ADDRESS": "Adresse e-mail",
     "ENTER_EMAIL_ADDRESS": "Entrez l'adresse e-mail"
   },
-  "ADMIN-CERTIFICATE": {
+  "ADMIN_CERTIFICATES": {
     "CERTIFICATE_MANAGEMENT": "Gestion des certificats",
     "SEARCH_CERTIFICATES": "Rechercher des certificats...",
     "VALIDITY": "Validité",
