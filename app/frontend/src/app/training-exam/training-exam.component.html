@@ -12,10 +12,17 @@
 
   <div class="progress-indicator">
     <div class="exam-progress">
-      {{ "EXAM.QUESTION_PROGRESS" | translate: { current: currentQuestionIndex + 1, total: totalQuestions } }}
+      {{
+        "EXAM.QUESTION_PROGRESS"
+          | translate
+            : { current: currentQuestionIndex + 1, total: totalQuestions }
+      }}
     </div>
     <div class="progress-bar">
-      <div class="progress-fill" [style.width]="getProgressPercentage() + '%'"></div>
+      <div
+        class="progress-fill"
+        [style.width]="getProgressPercentage() + '%'"
+      ></div>
     </div>
   </div>
 
@@ -25,7 +32,9 @@
         <span class="icon">?</span>
       </div>
       <div class="question-content">
-        <h2>{{ "QUESTIONS.QUESTION" | translate }} {{ currentQuestionIndex + 1 }}</h2>
+        <h2>
+          {{ "QUESTIONS.QUESTION" | translate }} {{ currentQuestionIndex + 1 }}
+        </h2>
         <div class="question-text">
           {{ getLocalizedContent(currentQuestion?.text) }}
         </div>
@@ -33,56 +42,97 @@
     </div>
 
     <div class="options-container">
-      <div 
+      <div
         *ngFor="let option of currentQuestion?.questionOptions"
         class="option"
         [class.selected]="selectedOptionId === option.id"
         (click)="selectOption(option.id)"
       >
         <div class="option-radio">
-          <input 
-            type="radio" 
-            [checked]="selectedOptionId === option.id" 
+          <input
+            type="radio"
+            [checked]="selectedOptionId === option.id"
             (click)="$event.stopPropagation()"
-          >
+          />
         </div>
         <div class="option-text">{{ getLocalizedContent(option.text) }}</div>
       </div>
     </div>
 
     <div class="action-buttons">
-      <button 
-        class="previous-button" 
+      <button
+        class="previous-button"
         [disabled]="currentQuestionIndex === 0"
         (click)="previousQuestion()"
       >
-        <span class="arrow-icon">←</span> {{ "EXAM.PREVIOUS_QUESTION" | translate }}
+        <span class="arrow-icon">←</span>
+        {{ "EXAM.PREVIOUS_QUESTION" | translate }}
       </button>
-      
+
       <div class="action-buttons-right">
-        <button 
-          *ngIf="selectedOptionId !== null" 
-          class="submit-button" 
+        <button
+          *ngIf="selectedOptionId !== null"
+          class="submit-button"
           (click)="submitAnswer()"
         >
-          {{ "EXAM.NEXT_QUESTION" | translate }} <span class="arrow-icon">→</span>
+          {{ "EXAM.NEXT_QUESTION" | translate }}
+          <span class="arrow-icon">→</span>
         </button>
       </div>
     </div>
   </div>
 
   <!-- Exam Completion Screen -->
-  <div class="exam-content completion-screen" *ngIf="isExamCompleted">
-    <div class="completion-message">
-      <h1>{{ "EXAM.COMPLETED_TITLE" | translate }}</h1>
-      <p *ngIf="examScore !== undefined">
-        {{ "EXAM.YOUR_SCORE" | translate: { score: examScore } }} 
-        <span *ngIf="examPassed" class="pass-badge">{{ "EXAM.PASS" | translate }}</span>
-        <span *ngIf="!examPassed" class="fail-badge">{{ "EXAM.FAIL" | translate }}</span>
-      </p>
-      <p>{{ "EXAM.COMPLETION_MESSAGE" | translate }}</p>
-      <p>{{ "EXAM.SCORE_LABEL" | translate }}</p>
+  <div
+    class="exam-content completion-screen"
+    *ngIf="isExamCompleted && !isLoading"
+  >
+    <!-- Display while calculating results -->
+    <div class="completion-message" *ngIf="isSubmitting">
+      <div class="calculating-results">
+        <div class="spinner"></div>
+        <h2>{{ "EXAM.CALCULATING_RESULTS" | translate }}</h2>
+        <p>{{ "EXAM.PLEASE_WAIT" | translate }}</p>
+      </div>
     </div>
+
+    <!-- Display results once available -->
+    <div
+      class="completion-message"
+      *ngIf="!isSubmitting && examScore !== undefined"
+    >
+      <h1>{{ "EXAM.COMPLETED_TITLE" | translate }}</h1>
+
+      <div class="results-container">
+        <div class="score-display">
+          <div
+            class="score-circle"
+            [ngClass]="{ pass: examPassed, fail: !examPassed }"
+          >
+            {{ examScore }}%
+          </div>
+        </div>
+      </div>
+
+      <div class="results-details">
+        <p>{{ "EXAM.YOUR_SCORE" | translate : { score: examScore } }}</p>
+        <p *ngIf="examPassed">{{ "EXAM.PASS_MESSAGE" | translate }}</p>
+        <p *ngIf="!examPassed">{{ "EXAM.FAIL_MESSAGE" | translate }}</p>
+        {{ "EXAM.RETRY_MESSAGE" | translate : { attempts: exam?.maxAttempts } }}
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <button class="overview-button" (click)="goBackToOverview()">
+        {{ "EXAM.BACK_TO_TRAININGS" | translate }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Error state in results -->
+  <div class="completion-message" *ngIf="!isSubmitting && examSubmissionError">
+    <h1>{{ "EXAM.ERROR_TITLE" | translate }}</h1>
+    <p>{{ examSubmissionError }}</p>
     <div class="action-buttons">
       <button class="overview-button" (click)="goBackToOverview()">
         {{ "EXAM.BACK_TO_TRAININGS" | translate }}
