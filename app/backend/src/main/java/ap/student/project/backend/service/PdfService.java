@@ -3,15 +3,12 @@ package ap.student.project.backend.service;
 import ap.student.project.backend.entity.*;
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Service;
+
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.Base64;
