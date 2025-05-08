@@ -30,7 +30,7 @@ export class ExamResultComponent {
   faHome = faHome;
   faBookOpen = faBookOpen;
 
-  @Input() passed: boolean = false;
+  @Input() passed: boolean = true;
   @Input() score: number = 0;
 
   currentUser$: Observable<IUser | null>;
@@ -73,12 +73,34 @@ export class ExamResultComponent {
   }
 
   primaryClicked() {
-    if (this.passed) this.router.navigate(['/trainings']);
+    if (this.passed) {
+      let userExamId = 1;
+      this.downloadPdf(userExamId);
+    }
     else this.router.navigate(['/trainings']);
   }
 
   secondaryClicked() {
     this.router.navigate(['/trainings']);
+  }
+  async downloadPdf(userExamId: number) {
+    const response = await fetch(`/api/pdf/generate/${userExamId}`);
+  
+    if (!response.ok) {
+      throw new Error("Failed to fetch PDF");
+    }
+  
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+  
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `certificate-${userExamId}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  
+    window.URL.revokeObjectURL(url);
   }
 }
 

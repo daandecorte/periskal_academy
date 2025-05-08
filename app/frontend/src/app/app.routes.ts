@@ -27,6 +27,7 @@ import { ModuleVideoViewComponent } from './module-video-view/module-video-view.
 import { ModuleQuestionsComponent } from './module-questions/module-questions.component';
 import { TrainingExamComponent } from './training-exam/training-exam.component';
 import { AdminCertificatesComponent } from './admin-certificates/admin-certificates.component';
+import { ExamResultComponent } from './exam-result/exam-result.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
