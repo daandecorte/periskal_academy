@@ -5,6 +5,7 @@
         {{ "ADMIN_ADD_TRAININGS.MODULE_TITLE" | translate }}
       </h3>
 
+      @if(modules.length == 0){
       <div class="message-no-trainig">
         <!--<img
             src="assets/no-module.svg"
@@ -15,6 +16,43 @@
           {{ "ADMIN_ADD_TRAININGS.NO_MODULE_DESCRIPTION" | translate }}
         </p>
       </div>
+      } @for (module of modules; track $index) {
+      <div class="module-card">
+        <div class="module-card-header">
+          <h4 class="module-title">{{ module.title[currentLanguage] }}</h4>
+          <div class="module-actions">
+            <button class="btn-icon edit-btn" (click)="editModule($index)">
+              <span class="material-icons"
+                ><fa-icon [icon]="faEdit"></fa-icon
+              ></span>
+            </button>
+            <button class="btn-icon delete-btn" (click)="deleteModal($index)">
+              <span class="material-icons"
+                ><fa-icon [icon]="faTrash"></fa-icon
+              ></span>
+            </button>
+          </div>
+        </div>
+        <p class="module-description">
+          {{ module.description[currentLanguage] }}
+        </p>
+        <div class="module-footer">
+          <span class="module-items"
+            >{{ "ADMIN_ADD_TRAININGS.ITEMS" | translate }}
+            {{ contentCount[$index].texts }}
+            {{ "ADMIN_ADD_TRAININGS.TEXTS" | translate }},
+            {{ contentCount[$index].pictures }}
+            {{ "ADMIN_ADD_TRAININGS.PICTURES" | translate }},
+            {{ contentCount[$index].videos }}
+            {{ "ADMIN_ADD_TRAININGS.VIDEOS" | translate }}</span
+          >
+          <span class="module-duration"
+            >{{ "ADMIN_ADD_TRAININGS.QUESTIONS" | translate }}:
+            {{ module.questions.length }}
+          </span>
+        </div>
+      </div>
+      }
 
       <div class="flex">
         <button
@@ -23,6 +61,31 @@
         >
           {{ "ADMIN_ADD_TRAININGS.ADD_MODULE" | translate }}
         </button>
+      </div>
+    </div>
+  </div>
+  <!---->
+  <div id="modal-overlay-delete" class="modal-overlay hidden">
+    <div class="modal-container modal-small">
+      <div>
+        <h4 class="modal-text-title">
+          {{ "ADMIN_ADD_TRAININGS.DELETE_MODULE" | translate }}
+        </h4>
+        <p class="modal-text">
+          {{ "ADMIN_ADD_TRAININGS.DELETE_MODULE_MESSAGE" | translate }}
+        </p>
+        <div class="modal-actions-delete">
+          <button
+            id="cancel-btn"
+            class="btn btn-cancel"
+            (click)="cancelDelete()"
+          >
+            {{ "ADMIN_EDIT_TRAININGS.CANCEL" | translate }}
+          </button>
+          <button id="save-btn" class="btn btn-delete" (click)="deleteModule()">
+            {{ "ADMIN_ADD_TRAININGS.DELETE" | translate }}
+          </button>
+        </div>
       </div>
     </div>
   </div>

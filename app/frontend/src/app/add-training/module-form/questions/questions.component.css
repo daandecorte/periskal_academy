@@ -1,5 +1,6 @@
 .question-pool {
   margin: auto;
+  margin-top: 10px;
   margin-bottom: 10px;
   background: white;
 }
@@ -50,15 +51,29 @@ label {
 
 .add-question-btn {
   background-color: #fbbf24;
-  color: white;
+  color: black;
   padding: 8px 12px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  margin-top: 8px;
+  margin-top: 10px;
+  margin-bottom: -10px;
 }
 
 .button-container {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 10px;
+}
+
+.border-down {
+  border-bottom: 2px solid #ddd;
+}
+
+.margin-top {
+  margin-top: 10px;
+}
+
+.title {
+  text-decoration: underline;
 }

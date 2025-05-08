@@ -134,7 +134,7 @@ class ExamServiceTest {
 
     @Test
     void addQuestion_ShouldAddQuestion_WhenExamIsNotFull() {
-        QuestionDTO questionDTO = new QuestionDTO(null, null, null);
+        QuestionDTO questionDTO = new QuestionDTO(null, null);
 
         examService.addQuestion(testExam.getId(), questionDTO);
 
@@ -146,20 +146,20 @@ class ExamServiceTest {
     void addQuestion_ShouldThrowException_WhenExamIsFull() {
         // Add maximum allowed questions
         for (int i = 0; i < testExam.getQuestionAmount(); i++) {
-            QuestionDTO questionDTO = new QuestionDTO(null, null, null);
+            QuestionDTO questionDTO = new QuestionDTO(null, null);
             examService.addQuestion(testExam.getId(), questionDTO);
         }
 
         testExam = examRepository.findById(testExam.getId()).orElseThrow();
 
-        QuestionDTO extraQuestion = new QuestionDTO(null, null, null);
+        QuestionDTO extraQuestion = new QuestionDTO(null, null);
 
         assertThrows(ListFullException.class, () -> examService.addQuestion(testExam.getId(), extraQuestion));
     }
 
     @Test
     void findAllQuestionsByExamId_ShouldReturnQuestions() {
-        QuestionDTO questionDTO = new QuestionDTO(null, null, null);
+        QuestionDTO questionDTO = new QuestionDTO(null, null);
         examService.addQuestion(testExam.getId(), questionDTO);
         testExam = examRepository.findById(testExam.getId()).orElseThrow();
         List<Question> questions = examService.findAllQuestionsByExamId(testExam.getId());

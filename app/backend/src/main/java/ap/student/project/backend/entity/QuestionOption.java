@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Map;
+
 @Entity
 @Table(name = "question_option")
 @Getter
@@ -15,8 +17,11 @@ public class QuestionOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column
-    private String text;
+    @ElementCollection
+    @CollectionTable(name = "questionoption_texts", joinColumns = @JoinColumn(name = "question_option_id"))
+    @MapKeyColumn(name = "language")
+    @Column(name = "text")
+    private Map<Language, String> text;
     @Column(name = "is_correct")
     private boolean isCorrect;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -24,7 +29,7 @@ public class QuestionOption {
     @JsonIgnore
     private Question question;
 
-    public QuestionOption(String text, boolean isCorrect, Question question) {
+    public QuestionOption(Map<Language, String> text, boolean isCorrect, Question question) {
         this.text = text;
         this.isCorrect = isCorrect;
         this.question = question;

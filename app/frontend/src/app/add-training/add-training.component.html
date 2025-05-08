@@ -7,7 +7,6 @@
   <div class="step-container">
     <div [class.active]="currentStep === step" class="step">
       <div class="circle">{{ steps.indexOf(step) + 1 }}</div>
-
       <span>{{ step | titlecase }}</span>
     </div>
   </div>
@@ -17,13 +16,19 @@
 <div>
   <router-outlet></router-outlet>
 </div>
-
 <!-- NavButtons -->
+@if(currentStep == 'basic-setup'){
+<div class="next-previous" style="flex-direction: row-reverse">
+  <button class="next-btn" (click)="goToNextStep()">
+    {{ "ADMIN_ADD_TRAININGS.NEXT" | translate }}
+  </button>
+</div>
+} @else {
 <div class="next-previous">
-  @if(currentStep !== 'basic-setup'){
   <button class="prev-btn" (click)="goToPreviousStep()">
-    &larr; {{ "ADMIN_ADD_TRAININGS.PREVIOUS" | translate }}</button
-  >} @if(currentStep !== 'preview'){
+    &larr; {{ "ADMIN_ADD_TRAININGS.PREVIOUS" | translate }}
+  </button>
+  @if(currentStep !== 'preview'){
   <button class="next-btn" (click)="goToNextStep()">
     {{ "ADMIN_ADD_TRAININGS.NEXT" | translate }}</button
   >} @if(currentStep === 'preview'){
@@ -31,3 +36,4 @@
     {{ "ADMIN_ADD_TRAININGS.PUBLISH" | translate }}</button
   >}
 </div>
+}

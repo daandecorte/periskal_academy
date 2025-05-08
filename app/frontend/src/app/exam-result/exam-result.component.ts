@@ -10,9 +10,9 @@ import {
   faBookOpen,
 } from '@fortawesome/free-solid-svg-icons';
 import { TranslatePipe } from '@ngx-translate/core';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
-import { IUser } from '../../types/user-info';
+import { IUser } from '../types/user-info';
 import { Router } from '@angular/router';
 
 @Component({
