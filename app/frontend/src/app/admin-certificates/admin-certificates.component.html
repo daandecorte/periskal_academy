@@ -7,14 +7,13 @@
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input type="text" class="search-input" placeholder="Search certificates...">
+        <input type="text" class="search-input" placeholder="Search certificates..." (input)="filterList()" [(ngModel)]="filter">
     </div>
     <div class="certificates-list">
         @for(certificate of filteredCertificates; track $index) {
             <div class="certificate-item" [ngClass]="{'selected': isSelected(certificate.id)}" (click)="select(certificate.id)">
                 <div class="certificate-header">
                     <div class="certificate-title">{{certificate.training.title[languageService.getLanguage()]}}</div>
-                    <div class="certificate-price">€{{certificate.price}}</div>
                 </div>
                 <div class="certificate-details">
                     <div class="certificate-period">
@@ -40,7 +39,7 @@
         </button>
     </div>
     <div class="footer">
-        <div class="certificate-count">5 certificates</div>
+        <div class="certificate-count">{{filteredCertificates.length}} certificates</div>
         <div class="action-buttons">
             <button class="btn btn-secondary" (click)="postSelection()">
                 + Assign Selection

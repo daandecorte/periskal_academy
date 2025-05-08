@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { init } from 'emailjs-com';
 import { Certificate } from '../certificates/select-training/select-training.component';
 import { LanguageService } from '../services/language.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Route, Router, TitleStrategy } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-certificates',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './admin-certificates.component.html',
   styleUrl: './admin-certificates.component.css'
 })
@@ -16,6 +16,7 @@ export class AdminCertificatesComponent {
   filteredCertificates:Certificate[] = [];
   selectedCertificates:Certificate[] = [];
   userId: number;
+  filter: string = "";
   constructor(public languageService: LanguageService, private router: Router, private route: ActivatedRoute) {
     this.userId = parseInt(this.route.snapshot.paramMap.get('id') ?? "");
     this.init();
@@ -37,6 +38,9 @@ export class AdminCertificatesComponent {
         this.selectedCertificates.push(cert);
       }
     }
+  }
+  filterList() {
+    this.filteredCertificates = this.certificates.filter(c=>c.training.title[this.languageService.getLanguage()].includes(this.filter)|| this.filter=="")
   }
 
   public isSelected(id:number): boolean {
