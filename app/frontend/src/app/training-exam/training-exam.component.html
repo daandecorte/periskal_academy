@@ -101,8 +101,6 @@
       class="completion-message"
       *ngIf="!isSubmitting && examScore !== undefined"
     >
-      <h1>{{ "EXAM.COMPLETED_TITLE" | translate }}</h1>
-
       <div class="results-container">
         <div class="score-display">
           <div
@@ -122,17 +120,15 @@
       </div>
     </div>
 
-    <div class="action-buttons">
-      <button class="overview-button" (click)="goBackToOverview()">
-        {{ "EXAM.BACK_TO_TRAININGS" | translate }}
-      </button>
+    <!-- Error state in results -->
+    <div
+      class="completion-message"
+      *ngIf="!isSubmitting && examSubmissionError"
+    >
+      <p>{{ examSubmissionError }}</p>
+      <div class="action-buttons"></div>
     </div>
-  </div>
 
-  <!-- Error state in results -->
-  <div class="completion-message" *ngIf="!isSubmitting && examSubmissionError">
-    <h1>{{ "EXAM.ERROR_TITLE" | translate }}</h1>
-    <p>{{ examSubmissionError }}</p>
     <div class="action-buttons">
       <button class="overview-button" (click)="goBackToOverview()">
         {{ "EXAM.BACK_TO_TRAININGS" | translate }}
