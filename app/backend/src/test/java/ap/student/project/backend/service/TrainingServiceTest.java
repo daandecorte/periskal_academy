@@ -4,7 +4,7 @@ import ap.student.project.backend.dto.TrainingDTO;
 import ap.student.project.backend.entity.Language;
 import ap.student.project.backend.entity.Training;
 import ap.student.project.backend.exceptions.NotFoundException;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

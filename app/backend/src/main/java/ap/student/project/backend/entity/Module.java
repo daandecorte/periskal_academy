@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,17 +23,17 @@ public class Module {
     @CollectionTable(name = "module_titles", joinColumns = @JoinColumn(name = "training_id", referencedColumnName = "id"))
     @MapKeyColumn(name = "language")
     @Column(name = "title")
-    private Map<Language, String> title;
+    private Map<Language, String> title = new HashMap<>();
     @ElementCollection
     @CollectionTable(name = "module_descriptions", joinColumns = @JoinColumn(name = "training_id"))
     @MapKeyColumn(name = "language")
     @Column(name = "description")
-    private Map<Language, String> description;
+    private Map<Language, String> description = new HashMap<>();
     @ElementCollection
     @CollectionTable(name = "video_references", joinColumns = @JoinColumn(name = "training_id"))
     @MapKeyColumn(name = "language")
     @Column(name = "video_reference")
-    private Map<Language, String> videoReference;
+    private Map<Language, String> videoReference = new HashMap<>();
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "training_id")
     @JsonIgnore
@@ -41,9 +42,9 @@ public class Module {
     private List<Question> questions;
 
     public Module(Map<Language, String> title, Map<Language, String> description, Map<Language, String> videoReference, Training training, List<Question> questions) {
-        this.title = title;
-        this.description = description;
-        this.videoReference = videoReference;
+        this.title = title != null ? title : new HashMap<>();
+        this.description = description != null ? description : new HashMap<>();
+        this.videoReference = videoReference != null ? videoReference : new HashMap<>();
         this.training = training;
         this.questions = questions;
     }

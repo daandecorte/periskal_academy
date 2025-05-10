@@ -12,6 +12,7 @@ import ap.student.project.backend.exceptions.NotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +37,29 @@ public class ModuleService {
         }
         Training training = trainingService.findById(moduleDTO.trainingId());
         module.setTraining(training);
-        BeanUtils.copyProperties(moduleDTO, module);
+        
+        // Initialize maps to prevent NullPointerException
+        if (module.getTitle() == null) {
+            module.setTitle(new HashMap<>());
+        }
+        if (module.getDescription() == null) {
+            module.setDescription(new HashMap<>());
+        }
+        if (module.getVideoReference() == null) {
+            module.setVideoReference(new HashMap<>());
+        }
+        
+        // Copy properties safely - only copy non-null values
+        if (moduleDTO.titles() != null) {
+            module.getTitle().putAll(moduleDTO.titles());
+        }
+        if (moduleDTO.descriptions() != null) {
+            module.getDescription().putAll(moduleDTO.descriptions());
+        }
+        if (moduleDTO.videoReferences() != null) {
+            module.getVideoReference().putAll(moduleDTO.videoReferences());
+        }
+        
         moduleRepository.save(module);
     }
     public Module getModuleById(int id) {
@@ -51,7 +74,32 @@ public class ModuleService {
         if (module == null) {
             throw new NotFoundException("Module with id " + id + " not found");
         }
-        BeanUtils.copyProperties(moduleDTO, module);
+        
+        // Initialize maps if they are null
+        if (module.getTitle() == null) {
+            module.setTitle(new HashMap<>());
+        }
+        if (module.getDescription() == null) {
+            module.setDescription(new HashMap<>());
+        }
+        if (module.getVideoReference() == null) {
+            module.setVideoReference(new HashMap<>());
+        }
+        
+        // Update with the new values
+        if (moduleDTO.titles() != null) {
+            module.getTitle().clear();
+            module.getTitle().putAll(moduleDTO.titles());
+        }
+        if (moduleDTO.descriptions() != null) {
+            module.getDescription().clear();
+            module.getDescription().putAll(moduleDTO.descriptions());
+        }
+        if (moduleDTO.videoReferences() != null) {
+            module.getVideoReference().clear();
+            module.getVideoReference().putAll(moduleDTO.videoReferences());
+        }
+        
         moduleRepository.save(module);
     }
     public void addVideo(int id, VideoDTO videoDTO) {
@@ -60,8 +108,11 @@ public class ModuleService {
             throw new NotFoundException("Module with id " + id + " not found");
         }
         Map<Language, String> videoReference = module.getVideoReference();
+        if (videoReference == null) {
+            videoReference = new HashMap<>();
+            module.setVideoReference(videoReference);
+        }
         videoReference.put(videoDTO.language(), videoDTO.videoReference());
-        module.setVideoReference(videoReference);
         moduleRepository.save(module);
     }
     public Question addQuestion(int id, QuestionDTO questionDTO) {
