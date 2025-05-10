@@ -67,14 +67,17 @@ class TrainingProgressServiceTest {
 
     @BeforeEach
     void setUp() {
-        // Clean up database
-        trainingProgressRepository.deleteAll();
+        cleanDatabase();
     }
 
     @AfterEach
     void tearDown() {
-        // Clean up database
+        cleanDatabase();
+    }
+
+    private void cleanDatabase() {
         trainingProgressRepository.deleteAll();
+        moduleProgressRepository.deleteAll();
     }
 
     @Test
@@ -211,16 +214,6 @@ class TrainingProgressServiceTest {
 
     @Test
     void findAll_ShouldReturnListOfTrainingProgress() {
-        // Ensure the repository is empty
-        if (moduleProgressRepository != null) {
-            moduleProgressRepository.deleteAll();
-        }
-        trainingProgressRepository.deleteAll();
-        trainingRepository.deleteAll();
-        userRepository.deleteAll();
-        userTrainingRepository.deleteAll();
-        assertEquals(0, trainingProgressService.findAll().size(), "Database should be empty before test");
-
         // Create fresh test data
         String uniqueUserId = "testId-" + UUID.randomUUID().toString();
         UserDTO userDTO = new UserDTO(uniqueUserId, "John", "Doe", "Ship123", Language.ENGLISH);
