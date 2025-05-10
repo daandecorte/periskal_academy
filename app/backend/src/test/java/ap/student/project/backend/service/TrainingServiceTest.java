@@ -1,81 +1,114 @@
 package ap.student.project.backend.service;
 import ap.student.project.backend.dao.TrainingRepository;
 import ap.student.project.backend.dto.TrainingDTO;
+import ap.student.project.backend.entity.Language;
 import ap.student.project.backend.entity.Training;
 import ap.student.project.backend.exceptions.NotFoundException;
+import org.springframework.transaction.annotation.Transactional;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+@ActiveProfiles("test")
+@Transactional
 class TrainingServiceTest {
 
-    @Mock
+    @Autowired
     private TrainingRepository trainingRepository;
 
-    @InjectMocks
+    @Autowired
     private TrainingService trainingService;
 
     private TrainingDTO trainingDTO;
-    private Training training;
 
     @BeforeEach
     void setUp() {
-        trainingDTO = new TrainingDTO(null,null, false, null, null); // Assuming a name field in DTO
-        training = new Training();
+        // Clean up database
+        trainingRepository.deleteAll();
+        
+        // Create test data
+        trainingDTO = new TrainingDTO(
+            Collections.singletonMap(Language.ENGLISH, "Test Training"),
+            Collections.singletonMap(Language.ENGLISH, "Test Description"),
+            true, 
+            null, 
+            null
+        );
+    }
+
+    @AfterEach
+    void tearDown() {
+        // Clean up database
+        trainingRepository.deleteAll();
     }
 
     @Test
     void save_ShouldSaveTraining_WhenValidDTOIsProvided() {
-        trainingService.save(trainingDTO);
-        verify(trainingRepository, times(1)).save(any(Training.class));
+        Training savedTraining = trainingService.save(trainingDTO);
+        
+        assertNotNull(savedTraining);
+        assertNotNull(savedTraining.getId());
+        assertEquals("Test Training", savedTraining.getTitle().get(Language.ENGLISH));
+        assertEquals("Test Description", savedTraining.getDescription().get(Language.ENGLISH));
+        assertTrue(savedTraining.isActive());
     }
-
     @Test
     void findById_ShouldThrowException_WhenTrainingNotFound() {
-        when(trainingRepository.findById(1)).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> trainingService.findById(1));
+        assertThrows(NotFoundException.class, () -> trainingService.findById(9999));
     }
 
     @Test
     void findById_ShouldReturnTraining_WhenFound() {
-        when(trainingRepository.findById(1)).thenReturn(Optional.of(training));
-        Training result = trainingService.findById(1);
-        assertNotNull(result);
-        verify(trainingRepository, times(1)).findById(1);
+        Training savedTraining = trainingService.save(trainingDTO);
+        Training foundTraining = trainingService.findById(savedTraining.getId());
+        
+        assertNotNull(foundTraining);
+        assertEquals(savedTraining.getId(), foundTraining.getId());
+        assertEquals(savedTraining.getTitle(), foundTraining.getTitle());
     }
 
     @Test
     void update_ShouldThrowException_WhenTrainingNotFound() {
-        when(trainingRepository.findById(1)).thenReturn(Optional.empty());
-        assertThrows(NotFoundException.class, () -> trainingService.update(1, trainingDTO));
+        assertThrows(NotFoundException.class, () -> trainingService.update(9999, trainingDTO));
     }
 
-    @Test
     void update_ShouldSaveUpdatedTraining_WhenFound() {
-        when(trainingRepository.findById(1)).thenReturn(Optional.of(training));
-
-        trainingService.update(1, trainingDTO);
-
-        verify(trainingRepository, times(1)).save(any(Training.class));
+        Training savedTraining = trainingService.save(trainingDTO);
+        
+        // Create updated DTO with new title
+        TrainingDTO updatedDTO = new TrainingDTO(
+            Collections.singletonMap(Language.ENGLISH, "Updated Training"),
+            Collections.singletonMap(Language.ENGLISH, "Updated Description"),
+            false, 
+            null, 
+            null
+        );
+        
+        trainingService.update(savedTraining.getId(), updatedDTO);
+        
+        Training updatedTraining = trainingRepository.findById(savedTraining.getId()).orElseThrow();
+        assertEquals("Updated Training", updatedTraining.getTitle().get(Language.ENGLISH));
+        assertEquals("Updated Description", updatedTraining.getDescription().get(Language.ENGLISH));
+        assertFalse(updatedTraining.isActive());
     }
 
     @Test
     void findAll_ShouldReturnListOfTrainings() {
-        when(trainingRepository.findAll()).thenReturn(List.of(training));
-
+        trainingService.save(trainingDTO);
         List<Training> result = trainingService.findAll();
+        
+        assertFalse(result.isEmpty());
         assertEquals(1, result.size());
-        verify(trainingRepository, times(1)).findAll();
     }
-
 }
+

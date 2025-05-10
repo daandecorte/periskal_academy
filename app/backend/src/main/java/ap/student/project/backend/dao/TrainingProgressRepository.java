@@ -6,4 +6,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(exported = false)
 public interface TrainingProgressRepository extends ListCrudRepository<TrainingProgress, Integer> {
+    TrainingProgress findByUserTrainingId(int userTrainingId);
 }
