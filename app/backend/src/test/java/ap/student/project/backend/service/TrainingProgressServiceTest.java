@@ -23,6 +23,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -33,6 +34,8 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@ActiveProfiles("test")
+@Transactional
 class TrainingProgressServiceTest {
 
     @Autowired
@@ -86,8 +89,7 @@ class TrainingProgressServiceTest {
         assertThrows(MissingArgumentException.class, () -> trainingProgressService.save(invalidDTO));
     }
 
-    // This test doesn't work, using mocking in stead
-    /*@Test
+    @Test
     @Transactional
     void save_ShouldSaveTrainingProgress_WhenValidDTOIsProvided() {
         // Create fresh test data for this test
@@ -135,7 +137,7 @@ class TrainingProgressServiceTest {
         assertEquals(savedProgress.getId(), retrievedProgress.getId());
         assertEquals(createdUserTraining.getId(), retrievedProgress.getUserTraining().getId());
         assertEquals(trainingProgressDTO.status(), retrievedProgress.getStatus());
-    } */
+    }
 
     @Test
     @Transactional
@@ -207,8 +209,7 @@ class TrainingProgressServiceTest {
         ));
     }
 
-    // This test currently has an issue caused by cleanup not properly working, using mocking test in stead
-    /* @Test
+    @Test
     void findAll_ShouldReturnListOfTrainingProgress() {
         // Ensure the repository is empty
         if (moduleProgressRepository != null) {
@@ -257,5 +258,5 @@ class TrainingProgressServiceTest {
         
         assertFalse(result.isEmpty());
         assertEquals(1, result.size());
-    } */
+    } 
 }
