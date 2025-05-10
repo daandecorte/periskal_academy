@@ -1,6 +1,8 @@
 package ap.student.project.backend.service;
 
 import ap.student.project.backend.dao.UserTrainingRepository;
+import ap.student.project.backend.dto.TrainingDTO;
+import ap.student.project.backend.dto.UserDTO;
 import ap.student.project.backend.dto.UserTrainingDTO;
 import ap.student.project.backend.entity.Language;
 import ap.student.project.backend.entity.Training;
@@ -8,86 +10,114 @@ import ap.student.project.backend.entity.User;
 import ap.student.project.backend.entity.UserTraining;
 import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
+import jakarta.transaction.Transactional;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+@ActiveProfiles("test")
+@Transactional
 class UserTrainingServiceTest {
 
-    @Mock
+@Autowired
     private UserTrainingRepository userTrainingRepository;
 
-    @Mock
+    @Autowired
     private UserService userService;
 
-    @Mock
+    @Autowired
     private TrainingService trainingService;
 
-    @InjectMocks
+    @Autowired
     private UserTrainingService userTrainingService;
 
-    private UserTraining userTraining;
-    private UserTrainingDTO userTrainingDTO;
     private User user;
     private Training training;
+    private UserTrainingDTO userTrainingDTO;
 
     @BeforeEach
     void setUp() {
-        user = new User("testId", "John", "Doe", "Ship123", Language.ENGLISH);
-        training = new Training();
-        userTraining = new UserTraining();
-        userTraining.setUser(user);
-        userTraining.setTraining(training);
-        userTrainingDTO = new UserTrainingDTO(null, 1, 1);
+        // Clean up database
+        userTrainingRepository.deleteAll();
+        
+        // Create test data
+        UserDTO userDTO = new UserDTO("testId", "John", "Doe", "Ship123", Language.ENGLISH);
+        user = userService.save(userDTO);
+        
+        TrainingDTO trainingDTO = new TrainingDTO(
+            Collections.singletonMap(Language.ENGLISH, "Test Training"),
+            Collections.singletonMap(Language.ENGLISH, "Test Description"),
+            true, 
+            null, 
+            null
+        );
+        training = trainingService.save(trainingDTO);
+        
+        userTrainingDTO = new UserTrainingDTO(null, training.getId(), user.getId());
+    }
+
+    @AfterEach
+    void tearDown() {
+        // Clean up database
+        userTrainingRepository.deleteAll();
     }
 
     @Test
     void save_ShouldThrowException_WhenUserIdIsMissing() {
-        UserTrainingDTO dto = new UserTrainingDTO(null, 1, 0);
-        assertThrows(MissingArgumentException.class, () -> userTrainingService.save(dto));
+        UserTrainingDTO invalidDTO = new UserTrainingDTO(null, training.getId(), 0);
+        assertThrows(MissingArgumentException.class, () -> userTrainingService.save(invalidDTO));
     }
 
     @Test
     void save_ShouldThrowException_WhenTrainingIdIsMissing() {
-        UserTrainingDTO dto = new UserTrainingDTO(null, 0, 1);
-        assertThrows(MissingArgumentException.class, () -> userTrainingService.save(dto));
+        UserTrainingDTO invalidDTO = new UserTrainingDTO(null, 0, user.getId());
+        assertThrows(MissingArgumentException.class, () -> userTrainingService.save(invalidDTO));
     }
 
     @Test
     void save_ShouldSaveUserTraining_WhenValidDTOIsProvided() {
-        when(userService.findById(1)).thenReturn(user);
-        when(trainingService.findById(1)).thenReturn(training);
         userTrainingService.save(userTrainingDTO);
-        verify(userTrainingRepository, times(1)).save(any(UserTraining.class));
+        
+        List<UserTraining> savedUserTrainings = userTrainingRepository.findAll();
+        assertFalse(savedUserTrainings.isEmpty());
+        UserTraining savedUserTraining = savedUserTrainings.get(0);
+        assertEquals(user.getId(), savedUserTraining.getUser().getId());
+        assertEquals(training.getId(), savedUserTraining.getTraining().getId());
     }
 
     @Test
     void findById_ShouldReturnUserTraining_WhenItExists() {
-        when(userTrainingRepository.findById(anyInt())).thenReturn(Optional.of(userTraining));
-        UserTraining found = userTrainingService.findById(1);
-        assertNotNull(found);
+        userTrainingService.save(userTrainingDTO);
+        UserTraining savedUserTraining = userTrainingRepository.findAll().get(0);
+        UserTraining foundUserTraining = userTrainingService.findById(savedUserTraining.getId());
+        
+        assertNotNull(foundUserTraining);
+        assertEquals(savedUserTraining.getId(), foundUserTraining.getId());
+        assertEquals(user.getId(), foundUserTraining.getUser().getId());
+        assertEquals(training.getId(), foundUserTraining.getTraining().getId());
     }
 
     @Test
     void findById_ShouldThrowException_WhenUserTrainingNotFound() {
-        when(userTrainingRepository.findById(anyInt())).thenReturn(Optional.empty());
         assertThrows(NotFoundException.class, () -> userTrainingService.findById(1));
     }
 
     @Test
     void findAll_ShouldReturnListOfUserTrainings() {
-        when(userTrainingRepository.findAll()).thenReturn(List.of(userTraining));
+        userTrainingService.save(userTrainingDTO);
         List<UserTraining> userTrainings = userTrainingService.findAll();
+        
         assertFalse(userTrainings.isEmpty());
+        assertEquals(1, userTrainings.size());
     }
 }
