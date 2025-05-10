@@ -21,26 +21,54 @@ public class TrainingProgressService {
         this.userTrainingService = userTrainingService;
     }
 
-    public void save(TrainingProgressDTO trainingProgressDTO) {
-        TrainingProgress trainingProgress = new TrainingProgress();
+    public TrainingProgress save(TrainingProgressDTO trainingProgressDTO) {
         if(trainingProgressDTO.userTrainingId()==0) {
             throw new MissingArgumentException("user_training_id is missing");
         }
         UserTraining userTraining = userTrainingService.findById(trainingProgressDTO.userTrainingId());
-        trainingProgress.setUserTraining(userTraining);
-        BeanUtils.copyProperties(trainingProgressDTO, trainingProgress);
-        trainingProgressRepository.save(trainingProgress);
-    }
-    public void update(int id, TrainingProgressDTO trainingProgressDTO) throws NotFoundException {
-        TrainingProgress trainingProgress = trainingProgressRepository.findById(id).orElse(null);
-        if (trainingProgress == null) {
-            throw new NotFoundException("Training progress with id " + id + " not found");
+
+        // Check if this UserTraining already has a TrainingProgress
+        if (userTraining.getTrainingProgress() != null) {
+            throw new IllegalStateException("UserTraining with id " + userTraining.getId() + 
+                " already has a TrainingProgress with id " + userTraining.getTrainingProgress().getId());
         }
-        BeanUtils.copyProperties(trainingProgressDTO, trainingProgress);
-        trainingProgressRepository.save(trainingProgress);
+        
+        TrainingProgress trainingProgress = new TrainingProgress();
+        trainingProgress.setUserTraining(userTraining);
+        trainingProgress.setStartDateTime(trainingProgressDTO.startDateTime());
+        trainingProgress.setLastTimeAccessed(trainingProgressDTO.lastTimeAccessed());
+        trainingProgress.setStatus(trainingProgressDTO.status());
+        
+        TrainingProgress savedProgress = trainingProgressRepository.save(trainingProgress);
+        
+        // Establish bidirectional relationship
+        userTraining.setTrainingProgress(savedProgress);
+        
+        return savedProgress;
+    }
+
+    public TrainingProgress update(int id, TrainingProgressDTO trainingProgressDTO) throws NotFoundException {
+        TrainingProgress trainingProgress = trainingProgressRepository.findById(id)
+            .orElseThrow(() -> new NotFoundException("Training progress with id " + id + " not found"));
+        
+        // Only update fields that don't involve relationships
+        trainingProgress.setStartDateTime(trainingProgressDTO.startDateTime());
+        trainingProgress.setLastTimeAccessed(trainingProgressDTO.lastTimeAccessed());
+        trainingProgress.setStatus(trainingProgressDTO.status());
+        
+        return trainingProgressRepository.save(trainingProgress);
     }
 
     public List<TrainingProgress> findAll() {
         return trainingProgressRepository.findAll();
+    }
+
+    public TrainingProgress findById(int id) throws NotFoundException {
+        return trainingProgressRepository.findById(id)
+            .orElseThrow(() -> new NotFoundException("Training progress with id " + id + " not found"));
+    }
+
+    public TrainingProgress findByUserTrainingId(int userTrainingId) {
+        return trainingProgressRepository.findByUserTrainingId(userTrainingId);
     }
 }
