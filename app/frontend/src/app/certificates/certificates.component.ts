@@ -59,7 +59,6 @@ export class CertificatesComponent {
     for(let user of this.service.selectedUsers) { 
       templateParams.users.push({name: user.firstname+" "+user.lastname, id: parseInt(user.id)})
     }
-    console.log(templateParams)
     emailjs.send(
       'service_apxfrbq',
       'template_qz2zssu',
@@ -81,12 +80,10 @@ export class CertificatesComponent {
         };
         this.service.selectedCertificates=[];
         this.service.selectedUsers=[];
-        //alert('Information sent successfully!');
         const msg = await this.translate.get('CERTIFICATES.INFO_SENT_SUCCESS').toPromise();
         alert(msg);
       },
       async (error) => {
-        //alert('Failed to send information, try again or contact support.');
         const msg = await this.translate.get('CERTIFICATES.INFO_SENT_FAILED').toPromise();
         alert(msg);
       }
