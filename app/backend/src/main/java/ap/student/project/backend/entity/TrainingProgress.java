@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TrainingProgress {
+public class  TrainingProgress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

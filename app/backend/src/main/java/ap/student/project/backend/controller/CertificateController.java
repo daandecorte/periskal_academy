@@ -25,27 +25,16 @@ public class CertificateController {
     public ResponseEntity getCertificates() {
         return ResponseEntity.ok(certificateService.getAllCertificates());
     }
+
     @PostMapping(value = "/certificates", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addCertificate(@RequestBody CertificateDTO certificateDTO) {
-        try {
-            Certificate certificate = this.certificateService.save(certificateDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(certificate);
-        }
-        catch(NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-        catch (MissingArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+        Certificate certificate = this.certificateService.save(certificateDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(certificate);
     }
+
     @GetMapping(value = "/certificates/{id}")
     public ResponseEntity getCertificate(@PathVariable("id") int id) {
-        try {
-            return ResponseEntity.ok(this.certificateService.findById(id));
-        }
-        catch(NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        return ResponseEntity.ok(this.certificateService.findById(id));
     }
 
     @GetMapping(value = "/certificates/training/{id}")
