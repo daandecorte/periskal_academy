@@ -2,15 +2,11 @@ package ap.student.project.backend.controller;
 
 import ap.student.project.backend.dto.CertificateDTO;
 import ap.student.project.backend.entity.Certificate;
-import ap.student.project.backend.exceptions.MissingArgumentException;
-import ap.student.project.backend.exceptions.NotFoundException;
 import ap.student.project.backend.service.CertificateService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin

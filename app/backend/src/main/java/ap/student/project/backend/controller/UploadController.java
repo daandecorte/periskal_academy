@@ -59,7 +59,7 @@ public class UploadController {
             }
 
             ftp.logout();
-            return "https://academyws.periskal.com/Downloads/groep7/"+file.getOriginalFilename();
+            return "https://academyws.periskal.com/Downloads/groep7/" + file.getOriginalFilename();
         } catch (IOException e) {
             e.printStackTrace();
             return "Error: " + e.getMessage();

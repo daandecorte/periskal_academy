@@ -1,8 +1,6 @@
 package ap.student.project.backend.controller;
 
 import ap.student.project.backend.dto.ExamAttemptDTO;
-import ap.student.project.backend.exceptions.MissingArgumentException;
-import ap.student.project.backend.exceptions.NotFoundException;
 import ap.student.project.backend.service.ExamAttemptService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

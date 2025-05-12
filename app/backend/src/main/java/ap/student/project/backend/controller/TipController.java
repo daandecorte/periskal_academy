@@ -1,12 +1,7 @@
 package ap.student.project.backend.controller;
 
 import ap.student.project.backend.dto.TipDTO;
-import ap.student.project.backend.dto.UserDTO;
-import ap.student.project.backend.exceptions.DuplicateException;
-import ap.student.project.backend.exceptions.NotFoundException;
 import ap.student.project.backend.service.TipService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,7 +14,9 @@ public class TipController {
     private final TipService tipService;
 
     @Autowired
-    public TipController(TipService tipService) { this.tipService = tipService; }
+    public TipController(TipService tipService) {
+        this.tipService = tipService;
+    }
 
     @GetMapping(value = "/tips", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getAll() {

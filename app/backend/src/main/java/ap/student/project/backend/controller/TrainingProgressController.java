@@ -1,8 +1,6 @@
 package ap.student.project.backend.controller;
 
 import ap.student.project.backend.dto.TrainingProgressDTO;
-import ap.student.project.backend.exceptions.MissingArgumentException;
-import ap.student.project.backend.exceptions.NotFoundException;
 import ap.student.project.backend.service.TrainingProgressService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,7 +26,8 @@ public class TrainingProgressController {
         this.trainingProgressService.save(trainingProgressDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(trainingProgressDTO);
     }
-    @PutMapping(value="training_progress/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+
+    @PutMapping(value = "training_progress/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity updateModuleProgress(@PathVariable("id") int id, @RequestBody TrainingProgressDTO trainingProgressDTO) {
         this.trainingProgressService.update(id, trainingProgressDTO);
         return ResponseEntity.ok(trainingProgressDTO);

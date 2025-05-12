@@ -1,11 +1,7 @@
 package ap.student.project.backend.controller;
 
 import ap.student.project.backend.dto.UserDTO;
-import ap.student.project.backend.exceptions.DuplicateException;
-import ap.student.project.backend.exceptions.NotFoundException;
 import ap.student.project.backend.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,6 +27,7 @@ public class UserController {
     public ResponseEntity getUserById(@PathVariable("id") int id) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findById(id));
     }
+
     @GetMapping(value = "/users/periskal_id/{periskalId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getUserById(@PathVariable("periskalId") String periskalId) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findByPeriskalId(periskalId));
@@ -51,6 +48,7 @@ public class UserController {
     public ResponseEntity getExamAttempts(@PathVariable("id") int id) {
         return ResponseEntity.ok(this.userService.getAllExamAttempts(id));
     }
+
     @GetMapping(value = "/users/{id}/chat_member", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getChatMember(@PathVariable("id") int id) {
         return ResponseEntity.ok(this.userService.getChatMember(id));

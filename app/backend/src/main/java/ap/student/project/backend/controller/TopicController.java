@@ -1,17 +1,12 @@
 package ap.student.project.backend.controller;
 
 import ap.student.project.backend.dto.TopicDTO;
-import ap.student.project.backend.exceptions.NotFoundException;
 import ap.student.project.backend.service.TopicService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.print.attribute.standard.Media;
 
 @CrossOrigin
 @RestController
@@ -19,10 +14,14 @@ public class TopicController {
     private final TopicService topicService;
 
     @Autowired
-    public TopicController(TopicService topicRepository) { this.topicService = topicRepository; }
+    public TopicController(TopicService topicRepository) {
+        this.topicService = topicRepository;
+    }
 
     @GetMapping(value = "/topics", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getAll() { return ResponseEntity.ok(topicService.findAll()); }
+    public ResponseEntity getAll() {
+        return ResponseEntity.ok(topicService.findAll());
+    }
 
     @GetMapping(value = "/topics/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getById(@PathVariable int id) {

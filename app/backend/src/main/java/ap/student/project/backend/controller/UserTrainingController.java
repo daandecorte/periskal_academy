@@ -1,8 +1,6 @@
 package ap.student.project.backend.controller;
 
 import ap.student.project.backend.dto.UserTrainingDTO;
-import ap.student.project.backend.exceptions.MissingArgumentException;
-import ap.student.project.backend.exceptions.NotFoundException;
 import ap.student.project.backend.service.UserTrainingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
