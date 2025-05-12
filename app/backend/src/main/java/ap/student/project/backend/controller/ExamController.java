@@ -32,8 +32,7 @@ public class ExamController {
     @PostMapping(value = "/exams", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addExam(@RequestBody ExamDTO examDTO) {
         try {
-            this.examService.save(examDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(examDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(this.examService.save(examDTO));
         } catch (NotFoundException e) {
             logger.error(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

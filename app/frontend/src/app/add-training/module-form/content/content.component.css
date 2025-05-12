@@ -1,8 +1,11 @@
-/* Form styling */
 .form-container {
   display: flex;
   flex-direction: column;
   margin-top: 10px;
+  height: 500px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  z-index: -1;
 }
 
 .form-group {
@@ -16,19 +19,19 @@
 }
 
 .form-control {
-  width: 100%;
+  width: 96.5%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 14px;
 }
 
-/* Video Upload Section */
 .video-upload {
   border: 1px solid #ccc;
   padding: 15px;
   border-radius: 6px;
   background: #f9f9f9;
+  margin-bottom: 10px;
 }
 
 .language-selection {
@@ -52,6 +55,7 @@
 }
 
 .upload-box {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -81,6 +85,7 @@
 .btn-content-add {
   display: flex;
   justify-content: space-around;
+  margin-top: -10px;
 }
 
 .btn-add-text,
@@ -98,10 +103,6 @@
   cursor: pointer;
 }
 
-.image {
-}
-
-/* Styling for the image input container */
 .picture-upload-container {
   width: 100%;
   margin-bottom: 15px;
@@ -111,15 +112,13 @@
   background-color: #f8f9fa;
 }
 
-/* Style for the image preview */
 .picture-preview {
   max-width: 100%;
   height: auto;
   margin-top: 10px;
-  display: none; /* Hidden by default until image is selected */
+  display: none;
 }
 
-/* Style for image upload box, similar to your video upload but with unique class name */
 .picture-upload-box {
   border: 2px dashed #ddd;
   border-radius: 5px;
@@ -135,7 +134,6 @@
   color: gray;
 }
 
-/* Style for the file input label */
 .picture-input-label {
   display: inline-block;
   padding: 8px 16px;
@@ -150,7 +148,6 @@
   background-color: #0069d9;
 }
 
-/* No file selected text */
 .picture-no-file-text {
   color: #6c757d;
   margin-top: 10px;
@@ -158,13 +155,13 @@
 
 .delete-image-btn {
   position: absolute;
-  top: 0;
+  top: 1px;
   right: 0;
   color: black;
-  background-color: transparent;
+  background-color: white;
   border: none;
-  width: 40px;
-  height: 40px;
+  width: 17px;
+  height: 17px;
   font-size: 20px;
   display: flex;
   align-items: center;
@@ -174,4 +171,24 @@
 
 .form-height {
   height: 100px;
+  margin-bottom: 10px;
+}
+
+.btn-delete-content {
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  bottom: 20px;
+  right: 20px;
+  color: gray;
+  font-size: 15px;
+}
+
+.upload-box .btn-delete-content {
+  bottom: 5px;
+  right: 5px;
+}
+
+textarea {
+  resize: none;
 }

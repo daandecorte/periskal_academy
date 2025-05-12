@@ -85,10 +85,10 @@ export class ModulesComponent {
 }
 
 interface ITranslated {
-  ENGLISH: string;
-  FRENCH: string;
-  DUTCH: string;
-  GERMAN: string;
+  ENGLISH: string | File;
+  FRENCH: string | File;
+  DUTCH: string | File;
+  GERMAN: string | File;
 }
 
 interface IContentCount {
@@ -122,5 +122,5 @@ interface IQuestion {
 
 interface IQuestionOption {
   text: ITranslated;
-  isCorrect: boolean;
+  is_correct: boolean;
 }

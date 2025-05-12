@@ -27,7 +27,7 @@ public class Exam {
     private int questionAmount;
     @OneToMany(mappedBy = "exam", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<Question> questions;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="training_id")
     @JsonIgnore
     private Training training;

@@ -2,7 +2,6 @@ package ap.student.project.backend.service;
 
 import ap.student.project.backend.dao.ModuleRepository;
 import ap.student.project.backend.dto.ModuleDTO;
-import ap.student.project.backend.dto.VideoDTO;
 import ap.student.project.backend.entity.Language;
 import ap.student.project.backend.entity.Module;
 import ap.student.project.backend.entity.Training;
@@ -85,24 +84,5 @@ class ModuleServiceTest {
         moduleService.updateModule(1, moduleDTO);
 
         verify(moduleRepository, times(1)).save(any(Module.class));
-    }
-
-    @Test
-    void addVideo_ShouldThrowException_WhenModuleNotFound() {
-        when(moduleRepository.findById(1)).thenReturn(Optional.empty());
-        VideoDTO videoDTO = new VideoDTO("video_url", Language.ENGLISH);
-        assertThrows(NotFoundException.class, () -> moduleService.addVideo(1, videoDTO));
-    }
-
-    @Test
-    void addVideo_ShouldSaveModuleWithVideo_WhenModuleExists() {
-        when(moduleRepository.findById(1)).thenReturn(Optional.of(module));
-        when(module.getVideoReference()).thenReturn(new HashMap<>());
-
-        VideoDTO videoDTO = new VideoDTO("video_url", Language.ENGLISH);
-        moduleService.addVideo(1, videoDTO);
-
-        verify(module, times(1)).getVideoReference();
-        verify(moduleRepository, times(1)).save(module);
     }
 }

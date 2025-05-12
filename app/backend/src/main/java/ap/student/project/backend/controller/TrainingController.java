@@ -37,8 +37,7 @@ public class TrainingController {
 
     @PostMapping(value = "/trainings", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addModule(@RequestBody TrainingDTO trainingDTO) {
-        this.trainingService.save(trainingDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(trainingDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.trainingService.save(trainingDTO));
     }
 
     @PutMapping(value = "/trainings/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

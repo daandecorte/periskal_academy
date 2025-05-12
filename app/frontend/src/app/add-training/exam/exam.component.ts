@@ -83,9 +83,9 @@ export class ExamComponent {
     for (let i = 0; i < questionArray.length; i++) {
       if (i < this.trainingService.newTraining.exam.questions.length) {
         questionArray[i].nativeElement.value =
-          this.trainingService.newTraining.exam.questions[i].text[
+          (this.trainingService.newTraining.exam.questions[i].text[
             this.selectedButtonLanguage
-          ] || '';
+          ] as string) || '';
       }
     }
 
@@ -105,9 +105,9 @@ export class ExamComponent {
       ) {
         if (answerCount < answerArray.length) {
           answerArray[answerCount].nativeElement.value =
-            this.trainingService.newTraining.exam.questions[i].questionOptions[
+            (this.trainingService.newTraining.exam.questions[i].questionOptions[
               j
-            ].text[this.selectedButtonLanguage] || '';
+            ].text[this.selectedButtonLanguage] as string) || '';
           answerCount++;
         }
       }
@@ -231,9 +231,9 @@ export class ExamComponent {
     const questionOptions =
       this.trainingService.newTraining.exam.questions[indexQ].questionOptions;
     questionOptions.forEach((option) => {
-      option.isCorrect = false;
+      option.is_correct = false;
     });
-    questionOptions[indexO].isCorrect = true;
+    questionOptions[indexO].is_correct = true;
   }
 }
 

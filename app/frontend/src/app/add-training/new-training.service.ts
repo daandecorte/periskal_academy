@@ -69,6 +69,8 @@ export class NewTrainingService {
       content: [],
       questions: [],
     };
+
+    this.setButtonSelectedLanguage('ENGLISH');
   }
 
   public addModuleQuestion() {
@@ -91,7 +93,7 @@ export class NewTrainingService {
         FRENCH: '',
         GERMAN: '',
       },
-      isCorrect: false,
+      is_correct: false,
     });
   }
 
@@ -119,7 +121,7 @@ export class NewTrainingService {
         FRENCH: '',
         GERMAN: '',
       },
-      isCorrect: false,
+      is_correct: false,
     });
   }
 
@@ -148,10 +150,10 @@ export interface INewTraining {
 }
 
 interface ITranslated {
-  ENGLISH: string;
-  FRENCH: string;
-  DUTCH: string;
-  GERMAN: string;
+  ENGLISH: string | File;
+  FRENCH: string | File;
+  DUTCH: string | File;
+  GERMAN: string | File;
 }
 
 interface IModule {
@@ -187,7 +189,7 @@ interface IQuestion {
 
 interface IQuestionOption {
   text: ITranslated;
-  isCorrect: boolean;
+  is_correct: boolean;
 }
 
 interface ICertificate {

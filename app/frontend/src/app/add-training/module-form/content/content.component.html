@@ -5,8 +5,9 @@
       #titleRef
       type="text"
       class="form-control"
-      (change)="titleChange()"
       [placeholder]="'ADMIN_EDIT_TRAININGS.ENTER_MODULE_TITLE' | translate"
+      [(ngModel)]="trainingService.newModule.title[selectedLanguage]"
+      name="title"
     />
   </div>
   <div class="form-group">
@@ -14,26 +15,36 @@
     <textarea
       #descriptionRef
       class="form-control"
-      (change)="descriptionChange()"
       [placeholder]="'ADMIN_EDIT_TRAININGS.ENTER_DESCRIPTION' | translate"
       style="font-family: Arial, Helvetica, sans-serif"
+      [(ngModel)]="trainingService.newModule.description[selectedLanguage]"
+      name="description"
     ></textarea>
   </div>
   <div class="form-group">
     <label>{{ "ADMIN_EDIT_TRAININGS.MODULE_CONTENT" | translate }}</label>
     @for (content of trainingService.newModule.content; track $index) {
     @if(content.contentType === ContentType.TEXT){
-    <textarea
-      #contentRef
-      class="form-control form-height"
-      (input)="textChange($index)"
-      maxlength="500"
-      [placeholder]="'ADMIN_ADD_TRAININGS.ENTER_CONTENT_TEXT' | translate"
-      style="font-family: Arial, Helvetica, sans-serif"
-    ></textarea>
+    <div style="position: relative">
+      <textarea
+        #contentRef
+        class="form-control form-height"
+        maxlength="1000"
+        [placeholder]="'ADMIN_ADD_TRAININGS.ENTER_CONTENT_TEXT' | translate"
+        style="font-family: Arial, Helvetica, sans-serif"
+        [(ngModel)]="
+          trainingService.newModule.content[$index].reference[selectedLanguage]
+        "
+        name="text_{{ $index }}"
+      ></textarea>
+      <button (click)="deleteContent($index)" class="btn-delete-content">
+        <fa-icon [icon]="faTrash" style="color: gray"></fa-icon>
+      </button>
+    </div>
     } @else if(content.contentType === ContentType.PICTURE){
     <div class="video-upload">
-      @if(selectedImagePreview[$index][selectedLanguage] == ""){
+      @if(trainingService.newModule.content[$index].reference[ selectedLanguage
+      ] == ""){
       <div class="upload-box">
         <fa-icon [icon]="faUpload" class="upload-icon"></fa-icon>
         <p>{{ "ADMIN_EDIT_TRAININGS.VIDEO_DESCRIPTION" | translate }}</p>
@@ -46,6 +57,9 @@
           accept="image/png,image/jpeg"
           (change)="imageChange($index, $event)"
         />
+        <button (click)="deleteContent($index)" class="btn-delete-content">
+          <fa-icon [icon]="faTrash" style="color: gray"></fa-icon>
+        </button>
       </div>
       } @else{
       <div style="position: relative">
@@ -57,7 +71,7 @@
           <fa-icon [icon]="faTimes"></fa-icon>
         </button>
         <img
-          [src]="selectedImagePreview[$index][selectedLanguage]"
+          [src]="imagePreviews[$index][selectedLanguage]"
           alt="Selected image"
           class="picture-preview"
           style="display: block"
@@ -67,7 +81,8 @@
     </div>
     } @else if(content.contentType === ContentType.VIDEO){
     <div class="video-upload">
-      @if(selectedVideoPreview[$index][selectedLanguage] == ""){
+      @if(trainingService.newModule.content[$index].reference[ selectedLanguage
+      ] == ""){
       <div class="upload-box">
         <fa-icon [icon]="faUpload" class="upload-icon"></fa-icon>
         <p>{{ "ADMIN_EDIT_TRAININGS.VIDEO_DESCRIPTION" | translate }}</p>
@@ -80,6 +95,9 @@
           accept="video/mp4,video/webm,video/ogg"
           (change)="videoChange($index, $event)"
         />
+        <button (click)="deleteContent($index)" class="btn-delete-content">
+          <fa-icon [icon]="faTrash" style="color: gray"></fa-icon>
+        </button>
       </div>
       } @else{
       <div style="position: relative">
@@ -87,11 +105,12 @@
           class="delete-image-btn"
           type="button"
           (click)="removeVideo($index)"
+          style="z-index: 1"
         >
           <fa-icon [icon]="faTimes"></fa-icon>
         </button>
         <video
-          [src]="selectedVideoPreview[$index][selectedLanguage]"
+          [src]="videoPreviews[$index][selectedLanguage]"
           controls
           class="video-preview"
           style="display: block; max-width: 100%"

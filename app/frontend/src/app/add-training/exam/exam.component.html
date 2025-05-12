@@ -120,7 +120,7 @@
             (change)="answerChoose(questionIndex, optionIndex)"
             [checked]="
               trainingService.newTraining.exam.questions[questionIndex]
-                .questionOptions[optionIndex].isCorrect
+                .questionOptions[optionIndex].is_correct
             "
           />
           <input
