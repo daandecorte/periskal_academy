@@ -32,18 +32,18 @@ public class Training {
     private boolean isActive = false;
     @OneToMany(mappedBy = "training", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Module> modules;
-    @OneToMany(mappedBy = "training", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    private List<Exam> exams;
+    @OneToOne(mappedBy = "training", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private Exam exam;
     @OneToMany(mappedBy = "training", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JsonIgnore
     private List<Certificate> certificates;
 
-    public Training(Map<Language, String> title, Map<Language, String> description, boolean isActive, List<Module> modules, List<Exam> exams) {
+    public Training(Map<Language, String> title, Map<Language, String> description, boolean isActive, List<Module> modules, Exam exam) {
         this.title = title;
         this.description = description;
         this.isActive = isActive;
         this.modules = modules;
-        this.exams = exams;
+        this.exam = exam;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class Training {
                 ", description='" + description + '\'' +
                 ", isActive=" + isActive +
                 ", modules=" + modules +
-                ", exams=" + exams +
+                ", exams=" + exam +
                 '}';
     }
 }

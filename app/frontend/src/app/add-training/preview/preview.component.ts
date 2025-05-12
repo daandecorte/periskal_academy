@@ -96,8 +96,8 @@ export class PreviewComponent {
 }
 
 interface ITranslated {
-  ENGLISH: string;
-  FRENCH: string;
-  DUTCH: string;
-  GERMAN: string;
+  ENGLISH: string | File;
+  FRENCH: string | File;
+  DUTCH: string | File;
+  GERMAN: string | File;
 }

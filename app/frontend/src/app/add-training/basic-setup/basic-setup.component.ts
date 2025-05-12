@@ -51,9 +51,13 @@ export class BasicSetupComponent {
     });
 
     this.titleRef.nativeElement.value =
-      this.trainingService.newTraining.title[this.selectedButtonLanguage];
+      (this.trainingService.newTraining.title[
+        this.selectedButtonLanguage
+      ] as string) || '';
     this.descriptionRef.nativeElement.value =
-      this.trainingService.newTraining.description[this.selectedButtonLanguage];
+      (this.trainingService.newTraining.description[
+        this.selectedButtonLanguage
+      ] as string) || '';
     this.periodRef.nativeElement.value = `${this.trainingService.newTraining.certificate.validityPeriod}`;
     this.priceRef.nativeElement.value = `${this.trainingService.newTraining.certificate.price}`;
   }
@@ -66,9 +70,13 @@ export class BasicSetupComponent {
     this.selectedButtonLanguage = buttonLanguage.value as keyof ITranslated;
 
     this.titleRef.nativeElement.value =
-      this.trainingService.newTraining.title[this.selectedButtonLanguage];
+      (this.trainingService.newTraining.title[
+        this.selectedButtonLanguage
+      ] as string) || '';
     this.descriptionRef.nativeElement.value =
-      this.trainingService.newTraining.description[this.selectedButtonLanguage];
+      (this.trainingService.newTraining.description[
+        this.selectedButtonLanguage
+      ] as string) || '';
   }
 
   titleChange() {

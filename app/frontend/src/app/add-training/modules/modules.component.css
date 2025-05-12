@@ -17,14 +17,6 @@
   font-weight: 600;
 }
 
-/* Section for no module message */
-.message-no-trainig {
-  margin-top: 16px;
-  border-width: 1px;
-  border-color: #e0e0e0;
-  padding: 24px;
-}
-
 .pic-no-module {
   margin-left: auto;
   margin-right: auto;

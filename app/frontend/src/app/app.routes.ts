@@ -18,9 +18,6 @@ import { ModuleFormComponent } from './add-training/module-form/module-form.comp
 import { ContentComponent } from './add-training/module-form/content/content.component';
 import { QuestionsComponent } from './add-training/module-form/questions/questions.component';
 import { authGuard } from './auth.guard';
-import { AdminEditTrainingComponent } from './admin-edit-training/admin-edit-training.component';
-import { BasicInfoComponent } from './admin-edit-training/basic-info/basic-info.component';
-import { EditModulesComponent } from './admin-edit-training/edit-modules/edit-modules.component';
 import { UserdetailComponent } from './userdetail/userdetail.component';
 import { TrainingOverviewComponent } from './training-overview/training-overview.component';
 import { ModuleVideoViewComponent } from './module-video-view/module-video-view.component';
@@ -110,22 +107,19 @@ export const routes: Routes = [
       },
     ],
   },
-  {
-    path: 'edit-training/:id',
-    component: AdminEditTrainingComponent,
-    //canActivate: [RoleGuard],
-    data: { roles: [Role.ADMIN] },
-    children: [
-      { path: '', redirectTo: 'basic-info', pathMatch: 'full' },
-      { path: 'basic-info', component: BasicInfoComponent },
-      { path: 'modules', component: EditModulesComponent },
-      { path: 'exam', component: ExamComponent },
-    ]
-  },
   { path: 'trainings/:id', component: TrainingOverviewComponent },
-  { path: 'trainings/:id/module/:sectionId', component: ModuleVideoViewComponent },
-  { path: 'trainings/:id/module/:sectionId/questions/:questionIndex', component: ModuleQuestionsComponent },
-  { path: 'trainings/:id/module/:sectionId/questions', redirectTo: 'trainings/:id/module/:sectionId/questions/0' },
+  {
+    path: 'trainings/:id/module/:sectionId',
+    component: ModuleVideoViewComponent,
+  },
+  {
+    path: 'trainings/:id/module/:sectionId/questions/:questionIndex',
+    component: ModuleQuestionsComponent,
+  },
+  {
+    path: 'trainings/:id/module/:sectionId/questions',
+    redirectTo: 'trainings/:id/module/:sectionId/questions/0',
+  },
   { path: 'exams/:id/:questionIndex', component: TrainingExamComponent },
   { path: 'exams/:id', redirectTo: 'exams/:id/0' },
   { path: 'training/:id/certificate', redirectTo: 'trainings/:id' }, // Placeholder for future implementation

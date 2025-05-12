@@ -1,8 +1,10 @@
 package ap.student.project.backend.controller;
 
+import ap.student.project.backend.dto.ContentDTO;
 import ap.student.project.backend.dto.ModuleDTO;
 import ap.student.project.backend.dto.QuestionDTO;
-import ap.student.project.backend.dto.VideoDTO;
+import ap.student.project.backend.exceptions.MissingArgumentException;
+import ap.student.project.backend.exceptions.NotFoundException;
 import ap.student.project.backend.service.ModuleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,8 +27,7 @@ public class ModuleController {
 
     @PostMapping(value = "/modules", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addModule(@RequestBody ModuleDTO moduleDTO) {
-        this.moduleService.save(moduleDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(moduleDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.moduleService.save(moduleDTO));
     }
 
     @GetMapping(value = "/modules/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -40,10 +41,10 @@ public class ModuleController {
         return ResponseEntity.ok(moduleDTO);
     }
 
-    @PostMapping(value = "/modules/{id}/video")
-    public ResponseEntity addVideo(@PathVariable Integer id, @RequestBody VideoDTO videoDTO) {
-        moduleService.addVideo(id, videoDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(videoDTO);
+    @PostMapping(value = "/modules/{id}/content")
+    public ResponseEntity addVideo(@PathVariable Integer id, @RequestBody ContentDTO contentDTO) {
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(moduleService.addContent(id, contentDTO));
     }
 
     @PostMapping(value = "/modules/{id}/questions")

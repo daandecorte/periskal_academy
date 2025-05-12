@@ -28,12 +28,9 @@ public class Module {
     @CollectionTable(name = "module_descriptions", joinColumns = @JoinColumn(name = "training_id"))
     @MapKeyColumn(name = "language")
     @Column(name = "description")
-    private Map<Language, String> description = new HashMap<>();
-    @ElementCollection
-    @CollectionTable(name = "video_references", joinColumns = @JoinColumn(name = "training_id"))
-    @MapKeyColumn(name = "language")
-    @Column(name = "video_reference")
-    private Map<Language, String> videoReference = new HashMap<>();
+    private Map<Language, String> description;
+    @OneToMany(mappedBy = "module", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private List<Content> content;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "training_id")
     @JsonIgnore
@@ -41,10 +38,10 @@ public class Module {
     @OneToMany(mappedBy = "module", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<Question> questions;
 
-    public Module(Map<Language, String> title, Map<Language, String> description, Map<Language, String> videoReference, Training training, List<Question> questions) {
-        this.title = title != null ? title : new HashMap<>();
-        this.description = description != null ? description : new HashMap<>();
-        this.videoReference = videoReference != null ? videoReference : new HashMap<>();
+    public Module(Map<Language, String> title, Map<Language, String> description, List<Content> content, Training training, List<Question> questions) {
+        this.title = title;
+        this.description = description;
+        this.content = content;
         this.training = training;
         this.questions = questions;
     }
@@ -55,7 +52,7 @@ public class Module {
                 "id=" + id +
                 ", title=" + title +
                 ", description=" + description +
-                ", videoReference=" + videoReference +
+                ", references=" + content +
                 ", training=" + training +
                 ", questions=" + questions +
                 '}';

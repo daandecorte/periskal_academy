@@ -26,8 +26,7 @@ public class ExamController {
 
     @PostMapping(value = "/exams", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addExam(@RequestBody ExamDTO examDTO) {
-        this.examService.save(examDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(examDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(this.examService.save(examDTO));        
     }
 
     @GetMapping(value = "/exams/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

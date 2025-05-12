@@ -3,7 +3,6 @@ package ap.student.project.backend.service;
 import ap.student.project.backend.dao.ModuleRepository;
 import ap.student.project.backend.dto.ModuleDTO;
 import ap.student.project.backend.dto.TrainingDTO;
-import ap.student.project.backend.dto.VideoDTO;
 import ap.student.project.backend.entity.Language;
 import ap.student.project.backend.entity.Module;
 import ap.student.project.backend.entity.Training;
@@ -64,10 +63,7 @@ class ModuleServiceTest {
         Map<Language, String> moduleDescriptions = new HashMap<>();
         moduleDescriptions.put(Language.ENGLISH, "Test Module Description");
         
-        Map<Language, String> videoReferences = new HashMap<>();
-        videoReferences.put(Language.ENGLISH, "https://example.com/video");
-        
-        moduleDTO = new ModuleDTO(moduleTitles, moduleDescriptions, videoReferences, trainingId);
+        moduleDTO = new ModuleDTO(moduleTitles, moduleDescriptions, null, trainingId);
     }
 
     @Test
@@ -92,7 +88,7 @@ class ModuleServiceTest {
                 .orElse(null);
         
         assertNotNull(savedModule);
-        assertEquals(moduleDTO.titles().get(Language.ENGLISH), savedModule.getTitle().get(Language.ENGLISH));
+        assertEquals(moduleDTO.title().get(Language.ENGLISH), savedModule.getTitle().get(Language.ENGLISH));
     }
 
     void getModuleById_ShouldThrowException_WhenModuleNotFound() {
@@ -138,8 +134,8 @@ class ModuleServiceTest {
         
         ModuleDTO updatedDTO = new ModuleDTO(
             updatedTitles,
-            moduleDTO.descriptions(),
-            moduleDTO.videoReferences(),
+            moduleDTO.description(),
+            null,
             trainingId
         );
         
@@ -147,36 +143,5 @@ class ModuleServiceTest {
         
         Module updatedModule = moduleService.getModuleById(moduleId);
         assertEquals("Updated Module Title", updatedModule.getTitle().get(Language.ENGLISH));
-    }
-
-    @Test
-    void addVideo_ShouldThrowException_WhenModuleNotFound() {
-        VideoDTO videoDTO = new VideoDTO("video_url", Language.ENGLISH);
-        assertThrows(NotFoundException.class, () -> moduleService.addVideo(1, videoDTO));
-    }
-
-    @Test
-    void addVideo_ShouldSaveModuleWithVideo_WhenModuleExists() {
-        moduleService.save(moduleDTO);
-        
-        Module savedModule = moduleRepository.findAll().stream()
-                .filter(m -> m.getTraining().getId() == trainingId)
-                .findFirst()
-                .orElse(null);
-        
-        assertNotNull(savedModule);
-        int moduleId = savedModule.getId(); 
-
-        // Ensure videoReference map is initialized
-        if (savedModule.getVideoReference() == null) {
-            savedModule.setVideoReference(new HashMap<>());
-            moduleRepository.save(savedModule);
-        }
-
-        VideoDTO videoDTO = new VideoDTO("https://example.com/updated-video", Language.ENGLISH);
-        moduleService.addVideo(moduleId, videoDTO);
-        
-        Module updatedModule = moduleService.getModuleById(moduleId);
-        assertEquals("https://example.com/updated-video", updatedModule.getVideoReference().get(Language.ENGLISH));
     }
 }

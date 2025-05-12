@@ -54,9 +54,9 @@ export class QuestionsComponent {
     for (let i = 0; i < questionArray.length; i++) {
       if (i < this.trainingService.newModule.questions.length) {
         questionArray[i].nativeElement.value =
-          this.trainingService.newModule.questions[i].text[
+          (this.trainingService.newModule.questions[i].text[
             this.selectedLanguage
-          ] || '';
+          ] as string) || '';
       }
     }
 
@@ -70,9 +70,8 @@ export class QuestionsComponent {
       ) {
         if (answerCount < answerArray.length) {
           answerArray[answerCount].nativeElement.value =
-            this.trainingService.newModule.questions[i].questionOptions[j].text[
-              this.selectedLanguage
-            ] || '';
+            (this.trainingService.newModule.questions[i].questionOptions[j]
+              .text[this.selectedLanguage] as string) || '';
           answerCount++;
         }
       }
@@ -159,15 +158,15 @@ export class QuestionsComponent {
     const questionOptions =
       this.trainingService.newModule.questions[indexQ].questionOptions;
     questionOptions.forEach((option) => {
-      option.isCorrect = false;
+      option.is_correct = false;
     });
-    questionOptions[indexO].isCorrect = true;
+    questionOptions[indexO].is_correct = true;
   }
 }
 
 interface ITranslated {
-  ENGLISH: string;
-  FRENCH: string;
-  DUTCH: string;
-  GERMAN: string;
+  ENGLISH: string | File;
+  FRENCH: string | File;
+  DUTCH: string | File;
+  GERMAN: string | File;
 }

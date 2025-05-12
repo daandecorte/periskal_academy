@@ -37,7 +37,7 @@ public class ExamService {
         this.questionOptionRepository = questionOptionRepository;
     }
 
-    public void save(ExamDTO examDTO) throws MissingArgumentException, NotFoundException {
+    public Exam save(ExamDTO examDTO) throws MissingArgumentException, NotFoundException {
         Exam exam = new Exam();
         if(examDTO.trainingId()==0) {
             throw new MissingArgumentException("training_id is missing");
@@ -48,7 +48,7 @@ public class ExamService {
         }
         BeanUtils.copyProperties(examDTO, exam);
         exam.setTraining(training);
-        examRepository.save(exam);
+        return examRepository.save(exam);
     }
 
     public Exam findById(int id) throws NotFoundException {
@@ -88,11 +88,7 @@ public class ExamService {
                 questionOption.setQuestion(question);
             }
             question.setQuestionOptions(questionOptions);
-            if (exam.getQuestions().size() < exam.getQuestionAmount()) {
-                questionRepository.save(question);
-            } else {
-                throw new ListFullException("Exam with id " + id + " has a question limit of " + exam.getQuestionAmount());
-            }
+            questionRepository.save(question);
         } catch (NotFoundException e) {
             throw new NotFoundException("Exam with id " + id + " not found");
         }
