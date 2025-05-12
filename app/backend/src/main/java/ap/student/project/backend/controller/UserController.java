@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserController {
     private final UserService userService;
-    private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     public UserController(UserService userService) {
@@ -30,75 +29,36 @@ public class UserController {
 
     @GetMapping(value = "/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getUserById(@PathVariable("id") int id) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(userService.findById(id));
-        } catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(userService.findById(id));
     }
     @GetMapping(value = "/users/periskal_id/{periskalId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getUserById(@PathVariable("periskalId") String periskalId) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(userService.findByPeriskalId(periskalId));
-        } catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(userService.findByPeriskalId(periskalId));
     }
 
     @PostMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity create(@RequestBody UserDTO user) {
-        try {
-            this.userService.save(user);
-            return ResponseEntity.status(HttpStatus.CREATED).body(userService.assemble(user));
-        } catch (DuplicateException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        }
+        this.userService.save(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.assemble(user));
     }
 
     @GetMapping(value = "/users/{id}/trainings", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getTrainings(@PathVariable("id") int id) {
-        try {
-            return ResponseEntity.ok(this.userService.getAllUserModules(id));
-        } catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-
+        return ResponseEntity.ok(this.userService.getAllUserModules(id));
     }
 
     @GetMapping(value = "/users/{id}/exam_attempts", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getExamAttempts(@PathVariable("id") int id) {
-        try {
-            return ResponseEntity.ok(this.userService.getAllExamAttempts(id));
-        } catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-
+        return ResponseEntity.ok(this.userService.getAllExamAttempts(id));
     }
     @GetMapping(value = "/users/{id}/chat_member", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getChatMember(@PathVariable("id") int id) {
-        try {
-            return ResponseEntity.ok(this.userService.getChatMember(id));
-        } catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-
+        return ResponseEntity.ok(this.userService.getChatMember(id));
     }
 
     @PutMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity update(@RequestBody UserDTO userDTO) {
-        try {
-            this.userService.update(userDTO);
-            return ResponseEntity.ok(userDTO);
-        } catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-
+        this.userService.update(userDTO);
+        return ResponseEntity.ok(userDTO);
     }
 }

@@ -19,85 +19,52 @@ public class ChatController {
     public ChatController(ChatService chatService) {
         this.chatService = chatService;
     }
+
     @GetMapping(value = "/chat", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getAllChats() {
         return ResponseEntity.ok(this.chatService.findAll());
     }
+
     @PostMapping(value = "/chat", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addChat(@RequestBody ChatDTO chatDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(this.chatService.save(chatDTO));
     }
+
     @PostMapping(value = "/messages", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addMessage(@RequestBody MessageDTO messageDTO) {
-        try {
-            this.chatService.addMessage(messageDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(messageDTO);
-        }
-        catch(MissingArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-        catch(NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        this.chatService.addMessage(messageDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(messageDTO);
     }
+
     @PostMapping(value = "/chat/{id}/members", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addChatMember(@PathVariable("id") int id, @RequestBody ChatMemberDTO chatMemberDTO) {
-        try {
-            this.chatService.addChatMember(id, chatMemberDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(chatMemberDTO);
-        }
-        catch(MissingArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-        catch(NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        this.chatService.addChatMember(id, chatMemberDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(chatMemberDTO);
     }
+
     @GetMapping(value = "/chat/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getChat(@PathVariable("id") int id) {
-        try {
-            return ResponseEntity.ok(this.chatService.findById(id));
-        }
-        catch(NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-
+        return ResponseEntity.ok(this.chatService.findById(id));
     }
+
     @GetMapping(value = "/members/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getChatMemberById(@PathVariable("id") int id) {
-        try {
-            return ResponseEntity.ok(this.chatService.findMemberById(id));
-        }
-        catch(NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        return ResponseEntity.ok(this.chatService.findMemberById(id));
     }
+
     @GetMapping(value="/members/{id}/chat", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getChatByChatMemberId(@PathVariable("id") int id) {
-        try {
-            return ResponseEntity.ok(this.chatService.findChatByMemberId(id));
-        }
-        catch(NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        return ResponseEntity.ok(this.chatService.findChatByMemberId(id));
     }
+
     @GetMapping(value = "/chat/{id}/messages", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getChatMessages(@PathVariable("id") int id) {
-        try {
-            return ResponseEntity.ok(this.chatService.findAllChatMessages(id));
-        }
-        catch(NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        return ResponseEntity.ok(this.chatService.findAllChatMessages(id));
     }
+
     @PutMapping(value = "/chat/{id}")
     public ResponseEntity updateChat(@PathVariable("id") int id, @RequestBody ChatDTO chatDTO) {
-        try{
-            this.chatService.updateChat(id, chatDTO);
-            return ResponseEntity.ok(chatDTO);
-        }
-        catch (NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        this.chatService.updateChat(id, chatDTO);
+        return ResponseEntity.ok(chatDTO);
     }
 }

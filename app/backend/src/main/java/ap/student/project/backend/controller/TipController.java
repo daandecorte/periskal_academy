@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class TipController {
     private final TipService tipService;
-    private final Logger logger = LoggerFactory.getLogger(TipController.class);
 
     @Autowired
     public TipController(TipService tipService) { this.tipService = tipService; }
@@ -29,33 +28,18 @@ public class TipController {
 
     @GetMapping(value = "/tips/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getTipById(@PathVariable("id") int id) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(tipService.findById(id));
-        } catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(tipService.findById(id));
     }
 
     @PostMapping(value = "/tips", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity create(@RequestBody TipDTO tip) {
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(this.tipService.save(tip));
-        } catch (DuplicateException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.tipService.save(tip));
     }
 
     @PutMapping(value = "/tips/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity update(@PathVariable("id") int id, @RequestBody TipDTO tipDTO) {
-        try {
-            this.tipService.update(id, tipDTO);
-            return ResponseEntity.ok(tipDTO);
-        } catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        this.tipService.update(id, tipDTO);
+        return ResponseEntity.ok(tipDTO);
     }
 
     @DeleteMapping(value = "/tips/{id}")

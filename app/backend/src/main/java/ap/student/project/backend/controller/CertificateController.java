@@ -39,11 +39,6 @@ public class CertificateController {
 
     @GetMapping(value = "/certificates/training/{id}")
     public ResponseEntity getCertificateByTrainingId(@PathVariable("id") int id) {
-        try {
-            return ResponseEntity.ok(this.certificateService.findByTrainingId(id));
-        }
-        catch(NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        return ResponseEntity.ok(this.certificateService.findByTrainingId(id));
     }
 }

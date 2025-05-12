@@ -25,14 +25,7 @@ public class ExamAttemptController {
 
     @PostMapping(value = "/exam_attempts", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createExamAttempt(@RequestBody ExamAttemptDTO examAttemptDTO) {
-        try {
-            this.examAttemptService.save(examAttemptDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(examAttemptDTO);
-        } catch (NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-        catch (MissingArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+        this.examAttemptService.save(examAttemptDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(examAttemptDTO);
     }
 }

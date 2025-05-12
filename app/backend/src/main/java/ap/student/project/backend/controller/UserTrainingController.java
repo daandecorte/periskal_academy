@@ -25,14 +25,7 @@ public class UserTrainingController {
 
     @PostMapping(value = "/user_trainings", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createUserModule(@RequestBody UserTrainingDTO userTrainingDTO) {
-        try {
-            this.userTrainingService.save(userTrainingDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(userTrainingDTO);
-        } catch (NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-        catch (MissingArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+        this.userTrainingService.save(userTrainingDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userTrainingDTO);
     }
 }

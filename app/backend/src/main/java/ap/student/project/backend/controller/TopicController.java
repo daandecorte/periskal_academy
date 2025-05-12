@@ -17,7 +17,6 @@ import javax.print.attribute.standard.Media;
 @RestController
 public class TopicController {
     private final TopicService topicService;
-    private final Logger logger = LoggerFactory.getLogger(TopicController.class);
 
     @Autowired
     public TopicController(TopicService topicRepository) { this.topicService = topicRepository; }
@@ -27,42 +26,22 @@ public class TopicController {
 
     @GetMapping(value = "/topics/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getById(@PathVariable int id) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(topicService.findById(id));
-        } catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(topicService.findById(id));
     }
 
     @PostMapping(value = "/topics", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity create(@RequestBody TopicDTO topic) {
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(topicService.save(topic));
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(topicService.save(topic));
     }
 
     @PutMapping(value = "/topics/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity update(@PathVariable int id, @RequestBody TopicDTO topic) {
-        try{
-            return ResponseEntity.status(HttpStatus.OK).body(this.topicService.update(id, topic));
-        } catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(this.topicService.update(id, topic));
     }
 
     @DeleteMapping(value = "/topics/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity delete(@PathVariable int id) {
-        try{
-            this.topicService.delete(id);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Deleted topic with id " + id);
-        } catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        this.topicService.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Deleted topic with id " + id);
     }
 }

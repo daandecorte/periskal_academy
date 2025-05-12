@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class TrainingController {
     private final TrainingService trainingService;
-    private final Logger logger = LoggerFactory.getLogger(TrainingController.class);
 
     public TrainingController(TrainingService trainingService) {
         this.trainingService = trainingService;
@@ -27,12 +26,7 @@ public class TrainingController {
 
     @GetMapping(value = "/trainings/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getModuleById(@PathVariable Integer id) {
-        try {
-            return ResponseEntity.ok(this.trainingService.findById(id));
-        } catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        return ResponseEntity.ok(this.trainingService.findById(id));
     }
 
     @PostMapping(value = "/trainings", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -43,12 +37,7 @@ public class TrainingController {
 
     @PutMapping(value = "/trainings/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity updateModule(@PathVariable("id") int id, @RequestBody TrainingDTO trainingDTO) {
-        try {
-            this.trainingService.update(id, trainingDTO);
-            return ResponseEntity.ok(trainingDTO);
-        } catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        this.trainingService.update(id, trainingDTO);
+        return ResponseEntity.ok(trainingDTO);
     }
 }

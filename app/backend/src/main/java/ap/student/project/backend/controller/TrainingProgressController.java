@@ -25,23 +25,12 @@ public class TrainingProgressController {
 
     @PostMapping(value = "/training_progress", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity createModuleProgress(@RequestBody TrainingProgressDTO trainingProgressDTO) {
-        try {
-            this.trainingProgressService.save(trainingProgressDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(trainingProgressDTO);
-        } catch (NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-        catch (MissingArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+        this.trainingProgressService.save(trainingProgressDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(trainingProgressDTO);
     }
     @PutMapping(value="training_progress/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity updateModuleProgress(@PathVariable("id") int id, @RequestBody TrainingProgressDTO trainingProgressDTO) {
-        try {
-            this.trainingProgressService.update(id, trainingProgressDTO);
-            return ResponseEntity.ok(trainingProgressDTO);
-        } catch (NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        this.trainingProgressService.update(id, trainingProgressDTO);
+        return ResponseEntity.ok(trainingProgressDTO);
     }
 }

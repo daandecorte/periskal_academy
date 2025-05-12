@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class ExamController {
     private final ExamService examService;
-    private final Logger logger = LoggerFactory.getLogger(ExamController.class);
 
     public ExamController(ExamService examService) {
         this.examService = examService;
@@ -33,39 +32,22 @@ public class ExamController {
 
     @PostMapping(value = "/exams", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addExam(@RequestBody ExamDTO examDTO) {
-        try {
-            this.examService.save(examDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(examDTO);
-        } catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-        catch (MissingArgumentException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
+        this.examService.save(examDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(examDTO);
     }
+
     @GetMapping(value = "/exams/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getExamById(@PathVariable int id) {
-        try {
-            this.examService.findById(id);
-            return ResponseEntity.ok(this.examService.findById(id));
-        }
-        catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        this.examService.findById(id);
+        return ResponseEntity.ok(this.examService.findById(id));
     }
+
     @PutMapping(value = "/exams/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity updateExam(@PathVariable int id, @RequestBody ExamDTO examDTO) {
-        try {
-            this.examService.update(id, examDTO);
-            return ResponseEntity.ok(examDTO);
-        } catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+        this.examService.update(id, examDTO);
+        return ResponseEntity.ok(examDTO);
     }
+
     @GetMapping(value = "/exams/{id}/questions", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getQuestions(@PathVariable int id) {
         return ResponseEntity.ok(this.examService.findAllQuestionsByExamId(id));
@@ -73,31 +55,13 @@ public class ExamController {
 
     @PostMapping(value="/exams/{id}/questions", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addQuestion(@PathVariable int id, @RequestBody QuestionDTO questionDTO) {
-        try {
-            this.examService.addQuestion(id, questionDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(questionDTO);
-        }
-        catch(NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-        catch(ListFullException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        }
+        this.examService.addQuestion(id, questionDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(questionDTO);
     }
 
-     @PostMapping(value = "/exams/submit", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/exams/submit", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity submitExam(@RequestBody ExamSubmissionDTO submissionDTO) {
-        try {
-            ExamResultDTO result = this.examService.evaluateExam(submissionDTO);
-            return ResponseEntity.ok(result);
-        } catch (NotFoundException e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (Exception e) {
-            logger.error("Error submitting exam: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing exam submission");
-        }
+        ExamResultDTO result = this.examService.evaluateExam(submissionDTO);
+        return ResponseEntity.ok(result);
     }
 }
