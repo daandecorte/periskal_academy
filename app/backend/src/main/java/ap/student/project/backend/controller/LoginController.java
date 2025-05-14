@@ -131,7 +131,7 @@ public class LoginController {
     }
 
     /**
-     * Authenticates a user with a hardware dongle code.     *
+     * Authenticates a user with a hardware dongle code.
      * @param dongleCode the encrypted dongle code
      * @param language the user's preferred language
      * @return a JSON string containing the authentication result or an error message
