@@ -10,6 +10,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller responsible for handling exam-related HTTP requests.
+ * Manages operations for exams including creation, retrieval, updates,
+ * managing exam questions, and evaluating exam submissions.
+ */
 @CrossOrigin
 @RestController
 public class ExamController {
@@ -19,39 +24,82 @@ public class ExamController {
         this.examService = examService;
     }
 
+    /**
+     * Retrieves all exams from the system.
+     * 
+     * @return ResponseEntity containing a list of all exams with HTTP status 200 (OK)
+     */
     @GetMapping(value = "/exams", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getExams() {
         return ResponseEntity.ok(this.examService.findAll());
     }
 
+    /**
+     * Creates a new exam in the system.
+     * 
+     * @param examDTO The exam data transfer object containing exam information
+     * @return ResponseEntity containing the created exam with HTTP status 201 (CREATED)
+     */
     @PostMapping(value = "/exams", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addExam(@RequestBody ExamDTO examDTO) {
             return ResponseEntity.status(HttpStatus.CREATED).body(this.examService.save(examDTO));        
     }
 
+    /**
+     * Retrieves a specific exam by its ID.
+     * 
+     * @param id The ID of the exam to retrieve
+     * @return ResponseEntity containing the exam with HTTP status 200 (OK)
+     */
     @GetMapping(value = "/exams/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getExamById(@PathVariable int id) {
         this.examService.findById(id);
         return ResponseEntity.ok(this.examService.findById(id));
     }
 
+    /**
+     * Updates a specific exam with new information.
+     * 
+     * @param id The ID of the exam to update
+     * @param examDTO The exam data transfer object containing updated exam information
+     * @return ResponseEntity containing the updated exam with HTTP status 200 (OK)
+     */
     @PutMapping(value = "/exams/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity updateExam(@PathVariable int id, @RequestBody ExamDTO examDTO) {
         this.examService.update(id, examDTO);
         return ResponseEntity.ok(examDTO);
     }
 
+    /**
+     * Retrieves all questions for a specific exam.
+     * 
+     * @param id The ID of the exam to retrieve questions for
+     * @return ResponseEntity containing a list of exam questions with HTTP status 200 (OK)
+     */
     @GetMapping(value = "/exams/{id}/questions", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getQuestions(@PathVariable int id) {
         return ResponseEntity.ok(this.examService.findAllQuestionsByExamId(id));
     }
 
+    /**
+     * Adds a new question to a specific exam.
+     * 
+     * @param id The ID of the exam to add a question to
+     * @param questionDTO The question data transfer object containing question information
+     * @return ResponseEntity containing the added question with HTTP status 201 (CREATED)
+     */
     @PostMapping(value="/exams/{id}/questions", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addQuestion(@PathVariable int id, @RequestBody QuestionDTO questionDTO) {
         this.examService.addQuestion(id, questionDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(questionDTO);
     }
 
+     /**
+     * Evaluates an exam submission and returns the result.
+     * 
+     * @param submissionDTO The exam submission data transfer object containing submission information
+     * @return ResponseEntity containing the exam result with HTTP status 200 (OK)
+     */
     @PostMapping(value = "/exams/submit", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity submitExam(@RequestBody ExamSubmissionDTO submissionDTO) {
         ExamResultDTO result = this.examService.evaluateExam(submissionDTO);

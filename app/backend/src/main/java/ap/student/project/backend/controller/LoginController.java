@@ -31,6 +31,12 @@ import java.nio.charset.StandardCharsets;
 import java.security.spec.KeySpec;
 import java.util.Base64;
 
+/**
+ * Controller responsible for handling authentication-related endpoints.
+ * This controller provides authentication functionality using either username/password
+ * credentials or a hardware dongle code. Upon successful authentication, user information
+ * is retrieved from an external authentication service.
+ */
 @RestController
 public class LoginController {
     public final UserService userService;
@@ -39,6 +45,14 @@ public class LoginController {
         this.userService = userService;
     }
 
+    /**
+     * Processes login requests using either credentials (username/password) or a dongle code.
+     * The method determines which authentication path to take based on the provided parameters.
+     *
+     * @param loginRequest the request containing login information (username, password, language, or dongle code)
+     * @return a JSON string containing the authentication result or an error message
+     * @throws IOException if an error occurs during communication with the authentication service
+     */
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public String login(@RequestBody LoginRequest loginRequest) throws IOException {
         String username = loginRequest.username().orElse(null);
@@ -57,6 +71,15 @@ public class LoginController {
         return "{\"text\": \"Missing authentication parameters \"}";
     }
 
+    /**
+     * Authenticates a user with username and password credentials.
+     *
+     * @param username the user's username
+     * @param password the user's password
+     * @param language the user's preferred language
+     * @return a JSON string containing the authentication result or an error message
+     * @throws IOException if an error occurs during communication with the authentication service
+     */
     private String authenticateWithCredentials(String username, String password, String language) throws IOException {
         URL url = new URL("http://academyws.periskal.com/Academy.asmx");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -107,6 +130,13 @@ public class LoginController {
         }
     }
 
+    /**
+     * Authenticates a user with a hardware dongle code.     *
+     * @param dongleCode the encrypted dongle code
+     * @param language the user's preferred language
+     * @return a JSON string containing the authentication result or an error message
+     * @throws IOException if an error occurs during communication with the authentication service
+     */
     protected String authenticateWithDongle(String dongleCode, String language) throws IOException {
         // Process dongle code if it has DEBUG prefix
         String processedDongleCode;
@@ -171,6 +201,13 @@ public class LoginController {
         }
     }
 
+    /**
+     * Converts XML response from the authentication service to JSON format.
+     * @param xml the XML string to convert
+     * @param resultNodeName the name of the node containing the authentication result
+     * @return a JSON string representation of the XML response
+     * @throws Exception if the XML cannot be parsed or the result node is not found
+     */
     private String XMLtoJSON(String xml, String resultNodeName) throws Exception {
         XmlMapper xmlMapper = new XmlMapper();
         xmlMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -216,6 +253,11 @@ public class LoginController {
         return null;
     }
 
+    /**
+     * Creates a SOAP request for username/password authentication.
+     * @param encoded the Base64-encoded and encrypted username:password string
+     * @return a SOAP request XML string
+     */
     private String makeCredentialsRequest(String encoded) {
         return "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
                 + "<soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
@@ -229,6 +271,11 @@ public class LoginController {
                 + "</soap12:Envelope>";
     }
 
+    /**
+     * Creates a SOAP request for dongle authentication.
+     * @param dongleCode the encoded dongle code
+     * @return a SOAP request XML string
+     */
     private String makeDongleRequest(String dongleCode) {
         return "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
                 + "<soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
@@ -244,6 +291,13 @@ public class LoginController {
 
     private final String salt = "PeriskalAcademy2024";
 
+    /**
+     * Encodes a username and password combination for authentication.
+     * @param username the username to encode
+     * @param password the password to encode
+     * @return a Base64-encoded encrypted string
+     * @throws IllegalArgumentException if username or password is empty
+     */
     private String encode(String username, String password) {
         if (username.trim().isEmpty() || password.trim().isEmpty()) {
             throw new IllegalArgumentException("Username and/or password cannot be empty.");
@@ -256,6 +310,12 @@ public class LoginController {
         return Base64.getEncoder().encodeToString(encrypted.getBytes(StandardCharsets.UTF_8));
     }
 
+    /**
+     * Encrypts a string using AES encryption with CBC mode and PKCS5 padding.
+     *
+     * @param input the string to encrypt
+     * @return the Base64-encoded encrypted string or null if encryption fails
+     */
     private String encryptString(String input) {
         try {
             byte[] key = deriveKeyFromSalt(salt);

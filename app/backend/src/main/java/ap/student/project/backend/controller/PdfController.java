@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
+/**
+ * Controller responsible for handling PDF generation requests.
+ * Manages operations for generating PDF documents from certificate data.
+ */
 @RestController
 @RequestMapping("/pdf")
 public class PdfController {
@@ -16,6 +20,13 @@ public class PdfController {
     public PdfController(PdfService pdfService) {
         this.pdfService = pdfService;
     }
+    /**
+     * Generates a PDF document for a specific user certificate.
+     * 
+     * @param userCertificateId The ID of the user certificate to generate a PDF for
+     * @return ResponseEntity containing the generated PDF as byte array with HTTP status 200 (OK)
+     *         or HTTP status 500 (INTERNAL_SERVER_ERROR) if PDF generation fails
+     */
     @GetMapping("/generate/{id}")
     public ResponseEntity generatePdf(@PathVariable("id") int userCertificateId) {
         try {
