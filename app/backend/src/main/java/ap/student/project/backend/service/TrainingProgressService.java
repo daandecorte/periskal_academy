@@ -11,16 +11,37 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service class that manages operations related to TrainingProgress entities.
+ * This service handles the business logic for creating, retrieving, and updating 
+ * training progress records associated with user trainings.
+ */
 @Service
 public class TrainingProgressService {
     private final TrainingProgressRepository trainingProgressRepository;
     private final UserTrainingService userTrainingService;
 
+    /**
+     * Constructs a new TrainingProgressService with the necessary dependencies.
+     *
+     * @param trainingProgressRepository The repository used for TrainingProgress entity persistence operations
+     * @param userTrainingService The service used for UserTraining operations
+     */
     public TrainingProgressService(TrainingProgressRepository trainingProgressRepository, UserTrainingService userTrainingService) {
         this.trainingProgressRepository = trainingProgressRepository;
         this.userTrainingService = userTrainingService;
     }
 
+    /**
+     * Creates and saves a new TrainingProgress entity from the provided DTO.
+     * This method establishes a bidirectional relationship between the TrainingProgress
+     * and its associated UserTraining.
+     *
+     * @param trainingProgressDTO The data transfer object containing the TrainingProgress information
+     * @return The newly created and saved TrainingProgress entity
+     * @throws MissingArgumentException If the userTrainingId is missing from the DTO
+     * @throws IllegalStateException If the specified UserTraining already has an associated TrainingProgress
+     */
     public TrainingProgress save(TrainingProgressDTO trainingProgressDTO) {
         if(trainingProgressDTO.userTrainingId()==0) {
             throw new MissingArgumentException("user_training_id is missing");
@@ -47,6 +68,15 @@ public class TrainingProgressService {
         return savedProgress;
     }
 
+    /**
+     * Updates an existing TrainingProgress entity with new information from the provided DTO.
+     * Only non-relationship fields are updated.
+     *
+     * @param id The ID of the TrainingProgress to update
+     * @param trainingProgressDTO The data transfer object containing the updated TrainingProgress information
+     * @return The updated TrainingProgress entity
+     * @throws NotFoundException If no TrainingProgress with the given ID exists
+     */
     public TrainingProgress update(int id, TrainingProgressDTO trainingProgressDTO) throws NotFoundException {
         TrainingProgress trainingProgress = trainingProgressRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("Training progress with id " + id + " not found"));
@@ -59,15 +89,33 @@ public class TrainingProgressService {
         return trainingProgressRepository.save(trainingProgress);
     }
 
+    /**
+     * Retrieves all TrainingProgress entities from the database.
+     *
+     * @return A list containing all TrainingProgress entities
+     */
     public List<TrainingProgress> findAll() {
         return trainingProgressRepository.findAll();
     }
 
+    /**
+     * Finds a TrainingProgress entity by its ID.
+     *
+     * @param id The ID of the TrainingProgress to find
+     * @return The found TrainingProgress entity
+     * @throws NotFoundException If no TrainingProgress with the given ID exists
+     */
     public TrainingProgress findById(int id) throws NotFoundException {
         return trainingProgressRepository.findById(id)
             .orElseThrow(() -> new NotFoundException("Training progress with id " + id + " not found"));
     }
 
+    /**
+     * Finds a TrainingProgress entity by its associated UserTraining ID.
+     *
+     * @param userTrainingId The ID of the UserTraining associated with the TrainingProgress
+     * @return The found TrainingProgress entity
+     */
     public TrainingProgress findByUserTrainingId(int userTrainingId) {
         return trainingProgressRepository.findByUserTrainingId(userTrainingId);
     }

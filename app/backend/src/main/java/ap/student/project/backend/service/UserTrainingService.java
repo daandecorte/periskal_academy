@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service class that manages operations related to UserTraining entities.
+ * This service handles the business logic for creating, retrieving UserTraining records,
+ * which represent the association between a User and a Training.
+ */
 @Service
 public class UserTrainingService {
 
@@ -19,6 +24,14 @@ public class UserTrainingService {
     private final UserService userService;
     private final TrainingService trainingService;
 
+
+    /**
+     * Constructs a new UserTrainingService with the necessary dependencies.
+     *
+     * @param userTrainingRepository The repository used for UserTraining entity persistence operations
+     * @param userService The service used for User operations
+     * @param trainingService The service used for Training operations
+     */
     @Autowired
     public UserTrainingService(UserTrainingRepository userTrainingRepository, UserService userService, TrainingService trainingService) {
         this.userTrainingRepository = userTrainingRepository;
@@ -26,6 +39,13 @@ public class UserTrainingService {
         this.trainingService = trainingService;
     }
 
+    /**
+     * Creates and saves a new UserTraining from the provided DTO.
+     * This method establishes the relationship between a User and a Training.
+     *
+     * @param userTrainingDTO The data transfer object containing the UserTraining information
+     * @throws MissingArgumentException If either user_id or training_id is missing from the DTO
+     */
     public void save(UserTrainingDTO userTrainingDTO) {
         UserTraining userTraining = new UserTraining();
         if(userTrainingDTO.user_id()==0) {
@@ -40,6 +60,14 @@ public class UserTrainingService {
         userTraining.setUser(user);
         userTrainingRepository.save(userTraining);
     }
+
+    /**
+     * Finds a UserTraining by its ID.
+     *
+     * @param id The ID of the UserTraining to find
+     * @return The found UserTraining entity
+     * @throws NotFoundException If no UserTraining with the given ID exists
+     */
     public UserTraining findById(int id) throws NotFoundException {
         UserTraining userTraining = this.userTrainingRepository.findById(id).orElse(null);
         if (userTraining == null) {
@@ -47,6 +75,12 @@ public class UserTrainingService {
         }
         return userTraining;
     }
+
+    /**
+     * Retrieves all UserTrainings from the database.
+     *
+     * @return A list containing all UserTraining entities
+     */
     public List<UserTraining> findAll() {
         return userTrainingRepository.findAll();
     }

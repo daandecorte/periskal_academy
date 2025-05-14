@@ -14,12 +14,31 @@ import java.time.format.TextStyle;
 import java.util.Base64;
 import java.util.Locale;
 
+/**
+ * Service class for generating PDF certificates.
+ * Handles creating PDF certificate documents for users.
+ */
 @Service
 public class PdfService {
     private final UserCertificateService userCertificateService;
+
+    /**
+     * Constructs a new PdfService with the required services.
+     *
+     * @param userCertificateService Service for user certificate-related operations
+     */
     public PdfService(UserCertificateService userCertificateService) {
         this.userCertificateService = userCertificateService;
     }
+
+    /**
+     * Generates a PDF certificate for a specific user certificate.
+     *
+     * @param userCertificateId The ID of the user certificate to generate a PDF for
+     * @return The generated PDF as a byte array
+     * @throws IOException If there is an error reading template files or generating the PDF
+     * @throws NotFoundException If the user certificate is not found
+     */
     public byte[] generatePdf(int userCertificateId) throws IOException {
         UserCertificate userCertificate = this.userCertificateService.findById(userCertificateId);
         Certificate certificate = userCertificate.getCertificate();
@@ -50,6 +69,13 @@ public class PdfService {
 
         return outputStream.toByteArray();
     }
+
+    /**
+     * Formats a date in a fancy style for display on certificates.
+     *
+     * @param date The date to format
+     * @return The formatted date string (e.g., "15th of May, 2025")
+     */
     public static String formatFancyDate(LocalDate date) {
         int day = date.getDayOfMonth();
         String suffix = getDaySuffix(day);
@@ -57,6 +83,12 @@ public class PdfService {
         return day + suffix + " of " + month + ", " + date.getYear();
     }
 
+    /**
+     * Gets the appropriate suffix for a day number (st, nd, rd, th).
+     *
+     * @param day The day number
+     * @return The appropriate suffix string
+     */
     private static String getDaySuffix(int day) {
         if (day >= 11 && day <= 13) return "th";
         switch (day % 10) {

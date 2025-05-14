@@ -23,6 +23,10 @@ import ap.student.project.backend.dao.QuestionOptionRepository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service class for managing exam-related operations.
+ * Handles creating, updating, and evaluating exams and their questions.
+ */
 @Service
 public class ExamService {
     private final ExamRepository examRepository;
@@ -30,6 +34,14 @@ public class ExamService {
     private final TrainingService trainingService;
     private final QuestionOptionRepository questionOptionRepository;
 
+    /**
+     * Constructs a new ExamService with the required repositories and services.
+     *
+     * @param examRepository Repository for Exam entity operations
+     * @param questionRepository Repository for Question entity operations
+     * @param trainingService Service for training-related operations
+     * @param questionOptionRepository Repository for QuestionOption entity operations
+     */
     public ExamService(ExamRepository examRepository, QuestionRepository questionRepository, TrainingService trainingService, QuestionOptionRepository questionOptionRepository) {
         this.examRepository = examRepository;
         this.questionRepository = questionRepository;
@@ -37,6 +49,14 @@ public class ExamService {
         this.questionOptionRepository = questionOptionRepository;
     }
 
+    /**
+     * Creates and saves a new exam.
+     *
+     * @param examDTO Data transfer object containing exam information
+     * @return The saved Exam entity
+     * @throws MissingArgumentException If training_id is missing from the DTO
+     * @throws NotFoundException If the training is not found
+     */
     public Exam save(ExamDTO examDTO) throws MissingArgumentException, NotFoundException {
         Exam exam = new Exam();
         if(examDTO.trainingId()==0) {
@@ -51,6 +71,13 @@ public class ExamService {
         return examRepository.save(exam);
     }
 
+    /**
+     * Finds an exam by its ID.
+     *
+     * @param id The ID of the exam to find
+     * @return The found Exam entity
+     * @throws NotFoundException If no exam with the given ID exists
+     */
     public Exam findById(int id) throws NotFoundException {
         Exam exam = examRepository.findById(id).orElse(null);
         if (exam == null) {
@@ -59,6 +86,13 @@ public class ExamService {
         return exam;
     }
 
+    /**
+     * Updates an existing exam with new information.
+     *
+     * @param id The ID of the exam to update
+     * @param examDTO Data transfer object containing updated exam information
+     * @throws NotFoundException If no exam with the given ID exists
+     */
     public void update(int id, ExamDTO examDTO) throws NotFoundException {
         Exam exam = examRepository.findById(id).orElse(null);
         if (exam == null) {
@@ -68,14 +102,31 @@ public class ExamService {
         examRepository.save(exam);
     }
 
+    /**
+     * Retrieves all exams in the system.
+     *
+     * @return A list of all Exam entities
+     */
     public List<Exam> findAll() {
         return examRepository.findAll();
     }
 
+    /**
+     * Deletes an exam by its ID.
+     *
+     * @param id The ID of the exam to delete
+     */
     public void delete(int id) {
         examRepository.deleteById(id);
     }
 
+    /**
+     * Adds a new question to an existing exam.
+     *
+     * @param id The ID of the exam to add the question to
+     * @param questionDTO Data transfer object containing question information
+     * @throws NotFoundException If no exam with the given ID exists
+     */
     @Transactional
     public void addQuestion(int id, QuestionDTO questionDTO) {
         try {
@@ -93,6 +144,14 @@ public class ExamService {
             throw new NotFoundException("Exam with id " + id + " not found");
         }
     }
+
+    /**
+     * Retrieves all questions for a specific exam.
+     *
+     * @param id The ID of the exam to get questions for
+     * @return A list of Question entities associated with the exam
+     * @throws NotFoundException If no exam with the given ID exists
+     */
     public List<Question> findAllQuestionsByExamId(int id) {
         try {
             Exam exam = this.findById(id);
@@ -103,6 +162,13 @@ public class ExamService {
         }
     }
 
+     /**
+     * Evaluates an exam submission and calculates the score.
+     *
+     * @param submissionDTO Data transfer object containing the exam submission information
+     * @return An ExamResultDTO containing the score and pass/fail status
+     * @throws NotFoundException If the exam or any of its components are not found
+     */
     public ExamResultDTO evaluateExam(ExamSubmissionDTO submissionDTO) throws NotFoundException {
         // Find the exam
         Exam exam = findById(submissionDTO.getExamId());

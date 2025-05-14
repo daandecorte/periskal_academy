@@ -11,19 +11,41 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service class for managing tips.
+ * Handles creating, retrieving, updating, and deleting tips associated with topics.
+ */
 @Service
 public class TipService {
     private final TipRepository tipRepository;
     private final TopicRepository topicRepository;
 
+    /**
+     * Constructs a new TipService with the required repositories.
+     *
+     * @param tipRepository Repository for Tip entity operations
+     * @param topicRepository Repository for Topic entity operations
+     */
     @Autowired
     public TipService(TipRepository tipRepository, TopicRepository topicRepository) {
         this.tipRepository = tipRepository;
         this.topicRepository = topicRepository;
     }
 
+     /**
+     * Retrieves all tips in the system.
+     *
+     * @return A list of all Tip entities
+     */
     public List<Tip> findAll() { return tipRepository.findAll(); }
 
+    /**
+     * Finds a tip by its ID.
+     *
+     * @param id The ID of the tip to find
+     * @return The found Tip entity
+     * @throws NotFoundException If no tip with the given ID exists
+     */
     public Tip findById(int id) throws NotFoundException {
         Tip tip = tipRepository.findById(id).orElse(null);
         if (tip == null) {
@@ -31,7 +53,14 @@ public class TipService {
         }
         return tip;
     }
-
+    
+    /**
+     * Creates and saves a new tip.
+     *
+     * @param tipDTO Data transfer object containing tip information
+     * @return The saved Tip entity
+     * @throws NotFoundException If the topic is not found or the topic_id is invalid
+     */
     public Tip save(TipDTO tipDTO){
         Topic topic;
         if(tipDTO.topic_id() >= 0){
