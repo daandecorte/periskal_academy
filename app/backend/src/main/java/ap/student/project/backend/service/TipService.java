@@ -75,6 +75,13 @@ public class TipService {
         return tipRepository.save(tip);
     }
 
+    /**
+     * Updates the text of an existing tip.
+     *
+     * @param id The ID of the tip to update
+     * @param tipDTO Data transfer object containing the updated tip information
+     * @throws NotFoundException If no tip with the given ID exists
+     */
     public void update(int id, TipDTO tipDTO) throws NotFoundException {
         Tip updatedTip = tipRepository.findById(id).orElse(null);
         if (updatedTip == null) {
@@ -84,6 +91,12 @@ public class TipService {
         tipRepository.save(updatedTip);
     }
 
+    /**
+     * Deletes a tip by its ID.
+     *
+     * @param id The ID of the tip to delete
+     * @throws NotFoundException If no tip with the given ID exists
+     */
     public void deleteById(int id) {
         Tip tip = tipRepository.findById(id).orElse(null);
         if (tip == null) {
