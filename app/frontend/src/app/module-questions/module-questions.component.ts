@@ -42,9 +42,7 @@ export class ModuleQuestionsComponent implements OnInit {
   faVideo = faVideo;
   
   currentLanguage: string = 'EN';
-  
-  // Flag to track if we're using hardcoded data
-  isUsingHardcodedData: boolean = false;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -101,14 +99,13 @@ export class ModuleQuestionsComponent implements OnInit {
           if (module) {
             this.moduleTitle = this.getLocalizedContent(module.title);
             
+            
             // Check if questions data is available or use hardcoded data
             if (module.questions && module.questions.length > 0) {
-              this.isUsingHardcodedData = false;
               this.questions = module.questions;
             } else {
-              console.warn(`Module with ID ${this.moduleId} has no questions. Using hardcoded data.`);
-              this.isUsingHardcodedData = true;
-              this.questions = this.getHardcodedQuestions();
+              console.warn(`Module with ID ${this.moduleId} has no questions.`);
+              //TODO: skip the test for this module
             }
             
             this.totalSteps = this.questions.length + 1; // +1 for video step
@@ -127,103 +124,9 @@ export class ModuleQuestionsComponent implements OnInit {
       },
       error => {
         console.error('Error loading module data:', error);
-        console.warn('Using hardcoded data due to error loading module data.');
-        this.isUsingHardcodedData = true;
-        this.moduleTitle = "Demo Module"; // Fallback module title
-        this.questions = this.getHardcodedQuestions();
-        this.totalSteps = this.questions.length + 1;
-        this.currentStep = this.currentQuestionIndex + 2;
-        this.setCurrentQuestion();
+        this.goBackToOverview();
       }
     );
-  }
-
-  getHardcodedQuestions(): any[] {
-    // Create hardcoded questions with localized content structure
-    return [
-      {
-        id: 1,
-        text: {
-          'EN': 'Question?',
-          'FR': 'Question?',
-          'NL': 'Question?',
-          'DE': 'Question?',
-        },
-        questionOptions: [
-          {
-            id: 101,
-            text: {
-              'EN': 'Answer 1',
-              'FR': 'Answer French 1',
-              'NL': 'Answer Dutch 1',
-              'DE': 'Answer German 1',
-            },
-            isCorrect: false
-          },
-          {
-            id: 102,
-            text: {
-              'EN': 'Answer 2',
-              'FR': 'Answer 2',
-              'NL': 'Answer 2',
-              'DE': 'Answer 2',
-            },
-            isCorrect: true
-          },
-          {
-            id: 103,
-            text: {
-              'EN': 'Answer 3',
-              'FR': 'Answer 3',
-              'NL': 'Answer 3',
-              'DE': 'Answer 3',
-            },
-            isCorrect: false
-          }
-        ]
-      },
-      {
-        id: 2,
-        text: {
-          'EN': 'Another question?',
-          'FR': 'Another question?',
-          'NL': 'Another question?',
-          'DE': 'Another question?'
-        },
-        questionOptions: [
-          {
-            id: 201,
-            text: {
-              'EN': 'Answer 1',
-              'FR': 'Answer 1',
-              'NL': 'Answer 1',
-              'DE': 'Answer 1',
-            },
-            isCorrect: false
-          },
-          {
-            id: 202,
-            text: {
-              'EN': 'Answer 2',
-              'FR': 'Answer 2',
-              'NL': 'Answer 2',
-              'DE': 'Answer 2',
-            },
-            isCorrect: false
-          },
-          {
-            id: 203,
-            text: {
-              'EN': 'Answer 3',
-              'FR': 'Answer 3',
-              'NL': 'Answer 3',
-              'DE': 'Answer 3',
-            },
-            isCorrect: true
-          }
-        ]
-      }
-    ];
   }
 
   setCurrentQuestion(): void {
