@@ -34,7 +34,11 @@
     </h2>
     <div class="trainings-grid" *ngIf="trainings.length > 0; else noTrainings">
       @for (training of trainings; track training.id) {
-      <app-admin-training-card [training]="training"></app-admin-training-card>
+      <app-admin-training-card
+        [training]="training"
+        [currentLanguage]="currentLanguage"
+      >
+      </app-admin-training-card>
       }
     </div>
     <ng-template #noTrainings>
