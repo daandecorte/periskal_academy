@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { NewTrainingService } from '../new-training.service';
+import { NewTrainingService, ITranslated } from '../new-training.service';
 TranslatePipe;
 
 @Component({
@@ -38,11 +38,9 @@ export class ModuleFormComponent {
     this.trainingService.saveModule();
     this.router.navigate(['/add-training/modules']);
   }
-}
 
-interface ITranslated {
-  ENGLISH: string | File;
-  FRENCH: string | File;
-  DUTCH: string | File;
-  GERMAN: string | File;
+  cancelModule() {
+    this.trainingService.resetModule();
+    this.router.navigate(['/add-training/modules']);
+  }
 }

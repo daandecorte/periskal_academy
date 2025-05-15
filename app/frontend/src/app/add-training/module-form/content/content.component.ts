@@ -6,7 +6,11 @@ import {
   QueryList,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { NewTrainingService } from '../../new-training.service';
+import {
+  NewTrainingService,
+  ITranslated,
+  ContentType,
+} from '../../new-training.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUpload, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FormsModule } from '@angular/forms';
@@ -27,6 +31,7 @@ export class ContentComponent {
   @ViewChildren('contentRef') contentRef!: QueryList<ElementRef>;
 
   selectedLanguage: keyof ITranslated = 'ENGLISH';
+  indexModule: number = -1;
 
   ContentType = ContentType;
 
@@ -34,33 +39,46 @@ export class ContentComponent {
     this.trainingService.buttonSelectedLanguage$.subscribe((lang) => {
       this.selectedLanguage = lang;
     });
+
+    this.indexModule = this.trainingService.editModuleIndexGet;
+    if (this.indexModule == -1)
+      this.indexModule = this.trainingService.newTraining.modules.length;
   }
 
   addTextField() {
     this.trainingService.newModule.content.push({
-      contentType: ContentType.TEXT,
+      id: -1,
+      content_type: ContentType.TEXT,
       reference: { ENGLISH: '', DUTCH: '', FRENCH: '', GERMAN: '' },
     });
     this.imagePreviews.push({ ENGLISH: '', DUTCH: '', GERMAN: '', FRENCH: '' });
     this.videoPreviews.push({ ENGLISH: '', DUTCH: '', GERMAN: '', FRENCH: '' });
+    this.trainingService.addVideoPreview();
+    this.trainingService.addImagePreview();
   }
 
   addPictureField() {
     this.trainingService.newModule.content.push({
-      contentType: ContentType.PICTURE,
+      id: -1,
+      content_type: ContentType.PICTURE,
       reference: { ENGLISH: '', DUTCH: '', FRENCH: '', GERMAN: '' },
     });
     this.imagePreviews.push({ ENGLISH: '', DUTCH: '', GERMAN: '', FRENCH: '' });
     this.videoPreviews.push({ ENGLISH: '', DUTCH: '', GERMAN: '', FRENCH: '' });
+    this.trainingService.addVideoPreview();
+    this.trainingService.addImagePreview();
   }
 
   addVideoField() {
     this.trainingService.newModule.content.push({
-      contentType: ContentType.VIDEO,
+      id: -1,
+      content_type: ContentType.VIDEO,
       reference: { ENGLISH: '', DUTCH: '', FRENCH: '', GERMAN: '' },
     });
     this.imagePreviews.push({ ENGLISH: '', DUTCH: '', GERMAN: '', FRENCH: '' });
     this.videoPreviews.push({ ENGLISH: '', DUTCH: '', GERMAN: '', FRENCH: '' });
+    this.trainingService.addVideoPreview();
+    this.trainingService.addImagePreview();
   }
 
   imagePreviews: ITranslated[] = [];
@@ -75,7 +93,15 @@ export class ContentComponent {
 
       const reader = new FileReader();
       reader.onload = (event: any) => {
-        this.imagePreviews[index][this.selectedLanguage] = event.target.result;
+        if (this.indexModule != -1) {
+          this.trainingService.imagePreviews[this.indexModule][index][
+            this.selectedLanguage
+          ] = event.target.result;
+        } else {
+          this.trainingService.imagePreviews[
+            this.trainingService.newTraining.modules.length
+          ][index][this.selectedLanguage] = event.target.result;
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -83,6 +109,10 @@ export class ContentComponent {
 
   removeImage(index: number) {
     this.trainingService.newModule.content[index].reference[
+      this.selectedLanguage
+    ] = '';
+
+    this.trainingService.imagePreviews[this.indexModule][index][
       this.selectedLanguage
     ] = '';
   }
@@ -99,7 +129,15 @@ export class ContentComponent {
 
       const reader = new FileReader();
       reader.onload = (event: any) => {
-        this.videoPreviews[index][this.selectedLanguage] = event.target.result;
+        if (this.indexModule != -1) {
+          this.trainingService.videoPreviews[this.indexModule][index][
+            this.selectedLanguage
+          ] = event.target.result;
+        } else {
+          this.trainingService.videoPreviews[
+            this.trainingService.newTraining.modules.length
+          ][index][this.selectedLanguage] = event.target.result;
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -110,23 +148,15 @@ export class ContentComponent {
       this.selectedLanguage
     ] = '';
 
-    console.log('here');
+    this.trainingService.videoPreviews[this.indexModule][index][
+      this.selectedLanguage
+    ] = '';
   }
 
   deleteContent(index: number) {
     this.trainingService.newModule.content.splice(index, 1);
+
+    this.trainingService.videoPreviews[this.indexModule].splice(index, 1);
+    this.trainingService.imagePreviews[this.indexModule].splice(index, 1);
   }
-}
-
-interface ITranslated {
-  ENGLISH: string | File;
-  FRENCH: string | File;
-  DUTCH: string | File;
-  GERMAN: string | File;
-}
-
-enum ContentType {
-  TEXT,
-  PICTURE,
-  VIDEO,
 }

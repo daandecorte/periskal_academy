@@ -53,6 +53,7 @@
         <button
           class="btn"
           [routerLink]="['/add-training/modules', 'new', 'content']"
+          (click)="addNewModule()"
         >
           {{ "ADMIN_ADD_TRAININGS.ADD_MODULE" | translate }}
         </button>

@@ -7,7 +7,7 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { NewTrainingService } from '../new-training.service';
+import { NewTrainingService, ITranslated } from '../new-training.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FormsModule } from '@angular/forms';
@@ -63,9 +63,9 @@ export class ExamComponent {
     this.changeInputLanguage();
 
     this.timeRef.nativeElement.value = `${this.trainingService.newTraining.exam.time}`;
-    this.questionsPerExamRef.nativeElement.value = `${this.trainingService.newTraining.exam.questionAmount}`;
-    this.passingScoreRef.nativeElement.value = `${this.trainingService.newTraining.exam.passingScore}`;
-    this.retryAttemptsRef.nativeElement.value = `${this.trainingService.newTraining.exam.maxAttempts}`;
+    this.questionsPerExamRef.nativeElement.value = `${this.trainingService.newTraining.exam.question_amount}`;
+    this.passingScoreRef.nativeElement.value = `${this.trainingService.newTraining.exam.passing_score}`;
+    this.retryAttemptsRef.nativeElement.value = `${this.trainingService.newTraining.exam.max_attempts}`;
   }
 
   changeInputLanguage() {
@@ -99,15 +99,16 @@ export class ExamComponent {
       for (
         let j = 0;
         j <
-        this.trainingService.newTraining.exam.questions[i].questionOptions
+        this.trainingService.newTraining.exam.questions[i].question_options
           .length;
         j++
       ) {
         if (answerCount < answerArray.length) {
           answerArray[answerCount].nativeElement.value =
-            (this.trainingService.newTraining.exam.questions[i].questionOptions[
-              j
-            ].text[this.selectedButtonLanguage] as string) || '';
+            (this.trainingService.newTraining.exam.questions[i]
+              .question_options[j].text[
+              this.selectedButtonLanguage
+            ] as string) || '';
           answerCount++;
         }
       }
@@ -121,7 +122,7 @@ export class ExamComponent {
   }
 
   changeQuestionsPerExam() {
-    this.trainingService.newTraining.exam.questionAmount = Number(
+    this.trainingService.newTraining.exam.question_amount = Number(
       this.questionsPerExamRef.nativeElement.value
     );
   }
@@ -135,11 +136,11 @@ export class ExamComponent {
       passingScore = '100';
     }
 
-    this.trainingService.newTraining.exam.passingScore = Number(passingScore);
+    this.trainingService.newTraining.exam.passing_score = Number(passingScore);
   }
 
   changeRetryAttempts() {
-    this.trainingService.newTraining.exam.maxAttempts = Number(
+    this.trainingService.newTraining.exam.max_attempts = Number(
       this.retryAttemptsRef.nativeElement.value
     );
   }
@@ -177,7 +178,7 @@ export class ExamComponent {
     if (idAnswerRef >= 0 && idAnswerRef < this.answerRef.length) {
       this.trainingService.newTraining.exam.questions[
         idQuestion
-      ].questionOptions[idAnswer].text[this.selectedButtonLanguage] =
+      ].question_options[idAnswer].text[this.selectedButtonLanguage] =
         this.answerRef.toArray()[idAnswerRef].nativeElement.value;
     }
   }
@@ -194,7 +195,7 @@ export class ExamComponent {
       }
 
       answerCount +=
-        this.trainingService.newTraining.exam.questions[i].questionOptions
+        this.trainingService.newTraining.exam.questions[i].question_options
           .length;
     }
 
@@ -229,17 +230,10 @@ export class ExamComponent {
 
   answerChoose(indexQ: number, indexO: number) {
     const questionOptions =
-      this.trainingService.newTraining.exam.questions[indexQ].questionOptions;
+      this.trainingService.newTraining.exam.questions[indexQ].question_options;
     questionOptions.forEach((option) => {
-      option.is_correct = false;
+      option.correct = false;
     });
-    questionOptions[indexO].is_correct = true;
+    questionOptions[indexO].correct = true;
   }
-}
-
-interface ITranslated {
-  ENGLISH: string;
-  FRENCH: string;
-  DUTCH: string;
-  GERMAN: string;
 }

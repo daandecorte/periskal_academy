@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterLink, Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { NewTrainingService } from '../new-training.service';
+import {
+  NewTrainingService,
+  ITranslated,
+  IModule,
+  ContentType,
+} from '../new-training.service';
 import { LanguageService } from '../../services/language.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -42,9 +47,9 @@ export class ModulesComponent {
       let videosCount = 0;
 
       module.content.forEach((el) => {
-        if (el.contentType == ContentType.TEXT) textsCount++;
-        if (el.contentType == ContentType.PICTURE) picturesCount++;
-        if (el.contentType == ContentType.VIDEO) videosCount++;
+        if (el.content_type == ContentType.TEXT) textsCount++;
+        if (el.content_type == ContentType.PICTURE) picturesCount++;
+        if (el.content_type == ContentType.VIDEO) videosCount++;
       });
 
       this.contentCount.push({
@@ -82,45 +87,16 @@ export class ModulesComponent {
     this.trainingService.editModuleIndex(index);
     this.router.navigate(['/add-training/modules/new/content']);
   }
-}
 
-interface ITranslated {
-  ENGLISH: string | File;
-  FRENCH: string | File;
-  DUTCH: string | File;
-  GERMAN: string | File;
+  addNewModule() {
+    this.trainingService.addVideoPreviewModule();
+    this.trainingService.addImagePreviewModule();
+    this.router.navigate(['/add-training/modules/new/content']);
+  }
 }
 
 interface IContentCount {
   texts: number;
   pictures: number;
   videos: number;
-}
-
-interface IModule {
-  title: ITranslated;
-  description: ITranslated;
-  content: IContent[];
-  questions: IQuestion[];
-}
-
-interface IContent {
-  contentType: ContentType;
-  reference: ITranslated;
-}
-
-enum ContentType {
-  TEXT,
-  PICTURE,
-  VIDEO,
-}
-
-interface IQuestion {
-  text: ITranslated;
-  questionOptions: IQuestionOption[];
-}
-
-interface IQuestionOption {
-  text: ITranslated;
-  is_correct: boolean;
 }

@@ -112,7 +112,7 @@
         <label class="label">{{
           "ADMIN_EDIT_TRAININGS.ANSWER_OPTION" | translate
         }}</label>
-        @for(options of question.questionOptions; track optionIndex; let
+        @for(options of question.question_options; track optionIndex; let
         optionIndex = $index){
         <div class="answer-option">
           <input
@@ -120,7 +120,7 @@
             (change)="answerChoose(questionIndex, optionIndex)"
             [checked]="
               trainingService.newTraining.exam.questions[questionIndex]
-                .questionOptions[optionIndex].is_correct
+                .question_options[optionIndex].correct
             "
           />
           <input

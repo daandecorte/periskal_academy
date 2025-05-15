@@ -24,7 +24,7 @@
   <div class="form-group">
     <label>{{ "ADMIN_EDIT_TRAININGS.MODULE_CONTENT" | translate }}</label>
     @for (content of trainingService.newModule.content; track $index) {
-    @if(content.contentType === ContentType.TEXT){
+    @if(content.content_type === ContentType.TEXT){
     <div style="position: relative">
       <textarea
         #contentRef
@@ -41,7 +41,7 @@
         <fa-icon [icon]="faTrash" style="color: gray"></fa-icon>
       </button>
     </div>
-    } @else if(content.contentType === ContentType.PICTURE){
+    } @else if(content.content_type === ContentType.PICTURE){
     <div class="video-upload">
       @if(trainingService.newModule.content[$index].reference[ selectedLanguage
       ] == ""){
@@ -70,16 +70,33 @@
         >
           <fa-icon [icon]="faTimes"></fa-icon>
         </button>
+        @if(trainingService.editModuleIndexGet != -1){
         <img
-          [src]="imagePreviews[$index][selectedLanguage]"
+          [src]="
+            this.trainingService.imagePreviews[
+              trainingService.editModuleIndexGet
+            ][$index][selectedLanguage]
+          "
           alt="Selected image"
           class="picture-preview"
           style="display: block"
         />
+        } @else{
+        <img
+          [src]="
+            this.trainingService.imagePreviews[
+              trainingService.newTraining.modules.length
+            ][$index][selectedLanguage]
+          "
+          alt="Selected image"
+          class="picture-preview"
+          style="display: block"
+        />
+        }
       </div>
       }
     </div>
-    } @else if(content.contentType === ContentType.VIDEO){
+    } @else if(content.content_type === ContentType.VIDEO){
     <div class="video-upload">
       @if(trainingService.newModule.content[$index].reference[ selectedLanguage
       ] == ""){
@@ -109,12 +126,29 @@
         >
           <fa-icon [icon]="faTimes"></fa-icon>
         </button>
+        @if(trainingService.editModuleIndexGet != -1){
         <video
-          [src]="videoPreviews[$index][selectedLanguage]"
+          [src]="
+            this.trainingService.videoPreviews[
+              trainingService.editModuleIndexGet
+            ][$index][selectedLanguage]
+          "
           controls
           class="video-preview"
           style="display: block; max-width: 100%"
         ></video>
+        } @else {
+        <video
+          [src]="
+            this.trainingService.videoPreviews[
+              trainingService.newTraining.modules.length
+            ][$index][selectedLanguage]
+          "
+          controls
+          class="video-preview"
+          style="display: block; max-width: 100%"
+        ></video>
+        }
       </div>
       }
     </div>
