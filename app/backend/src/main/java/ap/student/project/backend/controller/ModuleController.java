@@ -78,9 +78,21 @@ public class ModuleController {
      * @return ResponseEntity containing the added content with HTTP status 201 (CREATED)
      */
     @PostMapping(value = "/modules/{id}/content")
-    public ResponseEntity addVideo(@PathVariable Integer id, @RequestBody ContentDTO contentDTO) {
-        
+    public ResponseEntity addContent(@PathVariable Integer id, @RequestBody ContentDTO contentDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(moduleService.addContent(id, contentDTO));
+    }
+
+    /**
+     * Updates a specific content to a specific module.
+     *
+     * @param id The ID of the module to add content to
+     * @param idContent The ID of the content
+     * @param contentDTO The content data transfer object containing content information
+     * @return ResponseEntity containing the added content with HTTP status 201 (CREATED)
+     */
+    @PutMapping(value = "/modules/{id}/content/{idContent}")
+    public ResponseEntity updateContent(@PathVariable Integer id, @PathVariable Integer idContent,@RequestBody ContentDTO contentDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(moduleService.updateContent(id, idContent, contentDTO));
     }
 
     /**

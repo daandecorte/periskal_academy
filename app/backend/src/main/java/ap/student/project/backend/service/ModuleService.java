@@ -143,6 +143,21 @@ public class ModuleService {
         return content;
     }
 
+    public Content updateContent(int id, int idContent, ContentDTO contentDTO) {
+        Module module = moduleRepository.findById(id).orElse(null);
+        if (module == null) {
+            throw new NotFoundException("Module with id " + id + " not found");
+        }
+        Content content = contentRepository.findById(idContent).orElse(null);
+        if(content==null) {
+            throw new NotFoundException("Content with id " + id + " not found");
+        }
+        content.setContentType(contentDTO.contentType());
+        content.setReference(contentDTO.reference());
+        contentRepository.save(content);
+        return content;
+    }
+
     /**
      * Adds a question to an existing module.
      *

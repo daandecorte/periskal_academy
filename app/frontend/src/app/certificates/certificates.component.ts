@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { booleanAttribute, Component } from '@angular/core';
 import { SelectTrainingComponent } from './select-training/select-training.component';
 import { TraineeChatComponent } from '../trainee-chat/trainee-chat.component';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, TitleStrategy } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AssignSailorComponent } from "./assign-sailor/assign-sailor.component";
 import { AcceptTermsComponent } from "./accept-terms/accept-terms.component";
@@ -12,6 +12,7 @@ import emailjs from 'emailjs-com';
 import { BillingInfo, CertificateService } from '../services/certificate.service';
 import { Serializer } from '@angular/compiler';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { isCaptureEventType } from '@angular/core/primitives/event-dispatch';
 
 @Component({
   selector: 'app-certificates',
@@ -24,6 +25,7 @@ export class CertificatesComponent {
   currentIndex:number=0;
   private routerSubscription!: Subscription;
   termsAccepted = false;
+  isSending: boolean = false;
 
   constructor(private router:Router, private route:ActivatedRoute, private service: CertificateService, private translate: TranslateService) {}
 
@@ -38,10 +40,63 @@ export class CertificatesComponent {
     this.termsAccepted = accepted;
   }
   complete() {
+    this.updateUserCertificates();
     this.sendEmail();
-    this.router.navigate(["/trainings"])
+  }
+  async updateUserCertificates() {
+    for(let certificate of this.service.selectedCertificates) {
+      for(let user of this.service.selectedUsers) {
+        try{
+          let userTrainingGetResponse = await fetch(`/api/user_trainings/training/${certificate.training.id}/user/${user.id}`);
+          if(userTrainingGetResponse.status==404) {
+            let userTrainingPostResponse = await fetch(`/api/user_trainings`, 
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  Accept: 'application/json',
+                },
+                body: JSON.stringify({
+                  training_id: certificate.training.id,
+                  user_id: user.id,
+                  eligible_for_certificate: true
+                })
+              }
+            )
+            if(userTrainingPostResponse.status!=201) {
+              const errorText = await userTrainingPostResponse.text();
+              console.error("failed to post usertraining " + errorText);
+            }
+          }
+          else if(userTrainingGetResponse.status==200) {
+            let userTraining = await userTrainingGetResponse.json();
+            let userTrainingPutResponse = await fetch(`/api/user_trainings/${userTraining.id}`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+              },
+              body: JSON.stringify({
+                eligible_for_certificate: true
+              })
+            })
+            if(userTrainingPutResponse.status!=200) {
+              const errorText = await userTrainingPutResponse.text();
+              console.error("Error updating: " + errorText);
+            }
+          }
+          else {
+            console.error("an error occured requesting this usertraining " + userTrainingGetResponse.status)
+          }
+        }
+        catch(e) {
+
+        }
+      }
+    }
   }
   sendEmail() {
+    this.isSending=true;
     const templateParams: {
       orders: { name: string; price: number }[];
       users: {name: string, id: number}[];
@@ -80,13 +135,29 @@ export class CertificatesComponent {
         };
         this.service.selectedCertificates=[];
         this.service.selectedUsers=[];
-        const msg = await this.translate.get('CERTIFICATES.INFO_SENT_SUCCESS').toPromise();
-        alert(msg);
+        this.isSending=false;
+        this.router.navigate(["/trainings"])
       },
       async (error) => {
-        const msg = await this.translate.get('CERTIFICATES.INFO_SENT_FAILED').toPromise();
-        alert(msg);
+        this.isSending=false;
+        this.router.navigate(["/trainings"])
       }
     );
+  }
+  get disabled():boolean {
+    return this.termsAccepted==false&&this.currentIndex==2 || 
+          this.currentIndex==0&&this.service.selectedCertificates.length==0 ||
+          this.currentIndex==1&&this.service.selectedUsers.length==0
+  }
+  get filledInForm():boolean {
+    for (const key in this.service.billingInfo) {
+      if (key!="state") {
+        const value = this.service.billingInfo[key as keyof typeof this.service.billingInfo];
+        if(value.toString().trim()=="") {
+          return true;
+        };
+      }
+    }
+    return false;
   }
 }

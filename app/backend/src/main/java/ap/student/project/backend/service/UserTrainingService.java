@@ -5,6 +5,7 @@ import ap.student.project.backend.dto.UserTrainingDTO;
 import ap.student.project.backend.entity.Training;
 import ap.student.project.backend.entity.User;
 import ap.student.project.backend.entity.UserTraining;
+import ap.student.project.backend.exceptions.DuplicateException;
 import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,7 @@ public class UserTrainingService {
      *
      * @param userTrainingDTO The data transfer object containing the UserTraining information
      * @throws MissingArgumentException If either user_id or training_id is missing from the DTO
+     * @throws DuplicateException If the combination of training and user already exists within this table
      */
     public void save(UserTrainingDTO userTrainingDTO) {
         UserTraining userTraining = new UserTraining();
@@ -54,10 +56,14 @@ public class UserTrainingService {
         if(userTrainingDTO.training_id()==0) {
             throw new MissingArgumentException("training_id is missing");
         }
+        if(this.userTrainingRepository.findByTrainingIdAndUserId(userTrainingDTO.training_id(),userTrainingDTO.user_id()).isPresent()) {
+            throw new DuplicateException("user training with user_id "+userTrainingDTO.user_id()+" and training id " + userTrainingDTO.training_id()+ " already exists");
+        }
         User user = userService.findById(userTrainingDTO.user_id());
         Training training = trainingService.findById(userTrainingDTO.training_id());
         userTraining.setTraining(training);
         userTraining.setUser(user);
+        userTraining.setEligibleForCertificate(userTrainingDTO.eligibleForCertificate());
         userTrainingRepository.save(userTraining);
     }
 
@@ -75,7 +81,32 @@ public class UserTrainingService {
         }
         return userTraining;
     }
-
+    /**
+     * Finds a UserTraining by a user ID and a training ID.
+     *
+     * @param trainingId The ID of the training
+     * @param userId The ID of the user
+     * @return The found UserTraining entity
+     * @throws NotFoundException If no UserTraining with the given ID exists
+     */
+    public UserTraining findByTrainingIdAndUserId(int trainingId, int userId) throws NotFoundException {
+        UserTraining userTraining = this.userTrainingRepository.findByTrainingIdAndUserId(trainingId, userId).orElse(null);
+        if (userTraining == null) {
+            throw new NotFoundException("User Training With TrainingId " + trainingId + " And UserId "+ userId +" Not Found");
+        }
+        return userTraining;
+    }
+    /**
+     * Updates a UserTraining object.
+     *
+     * @param id The ID of the userTraining
+     * @param userTrainingDTO The data transfer object containing the UserTraining information
+     */
+    public void update(int id, UserTrainingDTO userTrainingDTO) {
+        UserTraining userTraining = this.findById(id);
+        userTraining.setEligibleForCertificate(userTrainingDTO.eligibleForCertificate());
+        userTrainingRepository.save(userTraining);
+    }
     /**
      * Retrieves all UserTrainings from the database.
      *
