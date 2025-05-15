@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record UserTrainingDTO(
         @JsonProperty("training_progress") TrainingProgress trainingProgress,
         @JsonProperty("training_id") int training_id,
-        @JsonProperty("user_id") int user_id
+        @JsonProperty("user_id") int user_id,
+        @JsonProperty("is_eligible_for_certificate") boolean isEligibleForCertificate
 ) {
 }
