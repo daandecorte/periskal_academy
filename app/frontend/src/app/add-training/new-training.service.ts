@@ -21,10 +21,33 @@ export class NewTrainingService {
     },
     certificate: {
       id: -1,
-      validityPeriod: 1,
+      validity_period: 1,
       price: 0,
     },
   };
+
+  resetTraining() {
+    this._newTraining = {
+      id: -1,
+      title: { ENGLISH: '', FRENCH: '', DUTCH: '', GERMAN: '' },
+      description: { ENGLISH: '', FRENCH: '', DUTCH: '', GERMAN: '' },
+      active: false,
+      modules: [],
+      exam: {
+        id: -1,
+        passing_score: 0,
+        max_attempts: 0,
+        time: 0,
+        question_amount: 0,
+        questions: [],
+      },
+      certificate: {
+        id: -1,
+        validity_period: 1,
+        price: 0,
+      },
+    };
+  }
 
   public get newTraining() {
     return this._newTraining;
@@ -250,6 +273,6 @@ export interface IQuestionOption {
 
 export interface ICertificate {
   id: number;
-  validityPeriod: number; //years
+  validity_period: number; //years
   price: number;
 }

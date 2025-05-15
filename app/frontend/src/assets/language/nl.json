@@ -23,7 +23,8 @@
     "SEARCH_PLACEHOLDER": "Zoek trainingen...",
     "CREATE_BUTTON": "Training aanmaken",
     "ALL_TRAININGS_SECTION": "Alle trainingen",
-    "NO_TRAININGS_FOUND": "Geen trainingen komen overeen met uw zoekopdracht."
+    "NO_TRAININGS_FOUND": "Geen trainingen komen overeen met uw zoekopdracht.",
+    "LOADING": "Aan het laden..."
   },
   "ASSIGNED_TRAINING_CARD": {
     "ASSIGNED_ON": "Toegewezen op {{date}}",

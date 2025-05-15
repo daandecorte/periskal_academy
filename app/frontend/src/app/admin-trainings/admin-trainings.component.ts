@@ -6,13 +6,20 @@ import { AdminTrainingCardComponent } from '../admin-training-card/admin-trainin
 import { RouterModule, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../services/language.service';
+import { NewTrainingService } from '../add-training/new-training.service';
 
 @Component({
   selector: 'app-admin-trainings',
   standalone: true,
-  imports: [CommonModule, FormsModule, AdminTrainingCardComponent, RouterModule, TranslateModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    AdminTrainingCardComponent,
+    RouterModule,
+    TranslateModule,
+  ],
   templateUrl: './admin-trainings.component.html',
-  styleUrl: './admin-trainings.component.css'
+  styleUrl: './admin-trainings.component.css',
 })
 export class AdminTrainingsComponent implements OnInit {
   trainings: Training[] = [];
@@ -23,9 +30,10 @@ export class AdminTrainingsComponent implements OnInit {
   currentLanguage: string = 'EN'; // Default language
 
   constructor(
-    protected trainingService: TrainingService, 
+    protected trainingService: TrainingService,
     private router: Router,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private newTrainingService: NewTrainingService
   ) {}
 
   ngOnInit(): void {
@@ -37,23 +45,23 @@ export class AdminTrainingsComponent implements OnInit {
         this.filterTrainings();
       }
     });
-    
+
     this.loadTrainings();
   }
 
   mapLanguageCode(language: any): string {
     const languageMappings: { [key: string]: string } = {
-      'ENGLISH': 'EN',
-      'FRENCH': 'FR',
-      'DUTCH': 'NL',
-      'GERMAN': 'DE'
+      ENGLISH: 'EN',
+      FRENCH: 'FR',
+      DUTCH: 'NL',
+      GERMAN: 'DE',
     };
-    
+
     // If it's already a code, return it
     if (['EN', 'FR', 'NL', 'DE'].includes(language)) {
       return language;
     }
-    
+
     // Otherwise map the language name to code
     return languageMappings[language] || 'EN'; // Default to EN if mapping not found
   }
@@ -61,7 +69,7 @@ export class AdminTrainingsComponent implements OnInit {
   loadTrainings(): void {
     this.loading = true;
     this.error = null;
-    
+
     this.trainingService.getTrainings().subscribe({
       next: (trainings) => {
         this.allTrainings = trainings;
@@ -72,21 +80,25 @@ export class AdminTrainingsComponent implements OnInit {
         console.error('Error loading trainings:', err);
         this.error = 'Failed to load trainings. Please try again later.';
         this.loading = false;
-      }
+      },
     });
   }
 
   filterTrainings(): void {
     // Filter trainings using localized titles when available
     this.trainings = this.searchTerm
-      ? this.allTrainings.filter(training => {
+      ? this.allTrainings.filter((training) => {
           let searchText = training.title.toLowerCase(); // Default to standard title
-          
+
           // Use localized title if available
-          if (training.titleLocalized && training.titleLocalized[this.currentLanguage]) {
-            searchText = training.titleLocalized[this.currentLanguage].toLowerCase();
+          if (
+            training.titleLocalized &&
+            training.titleLocalized[this.currentLanguage]
+          ) {
+            searchText =
+              training.titleLocalized[this.currentLanguage].toLowerCase();
           }
-          
+
           return searchText.includes(this.searchTerm.toLowerCase());
         })
       : this.allTrainings;
@@ -97,6 +109,7 @@ export class AdminTrainingsComponent implements OnInit {
   }
 
   navigateToAddTraining(): void {
+    this.newTrainingService.resetTraining();
     this.router.navigate(['/add-training']);
   }
 }

@@ -49,18 +49,14 @@ export class AdminTrainingCardComponent {
     return this.training.description || '';
   }
 
-  //Navigates to the training edit page
-  async editModule(id: number): Promise<void> {
-    // Fetch training data
-    const response = await fetch(`/api/trainings/${id}`);
-    this.newTrainingService.newTraining = await response.json();
-    
-    // Initialize certificate with default values
-    this.newTrainingService.newTraining.certificate = {
-      id: -1,
-      price: 0,
-      validityPeriod: 1,
-    };
+  async editModule(id: number) {
+    let dataTraining = await fetch(`/api/trainings/${id}`);
+    this.newTrainingService.newTraining = await dataTraining.json();
+    this.newTrainingService.editModuleIndex(id);
+
+    let dataCertificate = await fetch(`/api/certificates/training/${id}`);
+    this.newTrainingService.newTraining.certificate =
+      await dataCertificate.json();
 
     // Process each module and set up previews
     const modules = this.newTrainingService.newTraining.modules;
@@ -84,7 +80,6 @@ export class AdminTrainingCardComponent {
     // Navigate to add training page
     this.router.navigate(['/add-training']);
   }
-
 
   // Checks if the training has content in the specified language
   // Used for the colorcoded language labels
