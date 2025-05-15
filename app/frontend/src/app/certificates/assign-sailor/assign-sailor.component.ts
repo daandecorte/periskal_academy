@@ -41,7 +41,6 @@ export class AssignSailorComponent {
   }
   toggleUserSelect(index: number) {
     let userIndex=this.service.selectedUsers.findIndex(u=> u.id==this.userList[index].id);
-    console.log(userIndex + " " + this.userList[index].id)
     if(userIndex!=-1) {
       this.service.selectedUsers.splice(userIndex, 1);
     }
