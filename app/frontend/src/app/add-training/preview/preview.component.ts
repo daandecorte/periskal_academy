@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
-import { NewTrainingService } from '../new-training.service';
+import { NewTrainingService, ITranslated } from '../new-training.service';
 
 @Component({
   selector: 'app-preview',
@@ -45,7 +45,7 @@ export class PreviewComponent {
       for (let j = 0; j < questions.length; j++) {
         if (!this.isTranslatedFilled(questions[j].text)) return;
 
-        const questionOptions = questions[j].questionOptions;
+        const questionOptions = questions[j].question_options;
         for (let k = 0; k < questionOptions.length; k++) {
           if (!this.isTranslatedFilled(questionOptions[k].text)) return;
         }
@@ -59,13 +59,13 @@ export class PreviewComponent {
     const exam = this.trainingService.newTraining.exam;
 
     if (exam.time == 0) return;
-    if (exam.questionAmount > exam.questions.length) return;
+    if (exam.question_amount > exam.questions.length) return;
 
     const questions = exam.questions;
     for (let j = 0; j < questions.length; j++) {
       if (!this.isTranslatedFilled(questions[j].text)) return;
 
-      const questionOptions = questions[j].questionOptions;
+      const questionOptions = questions[j].question_options;
       for (let k = 0; k < questionOptions.length; k++) {
         if (!this.isTranslatedFilled(questionOptions[k].text)) return;
       }
@@ -93,11 +93,4 @@ export class PreviewComponent {
       input.checked = false;
     }
   }
-}
-
-interface ITranslated {
-  ENGLISH: string | File;
-  FRENCH: string | File;
-  DUTCH: string | File;
-  GERMAN: string | File;
 }

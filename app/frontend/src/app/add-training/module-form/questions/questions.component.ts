@@ -6,7 +6,7 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { NewTrainingService } from '../../new-training.service';
+import { NewTrainingService, ITranslated } from '../../new-training.service';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -65,12 +65,12 @@ export class QuestionsComponent {
     for (let i = 0; i < this.trainingService.newModule.questions.length; i++) {
       for (
         let j = 0;
-        j < this.trainingService.newModule.questions[i].questionOptions.length;
+        j < this.trainingService.newModule.questions[i].question_options.length;
         j++
       ) {
         if (answerCount < answerArray.length) {
           answerArray[answerCount].nativeElement.value =
-            (this.trainingService.newModule.questions[i].questionOptions[j]
+            (this.trainingService.newModule.questions[i].question_options[j]
               .text[this.selectedLanguage] as string) || '';
           answerCount++;
         }
@@ -107,7 +107,7 @@ export class QuestionsComponent {
     let idAnswerRef: number = this.searchAnswerRef(idAnswer, idQuestion);
 
     if (idAnswerRef >= 0 && idAnswerRef < this.answerRef.length) {
-      this.trainingService.newModule.questions[idQuestion].questionOptions[
+      this.trainingService.newModule.questions[idQuestion].question_options[
         idAnswer
       ].text[this.selectedLanguage] =
         this.answerRef.toArray()[idAnswerRef].nativeElement.value;
@@ -122,7 +122,7 @@ export class QuestionsComponent {
       }
 
       answerCount +=
-        this.trainingService.newModule.questions[i].questionOptions.length;
+        this.trainingService.newModule.questions[i].question_options.length;
     }
 
     return -1;
@@ -156,17 +156,10 @@ export class QuestionsComponent {
 
   answerChoose(indexQ: number, indexO: number) {
     const questionOptions =
-      this.trainingService.newModule.questions[indexQ].questionOptions;
+      this.trainingService.newModule.questions[indexQ].question_options;
     questionOptions.forEach((option) => {
-      option.is_correct = false;
+      option.correct = false;
     });
-    questionOptions[indexO].is_correct = true;
+    questionOptions[indexO].correct = true;
   }
-}
-
-interface ITranslated {
-  ENGLISH: string | File;
-  FRENCH: string | File;
-  DUTCH: string | File;
-  GERMAN: string | File;
 }

@@ -5,7 +5,7 @@
       <button
         class="edit-btn"
         aria-label="Edit training"
-        [routerLink]="['/edit-training', training.id]"
+        (click)="editModule(training.id)"
       >
         <fa-icon [icon]="faPencilAlt"></fa-icon>
       </button>

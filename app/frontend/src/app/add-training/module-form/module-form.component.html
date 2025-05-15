@@ -39,7 +39,7 @@
     </div>
 
     <div class="form-actions">
-      <button class="cancel-btn" [routerLink]="['/add-training/modules']">
+      <button class="cancel-btn" (click)="cancelModule()">
         {{ "ADMIN_ADD_TRAININGS.MODULE_CANCEL" | translate }}
       </button>
       <button class="save-btn" (click)="saveModule()">

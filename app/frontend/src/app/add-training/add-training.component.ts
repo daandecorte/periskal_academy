@@ -4,14 +4,15 @@ import {
   ActivatedRoute,
   NavigationEnd,
   Router,
-  RouterLink,
-  RouterLinkActive,
-  RouterModule,
   RouterOutlet,
 } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { filter, Subscription } from 'rxjs';
-import { NewTrainingService } from './new-training.service';
+import {
+  NewTrainingService,
+  ITranslated,
+  ContentType,
+} from './new-training.service';
 
 @Component({
   selector: 'app-add-training',
@@ -73,7 +74,7 @@ export class AddTrainingComponent {
         body: JSON.stringify({
           title: this.trainingService.newTraining.title,
           description: this.trainingService.newTraining.description,
-          isActive: this.trainingService.newTraining.isActive,
+          isActive: this.trainingService.newTraining.active,
         }),
       });
 
@@ -88,10 +89,11 @@ export class AddTrainingComponent {
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          passing_score: this.trainingService.newTraining.exam.passingScore,
-          maxAttempts: this.trainingService.newTraining.exam.maxAttempts,
+          passing_score: this.trainingService.newTraining.exam.passing_score,
+          max_attempts: this.trainingService.newTraining.exam.max_attempts,
           time: this.trainingService.newTraining.exam.time,
-          questionAmount: this.trainingService.newTraining.exam.questionAmount,
+          question_amount:
+            this.trainingService.newTraining.exam.question_amount,
           training_id: trainingId,
         }),
       });
@@ -105,6 +107,23 @@ export class AddTrainingComponent {
         i < this.trainingService.newTraining.exam.questions.length;
         i++
       ) {
+        let questionOptions: IQuestionOptionPost[] = [];
+        for (
+          let j = 0;
+          j <
+          this.trainingService.newTraining.exam.questions[i].question_options
+            .length;
+          j++
+        ) {
+          questionOptions.push({
+            text: this.trainingService.newTraining.exam.questions[i]
+              .question_options[j].text,
+            correct:
+              this.trainingService.newTraining.exam.questions[i]
+                .question_options[j].correct,
+          });
+        }
+
         await fetch(`/api/exams/${examId}/questions`, {
           method: 'POST',
           headers: {
@@ -113,9 +132,7 @@ export class AddTrainingComponent {
           },
           body: JSON.stringify({
             text: this.trainingService.newTraining.exam.questions[i].text,
-            question_options:
-              this.trainingService.newTraining.exam.questions[i]
-                .questionOptions,
+            question_options: questionOptions,
           }),
         });
       }
@@ -135,6 +152,7 @@ export class AddTrainingComponent {
         }),
       });
 
+      //POST Modules
       const modules = this.trainingService.newTraining.modules;
       for (let i = 0; i < modules.length; i++) {
         let resultModules = await fetch(`/api/modules`, {
@@ -154,7 +172,7 @@ export class AddTrainingComponent {
         let moduleId = dataModules.id;
 
         for (let j = 0; j < modules[i].content.length; j++) {
-          if (modules[i].content[j].contentType != ContentType.TEXT) {
+          if (modules[i].content[j].content_type != ContentType.TEXT) {
             await this.uploadVideo(modules[i].content[j].reference, i, j);
           }
 
@@ -165,8 +183,33 @@ export class AddTrainingComponent {
               Accept: 'application/json',
             },
             body: JSON.stringify({
-              content_type: modules[i].content[j].contentType,
+              content_type: modules[i].content[j].content_type,
               reference: modules[i].content[j].reference,
+            }),
+          });
+        }
+
+        for (let j = 0; j < modules[i].questions.length; j++) {
+          let questionOptions: IQuestionOptionPost[] = [];
+          for (
+            let k = 0;
+            k < modules[i].questions[j].question_options.length;
+            k++
+          )
+            questionOptions.push({
+              text: modules[i].questions[j].question_options[k].text,
+              correct: modules[i].questions[j].question_options[k].correct,
+            });
+
+          await fetch(`/api/modules/${moduleId}/questions`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify({
+              text: modules[i].questions[j].text,
+              question_options: questionOptions,
             }),
           });
         }
@@ -182,18 +225,21 @@ export class AddTrainingComponent {
 
   resetTraining() {
     this.trainingService.newTraining = {
+      id: -1,
       title: { ENGLISH: '', FRENCH: '', DUTCH: '', GERMAN: '' },
       description: { ENGLISH: '', FRENCH: '', DUTCH: '', GERMAN: '' },
-      isActive: false,
+      active: false,
       modules: [],
       exam: {
-        passingScore: 0,
-        maxAttempts: 0,
+        id: -1,
+        passing_score: 0,
+        max_attempts: 0,
         time: 0,
-        questionAmount: 0,
+        question_amount: 0,
         questions: [],
       },
       certificate: {
+        id: -1,
         validityPeriod: 1,
         price: 0,
       },
@@ -258,15 +304,7 @@ export class AddTrainingComponent {
   }
 }
 
-interface ITranslated {
-  ENGLISH: string | File;
-  FRENCH: string | File;
-  DUTCH: string | File;
-  GERMAN: string | File;
-}
-
-enum ContentType {
-  TEXT,
-  PICTURE,
-  VIDEO,
+interface IQuestionOptionPost {
+  text: ITranslated;
+  correct: boolean;
 }

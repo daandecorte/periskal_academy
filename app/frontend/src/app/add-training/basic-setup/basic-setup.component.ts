@@ -2,7 +2,11 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { LanguageService } from '../../services/language.service';
-import { INewTraining, NewTrainingService } from '../new-training.service';
+import {
+  INewTraining,
+  NewTrainingService,
+  ITranslated,
+} from '../new-training.service';
 
 @Component({
   selector: 'app-basic-setup',
@@ -60,6 +64,7 @@ export class BasicSetupComponent {
       ] as string) || '';
     this.periodRef.nativeElement.value = `${this.trainingService.newTraining.certificate.validityPeriod}`;
     this.priceRef.nativeElement.value = `${this.trainingService.newTraining.certificate.price}`;
+    console.log(this.trainingService.newTraining);
   }
 
   changeInputLanguage() {
@@ -100,11 +105,4 @@ export class BasicSetupComponent {
       this.priceRef.nativeElement.value
     );
   }
-}
-
-interface ITranslated {
-  ENGLISH: string;
-  FRENCH: string;
-  DUTCH: string;
-  GERMAN: string;
 }

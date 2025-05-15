@@ -6,18 +6,21 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class NewTrainingService {
   private _newTraining: INewTraining = {
+    id: -1,
     title: { ENGLISH: '', FRENCH: '', DUTCH: '', GERMAN: '' },
     description: { ENGLISH: '', FRENCH: '', DUTCH: '', GERMAN: '' },
-    isActive: false,
+    active: false,
     modules: [],
     exam: {
-      passingScore: 0,
-      maxAttempts: 0,
+      id: -1,
+      passing_score: 0,
+      max_attempts: 0,
       time: 0,
-      questionAmount: 0,
+      question_amount: 0,
       questions: [],
     },
     certificate: {
+      id: -1,
       validityPeriod: 1,
       price: 0,
     },
@@ -32,6 +35,7 @@ export class NewTrainingService {
   }
 
   private _newModule: IModule = {
+    id: -1,
     title: { ENGLISH: '', FRENCH: '', DUTCH: '', GERMAN: '' },
     description: { ENGLISH: '', FRENCH: '', DUTCH: '', GERMAN: '' },
     content: [],
@@ -52,6 +56,22 @@ export class NewTrainingService {
     this._editModuleIndex = index;
   }
 
+  public get editModuleIndexGet() {
+    return this._editModuleIndex;
+  }
+
+  public resetModule() {
+    this._newModule = {
+      id: -1,
+      title: { ENGLISH: '', FRENCH: '', DUTCH: '', GERMAN: '' },
+      description: { ENGLISH: '', FRENCH: '', DUTCH: '', GERMAN: '' },
+      content: [],
+      questions: [],
+    };
+
+    this.setButtonSelectedLanguage('ENGLISH');
+  }
+
   public saveModule() {
     if (this._editModuleIndex == -1)
       this._newTraining.modules.push(this._newModule);
@@ -63,70 +83,67 @@ export class NewTrainingService {
       );
     }
 
-    this._newModule = {
-      title: { ENGLISH: '', FRENCH: '', DUTCH: '', GERMAN: '' },
-      description: { ENGLISH: '', FRENCH: '', DUTCH: '', GERMAN: '' },
-      content: [],
-      questions: [],
-    };
-
-    this.setButtonSelectedLanguage('ENGLISH');
+    this.resetModule();
   }
 
   public addModuleQuestion() {
     this._newModule.questions.push({
+      id: -1,
       text: {
         ENGLISH: '',
         DUTCH: '',
         FRENCH: '',
         GERMAN: '',
       },
-      questionOptions: [],
+      question_options: [],
     });
   }
 
   public addModuleQuestionOption(index: number) {
-    this._newModule.questions[index].questionOptions.push({
+    this._newModule.questions[index].question_options.push({
+      id: -1,
       text: {
         ENGLISH: '',
         DUTCH: '',
         FRENCH: '',
         GERMAN: '',
       },
-      is_correct: false,
+      correct: false,
     });
   }
 
   public deleteModuleQuestionOption(indexQ: number, indexO: number) {
-    this._newModule.questions[indexQ].questionOptions.splice(indexO, 1);
+    this._newModule.questions[indexQ].question_options.splice(indexO, 1);
   }
 
   public addExamQuestion() {
     this._newTraining.exam.questions.push({
+      id: -1,
       text: {
         ENGLISH: '',
         DUTCH: '',
         FRENCH: '',
         GERMAN: '',
       },
-      questionOptions: [],
+      question_options: [],
     });
   }
 
   public addExamQuestionOption(index: number) {
-    this._newTraining.exam.questions[index].questionOptions.push({
+    this._newTraining.exam.questions[index].question_options.push({
+      id: -1,
       text: {
         ENGLISH: '',
         DUTCH: '',
         FRENCH: '',
         GERMAN: '',
       },
-      is_correct: false,
+      correct: false,
     });
   }
 
   public deleteExamQuestionOption(indexQ: number, indexO: number) {
-    this._newTraining.exam.questions[indexQ].questionOptions.splice(indexO, 1);
+    this._newTraining.exam.questions[indexQ].question_options.splice(indexO, 1);
   }
 
   private _buttonSelectedLanguage$ = new BehaviorSubject<keyof ITranslated>(
@@ -138,61 +155,101 @@ export class NewTrainingService {
   public setButtonSelectedLanguage(value: keyof ITranslated) {
     this._buttonSelectedLanguage$.next(value);
   }
+
+  public videoPreviews: ITranslated[][] = [];
+  public imagePreviews: ITranslated[][] = [];
+
+  addVideoPreviewModule() {
+    this.videoPreviews.push([]);
+  }
+
+  addVideoPreview() {
+    let addVideoIndex = this.newTraining.modules.length;
+    if (this._editModuleIndex != -1) addVideoIndex = this._editModuleIndex;
+    this.videoPreviews[addVideoIndex].push({
+      ENGLISH: '',
+      DUTCH: '',
+      GERMAN: '',
+      FRENCH: '',
+    });
+  }
+
+  addImagePreviewModule() {
+    this.imagePreviews.push([]);
+  }
+
+  addImagePreview() {
+    let addImageIndex = this.newTraining.modules.length;
+    if (this._editModuleIndex != -1) addImageIndex = this._editModuleIndex;
+    this.imagePreviews[addImageIndex].push({
+      ENGLISH: '',
+      DUTCH: '',
+      GERMAN: '',
+      FRENCH: '',
+    });
+  }
 }
 
-export interface INewTraining {
-  title: ITranslated;
-  description: ITranslated;
-  isActive: boolean;
-  modules: IModule[];
-  exam: IExam;
-  certificate: ICertificate;
-}
-
-interface ITranslated {
+export interface ITranslated {
+  DUTCH: string | File;
   ENGLISH: string | File;
   FRENCH: string | File;
-  DUTCH: string | File;
   GERMAN: string | File;
 }
 
-interface IModule {
+export interface INewTraining {
+  id: number;
+  title: ITranslated;
+  description: ITranslated;
+  modules: IModule[];
+  exam: IExam;
+  active: boolean;
+  certificate: ICertificate;
+}
+
+export interface IModule {
+  id: number;
   title: ITranslated;
   description: ITranslated;
   content: IContent[];
   questions: IQuestion[];
 }
 
-interface IContent {
-  contentType: ContentType;
+export interface IContent {
+  id: number;
+  content_type: ContentType;
   reference: ITranslated;
 }
 
-enum ContentType {
-  TEXT,
-  PICTURE,
-  VIDEO,
+export enum ContentType {
+  TEXT = 'TEXT',
+  PICTURE = 'PICTURE',
+  VIDEO = 'VIDEO',
 }
 
-interface IExam {
-  passingScore: number;
-  maxAttempts: number;
+export interface IExam {
+  id: number;
+  passing_score: number;
+  max_attempts: number;
   time: number;
-  questionAmount: number;
+  question_amount: number;
   questions: IQuestion[];
 }
 
-interface IQuestion {
+export interface IQuestion {
+  id: number;
   text: ITranslated;
-  questionOptions: IQuestionOption[];
+  question_options: IQuestionOption[];
 }
 
-interface IQuestionOption {
+export interface IQuestionOption {
+  id: number;
   text: ITranslated;
-  is_correct: boolean;
+  correct: boolean;
 }
 
-interface ICertificate {
+export interface ICertificate {
+  id: number;
   validityPeriod: number; //years
   price: number;
 }
