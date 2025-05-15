@@ -118,7 +118,8 @@
     "DELETE": "Löschen",
     "ADD_NEW_MODULE": "Neues Modul hinzufügen",
     "CONTENT": "Inhalt",
-    "ENTER_CONTENT_TEXT": "Inhaltstext eingeben"
+    "ENTER_CONTENT_TEXT": "Inhaltstext eingeben",
+    "UPLOADING_DATA": "Daten werden hochgeladen"
   },
   "TRAINING_OVERVIEW": {
     "ABOUT_TRAINING": "Über diese Schulung",

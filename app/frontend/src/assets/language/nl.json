@@ -118,7 +118,8 @@
     "DELETE": "Verwijderen",
     "ADD_NEW_MODULE": "Nieuw module toevoegen",
     "CONTENT": "Inhoud",
-    "ENTER_CONTENT_TEXT": "Voer inhoudstekst in"
+    "ENTER_CONTENT_TEXT": "Voer inhoudstekst in",
+    "UPLOADING_DATA": "Gegevens worden geüpload"
   },
   "TRAINING_OVERVIEW": {
     "ABOUT_TRAINING": "Over deze training",
