@@ -63,7 +63,7 @@ class UserTrainingServiceTest {
         );
         training = trainingService.save(trainingDTO);
         
-        userTrainingDTO = new UserTrainingDTO(null, training.getId(), user.getId());
+        userTrainingDTO = new UserTrainingDTO(null, training.getId(), user.getId(), false);
     }
 
     @AfterEach
@@ -74,13 +74,13 @@ class UserTrainingServiceTest {
 
     @Test
     void save_ShouldThrowException_WhenUserIdIsMissing() {
-        UserTrainingDTO invalidDTO = new UserTrainingDTO(null, training.getId(), 0);
+        UserTrainingDTO invalidDTO = new UserTrainingDTO(null, training.getId(), 0, false);
         assertThrows(MissingArgumentException.class, () -> userTrainingService.save(invalidDTO));
     }
 
     @Test
     void save_ShouldThrowException_WhenTrainingIdIsMissing() {
-        UserTrainingDTO invalidDTO = new UserTrainingDTO(null, 0, user.getId());
+        UserTrainingDTO invalidDTO = new UserTrainingDTO(null, 0, user.getId(), false);
         assertThrows(MissingArgumentException.class, () -> userTrainingService.save(invalidDTO));
     }
 
