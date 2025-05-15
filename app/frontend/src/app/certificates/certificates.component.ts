@@ -40,7 +40,60 @@ export class CertificatesComponent {
     this.termsAccepted = accepted;
   }
   complete() {
+    this.updateUserCertificates();
     this.sendEmail();
+  }
+  async updateUserCertificates() {
+    for(let certificate of this.service.selectedCertificates) {
+      for(let user of this.service.selectedUsers) {
+        try{
+          let userTrainingGetResponse = await fetch(`/api/user_trainings/training/${certificate.training.id}/user/${user.id}`);
+          if(userTrainingGetResponse.status==404) {
+            let userTrainingPostResponse = await fetch(`/api/user_trainings`, 
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  Accept: 'application/json',
+                },
+                body: JSON.stringify({
+                  training_id: certificate.training.id,
+                  user_id: user.id,
+                  eligible_for_certificate: true
+                })
+              }
+            )
+            if(userTrainingPostResponse.status!=201) {
+              const errorText = await userTrainingPostResponse.text();
+              console.error("failed to post usertraining " + errorText);
+            }
+          }
+          else if(userTrainingGetResponse.status==200) {
+            let userTraining = await userTrainingGetResponse.json();
+            let userTrainingPutResponse = await fetch(`/api/user_trainings/${userTraining.id}`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+              },
+              body: JSON.stringify({
+                eligible_for_certificate: true
+              })
+            })
+            if(userTrainingPutResponse.status!=200) {
+              const errorText = await userTrainingPutResponse.text();
+              console.error("Error updating: " + errorText);
+            }
+          }
+          else {
+            console.error("an error occured requesting this usertraining " + userTrainingGetResponse.status)
+          }
+        }
+        catch(e) {
+
+        }
+      }
+    }
   }
   sendEmail() {
     this.isSending=true;
@@ -82,15 +135,11 @@ export class CertificatesComponent {
         };
         this.service.selectedCertificates=[];
         this.service.selectedUsers=[];
-        const msg = await this.translate.get('CERTIFICATES.INFO_SENT_SUCCESS').toPromise();
         this.isSending=false;
-        //alert(msg);
         this.router.navigate(["/trainings"])
       },
       async (error) => {
-        const msg = await this.translate.get('CERTIFICATES.INFO_SENT_FAILED').toPromise();
         this.isSending=false;
-        //alert(msg);
         this.router.navigate(["/trainings"])
       }
     );

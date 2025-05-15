@@ -56,7 +56,7 @@ public class UserTrainingService {
         if(userTrainingDTO.training_id()==0) {
             throw new MissingArgumentException("training_id is missing");
         }
-        if(this.findByTrainingIdAndUserId(userTrainingDTO.training_id(),userTrainingDTO.user_id())!=null) {
+        if(this.userTrainingRepository.findByTrainingIdAndUserId(userTrainingDTO.training_id(),userTrainingDTO.user_id()).isPresent()) {
             throw new DuplicateException("user training with user_id "+userTrainingDTO.user_id()+" and training id " + userTrainingDTO.training_id()+ " already exists");
         }
         User user = userService.findById(userTrainingDTO.user_id());
