@@ -26,12 +26,15 @@ public class UserTraining {
     private User user;
     @OneToMany(mappedBy = "userTraining",fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<ExamAttempt> examAttempts;
+    @Column
+    private boolean eligibleForCertificate;
 
-    public UserTraining(TrainingProgress trainingProgress, Training training, User user, List<ExamAttempt> examAttempts) {
+    public UserTraining(TrainingProgress trainingProgress, Training training, User user, List<ExamAttempt> examAttempts, boolean eligibleForCertificate) {
         this.trainingProgress = trainingProgress;
         this.training = training;
         this.user = user;
         this.examAttempts = examAttempts;
+        this.eligibleForCertificate = eligibleForCertificate;
     }
 
     @Override
@@ -41,6 +44,7 @@ public class UserTraining {
                 ", trainingProgress=" + trainingProgress +
                 ", training=" + training +
                 ", user=" + user +
+                ", examAttempts=" + examAttempts +
                 '}';
     }
 }

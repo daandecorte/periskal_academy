@@ -62,6 +62,7 @@ export class AddTrainingComponent {
   }
 
   async publishTraining() {
+    this.showLoadingModal();
     //Logic for uploading to database
     try {
       //POST Training
@@ -220,7 +221,8 @@ export class AddTrainingComponent {
       console.error(error);
     }
 
-    this.router.navigate(['/trainings']);
+    this.hideLoadingModal();
+    this.router.navigate(['/admin/trainings']);
   }
 
   resetTraining() {
@@ -301,6 +303,14 @@ export class AddTrainingComponent {
         alert(`Upload failed for ${lang}: ${error}`);
       }
     }
+  }
+
+  showLoadingModal() {
+    document.getElementById('loadingModal')!.classList.remove('hidden');
+  }
+
+  hideLoadingModal() {
+    document.getElementById('loadingModal')!.classList.add('hidden');
   }
 }
 

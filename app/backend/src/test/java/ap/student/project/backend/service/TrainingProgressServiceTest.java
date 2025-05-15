@@ -109,7 +109,7 @@ class TrainingProgressServiceTest {
         );
         Training training = trainingService.save(trainingDTO);
         
-        UserTrainingDTO userTrainingDTO = new UserTrainingDTO(null, training.getId(), user.getId());
+        UserTrainingDTO userTrainingDTO = new UserTrainingDTO(null, training.getId(), user.getId(), false);
         userTrainingService.save(userTrainingDTO);
         
         // Find the created UserTraining to use its ID
@@ -159,7 +159,7 @@ class TrainingProgressServiceTest {
         );
         Training training = trainingService.save(trainingDTO);
         
-        UserTrainingDTO userTrainingDTO = new UserTrainingDTO(null, training.getId(), user.getId());
+        UserTrainingDTO userTrainingDTO = new UserTrainingDTO(null, training.getId(), user.getId(), false);
         userTrainingService.save(userTrainingDTO);
         
         // Find the created UserTraining to use its ID
@@ -228,7 +228,7 @@ class TrainingProgressServiceTest {
         );
         Training training = trainingService.save(trainingDTO);
         
-        UserTrainingDTO userTrainingDTO = new UserTrainingDTO(null, training.getId(), user.getId());
+        UserTrainingDTO userTrainingDTO = new UserTrainingDTO(null, training.getId(), user.getId(), false);
         userTrainingService.save(userTrainingDTO);
         
         // Find the created UserTraining

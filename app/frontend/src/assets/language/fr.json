@@ -118,7 +118,8 @@
     "DELETE": "Supprimer",
     "ADD_NEW_MODULE": "Ajouter un nouveau module",
     "CONTENT": "Contenu",
-    "ENTER_CONTENT_TEXT": "Saisissez le texte du contenu"
+    "ENTER_CONTENT_TEXT": "Saisissez le texte du contenu",
+    "UPLOADING_DATA": "Téléchargement des données"
   },
   "TRAINING_OVERVIEW": {
     "ABOUT_TRAINING": "À propos de cette formation",
