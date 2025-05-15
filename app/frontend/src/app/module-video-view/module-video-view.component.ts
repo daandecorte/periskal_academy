@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { TrainingService } from '../services/training.service';
+import { Module, TrainingService } from '../services/training.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../services/language.service';
 import { Subscription } from 'rxjs';
+import { ContentType } from '../services/training.service';
 
 @Component({
   selector: 'app-module-video-view',
@@ -16,7 +17,6 @@ import { Subscription } from 'rxjs';
 })
 export class ModuleVideoViewComponent implements OnInit, OnDestroy {
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
-  
   trainingId: number = 0;
   moduleId: number = 0;
   currentStep: number = 1; // Video is always step 1
@@ -34,6 +34,13 @@ export class ModuleVideoViewComponent implements OnInit, OnDestroy {
   videoCompleted: boolean = false;
   videoProgressThreshold: number = 0.9; // 90% completion is considered complete
   
+  public module: Module = {
+    id: 0,
+    title: {},
+    description: {},
+    questions: [],
+    content: []
+  };
   // Subscription management
   private subscriptions: Subscription[] = [];
   
@@ -44,19 +51,10 @@ export class ModuleVideoViewComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private trainingService: TrainingService,
-    private languageService: LanguageService
+    public languageService: LanguageService
   ) {}
 
   ngOnInit(): void {
-    const languageSub = this.languageService.currentLanguage$.subscribe((language) => {
-      this.currentLanguage = this.mapLanguageCode(language);
-      // Reload module data when language changes to get the right video
-      if (this.trainingId && this.moduleId) {
-        this.loadModuleData();
-      }
-    });
-    this.subscriptions.push(languageSub);
-
     const routeSub = this.route.params.subscribe(params => {
       this.trainingId = +params['id'];
       this.moduleId = +params['sectionId'];
@@ -100,84 +98,27 @@ export class ModuleVideoViewComponent implements OnInit, OnDestroy {
     return languageMappings[language] || 'EN';
   }
 
-  loadModuleData(): void {
-    const trainingSub = this.trainingService.getTrainingById(this.trainingId).subscribe(
-      training => {
-        if (training && training.modules) {
-          // Find the specific module in the training modules
-          const module = training.modules.find((m: any) => m.id === this.moduleId);
-          
-          if (module) {
-            this.setModuleData(module);
-            // Restore video progress after loading module data
-            setTimeout(() => this.restoreVideoProgress(), 300);
-          } else {
-            console.error(`Module with ID ${this.moduleId} not found in training ${this.trainingId}`);
-            this.goBackToOverview();
-          }
-        } else {
-          console.error(`Training with ID ${this.trainingId} not found or has no modules`);
-          this.goBackToOverview();
-        }
-      },
-      error => {
-        console.error('Error loading module data:', error);
-      }
-    );
-    this.subscriptions.push(trainingSub);
-  }
+  async loadModuleData() {
 
-  setModuleData(module: any): void {
-    this.moduleTitle = this.getLocalizedContent(module.title);
-    this.moduleDescription = this.getLocalizedContent(module.description);
-    
-    // Set video URL based on current language
-    if (module.videoReference) {
-      this.videoUrl = this.getLocalizedContent(module.videoReference);
-    } else {
-      //This is for testing and should be removed later
-      this.videoUrl = "https://academyws.periskal.com/Downloads/groep7/TEST.mp4";
+    let response = await fetch(`/api/modules/${this.moduleId}`);
+    if(response.status!=200) {
+      let errorText = await response.text
+      console.log("error fetching module" + errorText);
     }
-    
-    // Set question count for total steps
-    if (module.questions && module.questions.length > 0) {
-      this.questionCount = module.questions.length;
-      this.totalSteps = this.questionCount + 1; // Video + questions count
-    } else {
-      // If no questions are available, set to zero
-      this.questionCount = 0; // Default to 0 question
-      this.totalSteps = 1;
+    else {
+      let json = await response.json();
+      this.module = await json;
+      console.log(this.module);
     }
   }
-
-  // Calculate progress percentage for the progress bar
+  
   getProgressPercentage(): number {
     if (this.totalSteps === 0) return 0;
     return ((this.currentStep) / this.totalSteps * 100);
   }
 
-  // Get the step indicator text in the same format as the question component
   getStepIndicatorText(): string {
-    return `${this.currentStep} ${this.getLocalizedContent({ 'EN': 'of', 'FR': 'de', 'NL': 'van', 'DE': 'von' })} ${this.totalSteps}`;
-  }
-
-  getLocalizedContent(contentMap: any): string {
-    if (!contentMap) return '';
-    if (typeof contentMap === 'string') return contentMap;
-    
-    // Try current language first
-    if (contentMap[this.currentLanguage]) {
-      return contentMap[this.currentLanguage];
-    }
-    
-    // Fallback to English
-    if (contentMap['EN']) {
-      return contentMap['EN'];
-    }
-    
-    // If none of the above, take the first available
-    const values = Object.values(contentMap);
-    return values.length > 0 ? values[0] as string : '';
+    return `${this.currentStep} of ${this.totalSteps}`;
   }
 
   goBackToOverview(): void {

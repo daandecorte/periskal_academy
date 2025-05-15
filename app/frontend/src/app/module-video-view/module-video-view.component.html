@@ -23,31 +23,49 @@
   </div>
 
   <div class="module-content">
+
     <div class="content-header">
-      <h1>{{ moduleTitle }}</h1>
-      <p>{{ moduleDescription }}</p>
+      <h1>{{ module.title[languageService.getLanguage()] }}</h1>
+      <p>{{ module.description[languageService.getLanguage()] }}</p>
     </div>
-
-    <!-- Video -->
-    <div class="video-container">
-      <video
-        #videoPlayer
-        [src]="videoUrl"
-        controls
-        (timeupdate)="updateVideoProgress($event)"
-        (pause)="saveVideoProgress()"
-        (ended)="videoCompleted = true; saveVideoProgress()"
-      >
-        Your browser does not support the video tag. Please try using a
-        different browser.
-      </video>
-
-      <div class="video-progress-indicator" *ngIf="videoCompleted">
-        <div class="completion-badge">
-          {{ "MODULE_VIDEO.VIDEO_COMPLETED" | translate }}
+    @for(content of module.content; track $index) {
+      @if(content.content_type.toString()=='TEXT') {
+        <div class="content-item content-text">
+          <p >{{content.reference[languageService.getLanguage()]}}</p>
+        </div>
+      }
+      @else if(content.content_type.toString()=='PICTURE') {
+        <div class="content-item content-picture">
+          <img [src]="content.reference[languageService.getLanguage()]" alt="">
+        </div>
+      }
+      @else if(content.content_type.toString()=='VIDEO') {
+      <div class="content-item">
+        <div class="video-container">
+          <video
+            #videoPlayer
+            [src]="content.reference[languageService.getLanguage()]"
+            controls
+            (timeupdate)="updateVideoProgress($event)"
+            (pause)="saveVideoProgress()"
+            (ended)="videoCompleted = true; saveVideoProgress()"
+          >
+            Your browser does not support the video tag. Please try using a
+            different browser.
+          </video>
+    
+          <div class="video-progress-indicator" *ngIf="videoCompleted">
+            <div class="completion-badge">
+              {{ "MODULE_VIDEO.VIDEO_COMPLETED" | translate }}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+      }
+      @else {
+        <p>{{content.content_type}}</p>
+      }
+    }
 
     <div class="action-buttons">
       <button
