@@ -122,12 +122,6 @@ export class ModuleVideoViewComponent implements OnInit, OnDestroy {
       },
       error => {
         console.error('Error loading module data:', error);
-        // Try to use hardcoded data for demo purposes
-        this.moduleTitle = "Demo Module";
-        this.moduleDescription = "This is a demo module description.";
-        this.videoUrl = "https://academyws.periskal.com/Downloads/groep7/TEST.mp4";
-        this.questionCount = 2; // Default to 2 questions
-        this.totalSteps = this.questionCount + 1; // Video + 2 questions = 3 steps total
       }
     );
     this.subscriptions.push(trainingSub);
