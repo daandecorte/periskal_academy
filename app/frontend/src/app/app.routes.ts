@@ -113,12 +113,8 @@ export const routes: Routes = [
     component: ModuleVideoViewComponent,
   },
   {
-    path: 'trainings/:id/module/:sectionId/questions/:questionIndex',
-    component: ModuleQuestionsComponent,
-  },
-  {
     path: 'trainings/:id/module/:sectionId/questions',
-    redirectTo: 'trainings/:id/module/:sectionId/questions/0',
+    component: ModuleQuestionsComponent,
   },
   { path: 'exams/:id/:questionIndex', component: TrainingExamComponent },
   { path: 'exams/:id', redirectTo: 'exams/:id/0' },

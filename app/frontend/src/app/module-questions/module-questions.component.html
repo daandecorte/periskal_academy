@@ -23,32 +23,32 @@
         <span class="icon">?</span>
       </div>
       <div class="question-content">
-        <h2>{{ "QUESTIONS.QUESTION" | translate }} {{ currentQuestionIndex + 1 }} {{ "QUESTIONS.OF" | translate }} {{ questions.length }}</h2>
+        <h2>{{ "QUESTIONS.QUESTION" | translate }} {{ currentQuestionIndex + 1 }} {{ "QUESTIONS.OF" | translate }} {{ module.questions.length }}</h2>
         <div class="question-text">
-          {{ getLocalizedContent(currentQuestion?.text) }}
+          {{ module.questions[currentQuestionIndex].text[languageService.getLanguage()] }}
         </div>
       </div>
     </div>
-
-    <div class="options-container">
-      <div 
-        *ngFor="let option of currentQuestion?.questionOptions"
-        class="option"
-        [class.selected]="selectedOptionId === option.id"
-        [class.incorrect]="isAnswerSubmitted && selectedOptionId === option.id && !option.isCorrect"
-        (click)="selectOption(option.id)"
-      >
-        <div class="option-radio">
-          <input 
+    @for(option of module.questions[currentQuestionIndex].question_options; track $index) {
+      <div class="options-container">
+          <div 
+          class="option"
+          [class.selected]="selectedOptionId === option.id"
+          [class.incorrect]="isAnswerSubmitted && selectedOptionId === option.id && !option.correct"
+          (click)="selectOption(option.id)"
+          >
+          <div class="option-radio">
+            <input 
             type="radio" 
             [checked]="selectedOptionId === option.id" 
             [disabled]="isAnswerSubmitted"
             (click)="$event.stopPropagation()"
-          >
+            >
+          </div>
+          <div class="option-text">{{ option.text[languageService.getLanguage()]}}</div>
         </div>
-        <div class="option-text">{{ getLocalizedContent(option.text) }}</div>
       </div>
-    </div>
+    }
 
     <div class="feedback-message" *ngIf="isAnswerSubmitted">
       <div *ngIf="isAnswerCorrect" class="correct-message">

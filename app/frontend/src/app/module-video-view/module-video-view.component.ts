@@ -19,9 +19,8 @@ export class ModuleVideoViewComponent implements OnInit, OnDestroy {
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
   trainingId: number = 0;
   moduleId: number = 0;
-  currentStep: number = 1; // Video is always step 1
-  totalSteps: number = 1; // Default to 1 (video + 0 question)
-  questionCount: number = 0;
+  currentStep: number = 1;
+  totalSteps: number = 1; 
 
   moduleTitle: string = '';
   moduleDescription: string = '';
@@ -126,7 +125,7 @@ export class ModuleVideoViewComponent implements OnInit, OnDestroy {
   }
 
   continueToQuestions(): void {
-    this.router.navigate(['/trainings', this.trainingId, 'module', this.moduleId, 'questions', 0]);
+    this.router.navigate(['/trainings', this.trainingId, 'module', this.moduleId, 'questions']);
   }
   
   // Video functionality

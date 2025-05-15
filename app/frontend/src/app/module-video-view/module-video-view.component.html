@@ -71,7 +71,7 @@
       <button
         class="continue-button"
         (click)="continueToQuestions()"
-        [disabled]="questionCount === 0"
+        [disabled]="module.questions.length === 0"
       >
         {{ "MODULE_VIDEO.CONTINUE_TO_QUESTIONS" | translate }}
         <span class="arrow-icon">→</span>

@@ -10,14 +10,14 @@ export interface LocalizedStrings {
 
 export interface QuestionOption {
   id: number;
-  text: string;
+  text: any;
   correct: boolean;
 }
 
 export interface Question {
   id: number;
   text: any;
-  questionOptions?: QuestionOption[];
+  question_options: QuestionOption[];
 }
 export interface Content {
   id: number;
@@ -32,7 +32,7 @@ export interface Module {
   title: any;
   description: any;
   content: Content[]
-  questions?: Question[];
+  questions: Question[];
 }
 
 export interface Training {
@@ -199,7 +199,7 @@ export class TrainingService {
           return {
             id: question.id,
             text: question.text,
-            questionOptions: question.questionOptions || []
+            question_options: question.questionOptions || []
           };
         });
       } else {

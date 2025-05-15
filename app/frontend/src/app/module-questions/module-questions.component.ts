@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
 import { faArrowLeft, faVideo } from '@fortawesome/free-solid-svg-icons';
-import { TrainingService } from '../services/training.service';
+import { Module, Question, TrainingService } from '../services/training.service';
 import { LanguageService } from '../services/language.service';
 
 @Component({
@@ -14,11 +14,19 @@ import { LanguageService } from '../services/language.service';
   styleUrl: './module-questions.component.css'
 })
 export class ModuleQuestionsComponent implements OnInit {
+  module: Module = {
+    id: 0,
+    title: {},
+    description: {},
+    content: [],
+    questions: []
+  }
+  currentQuestionIndex:number=0;
+
   trainingId: number = 0;
   moduleId: number = 0;
-  currentQuestionIndex: number = 0;
   questions: any[] = [];
-  currentQuestion: any = null;
+  currentQuestion: Question | undefined;
   selectedOptionId: number | null = null;
   
   // Store user answers for each question
@@ -48,28 +56,13 @@ export class ModuleQuestionsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private trainingService: TrainingService,
-    private languageService: LanguageService
+    public languageService: LanguageService
   ) {}
 
   ngOnInit(): void {
-    this.languageService.currentLanguage$.subscribe((language) => {
-      this.currentLanguage = this.mapLanguageCode(language);
-      // Reload question data when language changes
-      if (this.trainingId && this.moduleId) {
-        this.loadQuestionData();
-      }
-    });
-
     this.route.params.subscribe(params => {
       this.trainingId = +params['id'];
       this.moduleId = +params['sectionId'];
-      
-      // Get the question index from the URL
-      if (params['questionIndex']) {
-        this.currentQuestionIndex = +params['questionIndex'];
-      } else {
-        this.currentQuestionIndex = 0; // Default to first question
-      }
       
       this.loadQuestionData();
     });
@@ -90,77 +83,15 @@ export class ModuleQuestionsComponent implements OnInit {
     return languageMappings[language] || 'EN';
   }
 
-  loadQuestionData(): void {
-    this.trainingService.getTrainingById(this.trainingId).subscribe(
-      training => {
-        if (training && training.modules) {
-          const module = training.modules.find((m: any) => m.id === this.moduleId);
-          
-          if (module) {
-            this.moduleTitle = this.getLocalizedContent(module.title);
-            
-            
-            // Check if questions data is available or use hardcoded data
-            if (module.questions && module.questions.length > 0) {
-              this.questions = module.questions;
-            } else {
-              console.warn(`Module with ID ${this.moduleId} has no questions.`);
-              //TODO: skip the test for this module
-            }
-            
-            this.totalSteps = this.questions.length + 1; // +1 for video step
-            this.currentStep = this.currentQuestionIndex + 2; // +2 because video is step 1 and questions are 1-indexed
-            
-            // Set current question
-            this.setCurrentQuestion();
-          } else {
-            console.error(`Module with ID ${this.moduleId} not found in training ${this.trainingId}`);
-            this.goBackToOverview();
-          }
-        } else {
-          console.error(`Training with ID ${this.trainingId} not found or has no modules`);
-          this.goBackToOverview();
-        }
-      },
-      error => {
-        console.error('Error loading module data:', error);
-        this.goBackToOverview();
-      }
-    );
+  async loadQuestionData() {
+    let response = await fetch(`/api/modules/${this.moduleId}`);
+    let json = await response.json();
+    this.module = await json;
+    this.setCurrentQuestion();
   }
 
   setCurrentQuestion(): void {
-    // Reset answer state for new display if there's no previous answer
-    if (this.currentQuestionIndex < this.questions.length) {
-      this.currentQuestion = this.questions[this.currentQuestionIndex];
-      
-      // Create a copy of the question options and shuffle them
-      if (this.currentQuestion && this.currentQuestion.questionOptions) {
-        this.currentQuestion = {
-          ...this.currentQuestion,
-          questionOptions: this.shuffleOptions([...this.currentQuestion.questionOptions])
-        };
-      }
-      
-      // Restore previously selected answer if exists
-      if (this.userAnswers.has(this.currentQuestion.id)) {
-        this.selectedOptionId = this.userAnswers.get(this.currentQuestion.id) || null;
-        // If the user has already answered this question, show the feedback
-        if (this.userCorrectAnswers.has(this.currentQuestion.id)) {
-          this.isAnswerSubmitted = true;
-          this.isAnswerCorrect = this.userCorrectAnswers.get(this.currentQuestion.id) || false;
-        } else {
-          this.isAnswerSubmitted = false;
-          this.isAnswerCorrect = false;
-        }
-      } else {
-        this.selectedOptionId = null;
-        this.isAnswerSubmitted = false;
-        this.isAnswerCorrect = false;
-      }
-    } else {
-      this.isModuleCompleted = true;
-    }
+    this.currentQuestion = this.module.questions[this.currentQuestionIndex];
   }
 
   // Calculate progress percentage based on current question index
@@ -213,15 +144,17 @@ export class ModuleQuestionsComponent implements OnInit {
     
     this.isAnswerSubmitted = true;
     
-    // Find selected option
-    const selectedOption = this.currentQuestion.questionOptions.find(
-      (option: any) => option.id === this.selectedOptionId
-    );
-    
-    if (selectedOption) {
-      this.isAnswerCorrect = selectedOption.isCorrect;
-      // Save whether the answer was correct
-      this.userCorrectAnswers.set(this.currentQuestion.id, this.isAnswerCorrect);
+    if(this.currentQuestion) {
+      // Find selected option
+      const selectedOption = this.currentQuestion.question_options.find(
+        (option: any) => option.id === this.selectedOptionId
+      );
+      
+      if (selectedOption) {
+        this.isAnswerCorrect = selectedOption.correct;
+        // Save whether the answer was correct
+        this.userCorrectAnswers.set(this.currentQuestion.id, this.isAnswerCorrect);
+      }
     }
   }
 
@@ -230,12 +163,9 @@ export class ModuleQuestionsComponent implements OnInit {
       this.currentQuestionIndex++;
       this.currentStep++;
       this.setCurrentQuestion();
-      
-      // Update URL
-      this.router.navigate(
-        ['/trainings', this.trainingId, 'module', this.moduleId, 'questions', this.currentQuestionIndex],
-        { replaceUrl: true }
-      );
+      if(this.currentQuestionIndex<=this.module.questions.length) {
+        this.isModuleCompleted = true;
+      }
     }
   }
 
