@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { booleanAttribute, Component } from '@angular/core';
 import { SelectTrainingComponent } from './select-training/select-training.component';
 import { TraineeChatComponent } from '../trainee-chat/trainee-chat.component';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, TitleStrategy } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AssignSailorComponent } from "./assign-sailor/assign-sailor.component";
 import { AcceptTermsComponent } from "./accept-terms/accept-terms.component";
@@ -12,6 +12,7 @@ import emailjs from 'emailjs-com';
 import { BillingInfo, CertificateService } from '../services/certificate.service';
 import { Serializer } from '@angular/compiler';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { isCaptureEventType } from '@angular/core/primitives/event-dispatch';
 
 @Component({
   selector: 'app-certificates',
@@ -88,5 +89,21 @@ export class CertificatesComponent {
         alert(msg);
       }
     );
+  }
+  get disabled():boolean {
+    return this.termsAccepted==false&&this.currentIndex==2 || 
+          this.currentIndex==0&&this.service.selectedCertificates.length==0 ||
+          this.currentIndex==1&&this.service.selectedUsers.length==0
+  }
+  get filledInForm():boolean {
+    for (const key in this.service.billingInfo) {
+      if (key!="state") {
+        const value = this.service.billingInfo[key as keyof typeof this.service.billingInfo];
+        if(value.toString().trim()=="") {
+          return true;
+        };
+      }
+    }
+    return false;
   }
 }
