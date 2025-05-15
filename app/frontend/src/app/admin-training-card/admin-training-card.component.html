@@ -22,7 +22,14 @@
 
   <div class="language-badges">
     @for (lang of training.languages; track lang) {
-    <span class="lang-badge" [class]="lang.toLowerCase()">{{ lang }}</span>
+    <span
+      class="lang-badge"
+      [class]="lang.toLowerCase()"
+      [class.available]="languageExists(lang)"
+      [class.unavailable]="!languageExists(lang)"
+    >
+      {{ lang }}
+    </span>
     }
   </div>
 </div>

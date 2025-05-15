@@ -87,4 +87,10 @@ export class AdminTrainingCardComponent {
 
     this.router.navigate(['/add-training']);
   }
+
+  // Method to check if the training exists in a specific language
+  languageExists(lang: string): boolean {
+    if (!this.training.titleLocalized) return false;
+    return !!this.training.titleLocalized[lang];
+  }
 }

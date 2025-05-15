@@ -83,3 +83,14 @@
   text-align: center;
   background-color: #e6f7e6;
 }
+
+/* Language availability classes */
+.lang-badge.available {
+  background-color: #e6f7e6;
+  color: #155724;
+}
+
+.lang-badge.unavailable {
+  background-color: #f8d7da;
+  color: #721c24;
+}
