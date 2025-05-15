@@ -78,12 +78,6 @@ export class TrainingsComponent implements OnInit {
     });
   }
 
-  toggleDataSource(): void {
-    const currentSetting = this.trainingService.getUseDemoData();
-    this.trainingService.setUseDemoData(!currentSetting);
-    this.loadTrainings();
-  }
-
   filterTrainings(): void {
     // Filter trainings using localized titles when available
     const filteredTrainings = this.searchTerm

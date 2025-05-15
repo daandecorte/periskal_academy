@@ -11,11 +11,6 @@
           (ngModelChange)="onSearchChange()"
         />
       </div>
-      <button class="data-source-toggle" (click)="toggleDataSource()">
-        {{
-          trainingService.getUseDemoData() ? "Use Backend Data" : "Use Demo Data"
-        }}
-      </button>
     </div>
   </div>
 
@@ -30,13 +25,18 @@
 
   <!-- Assigned Trainings Section -->
   <ng-container *ngIf="!loading && !error">
-    <h2 class="section-title">{{ "TRAININGS.ASSIGNED_SECTION" | translate }}</h2>
+    <h2 class="section-title">
+      {{ "TRAININGS.ASSIGNED_SECTION" | translate }}
+    </h2>
     <div
       class="assigned-trainings"
       *ngIf="assignedTrainings.length > 0; else noAssignedTrainings"
     >
       @for (training of assignedTrainings; track training.id) {
-      <app-assigned-training-card [training]="training" [currentLanguage]="currentLanguage"></app-assigned-training-card>
+      <app-assigned-training-card
+        [training]="training"
+        [currentLanguage]="currentLanguage"
+      ></app-assigned-training-card>
       }
     </div>
     <ng-template #noAssignedTrainings>
@@ -54,11 +54,16 @@
       *ngIf="trainings.length > 0; else noTrainings"
     >
       @for (training of trainings; track training.id) {
-      <app-training-card [training]="training" [currentLanguage]="currentLanguage"></app-training-card>
+      <app-training-card
+        [training]="training"
+        [currentLanguage]="currentLanguage"
+      ></app-training-card>
       }
     </div>
     <ng-template #noTrainings>
-      <div class="no-results">{{ "TRAININGS.NO_TRAININGS_FOUND" | translate }}</div>
+      <div class="no-results">
+        {{ "TRAININGS.NO_TRAININGS_FOUND" | translate }}
+      </div>
     </ng-template>
   </ng-container>
   <app-trainee-chat></app-trainee-chat>

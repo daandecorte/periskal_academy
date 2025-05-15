@@ -76,12 +76,6 @@ export class AdminTrainingsComponent implements OnInit {
     });
   }
 
-  toggleDataSource(): void {
-    const currentSetting = this.trainingService.getUseDemoData();
-    this.trainingService.setUseDemoData(!currentSetting);
-    this.loadTrainings();
-  }
-
   filterTrainings(): void {
     // Filter trainings using localized titles when available
     this.trainings = this.searchTerm

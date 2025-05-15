@@ -11,11 +11,6 @@
           (ngModelChange)="onSearchChange()"
         />
       </div>
-      <button class="data-source-toggle" (click)="toggleDataSource()">
-        {{
-          trainingService.getUseDemoData() ? "Use Backend Data" : "Use Demo Data"
-        }}
-      </button>
       <button class="create-training-btn" (click)="navigateToAddTraining()">
         <span class="plus-icon">+</span>
         {{ "ADMIN_TRAININGS.CREATE_BUTTON" | translate }}
