@@ -128,11 +128,13 @@
     "OF_COMPLETED": "van {{completed}} voltooid",
     "BACK": "Terug",
     "GO_FOR_CERTIFICATE": "Ga voor certificaat",
-    "COMPLETE_ALL_MODULES_FIRST": "Voltooi eerst alle modules!",
+    "BUY_CERTIFICATE_FIRST": "U moet het certificaat kopen om in aanmerking te komen voor het examen!",
     "COMPLETED": "voltooid",
-    "QUESTIONS": "vragen",
+    "QUESTIONS": "Vragen",
     "START": "Start",
-    "REVIEW": "Herzien"
+    "REVIEW": "Herzien",
+    "IMAGES": "Afbeelding(en)",
+    "VIDEOS": "Video('s)"
   },
   "TIPS_AND_TRICKS": {
     "TIPS_AND_TRICKS": "Tips en trucs",

@@ -128,11 +128,13 @@
     "OF_COMPLETED": "von {{completed}} abgeschlossen",
     "BACK": "Zurück",
     "GO_FOR_CERTIFICATE": "Zum Zertifikat",
-    "COMPLETE_ALL_MODULES_FIRST": "Bitte schließen Sie zuerst alle Module ab!",
+    "BUY_CERTIFICATE_FIRST": "Sie müssen das Zertifikat kaufen, um für die Prüfung zugelassen zu werden!",
     "COMPLETED": "abgeschlossen",
     "QUESTIONS": "Fragen",
     "START": "Starten",
-    "REVIEW": "Wiederholen"
+    "REVIEW": "Wiederholen",
+    "IMAGES": "Bild(er)",
+    "VIDEOS": "Video(s)"
   },
   "TIPS_AND_TRICKS": {
     "TIPS_AND_TRICKS": "Tipps und Tricks",

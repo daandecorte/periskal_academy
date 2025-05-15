@@ -128,11 +128,13 @@
     "OF_COMPLETED": "of {{completed}} completed",
     "BACK": "Back",
     "GO_FOR_CERTIFICATE": "Go for Certificate",
-    "COMPLETE_ALL_TRAININGS_FIRST": "Please complete all trainings first!",
+    "BUY_CERTIFICATE_FIRST": "You need to purchase the certificate to be eligible for the exam!",
     "COMPLETED": "completed",
-    "QUESTIONS": "questions",
+    "QUESTIONS": "Questions",
     "START": "Start",
-    "REVIEW": "Review"
+    "REVIEW": "Review",
+    "IMAGES": "Image(s)",
+    "VIDEOS": "Video(s)"
   },
   "TIPS_AND_TRICKS": {
     "TIPS_AND_TRICKS": "Tips and tricks",

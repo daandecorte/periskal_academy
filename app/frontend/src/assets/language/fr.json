@@ -128,11 +128,13 @@
     "OF_COMPLETED": "sur {{completed}} terminés",
     "BACK": "Retour",
     "GO_FOR_CERTIFICATE": "Obtenir le certificat",
-    "COMPLETE_ALL_MODULES_FIRST": "Veuillez d'abord terminer tous les modules!",
+    "BUY_CERTIFICATE_FIRST": "Vous devez acheter le certificat pour être éligible à l'examen!",
     "COMPLETED": "terminé",
-    "QUESTIONS": "questions",
+    "QUESTIONS": "Questions",
     "START": "Commencer",
-    "REVIEW": "Revoir"
+    "REVIEW": "Revoir",
+    "IMAGES": "Image(s)",
+    "VIDEOS": "Vidéo(s)"
   },
   "TIPS_AND_TRICKS": {
     "TIPS_AND_TRICKS": "Astuces et conseils",

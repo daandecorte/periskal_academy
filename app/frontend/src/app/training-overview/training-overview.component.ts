@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { TrainingService, Training } from '../services/training.service';
+import { TrainingService, Training, Module } from '../services/training.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { 
   faPlayCircle, 
@@ -21,7 +21,7 @@ interface ModuleSection {
   title: string;
   description: string;
   completed: boolean;
-  duration: string;
+  duration: any;
   questionCount: number;
 }
 
@@ -114,13 +114,23 @@ export class TrainingOverviewComponent implements OnInit {
     // Check if training has modules from the backend
     if (this.training?.modules && this.training.modules.length > 0) {
       // Map backend modules to our frontend model
-      this.moduleSections = this.training.modules.map((module: any) => {
+      this.moduleSections = this.training.modules.map((module: Module) => {
+        let video: number=0;
+        let image: number=0;
+        for(let content of module.content) {
+          if(content.content_type.toString()=="PICTURE") {
+            image++;
+          }
+          else if(content.content_type.toString()=="VIDEO") {
+            video++;
+          }
+        }
         return {
           id: module.id,
           title: this.getLocalizedContent(module.title),
           description: this.getLocalizedContent(module.description),
           completed: false, // We need to fetch completion status separately or calculate it
-          duration: this.estimateVideoDuration(module),
+          duration: [image, video],
           questionCount: module.questions ? module.questions.length : 0
         };
       });
@@ -147,19 +157,6 @@ export class TrainingOverviewComponent implements OnInit {
     // If none of the above, take the first available
     const values = Object.values(contentMap);
     return values.length > 0 ? values[0] as string : '';
-  }
-
-  estimateVideoDuration(module: any): string {
-    if (module.duration) {
-      return `${module.duration} min video`;
-    }
-    
-    // Make an estimate based on questions count or just return a default idk
-    // TODO: probably look at this again later cause idk lol
-    const questionsCount = module.questions ? module.questions.length : 0;
-    const estimatedMinutes = Math.max(10, questionsCount * 3); // At least 10 min, or 3 min per question
-    
-    return `${estimatedMinutes} min video`;
   }
 
   generateModuleSections(): void {
