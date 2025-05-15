@@ -25,6 +25,7 @@ export class CertificatesComponent {
   currentIndex:number=0;
   private routerSubscription!: Subscription;
   termsAccepted = false;
+  isSending: boolean = false;
 
   constructor(private router:Router, private route:ActivatedRoute, private service: CertificateService, private translate: TranslateService) {}
 
@@ -40,9 +41,9 @@ export class CertificatesComponent {
   }
   complete() {
     this.sendEmail();
-    this.router.navigate(["/trainings"])
   }
   sendEmail() {
+    this.isSending=true;
     const templateParams: {
       orders: { name: string; price: number }[];
       users: {name: string, id: number}[];
@@ -82,11 +83,15 @@ export class CertificatesComponent {
         this.service.selectedCertificates=[];
         this.service.selectedUsers=[];
         const msg = await this.translate.get('CERTIFICATES.INFO_SENT_SUCCESS').toPromise();
-        alert(msg);
+        this.isSending=false;
+        //alert(msg);
+        this.router.navigate(["/trainings"])
       },
       async (error) => {
         const msg = await this.translate.get('CERTIFICATES.INFO_SENT_FAILED').toPromise();
-        alert(msg);
+        this.isSending=false;
+        //alert(msg);
+        this.router.navigate(["/trainings"])
       }
     );
   }
