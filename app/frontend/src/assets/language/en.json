@@ -23,7 +23,8 @@
     "SEARCH_PLACEHOLDER": "Search trainings...",
     "CREATE_BUTTON": "Create Training",
     "ALL_TRAININGS_SECTION": "All Trainings",
-    "NO_TRAININGS_FOUND": "No trainings match your search."
+    "NO_TRAININGS_FOUND": "No trainings match your search.",
+    "LOADING": "Loading..."
   },
   "ASSIGNED_TRAINING_CARD": {
     "ASSIGNED_ON": "Assigned on {{date}}",

@@ -62,7 +62,7 @@ export class BasicSetupComponent {
       (this.trainingService.newTraining.description[
         this.selectedButtonLanguage
       ] as string) || '';
-    this.periodRef.nativeElement.value = `${this.trainingService.newTraining.certificate.validityPeriod}`;
+    this.periodRef.nativeElement.value = `${this.trainingService.newTraining.certificate.validity_period}`;
     this.priceRef.nativeElement.value = `${this.trainingService.newTraining.certificate.price}`;
     console.log(this.trainingService.newTraining);
   }
@@ -95,7 +95,7 @@ export class BasicSetupComponent {
   }
 
   periodChange() {
-    this.trainingService.newTraining.certificate.validityPeriod = Number(
+    this.trainingService.newTraining.certificate.validity_period = Number(
       this.periodRef.nativeElement.value
     );
   }

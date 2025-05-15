@@ -34,9 +34,9 @@ public class Training {
     private List<Module> modules;
     @OneToOne(mappedBy = "training", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Exam exam;
-    @OneToMany(mappedBy = "training", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToOne(mappedBy = "training", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JsonIgnore
-    private List<Certificate> certificates;
+    private Certificate certificate;
 
     public Training(Map<Language, String> title, Map<Language, String> description, boolean isActive, List<Module> modules, Exam exam) {
         this.title = title;

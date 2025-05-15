@@ -23,7 +23,8 @@
     "SEARCH_PLACEHOLDER": "Rechercher des formations...",
     "CREATE_BUTTON": "Créer une formation",
     "ALL_TRAININGS_SECTION": "Toutes les formations",
-    "NO_TRAININGS_FOUND": "Aucune formation ne correspond à votre recherche."
+    "NO_TRAININGS_FOUND": "Aucune formation ne correspond à votre recherche.",
+    "LOADING": "Chargement..."
   },
   "ASSIGNED_TRAINING_CARD": {
     "ASSIGNED_ON": "Assigné le {{date}}",

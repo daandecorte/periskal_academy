@@ -23,7 +23,8 @@
     "SEARCH_PLACEHOLDER": "Schulungen suchen...",
     "CREATE_BUTTON": "Schulung erstellen",
     "ALL_TRAININGS_SECTION": "Alle Schulungen",
-    "NO_TRAININGS_FOUND": "Keine Schulungen entsprechen Ihrer Suche."
+    "NO_TRAININGS_FOUND": "Keine Schulungen entsprechen Ihrer Suche.",
+    "LOADING": "Laden..."
   },
   "ASSIGNED_TRAINING_CARD": {
     "ASSIGNED_ON": "Zugewiesen am {{date}}",

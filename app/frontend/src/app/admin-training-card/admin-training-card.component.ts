@@ -48,13 +48,13 @@ export class AdminTrainingCardComponent {
   }
 
   async editModule(id: number) {
-    let data = await fetch(`/api/trainings/${id}`);
-    this.newTrainingService.newTraining = await data.json();
-    this.newTrainingService.newTraining.certificate = {
-      id: -1,
-      price: 0,
-      validityPeriod: 1,
-    };
+    let dataTraining = await fetch(`/api/trainings/${id}`);
+    this.newTrainingService.newTraining = await dataTraining.json();
+    this.newTrainingService.editModuleIndex(id);
+
+    let dataCertificate = await fetch(`/api/certificates/training/${id}`);
+    this.newTrainingService.newTraining.certificate =
+      await dataCertificate.json();
 
     for (
       let i = 0;

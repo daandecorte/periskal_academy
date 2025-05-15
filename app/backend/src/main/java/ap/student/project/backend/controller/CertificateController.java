@@ -56,6 +56,17 @@ public class CertificateController {
     }
 
     /**
+     * Updates a specific certificate by its ID.
+     *
+     * @param id The ID of the certificate to update
+     * @return ResponseEntity containing the certificate with HTTP status 200 (OK)
+     */
+    @PutMapping(value = "/certificates/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity updateCertificate(@PathVariable int id, @RequestBody CertificateDTO certificateDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.certificateService.update(id, certificateDTO));
+    }
+
+    /**
      * Retrieves certificates associated with a specific training ID.
      * 
      * @param id The training ID to find certificates for

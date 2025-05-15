@@ -14,7 +14,7 @@ public class Certificate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "training_id")
     private Training training;
     @Column(name = "validity_period")

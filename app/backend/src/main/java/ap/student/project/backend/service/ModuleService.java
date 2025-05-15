@@ -143,6 +143,15 @@ public class ModuleService {
         return content;
     }
 
+    /**
+     * Updates content from an existing module.
+     *
+     * @param id The ID of the module to add content to
+     * @param idContent The ID of the content
+     * @param contentDTO Data transfer object containing content information
+     * @return The saved Content entity
+     * @throws NotFoundException If no module or no content with the given ID exists
+     */
     public Content updateContent(int id, int idContent, ContentDTO contentDTO) {
         Module module = moduleRepository.findById(id).orElse(null);
         if (module == null) {

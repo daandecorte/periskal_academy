@@ -62,6 +62,37 @@ export class AddTrainingComponent {
   }
 
   async publishTraining() {
+    if (this.trainingService.newTraining.id == -1) this.publishNewTraining();
+    else this.publishEditedTraining();
+
+    this.hideLoadingModal();
+    this.router.navigate(['/admin/trainings']);
+  }
+
+  async publishEditedTraining() {
+    try {
+      //PUT Certificate
+      await fetch(
+        `/api/certificates/${this.trainingService.newTraining.certificate.id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            validity_period:
+              this.trainingService.newTraining.certificate.validity_period,
+            price: this.trainingService.newTraining.certificate.price,
+          }),
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async publishNewTraining() {
     this.showLoadingModal();
     //Logic for uploading to database
     try {
@@ -148,7 +179,7 @@ export class AddTrainingComponent {
         body: JSON.stringify({
           training_id: trainingId,
           validity_period:
-            this.trainingService.newTraining.certificate.validityPeriod,
+            this.trainingService.newTraining.certificate.validity_period,
           price: this.trainingService.newTraining.certificate.price,
         }),
       });
@@ -220,9 +251,6 @@ export class AddTrainingComponent {
     } catch (error) {
       console.error(error);
     }
-
-    this.hideLoadingModal();
-    this.router.navigate(['/admin/trainings']);
   }
 
   resetTraining() {
@@ -242,7 +270,7 @@ export class AddTrainingComponent {
       },
       certificate: {
         id: -1,
-        validityPeriod: 1,
+        validity_period: 1,
         price: 0,
       },
     };
@@ -254,7 +282,6 @@ export class AddTrainingComponent {
     }
   }
 
-  // Fix for the uploadVideo method in ContentComponent
   async uploadVideo(files: ITranslated, indexM: number, indexC: number) {
     const languages: (keyof ITranslated)[] = [
       'ENGLISH',
