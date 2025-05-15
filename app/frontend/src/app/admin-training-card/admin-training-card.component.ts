@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { Training } from '../services/training.service';
-import { RouterLink, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import {
   ContentType,
   NewTrainingService,
@@ -19,14 +19,15 @@ export class AdminTrainingCardComponent {
   @Input() training!: Training;
   @Input() currentLanguage: string = 'EN';
 
+  // FontAwesome icons used in the template
   faPencilAlt = faPencilAlt;
-  faTrash = faTrash;
 
   constructor(
     private router: Router,
     private newTrainingService: NewTrainingService
   ) {}
 
+  //Returns the localized title if available, otherwise returns the default title (English)
   getLocalizedTitle(): string {
     if (
       this.training.titleLocalized &&
@@ -37,6 +38,7 @@ export class AdminTrainingCardComponent {
     return this.training.title || '';
   }
 
+  //Returns the localized description if available, otherwise returns the default description (English)
   getLocalizedDescription(): string {
     if (
       this.training.descriptionLocalized &&
@@ -47,48 +49,45 @@ export class AdminTrainingCardComponent {
     return this.training.description || '';
   }
 
-  async editModule(id: number) {
-    let data = await fetch(`/api/trainings/${id}`);
-    this.newTrainingService.newTraining = await data.json();
+  //Navigates to the training edit page
+  async editModule(id: number): Promise<void> {
+    // Fetch training data
+    const response = await fetch(`/api/trainings/${id}`);
+    this.newTrainingService.newTraining = await response.json();
+    
+    // Initialize certificate with default values
     this.newTrainingService.newTraining.certificate = {
       id: -1,
       price: 0,
       validityPeriod: 1,
     };
 
-    for (
-      let i = 0;
-      i < this.newTrainingService.newTraining.modules.length;
-      i++
-    ) {
+    // Process each module and set up previews
+    const modules = this.newTrainingService.newTraining.modules;
+    for (let i = 0; i < modules.length; i++) {
+      // Initialize preview arrays for this module
       this.newTrainingService.addVideoPreviewModule();
       this.newTrainingService.addImagePreviewModule();
 
-      for (
-        let j = 0;
-        j < this.newTrainingService.newTraining.modules[i].content.length;
-        j++
-      ) {
-        if (
-          this.newTrainingService.newTraining.modules[i].content[j]
-            .content_type == ContentType.PICTURE
-        ) {
-          this.newTrainingService.imagePreviews[i][j] =
-            this.newTrainingService.newTraining.modules[i].content[j].reference;
-        } else if (
-          this.newTrainingService.newTraining.modules[i].content[j]
-            .content_type == ContentType.VIDEO
-        ) {
-          this.newTrainingService.videoPreviews[i][j] =
-            this.newTrainingService.newTraining.modules[i].content[j].reference;
+      // Set up content previews based on content type
+      const moduleContent = modules[i].content;
+      for (let j = 0; j < moduleContent.length; j++) {
+        const content = moduleContent[j];
+        if (content.content_type === ContentType.PICTURE) {
+          this.newTrainingService.imagePreviews[i][j] = content.reference;
+        } else if (content.content_type === ContentType.VIDEO) {
+          this.newTrainingService.videoPreviews[i][j] = content.reference;
         }
       }
     }
 
+    // Navigate to add training page
     this.router.navigate(['/add-training']);
   }
 
-  // Method to check if the training exists in a specific language
+
+  // Checks if the training has content in the specified language
+  // Used for the colorcoded language labels
   languageExists(lang: string): boolean {
     if (!this.training.titleLocalized) return false;
     return !!this.training.titleLocalized[lang];

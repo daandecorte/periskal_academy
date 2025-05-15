@@ -77,14 +77,11 @@
   padding: 6px 12px;
   border-radius: 4px;
   font-size: 12px;
-  background-color: #f0f0f0;
-  color: #333;
-  flex-grow: 1;
   text-align: center;
-  background-color: #e6f7e6;
+  flex-grow: 1;
 }
 
-/* Language availability classes */
+/* Language availability styles */
 .lang-badge.available {
   background-color: #e6f7e6;
   color: #155724;
