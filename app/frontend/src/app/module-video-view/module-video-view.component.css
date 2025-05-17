@@ -241,7 +241,7 @@ video {
   transform: scale(2);
   max-width: none;
   max-height: none;
-  transform-origin: center center;
+  transform-origin: top center;
   cursor: zoom-out;
 }
 

@@ -1,6 +1,6 @@
 <div class="questions-container">
   <div class="back-nav">
-    <button class="back-button" (click)="goBackToVideo()">
+    <button class="back-button" (click)="goBackToModule()">
       <fa-icon [icon]="faVideo"></fa-icon>
       {{ "QUESTIONS.REVIEW_MODULE" | translate }}
     </button>
@@ -9,7 +9,7 @@
     <div class="progress-indicator">
       <div class="module-name">{{ module.title[languageService.getLanguage()] }} - {{ "QUESTIONS.QUESTION" | translate }} {{ currentQuestionIndex + 1 }}</div>
       <div class="step-indicator">
-        {{ "QUESTIONS.STEP" | translate }} {{ getStepIndicatorText() }}
+        {{ "QUESTIONS.STEP" | translate }} {{currentStep}} {{ "QUESTIONS.OF" | translate }} {{totalSteps}}
       </div>
     </div>
     <div class="progress-bar">
@@ -106,7 +106,6 @@
     </div>
   </div>
 
-  <!-- Module Completion Screen -->
   <div class="module-content completion-screen" *ngIf="isModuleCompleted">
     <div class="completion-message">
       <h1>{{ "QUESTIONS.MODULE_COMPLETED" | translate }}</h1>
