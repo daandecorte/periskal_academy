@@ -129,11 +129,13 @@
     "OF_COMPLETED": "von {{completed}} abgeschlossen",
     "BACK": "Zurück",
     "GO_FOR_CERTIFICATE": "Zum Zertifikat",
-    "COMPLETE_ALL_MODULES_FIRST": "Bitte schließen Sie zuerst alle Module ab!",
+    "BUY_CERTIFICATE_FIRST": "Sie müssen das Zertifikat kaufen, um für die Prüfung zugelassen zu werden!",
     "COMPLETED": "abgeschlossen",
     "QUESTIONS": "Fragen",
     "START": "Starten",
-    "REVIEW": "Wiederholen"
+    "REVIEW": "Wiederholen",
+    "IMAGES": "Bild(er)",
+    "VIDEOS": "Video(s)"
   },
   "TIPS_AND_TRICKS": {
     "TIPS_AND_TRICKS": "Tipps und Tricks",
@@ -208,7 +210,7 @@
   },
   "MODULE_VIDEO": {
     "BACK_TO_OVERVIEW": "Zurück zur Modulübersicht",
-    "VIDEO": "Video",
+    "MATTER": "Lehrinhalt",
     "STEP": "Schritt",
     "OF": "von",
     "CONTINUE_TO_QUESTIONS": "Weiter zu den Fragen"
@@ -217,7 +219,7 @@
     "QUESTION": "Frage",
     "OF": "von",
     "STEP": "Schritt",
-    "REVIEW_VIDEO": "Video erneut ansehen",
+    "REVIEW_MODULE": "Modul erneut ansehen",
     "CHECK_ANSWER": "Antwort prüfen",
     "PREVIOUS_QUESTION": "Vorherige Frage",
     "NEXT_QUESTION": "Nächste Frage",
@@ -227,7 +229,9 @@
     "MODULE_COMPLETED": "Modul abgeschlossen!",
     "CONGRATULATIONS": "Herzlichen Glückwunsch! Sie haben alle Fragen dieses Moduls erfolgreich beantwortet.",
     "BACK_TO_OVERVIEW": "Zurück zur Übersicht",
-    "NEXT_MODULE": "Nächstes Modul"
+    "NEXT_MODULE": "Nächstes Modul",
+    "FINISH": "Fertig",
+    "COMPLETED": "Abgeschlossen"
   },
   "EXAM": {
     "TIME_REMAINING": "Verbleibende Zeit",

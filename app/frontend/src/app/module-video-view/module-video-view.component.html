@@ -8,10 +8,10 @@
 
   <div class="progress-indicator">
     <div class="module-name">
-      {{ moduleTitle }} - {{ "MODULE_VIDEO.VIDEO" | translate }}
+      {{ module.title[languageService.getLanguage()] }} - {{ "MODULE_VIDEO.MATTER" | translate }}
     </div>
     <div class="step-indicator">
-      {{ "MODULE_VIDEO.STEP" | translate }} {{ getStepIndicatorText() }}
+      {{ "MODULE_VIDEO.STEP" | translate }} {{currentStep}} {{ "MODULE_VIDEO.OF" | translate }} {{totalSteps}}
     </div>
   </div>
 
@@ -23,37 +23,47 @@
   </div>
 
   <div class="module-content">
+
     <div class="content-header">
-      <h1>{{ moduleTitle }}</h1>
-      <p>{{ moduleDescription }}</p>
+      <h1>{{ module.title[languageService.getLanguage()] }}</h1>
+      <p>{{ module.description[languageService.getLanguage()] }}</p>
     </div>
-
-    <!-- Video -->
-    <div class="video-container">
-      <video
-        #videoPlayer
-        [src]="videoUrl"
-        controls
-        (timeupdate)="updateVideoProgress($event)"
-        (pause)="saveVideoProgress()"
-        (ended)="videoCompleted = true; saveVideoProgress()"
-      >
-        Your browser does not support the video tag. Please try using a
-        different browser.
-      </video>
-
-      <div class="video-progress-indicator" *ngIf="videoCompleted">
-        <div class="completion-badge">
-          {{ "MODULE_VIDEO.VIDEO_COMPLETED" | translate }}
+    @for(content of module.content; track $index) {
+      @if(content.content_type.toString()=='TEXT') {
+        <div class="content-item content-text">
+          <p >{{content.reference[languageService.getLanguage()]}}</p>
+        </div>
+      }
+      @else if(content.content_type.toString()=='PICTURE') {
+        <div class="content-item content-picture" (click)="zoomImage($index)">
+          <img [src]="content.reference[languageService.getLanguage()]" alt="">
+        </div>
+      }
+      @else if(content.content_type.toString()=='VIDEO') {
+      <div class="content-item">
+        <div class="video-container">
+          <video
+            #videoPlayer
+            [src]="content.reference[languageService.getLanguage()]"
+            controls
+          >
+            Your browser does not support the video tag. Please try using a
+            different browser.
+          </video>
         </div>
       </div>
-    </div>
+      }
+      @else {
+        <p>{{content.content_type}}</p>
+      }
+    }
+
 
     <div class="action-buttons">
       <button
         class="continue-button"
         (click)="continueToQuestions()"
-        [disabled]="questionCount === 0"
+        [disabled]="module.questions.length === 0"
       >
         {{ "MODULE_VIDEO.CONTINUE_TO_QUESTIONS" | translate }}
         <span class="arrow-icon">→</span>
@@ -61,3 +71,11 @@
     </div>
   </div>
 </div>
+@if(zoomImageId !== -1) {
+  <div id="imageModal" class="modal" (click)="zoomImage(-1)">
+    <button class="close-button" (click)="zoomImage(-1)">×</button>
+    <div class="zoom-scroll-container">
+      <img id="zoomImage" [src]="module.content[zoomImageId].reference[languageService.getLanguage()]" alt="" [class.zoomed]="isZoomed" (click)="toggleZoom($event)">
+    </div>
+  </div>
+}

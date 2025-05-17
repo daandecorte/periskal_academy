@@ -10,23 +10,29 @@ export interface LocalizedStrings {
 
 export interface QuestionOption {
   id: number;
-  text: string;
-  isCorrect: boolean;
+  text: any;
+  correct: boolean;
 }
 
 export interface Question {
   id: number;
   text: any;
-  questionType: 'MULTIPLE_CHOICE' | 'TRUE_FALSE';
-  questionOptions?: QuestionOption[];
+  question_options: QuestionOption[];
 }
-
+export interface Content {
+  id: number;
+  content_type: ContentType
+  reference: any
+}
+export enum ContentType {
+  TEXT="TEXT", VIDEO="VIDEO", PICTURE="PICTURE"
+}
 export interface Module {
   id: number;
   title: any;
   description: any;
-  videoReference?: any;
-  questions?: Question[];
+  content: Content[]
+  questions: Question[];
 }
 
 export interface Training {
@@ -185,7 +191,7 @@ export class TrainingService {
               return {
                 id: option.id,
                 text: option.text,
-                isCorrect: option.isCorrect
+                correct: option.isCorrect
               };
             });
           }
@@ -193,8 +199,7 @@ export class TrainingService {
           return {
             id: question.id,
             text: question.text,
-            questionType: question.questionType,
-            questionOptions: question.questionOptions || []
+            question_options: question.questionOptions || []
           };
         });
       } else {

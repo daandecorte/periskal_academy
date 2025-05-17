@@ -129,11 +129,13 @@
     "OF_COMPLETED": "sur {{completed}} terminés",
     "BACK": "Retour",
     "GO_FOR_CERTIFICATE": "Obtenir le certificat",
-    "COMPLETE_ALL_MODULES_FIRST": "Veuillez d'abord terminer tous les modules!",
+    "BUY_CERTIFICATE_FIRST": "Vous devez acheter le certificat pour être éligible à l'examen!",
     "COMPLETED": "terminé",
-    "QUESTIONS": "questions",
+    "QUESTIONS": "Questions",
     "START": "Commencer",
-    "REVIEW": "Revoir"
+    "REVIEW": "Revoir",
+    "IMAGES": "Image(s)",
+    "VIDEOS": "Vidéo(s)"
   },
   "TIPS_AND_TRICKS": {
     "TIPS_AND_TRICKS": "Astuces et conseils",
@@ -195,7 +197,7 @@
   },
   "MODULE_VIDEO": {
     "BACK_TO_OVERVIEW": "Retour à l'aperçu du module",
-    "VIDEO": "Vidéo",
+    "MATTER": "Matière",
     "STEP": "Étape",
     "OF": "sur",
     "CONTINUE_TO_QUESTIONS": "Continuer vers les questions"
@@ -204,7 +206,7 @@
     "QUESTION": "Question",
     "OF": "sur",
     "STEP": "Étape",
-    "REVIEW_VIDEO": "Revoir la vidéo",
+    "REVIEW_MODULE": "Revoir la module",
     "CHECK_ANSWER": "Vérifier la réponse",
     "PREVIOUS_QUESTION": "Question précédente",
     "NEXT_QUESTION": "Question suivante",
@@ -214,7 +216,9 @@
     "MODULE_COMPLETED": "Module terminé!",
     "CONGRATULATIONS": "Félicitations! Vous avez répondu à toutes les questions de ce module.",
     "BACK_TO_OVERVIEW": "Retour à l'aperçu",
-    "NEXT_MODULE": "Module suivant"
+    "NEXT_MODULE": "Module suivant",
+    "FINISH": "Terminer",
+    "COMPLETED": "Terminé"
   },
   "EXAM": {
     "TIME_REMAINING": "Temps restant",

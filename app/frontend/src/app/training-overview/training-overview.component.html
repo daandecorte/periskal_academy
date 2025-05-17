@@ -12,12 +12,12 @@
     <div class="module-sections">
       <h2>{{ "TRAINING_OVERVIEW.MODULES" | translate }}:</h2>
 
-      @for (section of moduleSections; track section.id) {
+      @for (section of moduleSections; track $index) {
       <div class="module-section">
         <div class="section-content">
           <div class="section-header">
             <h3>
-              {{ section.id }}. {{ section.title }}
+              {{ $index+1 }}. {{ section.title }}
               @if (section.completed) {
               <span class="status-badge">
                 <fa-icon [icon]="faCheckCircle" class="button-icon"></fa-icon>
@@ -30,7 +30,7 @@
           <div class="section-meta">
             <span class="meta-item">
               <fa-icon [icon]="faClock" class="meta-icon"></fa-icon>
-              {{ section.duration }}
+              {{ section.duration[0] }} {{"TRAINING_OVERVIEW.IMAGES" | translate}}, {{section.duration[1]}} {{"TRAINING_OVERVIEW.VIDEOS" | translate}}
             </span>
             <span class="meta-item">
               <fa-icon [icon]="faQuestionCircle" class="meta-icon"></fa-icon>
@@ -87,14 +87,14 @@
       <div class="tooltip-container">
         <button
           class="certificate-button"
-          [disabled]="trainingsCompleted < totalTrainings"
+          [disabled]="userTraining.eligible_for_certificate == false"
           (click)="goToCertificate()"
         >
           <fa-icon [icon]="faCertificate" class="button-icon"></fa-icon>
           {{ "TRAINING_OVERVIEW.GO_FOR_CERTIFICATE" | translate }}
         </button>
-        <div class="tooltip" *ngIf="trainingsCompleted < totalTrainings">
-          {{ "TRAINING_OVERVIEW.COMPLETE_ALL_TRAININGS_FIRST" | translate }}
+        <div class="tooltip" *ngIf="userTraining.eligible_for_certificate == false">
+          {{ "TRAINING_OVERVIEW.BUY_CERTIFICATE_FIRST" | translate }}
         </div>
       </div>
     </div>

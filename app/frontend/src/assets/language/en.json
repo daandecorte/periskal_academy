@@ -129,11 +129,13 @@
     "OF_COMPLETED": "of {{completed}} completed",
     "BACK": "Back",
     "GO_FOR_CERTIFICATE": "Go for Certificate",
-    "COMPLETE_ALL_TRAININGS_FIRST": "Please complete all trainings first!",
+    "BUY_CERTIFICATE_FIRST": "You need to purchase the certificate to be eligible for the exam!",
     "COMPLETED": "completed",
-    "QUESTIONS": "questions",
+    "QUESTIONS": "Questions",
     "START": "Start",
-    "REVIEW": "Review"
+    "REVIEW": "Review",
+    "IMAGES": "Image(s)",
+    "VIDEOS": "Video(s)"
   },
   "TIPS_AND_TRICKS": {
     "TIPS_AND_TRICKS": "Tips and tricks",
@@ -194,7 +196,7 @@
   },
   "MODULE_VIDEO": {
     "BACK_TO_OVERVIEW": "Back to Module Overview",
-    "VIDEO": "Video",
+    "MATTER": "Subject Matter",
     "STEP": "Step",
     "OF": "of",
     "CONTINUE_TO_QUESTIONS": "Continue to Questions"
@@ -203,7 +205,7 @@
     "QUESTION": "Question",
     "OF": "of",
     "STEP": "Step",
-    "REVIEW_VIDEO": "Review Video",
+    "REVIEW_MODULE": "Review Module",
     "CHECK_ANSWER": "Check Answer",
     "PREVIOUS_QUESTION": "Previous Question",
     "NEXT_QUESTION": "Next Question",
@@ -213,7 +215,9 @@
     "MODULE_COMPLETED": "Module Completed!",
     "CONGRATULATIONS": "Congratulations! You have successfully completed all questions for this module.",
     "BACK_TO_OVERVIEW": "Back to Overview",
-    "NEXT_MODULE": "Next Module"
+    "NEXT_MODULE": "Next Module",
+    "FINISH": "Finish",
+    "COMPLETED": "Completed"
   },
   "EXAM": {
     "TIME_REMAINING": "Time Remaining",

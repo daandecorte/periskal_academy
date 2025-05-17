@@ -1,5 +1,6 @@
 package ap.student.project.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,9 +21,11 @@ public class UserTraining {
     private TrainingProgress trainingProgress;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "training_id")
+    @JsonIgnore
     private Training training;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
     @OneToMany(mappedBy = "userTraining",fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<ExamAttempt> examAttempts;
