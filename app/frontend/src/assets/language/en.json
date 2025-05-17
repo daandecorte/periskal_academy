@@ -204,7 +204,7 @@
     "QUESTION": "Question",
     "OF": "of",
     "STEP": "Step",
-    "REVIEW_VIDEO": "Review Video",
+    "REVIEW_MODULE": "Review Module",
     "CHECK_ANSWER": "Check Answer",
     "PREVIOUS_QUESTION": "Previous Question",
     "NEXT_QUESTION": "Next Question",
@@ -214,7 +214,9 @@
     "MODULE_COMPLETED": "Module Completed!",
     "CONGRATULATIONS": "Congratulations! You have successfully completed all questions for this module.",
     "BACK_TO_OVERVIEW": "Back to Overview",
-    "NEXT_MODULE": "Next Module"
+    "NEXT_MODULE": "Next Module",
+    "FINISH": "Finish",
+    "COMPLETED": "Completed"
   },
   "EXAM": {
     "TIME_REMAINING": "Time Remaining",

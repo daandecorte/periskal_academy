@@ -2,20 +2,20 @@
   <div class="back-nav">
     <button class="back-button" (click)="goBackToVideo()">
       <fa-icon [icon]="faVideo"></fa-icon>
-      {{ "QUESTIONS.REVIEW_VIDEO" | translate }}
+      {{ "QUESTIONS.REVIEW_MODULE" | translate }}
     </button>
   </div>
-
-  <div class="progress-indicator">
-    <div class="module-name">{{ moduleTitle }} - {{ "QUESTIONS.QUESTION" | translate }} {{ currentQuestionIndex + 1 }}</div>
-    <div class="step-indicator">
-      {{ "QUESTIONS.STEP" | translate }} {{ getStepIndicatorText() }}
+  @if(!isModuleCompleted) {
+    <div class="progress-indicator">
+      <div class="module-name">{{ module.title[languageService.getLanguage()] }} - {{ "QUESTIONS.QUESTION" | translate }} {{ currentQuestionIndex + 1 }}</div>
+      <div class="step-indicator">
+        {{ "QUESTIONS.STEP" | translate }} {{ getStepIndicatorText() }}
+      </div>
     </div>
-  </div>
-
-  <div class="progress-bar">
-    <div class="progress-fill" [style.width]="getProgressPercentage() + '%'"></div>
-  </div>
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width]="getProgressPercentage() + '%'"></div>
+    </div>
+  }
 
   <div class="module-content" *ngIf="!isModuleCompleted">
     <div class="question-wrapper">
@@ -35,6 +35,7 @@
           class="option"
           [class.selected]="selectedOptionId === option.id"
           [class.incorrect]="isAnswerSubmitted && selectedOptionId === option.id && !option.correct"
+          [class.correct]="isAnswerSubmitted && selectedOptionId === option.id && option.correct"
           (click)="selectOption(option.id)"
           >
           <div class="option-radio">
@@ -77,13 +78,23 @@
         >
           {{ "QUESTIONS.CHECK_ANSWER" | translate }}
         </button>
+        @if(isAnswerSubmitted && isAnswerCorrect && currentQuestionIndex+1<module.questions.length) {
+
         <button 
-          *ngIf="isAnswerSubmitted && isAnswerCorrect" 
           class="next-button"
           (click)="nextQuestion()"
-        >
+          >
           {{ "QUESTIONS.NEXT_QUESTION" | translate }} <span class="arrow-icon">→</span>
         </button>
+      }
+      @else if(isAnswerSubmitted && isAnswerCorrect && currentQuestionIndex+1>=module.questions.length) {
+        <button 
+          class="next-button"
+          (click)="nextQuestion()"
+          >
+          {{ "QUESTIONS.FINISH" | translate }} <span class="arrow-icon">→</span>
+        </button>
+      }
         <button 
           *ngIf="isAnswerSubmitted && !isAnswerCorrect" 
           class="try-again-button"

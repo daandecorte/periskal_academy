@@ -118,7 +118,7 @@ export const routes: Routes = [
   },
   { path: 'exams/:id/:questionIndex', component: TrainingExamComponent },
   { path: 'exams/:id', redirectTo: 'exams/:id/0' },
-  { path: 'training/:id/certificate', redirectTo: 'trainings/:id' }, // Placeholder for future implementation
+  { path: 'training/:id/certificate', component: TrainingExamComponent }, // Placeholder for future implementation
   { path: '', redirectTo: 'trainings', pathMatch: 'full' },
   { path: '**', redirectTo: 'trainings', pathMatch: 'full' },
 ];

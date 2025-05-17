@@ -218,7 +218,7 @@
     "QUESTION": "Vraag",
     "OF": "van",
     "STEP": "Stap",
-    "REVIEW_VIDEO": "Video bekijken",
+    "REVIEW_MODULE": "Module opnieuw bekijken",
     "CHECK_ANSWER": "Antwoord controleren",
     "PREVIOUS_QUESTION": "Vorige vraag",
     "NEXT_QUESTION": "Volgende vraag",
@@ -228,7 +228,9 @@
     "MODULE_COMPLETED": "Module voltooid!",
     "CONGRATULATIONS": "Gefeliciteerd! Je hebt alle vragen van deze module succesvol beantwoord.",
     "BACK_TO_OVERVIEW": "Terug naar overzicht",
-    "NEXT_MODULE": "Volgende module"
+    "NEXT_MODULE": "Volgende module",
+    "FINISH": "Voltooien",
+    "COMPLETED":"Voltooid"
   },
   "EXAM": {
     "TIME_REMAINING": "Resterende tijd",

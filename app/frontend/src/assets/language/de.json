@@ -218,7 +218,7 @@
     "QUESTION": "Frage",
     "OF": "von",
     "STEP": "Schritt",
-    "REVIEW_VIDEO": "Video erneut ansehen",
+    "REVIEW_MODULE": "Modul erneut ansehen",
     "CHECK_ANSWER": "Antwort prüfen",
     "PREVIOUS_QUESTION": "Vorherige Frage",
     "NEXT_QUESTION": "Nächste Frage",
@@ -228,7 +228,9 @@
     "MODULE_COMPLETED": "Modul abgeschlossen!",
     "CONGRATULATIONS": "Herzlichen Glückwunsch! Sie haben alle Fragen dieses Moduls erfolgreich beantwortet.",
     "BACK_TO_OVERVIEW": "Zurück zur Übersicht",
-    "NEXT_MODULE": "Nächstes Modul"
+    "NEXT_MODULE": "Nächstes Modul",
+    "FINISH": "Fertig",
+    "COMPLETED": "Abgeschlossen"
   },
   "EXAM": {
     "TIME_REMAINING": "Verbleibende Zeit",

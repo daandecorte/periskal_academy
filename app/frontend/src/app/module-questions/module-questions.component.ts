@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { faArrowLeft, faVideo } from '@fortawesome/free-solid-svg-icons';
 import { Module, Question, TrainingService } from '../services/training.service';
 import { LanguageService } from '../services/language.service';
@@ -25,7 +25,6 @@ export class ModuleQuestionsComponent implements OnInit {
 
   trainingId: number = 0;
   moduleId: number = 0;
-  questions: any[] = [];
   currentQuestion: Question | undefined;
   selectedOptionId: number | null = null;
   
@@ -56,7 +55,8 @@ export class ModuleQuestionsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private trainingService: TrainingService,
-    public languageService: LanguageService
+    public languageService: LanguageService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -88,10 +88,13 @@ export class ModuleQuestionsComponent implements OnInit {
     let json = await response.json();
     this.module = await json;
     this.setCurrentQuestion();
+    this.totalSteps = this.module.questions.length;
   }
 
   setCurrentQuestion(): void {
     this.currentQuestion = this.module.questions[this.currentQuestionIndex];
+    this.isAnswerSubmitted = false;
+    this.isAnswerCorrect = false;
   }
 
   // Calculate progress percentage based on current question index
@@ -141,7 +144,6 @@ export class ModuleQuestionsComponent implements OnInit {
 
   submitAnswer(): void {
     if (this.selectedOptionId === null) return;
-    
     this.isAnswerSubmitted = true;
     
     if(this.currentQuestion) {
@@ -163,7 +165,7 @@ export class ModuleQuestionsComponent implements OnInit {
       this.currentQuestionIndex++;
       this.currentStep++;
       this.setCurrentQuestion();
-      if(this.currentQuestionIndex<=this.module.questions.length) {
+      if(this.currentQuestionIndex>=this.module.questions.length) {
         this.isModuleCompleted = true;
       }
     }
@@ -174,18 +176,12 @@ export class ModuleQuestionsComponent implements OnInit {
       this.currentQuestionIndex--;
       this.currentStep--;
       this.setCurrentQuestion();
-      
-      // Update URL
-      this.router.navigate(
-        ['/trainings', this.trainingId, 'module', this.moduleId, 'questions', this.currentQuestionIndex],
-        { replaceUrl: true }
-      );
     }
   }
 
   getStepIndicatorText(): string {
     if (this.isModuleCompleted) {
-      return "completed";
+      return this.translate.instant("QUESTIONS.COMPLETED");
     }
     return `${this.currentStep} ${this.getLocalizedContent({ 'EN': 'of', 'FR': 'de', 'NL': 'van', 'DE': 'von' })} ${this.totalSteps}`;
   }
