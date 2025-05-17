@@ -15,6 +15,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../services/language.service';
+import { AuthService } from '../services/auth.service';
+import { IUser } from '../types/user-info';
+import { firstValueFrom } from 'rxjs';
 
 interface ModuleSection {
   id: number;
@@ -40,6 +43,8 @@ export class TrainingOverviewComponent implements OnInit {
   totalTrainings: number = 0;
   currentLanguage: string = 'EN'; // Default language
   
+  userTraining: any={};
+
   // Font Awesome icons
   faPlayCircle = faPlayCircle;
   faCheckCircle = faCheckCircle;
@@ -54,7 +59,8 @@ export class TrainingOverviewComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private trainingService: TrainingService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -71,6 +77,42 @@ export class TrainingOverviewComponent implements OnInit {
       this.trainingId = +params['id'];
       this.loadTrainingData();
     });
+    this.getUserTraining();
+  }
+  async getUserTraining() {
+    let currentUser = await firstValueFrom(this.authService.currentUser$);
+    if(currentUser) {
+      let userResponse = await fetch(`/api/users/periskal_id/${currentUser.ID}`);
+      let user = await userResponse.json();
+      let userTrainingResponse = await fetch(`/api/user_trainings/training/${this.trainingId}/user/${user.id}`);
+      //check if userTraining exists
+      if(userTrainingResponse.status==404) {
+        let userTrainingPostResponse = await fetch(`/api/user_trainings`, 
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify({
+              training_id: this.trainingId,
+              user_id: user.id,
+              eligible_for_certificate: false
+            })
+          }
+        )
+        if(userTrainingPostResponse.status==201) {
+          await this.getUserTraining();
+        }
+        else {
+          console.error("failed to post user training!");
+        }
+      }
+      else if(userTrainingResponse.status==200) {
+        let userTrainingJson = await userTrainingResponse.json();
+        this.userTraining = await userTrainingJson;
+      }
+    }
   }
 
   mapLanguageCode(language: any): string {
@@ -134,9 +176,6 @@ export class TrainingOverviewComponent implements OnInit {
           questionCount: module.questions ? module.questions.length : 0
         };
       });
-    } else {
-      // Fallback to demo data if no modules are available
-      this.generateModuleSections();
     }
   }
 
@@ -159,36 +198,6 @@ export class TrainingOverviewComponent implements OnInit {
     return values.length > 0 ? values[0] as string : '';
   }
 
-  generateModuleSections(): void {
-    // Fallback to demo data
-    this.moduleSections = [
-      {
-        id: 1,
-        title: 'Basic Navigation Safety',
-        description: 'Understanding fundamental navigation protocols',
-        completed: true,
-        duration: '15 min video',
-        questionCount: 3
-      },
-      {
-        id: 2,
-        title: 'Emergency Procedures',
-        description: 'Learn how to handle emergency situations',
-        completed: true,
-        duration: '11 min video',
-        questionCount: 2
-      },
-      {
-        id: 3,
-        title: 'Communication Protocols',
-        description: 'Maritime communication best practices',
-        completed: false,
-        duration: '10 min video',
-        questionCount: 4
-      }
-    ];
-  }
-
   calculateProgress(): void {
     // Calculate completed trainings
     this.trainingsCompleted = this.moduleSections.filter(section => section.completed).length;
@@ -205,8 +214,8 @@ export class TrainingOverviewComponent implements OnInit {
   }
 
   goToCertificate(): void {
-    // Check if all trainings are completed
-    if (this.trainingsCompleted === this.totalTrainings) {
+    // user is eligible for certificate
+    if (this.userTraining.eligible_for_certificate == true) {
       this.router.navigate(['/trainings', this.trainingId, 'certificate']);
     }
   }

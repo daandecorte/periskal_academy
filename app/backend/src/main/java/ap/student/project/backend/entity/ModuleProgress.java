@@ -1,5 +1,6 @@
 package ap.student.project.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class ModuleProgress {
     private Module module;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="training_progress_id")
+    @JsonIgnore
     private TrainingProgress trainingProgress;
     @Column(name = "video_watched")
     private boolean videoWatched;
