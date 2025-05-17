@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { faArrowLeft, faVideo } from '@fortawesome/free-solid-svg-icons';
-import { Module, Question, TrainingService } from '../services/training.service';
+import { Module, Question, Training, TrainingService } from '../services/training.service';
 import { LanguageService } from '../services/language.service';
 
 @Component({
@@ -194,9 +194,22 @@ export class ModuleQuestionsComponent implements OnInit {
     this.router.navigate(['/trainings', this.trainingId]);
   }
 
-  goToNextModule(): void {
-    // TODO: determine the next module ID
-    // For now, just go back to training overview
-    this.goBackToOverview();
+  async goToNextModule(){
+    let trainingResponse = await fetch(`/api/trainings/${this.trainingId}`);
+    let training: Training = await trainingResponse.json();
+    if(training.modules) {
+      let nextModuleIndex = training.modules.findIndex(m=>m.id==this.moduleId) + 1;
+      let nextModuleId = training.modules[nextModuleIndex].id;
+      if(nextModuleId) {
+        console.log(nextModuleId);
+        this.router.navigate(['/trainings', this.trainingId, 'module', nextModuleId]);
+      }
+      else {
+        this.router.navigate(['/trainings', this.trainingId]);
+      }
+    }
+    else {
+      this.router.navigate(['/trainings', this.trainingId]);
+    }
   }
 }
