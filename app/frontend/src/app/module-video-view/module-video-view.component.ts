@@ -65,7 +65,7 @@ export class ModuleVideoViewComponent {
     else {
       let json = await response.json();
       this.module = await json;
-      console.log(this.module);
+      this.totalSteps += this.module.questions.length;
     }
   }
   

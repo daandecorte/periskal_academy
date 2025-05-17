@@ -27,7 +27,7 @@ export class ModuleQuestionsComponent implements OnInit {
   moduleId: number = 0;
   currentQuestion: Question | undefined;
   selectedOptionId: number | null = null;
-  
+
   userAnswers: Map<number, number> = new Map();
   userCorrectAnswers: Map<number, boolean> = new Map();
   
@@ -35,8 +35,8 @@ export class ModuleQuestionsComponent implements OnInit {
   isAnswerCorrect: boolean = false;
   isModuleCompleted: boolean = false;
   
-  currentStep: number = 1;
-  totalSteps: number = 1;
+  currentStep: number = 2;
+  totalSteps: number = 10;
   
   faArrowLeft = faArrowLeft;
   faVideo = faVideo;
@@ -61,7 +61,7 @@ export class ModuleQuestionsComponent implements OnInit {
     let json = await response.json();
     this.module = await json;
     this.setCurrentQuestion();
-    this.totalSteps = this.module.questions.length;
+    this.totalSteps = this.module.questions.length + 1;
   }
 
   setCurrentQuestion(): void {

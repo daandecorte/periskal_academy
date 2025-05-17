@@ -251,8 +251,11 @@ video {
   right: 1rem;
   font-size: 2rem;
   color: white;
-  background: transparent;
+  background: rgba(0, 0, 0, 0.6); /* semi-transparent black */
   border: none;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
   cursor: pointer;
   z-index: 10000;
 }
