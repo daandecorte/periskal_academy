@@ -215,9 +215,10 @@ export class TrainingOverviewComponent implements OnInit {
 
   goToCertificate(): void {
     // user is eligible for certificate
-    if (this.userTraining.eligible_for_certificate == true) {
-      this.router.navigate(['/trainings', this.trainingId, 'certificate']);
-    }
+    //if (this.userTraining.eligible_for_certificate == true) {
+      // Navigate to the exam page with the current training ID
+      this.router.navigate(['/exams', this.trainingId]);
+    //}
   }
 
   getActionText(completed: boolean): string {

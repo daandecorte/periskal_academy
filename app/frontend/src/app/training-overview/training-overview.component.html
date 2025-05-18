@@ -87,7 +87,6 @@
       <div class="tooltip-container">
         <button
           class="certificate-button"
-          [disabled]="userTraining.eligible_for_certificate == false"
           (click)="goToCertificate()"
         >
           <fa-icon [icon]="faCertificate" class="button-icon"></fa-icon>
@@ -100,3 +99,6 @@
     </div>
   </div>
 </div>
+
+<!-- TODO: PUT THIS BACK LATER -->
+<!-- [disabled]="userTraining.eligible_for_certificate == false" -->
