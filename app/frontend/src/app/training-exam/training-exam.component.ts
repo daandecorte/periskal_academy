@@ -6,7 +6,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
 import { faArrowLeft, faArrowRight} from '@fortawesome/free-solid-svg-icons';
 import { interval, Subscription } from 'rxjs';
-import { ExamService, Exam, ExamSubmission, ExamQuestionAnswer, ExamResult } from '../services/exam.service';
+import { ExamService, Exam, ExamSubmission, ExamQuestionAnswer, ExamResult, QuestionOption, Question } from '../services/exam.service';
 import { AuthService } from '../services/auth.service';
 import { ExamResultComponent } from '../exam-result/exam-result.component';
 
@@ -25,8 +25,8 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   
   // Question handling
   currentQuestionIndex: number = 0;
-  questions: any[] = [];
-  currentQuestion: any = null;
+  questions: Question[] = [];
+  currentQuestion: Question | null = null;
   selectedOptionId: number | null = null;
   
   // Store user answers for each question
@@ -85,7 +85,13 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
         this.currentQuestionIndex = 0; // Default to first question
       }
       
-      this.loadExamData();
+      //Load exam from id
+      if (this.examId > 0) {
+        this.loadExamData();
+      } else {
+        this.examSubmissionError = 'Invalid exam ID';
+        this.isLoading = false;
+      }
     });
   }
 
@@ -96,7 +102,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   }
 
   getCurrentUserId(): number {
-    // Implement based on auth system
+    // TODO: Implement based on auth system
     //return this.authService.getCurrentUserId()
     return 1; // Placeholder for demo
   }
@@ -106,6 +112,10 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   }
 
   startTimer(): void {
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe();
+    }
+    
     this.timerSubscription = interval(1000).subscribe(() => {
       if (this.timeRemainingInSeconds > 0) {
         this.timeRemainingInSeconds--;
@@ -128,10 +138,19 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     this.examService.getExamById(this.examId).subscribe({
       next: (exam) => {
         this.exam = exam;
+        
+        // Set localized content
         this.examTitle = this.getLocalizedContent(exam.titleLocalized);
         this.examDescription = this.getLocalizedContent(exam.descriptionLocalized);
+        
+        // Get questions from exam
         this.questions = [...exam.questions];
         this.totalQuestions = this.questions.length;
+        
+        // Validate currentQuestionIndex is in range
+        if (this.currentQuestionIndex >= this.totalQuestions) {
+          this.currentQuestionIndex = 0;
+        }
         
         // Set timer based on exam time (convert minutes to seconds)
         this.timeRemainingInSeconds = exam.time * 60;
@@ -147,7 +166,6 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
       error: (err) => {
         console.error('Error loading exam:', err);
         this.isLoading = false;
-        // Handle error
         this.examSubmissionError = 'Failed to load exam. Please try again later.';
       }
     });
@@ -158,15 +176,14 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     this.isAnswerSubmitted = false;
     
     if (this.currentQuestionIndex < this.questions.length) {
-      this.currentQuestion = this.questions[this.currentQuestionIndex];
+      // Get the current question
+      const baseQuestion = this.questions[this.currentQuestionIndex];
       
-      // Create a copy of the question options and shuffle them
-      if (this.currentQuestion && this.currentQuestion.questionOptions) {
-        this.currentQuestion = {
-          ...this.currentQuestion,
-          questionOptions: this.shuffleOptions([...this.currentQuestion.questionOptions])
-        };
-      }
+      // Create a deep copy to avoid modifying the original question
+      this.currentQuestion = {
+        ...baseQuestion,
+        questionOptions: this.shuffleOptions([...baseQuestion.questionOptions])
+      };
       
       // Restore previously selected answer if exists
       if (this.userAnswers.has(this.currentQuestion.id)) {
@@ -191,7 +208,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   }
 
   // Shuffle the answer options
-  shuffleOptions(options: any[]): any[] {
+  shuffleOptions(options: QuestionOption[]): QuestionOption[] {
     for (let i = options.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [options[i], options[j]] = [options[j], options[i]];
@@ -225,6 +242,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
       // Save the user's answer
       if (this.currentQuestion) {
         this.userAnswers.set(this.currentQuestion.id, optionId);
+        this.updateAnsweredQuestionsCount();
       }
     }
   }
@@ -311,8 +329,6 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         console.error('Error submitting exam:', error);
-        // TODO: properly handle error
-        // Retry submission button
         this.examSubmissionError = 'Exam submission failed, please check your internet connection.';
         this.isSubmitting = false;
       }

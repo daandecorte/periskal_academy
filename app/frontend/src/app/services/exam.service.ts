@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-// Reusing LocalizedStrings from the Training Service, TODO: relocate things later
-import { LocalizedStrings } from './training.service';
+
+export interface LocalizedStrings {
+  [key: string]: string;
+}
 
 export interface QuestionOption {
   id: number;
@@ -16,7 +18,6 @@ export interface Question {
   text: LocalizedStrings;
   questionOptions: QuestionOption[];
 }
-
 export interface Exam {
   id: number;
   title?: string;
@@ -69,13 +70,13 @@ export class ExamService {
 
   // Get an exam by ID
   getExamById(examId: number): Observable<Exam> {
-      return this.http.get<any>(`${this.apiUrl}/${examId}`).pipe(
-        map(backendExam => this.mapBackendExam(backendExam)),
-        catchError(error => {
-          console.error(`Error fetching exam with ID ${examId}:`, error);
-          return throwError(() => error);
-        })
-      );
+    return this.http.get<any>(`${this.apiUrl}/${examId}`).pipe(
+      map(backendExam => this.mapBackendExam(backendExam)),
+      catchError(error => {
+        console.error(`Error fetching exam with ID ${examId}:`, error);
+        return throwError(() => error);
+      })
+    );
   }
 
   // Get exams by training ID
@@ -101,13 +102,31 @@ export class ExamService {
 
   // Map backend exam data
   private mapBackendExam(backendExam: any): Exam {
-    // Create localized title and description objects
-    const titleLocalized: { [key: string]: string } = {};
-    const descriptionLocalized: { [key: string]: string } = {};
+    // Map localized title and description
+    const titleLocalized: LocalizedStrings = {};
+    const descriptionLocalized: LocalizedStrings = {};
     
-    // Default values
-    titleLocalized['EN'] = 'Exam';
-    descriptionLocalized['EN'] = 'Please complete all questions';
+    // Map language enum values to strings (EN, FR, etc.)
+    if (backendExam.title) {
+      Object.entries(backendExam.title).forEach(([lang, text]) => {
+        titleLocalized[this.mapLanguageEnumToString(lang)] = text as string;
+      });
+    }
+    
+    if (backendExam.description) {
+      Object.entries(backendExam.description).forEach(([lang, text]) => {
+        descriptionLocalized[this.mapLanguageEnumToString(lang)] = text as string;
+      });
+    }
+    
+    // Default values if no localized content is available
+    if (Object.keys(titleLocalized).length === 0) {
+      titleLocalized['EN'] = backendExam.title || 'Exam';
+    }
+    
+    if (Object.keys(descriptionLocalized).length === 0) {
+      descriptionLocalized['EN'] = backendExam.description || 'Please complete all questions';
+    }
     
     const exam: Exam = {
       id: backendExam.id,
@@ -124,27 +143,47 @@ export class ExamService {
     return exam;
   }
 
-  // Map backend exam questions
-  private mapBackendQuestions(backendQuestions: any[]): any[] {
+// Map backend questions to frontend model
+  private mapBackendQuestions(backendQuestions: any[]): Question[] {
     return backendQuestions.map(q => {
-      // Create localized text for the question
-      const textLocalized: { [key: string]: string } = {};
-      textLocalized['EN'] = q.text || 'Question';
+      const textLocalized: LocalizedStrings = {};
+      
+      // Map the text entries from backend format
+      if (q.text) {
+        Object.entries(q.text).forEach(([lang, text]) => {
+          textLocalized[this.mapLanguageEnumToString(lang)] = text as string;
+        });
+      }
+      
+      // Default if no text is available
+      if (Object.keys(textLocalized).length === 0) {
+        textLocalized['EN'] = 'Question';
+      }
       
       return {
         id: q.id,
         text: textLocalized,
-        questionOptions: this.mapBackendOptions(q.options || [])
+        questionOptions: this.mapBackendOptions(q.questionOptions || [])
       };
     });
   }
 
   // Map backend options
-  private mapBackendOptions(backendOptions: any[]): any[] {
+  private mapBackendOptions(backendOptions: any[]): QuestionOption[] {
     return backendOptions.map(o => {
-      // Create localized text for the option
-      const textLocalized: { [key: string]: string } = {};
-      textLocalized['EN'] = o.text || 'Option';
+      const textLocalized: LocalizedStrings = {};
+      
+      // Map the text entries
+      if (o.text) {
+        Object.entries(o.text).forEach(([lang, text]) => {
+          textLocalized[this.mapLanguageEnumToString(lang)] = text as string;
+        });
+      }
+      
+      // Default if no text is available
+      if (Object.keys(textLocalized).length === 0) {
+        textLocalized['EN'] = 'Option';
+      }
       
       return {
         id: o.id,
@@ -153,6 +192,19 @@ export class ExamService {
       };
     });
   }
+
+  // Helper method to convert Language enum to string
+  private mapLanguageEnumToString(lang: string): string {
+    const languageMap: { [key: string]: string } = {
+      'ENGLISH': 'EN',
+      'FRENCH': 'FR',
+      'DUTCH': 'NL',
+      'GERMAN': 'DE'
+    };
+    
+    return languageMap[lang] || lang;
+  }
+
 
   // Get user exam attempts
   getUserExamAttempts(userId: number, examId: number): Observable<any[]> {   
