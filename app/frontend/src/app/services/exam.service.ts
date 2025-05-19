@@ -129,10 +129,10 @@ export class ExamService {
     
     const exam: Exam = {
       id: backendExam.id,
-      passingScore: backendExam.passingScore,
-      maxAttempts: backendExam.maxAttempts,
+      passingScore: backendExam.passingScore || backendExam.passing_score,
+      maxAttempts: backendExam.maxAttempts || backendExam.max_attempts,
       time: backendExam.time,
-      questionAmount: backendExam.questionAmount,
+      questionAmount: backendExam.questionAmount || backendExam.question_amount,
       trainingId: backendExam.training ? backendExam.training.id : 0,
       titleLocalized: titleLocalized,
       descriptionLocalized: descriptionLocalized,
@@ -162,7 +162,7 @@ export class ExamService {
       return {
         id: q.id,
         text: textLocalized,
-        questionOptions: this.mapBackendOptions(q.questionOptions || [])
+        questionOptions: this.mapBackendOptions(q.questionOptions || q.question_options || [])
       };
     });
   }
@@ -187,7 +187,7 @@ export class ExamService {
       return {
         id: o.id,
         text: textLocalized,
-        isCorrect: o.isCorrect || false
+        isCorrect: o.isCorrect || o.correct || false
       };
     });
   }
