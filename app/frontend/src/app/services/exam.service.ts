@@ -18,12 +18,11 @@ export interface Question {
   text: LocalizedStrings;
   questionOptions: QuestionOption[];
 }
+
 export interface Exam {
   id: number;
-  title?: string;
-  titleLocalized?: LocalizedStrings;
-  description?: string;
-  descriptionLocalized?: LocalizedStrings;
+  titleLocalized: LocalizedStrings;
+  descriptionLocalized: LocalizedStrings;
   passingScore: number;
   maxAttempts: number;
   time: number; // Time in minutes
@@ -78,26 +77,26 @@ export class ExamService {
       })
     );
   }
-
+  
   // Get exams by training ID
   getExamsByTrainingId(trainingId: number): Observable<Exam[]> {
-      return this.http.get<any[]>(`${this.apiUrl}/training/${trainingId}`).pipe(
-        map(backendExams => backendExams.map(exam => this.mapBackendExam(exam))),
-        catchError(error => {
-          console.error(`Error fetching exams for training ID ${trainingId}:`, error);
-          return throwError(() => error);
-        })
-      );
+    return this.http.get<any[]>(`${this.apiUrl}/training/${trainingId}`).pipe(
+      map(backendExams => backendExams.map(exam => this.mapBackendExam(exam))),
+      catchError(error => {
+        console.error(`Error fetching exams for training ID ${trainingId}:`, error);
+        return throwError(() => error);
+      })
+    );
   }
 
   // Submit exam answers
   submitExam(submission: ExamSubmission): Observable<ExamResult> {
-      return this.http.post<ExamResult>(`${this.apiUrl}/submit`, submission).pipe(
-        catchError(error => {
-          console.error('Error submitting exam:', error);
-          return throwError(() => error);
-        })
-      );    
+    return this.http.post<ExamResult>(`${this.apiUrl}/submit`, submission).pipe(
+      catchError(error => {
+        console.error('Error submitting exam:', error);
+        return throwError(() => error);
+      })
+    );    
   }
 
   // Map backend exam data
@@ -109,13 +108,13 @@ export class ExamService {
     // Map language enum values to strings (EN, FR, etc.)
     if (backendExam.title) {
       Object.entries(backendExam.title).forEach(([lang, text]) => {
-        titleLocalized[this.mapLanguageEnumToString(lang)] = text as string;
+        titleLocalized[this.convertLanguageToString(lang)] = text as string;
       });
     }
     
     if (backendExam.description) {
       Object.entries(backendExam.description).forEach(([lang, text]) => {
-        descriptionLocalized[this.mapLanguageEnumToString(lang)] = text as string;
+        descriptionLocalized[this.convertLanguageToString(lang)] = text as string;
       });
     }
     
@@ -143,7 +142,7 @@ export class ExamService {
     return exam;
   }
 
-// Map backend questions to frontend model
+  // Map backend exam questions
   private mapBackendQuestions(backendQuestions: any[]): Question[] {
     return backendQuestions.map(q => {
       const textLocalized: LocalizedStrings = {};
@@ -151,7 +150,7 @@ export class ExamService {
       // Map the text entries from backend format
       if (q.text) {
         Object.entries(q.text).forEach(([lang, text]) => {
-          textLocalized[this.mapLanguageEnumToString(lang)] = text as string;
+          textLocalized[this.convertLanguageToString(lang)] = text as string;
         });
       }
       
@@ -173,10 +172,10 @@ export class ExamService {
     return backendOptions.map(o => {
       const textLocalized: LocalizedStrings = {};
       
-      // Map the text entries
+      // Map the text entries from backend format
       if (o.text) {
         Object.entries(o.text).forEach(([lang, text]) => {
-          textLocalized[this.mapLanguageEnumToString(lang)] = text as string;
+          textLocalized[this.convertLanguageToString(lang)] = text as string;
         });
       }
       
@@ -194,7 +193,7 @@ export class ExamService {
   }
 
   // Helper method to convert Language enum to string
-  private mapLanguageEnumToString(lang: string): string {
+  private convertLanguageToString(lang: string): string {
     const languageMap: { [key: string]: string } = {
       'ENGLISH': 'EN',
       'FRENCH': 'FR',
@@ -204,7 +203,6 @@ export class ExamService {
     
     return languageMap[lang] || lang;
   }
-
 
   // Get user exam attempts
   getUserExamAttempts(userId: number, examId: number): Observable<any[]> {   

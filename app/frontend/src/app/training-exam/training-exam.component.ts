@@ -194,6 +194,10 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     } else {
       this.isExamCompleted = true;
     }
+
+    console.log('Exam:', this.exam);
+    console.log('Questions:', this.questions);
+    console.log('Current Question:', this.currentQuestion);
   }
 
   // Calculate progress percentage based on current question index
