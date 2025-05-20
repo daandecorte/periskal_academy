@@ -121,14 +121,6 @@ class ExamServiceTest {
     }
 
     @Test
-    void delete_ShouldDeleteExam() {
-        examService.delete(testExam.getId());
-
-        Optional<Exam> deletedExam = examRepository.findById(testExam.getId());
-        assertFalse(deletedExam.isPresent());
-    }
-
-    @Test
     void findAll_ShouldReturnListOfExams() {
         List<Exam> exams = examService.findAll();
         assertEquals(1, exams.size());

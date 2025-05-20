@@ -154,6 +154,10 @@ export class ContentComponent {
   }
 
   deleteContent(index: number) {
+    this.trainingService.removedContentsIndex.push(
+      this.trainingService.newModule.id
+    );
+
     this.trainingService.newModule.content.splice(index, 1);
 
     this.trainingService.videoPreviews[this.indexModule].splice(index, 1);

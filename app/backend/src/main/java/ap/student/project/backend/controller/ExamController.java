@@ -66,8 +66,7 @@ public class ExamController {
      */
     @PutMapping(value = "/exams/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity updateExam(@PathVariable int id, @RequestBody ExamDTO examDTO) {
-        this.examService.update(id, examDTO);
-        return ResponseEntity.ok(examDTO);
+        return ResponseEntity.ok(this.examService.update(id, examDTO));
     }
 
     /**
@@ -92,6 +91,18 @@ public class ExamController {
     public ResponseEntity addQuestion(@PathVariable int id, @RequestBody QuestionDTO questionDTO) {
         this.examService.addQuestion(id, questionDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(questionDTO);
+    }
+
+    /**
+     * Deletes questions of a specific exam.
+     *
+     * @param id The ID of the exam to delete a questions for
+     * @return ResponseEntity containing nothing with HTTP status 200 (OK)
+     */
+    @DeleteMapping(value="/exams/{id}/questions", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity deleteQuestion(@PathVariable int id) {
+        this.examService.deleteQuestions(id);
+        return ResponseEntity.status(HttpStatus.OK).body(id);
     }
 
      /**
