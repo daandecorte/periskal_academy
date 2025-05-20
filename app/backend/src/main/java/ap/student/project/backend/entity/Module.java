@@ -29,13 +29,13 @@ public class Module {
     @MapKeyColumn(name = "language")
     @Column(name = "description")
     private Map<Language, String> description;
-    @OneToMany(mappedBy = "module", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "module", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Content> content;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "training_id")
     @JsonIgnore
     private Training training;
-    @OneToMany(mappedBy = "module", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "module", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions;
 
     public Module(Map<Language, String> title, Map<Language, String> description, List<Content> content, Training training, List<Question> questions) {

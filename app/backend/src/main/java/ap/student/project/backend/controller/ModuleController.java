@@ -66,8 +66,19 @@ public class ModuleController {
      */
     @PutMapping(value = "/modules/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity updateModule(@PathVariable Integer id, @RequestBody ModuleDTO moduleDTO) {
-        this.moduleService.updateModule(id, moduleDTO);
-        return ResponseEntity.ok(moduleDTO);
+        return ResponseEntity.ok(this.moduleService.updateModule(id, moduleDTO));
+    }
+
+    /**
+     * Deletes a specific module.
+     *
+     * @param id The ID of the module to delete
+     * @return ResponseEntity containing nothing with HTTP status 200 (OK)
+     */
+    @DeleteMapping(value = "/modules/{id}")
+    public ResponseEntity deleteModule(@PathVariable Integer id) {
+        this.moduleService.deleteModule(id);
+        return ResponseEntity.ok().build();
     }
 
     /**
@@ -116,5 +127,17 @@ public class ModuleController {
     @GetMapping(value = "/modules/{id}/questions")
     public ResponseEntity getQuestion(@PathVariable("id") int id) {
         return ResponseEntity.ok(this.moduleService.getQuestionsByModuleId(id));
+    }
+
+    /**
+     * Deletes all questions for a specific module.
+     *
+     * @param id The ID of the module to delete questions for
+     * @return ResponseEntity containing nothing with HTTP status 200 (OK)
+     */
+    @DeleteMapping(value = "/modules/{id}/questions")
+    public ResponseEntity deleteQuestions(@PathVariable("id") int id) {
+        this.moduleService.deleteQuestions(id);
+        return ResponseEntity.ok().build();
     }
 }

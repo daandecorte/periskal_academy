@@ -25,7 +25,7 @@ public class Exam {
     private int time;
     @Column(name = "question_amount")
     private int questionAmount;
-    @OneToMany(mappedBy = "exam", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="training_id")

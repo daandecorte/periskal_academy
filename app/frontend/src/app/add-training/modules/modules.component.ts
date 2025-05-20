@@ -77,6 +77,11 @@ export class ModulesComponent {
   }
 
   deleteModule() {
+    if (this.trainingService.newTraining.modules[this.deleteId].id != -1)
+      this.trainingService.removedModulesIndex.push(
+        this.trainingService.newTraining.modules[this.deleteId].id
+      );
+
     this.trainingService.newTraining.modules.splice(this.deleteId, 1);
     this.modalOverlayDelete.classList.add('hidden');
   }

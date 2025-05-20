@@ -83,6 +83,9 @@ export class NewTrainingService {
     return this._editModuleIndex;
   }
 
+  removedModulesIndex: number[] = [];
+  removedContentsIndex: number[] = [];
+
   public resetModule() {
     this._newModule = {
       id: -1,
