@@ -41,9 +41,10 @@ export class UserdetailComponent {
     }
   }
   async getUserCertificate(trainingId:number) {
-    let userCertificateResponse = await fetch(`/api/user_certificates/training${trainingId}/user/${this.user?.id}`);
+    let userCertificateResponse = await fetch(`/api/user_certificates/training/${trainingId}/user/${this.user?.id}`);
     let userCertificate = await userCertificateResponse.json();
     if(userCertificate) {
+      console.log(userCertificate);
       return userCertificate;
     }
     else return null
@@ -85,6 +86,18 @@ export class UserdetailComponent {
       });
     }
   }
+  mapStatusToTranslationKey(status: string | null | undefined): string {
+  switch (status) {
+    case 'IN_PROGRESS':
+      return 'TRAINING_STATUS.IN_PROGRESS';
+    case 'NOT_STARTED':
+      return 'TRAINING_STATUS.NOT_STARTED';
+    case 'COMPLETED':
+      return 'TRAINING_STATUS.COMPLETED';
+    default:
+      return 'TRAINING_STATUS.NO_STATUS';
+  }
+}
 }
 
 

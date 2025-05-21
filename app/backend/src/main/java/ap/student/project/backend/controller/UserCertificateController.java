@@ -66,7 +66,7 @@ public class UserCertificateController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userCertificate);
     }
 
-    @GetMapping(value="/user_certificates/training/{trainingId}/user/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value="/user_certificates/training/{trainingId}/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getUserCertificate(@PathVariable("trainingId") int trainingId, @PathVariable("userId") int userId) {
         return ResponseEntity.ok(this.userCertificateService.findByTrainingIdAndUserId(trainingId, userId));
     }

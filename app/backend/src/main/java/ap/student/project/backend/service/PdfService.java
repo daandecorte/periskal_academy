@@ -48,6 +48,7 @@ public class PdfService {
         String html = new String(htmlStream.readAllBytes(), StandardCharsets.UTF_8);
 
         html = html.replace("${name}", user.getFirstname() + " " + user.getLastname())
+                .replace("${shipname}", user.getShipname())
                 .replace("${training}", training.getTitle().get(Language.ENGLISH))
                 .replace("${date}", formatFancyDate(userCertificate.getIssueDate()));
 

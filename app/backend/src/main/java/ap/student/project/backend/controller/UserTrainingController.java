@@ -48,7 +48,7 @@ public class UserTrainingController {
      * @param userId The user id
      * @return ResponseEntity containing the found user training record with HTTP status 200 (OK)
      */
-    @GetMapping(value="/user_trainings/training/{training_id}/user/{user_id}")
+    @GetMapping(value="/user_trainings/training/{training_id}/user/{user_id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity findUserTrainingByTrainingIdAndUserId(@PathVariable("training_id") int trainingId, @PathVariable("user_id") int userId) {
         return ResponseEntity.ok(this.userTrainingService.findByTrainingIdAndUserId(trainingId, userId));
     }
