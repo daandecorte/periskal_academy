@@ -116,6 +116,7 @@ h1 {
 
   .modal-content {
     background-color: white;
+    min-width: 10rem;
     padding: 2rem;
     border-radius: 8px;
     text-align: center;

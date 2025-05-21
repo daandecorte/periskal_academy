@@ -21,7 +21,6 @@ public class UserTraining {
     private TrainingProgress trainingProgress;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "training_id")
-    @JsonIgnore
     private Training training;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")

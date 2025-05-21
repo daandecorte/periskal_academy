@@ -12,13 +12,11 @@ import ap.student.project.backend.entity.Exam;
 import ap.student.project.backend.entity.QuestionOption;
 import ap.student.project.backend.entity.Training;
 import ap.student.project.backend.entity.Question;
-import ap.student.project.backend.exceptions.ListFullException;
 import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ap.student.project.backend.dao.QuestionOptionRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -93,13 +91,14 @@ public class ExamService {
      * @param examDTO Data transfer object containing updated exam information
      * @throws NotFoundException If no exam with the given ID exists
      */
-    public void update(int id, ExamDTO examDTO) throws NotFoundException {
+    public Exam update(int id, ExamDTO examDTO) throws NotFoundException {
         Exam exam = examRepository.findById(id).orElse(null);
         if (exam == null) {
             throw new NotFoundException("Exam with id " + id + " not found");
         }
         BeanUtils.copyProperties(examDTO, exam);
         examRepository.save(exam);
+        return exam;
     }
 
     /**
@@ -109,15 +108,6 @@ public class ExamService {
      */
     public List<Exam> findAll() {
         return examRepository.findAll();
-    }
-
-    /**
-     * Deletes an exam by its ID.
-     *
-     * @param id The ID of the exam to delete
-     */
-    public void delete(int id) {
-        examRepository.deleteById(id);
     }
 
     /**
@@ -144,6 +134,27 @@ public class ExamService {
             throw new NotFoundException("Exam with id " + id + " not found");
         }
     }
+
+    /**
+     * Deletes the questions of an exam.
+     *
+     * @param id The ID of the exam to delete the question for
+     * @throws NotFoundException If no exam with the given ID exists
+     */
+    @Transactional
+    public void deleteQuestions(int id){
+        Exam exam = this.findById(id);
+        if(exam == null){
+            throw new NotFoundException("Exam with id " + id + " not found");
+        }
+        for(Question question : exam.getQuestions()){
+            questionOptionRepository.deleteAll(question.getQuestionOptions());
+            questionRepository.delete(question);
+        }
+        exam.getQuestions().clear();
+        examRepository.save(exam);
+    }
+
 
     /**
      * Retrieves all questions for a specific exam.

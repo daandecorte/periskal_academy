@@ -133,9 +133,8 @@ export class ModuleQuestionsComponent implements OnInit {
     let training: Training = await trainingResponse.json();
     if(training.modules) {
       let nextModuleIndex = training.modules.findIndex(m=>m.id==this.moduleId) + 1;
-      let nextModuleId = training.modules[nextModuleIndex].id;
+      let nextModuleId = training.modules[nextModuleIndex]?.id;
       if(nextModuleId) {
-        console.log(nextModuleId);
         this.router.navigate(['/trainings', this.trainingId, 'module', nextModuleId]);
       }
       else {

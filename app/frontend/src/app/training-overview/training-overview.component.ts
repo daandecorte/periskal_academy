@@ -111,6 +111,35 @@ export class TrainingOverviewComponent implements OnInit {
       else if(userTrainingResponse.status==200) {
         let userTrainingJson = await userTrainingResponse.json();
         this.userTraining = await userTrainingJson;
+        if(this.userTraining.training_progress==null) {
+          let trainingProgressPostResponse = await fetch(`/api/training_progress`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify({
+              start_date_time: new Date().toISOString(),
+              last_time_accessed: new Date().toISOString(),
+              status: "IN_PROGRESS",
+              user_training_id: this.userTraining.id
+            })
+          })
+        }
+        else {
+          let trainingProgressPostResponse = await fetch(`/api/training_progress/${this.userTraining.training_progress.id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify({
+              start_date_time: this.userTraining.training_progress.start_date_time,
+              last_time_accessed: new Date().toISOString(),
+              status: "IN_PROGRESS"
+            })
+          })
+        }
       }
     }
   }

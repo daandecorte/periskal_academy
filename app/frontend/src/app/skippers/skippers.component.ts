@@ -39,23 +39,24 @@ export class SkippersComponent {
 
   async getUsers() {
     for (const id of this.skippersListPerId) {
-      console.log(id);
       let result = await fetch(`api/users/periskal_id/${id}`);
-      let temp: IUsers = await result.json();
-
-      let trainingCount = await this.getUserTrainings(Number(temp.id));
-      // let certificateCount = await this.getUserCertificates(Number(temp.id));
-
-      let tempF: IUserFull = {
-        id: temp.id,
-        firstname: temp.firstname,
-        lastname: temp.lastname,
-        shipname: temp.shipname,
-        products: `${trainingCount}`,
-        certificates: `-1`,
-      };
-
-      this.skippersList.push(tempF);
+      if(result.status==200) {
+        let temp: IUsers = await result.json();
+  
+        let trainingCount = await this.getUserTrainings(Number(temp.id));
+        // let certificateCount = await this.getUserCertificates(Number(temp.id));
+  
+        let tempF: IUserFull = {
+          id: temp.id,
+          firstname: temp.firstname,
+          lastname: temp.lastname,
+          shipname: temp.shipname,
+          products: `${trainingCount}`,
+          certificates: `-1`,
+        };
+  
+        this.skippersList.push(tempF);
+      }
     }
 
     this.filteredSkippersList = this.skippersList;

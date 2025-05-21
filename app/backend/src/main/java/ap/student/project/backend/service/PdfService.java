@@ -37,7 +37,6 @@ public class PdfService {
      * @param userCertificateId The ID of the user certificate to generate a PDF for
      * @return The generated PDF as a byte array
      * @throws IOException If there is an error reading template files or generating the PDF
-     * @throws NotFoundException If the user certificate is not found
      */
     public byte[] generatePdf(int userCertificateId) throws IOException {
         UserCertificate userCertificate = this.userCertificateService.findById(userCertificateId);
@@ -49,6 +48,7 @@ public class PdfService {
         String html = new String(htmlStream.readAllBytes(), StandardCharsets.UTF_8);
 
         html = html.replace("${name}", user.getFirstname() + " " + user.getLastname())
+                .replace("${shipname}", user.getShipname())
                 .replace("${training}", training.getTitle().get(Language.ENGLISH))
                 .replace("${date}", formatFancyDate(userCertificate.getIssueDate()));
 

@@ -215,3 +215,20 @@
         margin-bottom: 10px;
     }
 }
+.certificate_detail {
+    display: flex;
+    justify-content: space-between;
+}
+.dl-certificate-btn {
+    background-color: #ffc107;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    right: 1rem;
+    height: 2.5rem;
+}
+ul {
+    list-style-type: none;
+}

@@ -23,6 +23,7 @@ export class UserdetailComponent {
   selectedStatus: string = 'ALL';
   searchQuery: string = '';
   user: User | undefined;
+  userCertificateMap: Map<number, UserCertificate | null> = new Map<number, UserCertificate | null>();
 
   constructor(private route: ActivatedRoute, private languageService: LanguageService, public authService: AuthService) {
   }
@@ -32,9 +33,40 @@ export class UserdetailComponent {
     let modules = await fetch(`/api/users/${this.userId}/trainings`);
     this.userdetails = await modules.json();
     if(this.userdetails) {
-      await console.log(this.userdetails);
       this.filteredUserDetails = await this.userdetails;
+      for (const u of this.userdetails) {
+        const cert = await this.getUserCertificate(u.training.id);
+        this.userCertificateMap.set(u.training.id, cert);
+      }
     }
+  }
+  async getUserCertificate(trainingId:number) {
+    let userCertificateResponse = await fetch(`/api/user_certificates/training/${trainingId}/user/${this.user?.id}`);
+    let userCertificate = await userCertificateResponse.json();
+    if(userCertificate) {
+      console.log(userCertificate);
+      return userCertificate;
+    }
+    else return null
+  }
+    async downloadPdf(userCertificateId: number) {
+    const response = await fetch(`/api/pdf/generate/${userCertificateId}`);
+  
+    if (!response.ok) {
+      throw new Error("Failed to fetch PDF");
+    }
+  
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+  
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `certificate-${userCertificateId}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  
+    window.URL.revokeObjectURL(url);
   }
   ngOnInit(): void {
     this.userId = this.route.snapshot.paramMap.get('id');
@@ -54,6 +86,18 @@ export class UserdetailComponent {
       });
     }
   }
+  mapStatusToTranslationKey(status: string | null | undefined): string {
+  switch (status) {
+    case 'IN_PROGRESS':
+      return 'USER_DETAIL.IN_PROGRESS';
+    case 'NOT_STARTED':
+      return 'USER_DETAIL.NOT_STARTED';
+    case 'COMPLETED':
+      return 'USER_DETAIL.COMPLETED';
+    default:
+      return 'USER_DETAIL.NO_STATUS';
+  }
+}
 }
 
 
@@ -116,4 +160,11 @@ interface TrainingProgress {
 interface UserDetailResponse {
   [key: number]: UserDetail;
   length: number;
+}
+
+interface UserCertificate {
+  id: number,
+  issue_date: Date,
+  expiry_date: Date,
+  status: string
 }

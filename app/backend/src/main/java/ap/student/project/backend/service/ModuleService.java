@@ -2,6 +2,7 @@ package ap.student.project.backend.service;
 
 import ap.student.project.backend.dao.ContentRepository;
 import ap.student.project.backend.dao.ModuleRepository;
+import ap.student.project.backend.dao.QuestionOptionRepository;
 import ap.student.project.backend.dao.QuestionRepository;
 import ap.student.project.backend.dto.ContentDTO;
 import ap.student.project.backend.dto.ModuleDTO;
@@ -27,6 +28,7 @@ public class ModuleService {
     private final TrainingService trainingService;
     private final ContentRepository contentRepository;
     private final QuestionRepository questionRepository;
+    private final QuestionOptionRepository questionOptionRepository;
 
     /**
      * Constructs a new ModuleService with the required repositories and services.
@@ -36,11 +38,12 @@ public class ModuleService {
      * @param contentRepository Repository for Content entity operations
      * @param questionRepository Repository for Question entity operations
      */
-    public ModuleService(ModuleRepository moduleRepository, TrainingService trainingService, ContentRepository contentRepository, QuestionRepository questionRepository) {
+    public ModuleService(ModuleRepository moduleRepository, TrainingService trainingService, ContentRepository contentRepository, QuestionRepository questionRepository, QuestionOptionRepository questionOptionRepository) {
         this.moduleRepository = moduleRepository;
         this.trainingService = trainingService;
         this.contentRepository = contentRepository;
         this.questionRepository = questionRepository;
+        this.questionOptionRepository = questionOptionRepository;
     }
 
     /**
@@ -95,7 +98,7 @@ public class ModuleService {
      * @param moduleDTO Data transfer object containing updated module information
      * @throws NotFoundException If no module with the given ID exists
      */
-    public void updateModule(int id, ModuleDTO moduleDTO) {
+    public Module updateModule(int id, ModuleDTO moduleDTO) {
         Module module = moduleRepository.findById(id).orElse(null);
         if (module == null) {
             throw new NotFoundException("Module with id " + id + " not found");
@@ -120,6 +123,12 @@ public class ModuleService {
         }
         
         moduleRepository.save(module);
+        return module;
+    }
+
+    public void deleteModule(int id) {
+        Module module = this.getModuleById(id);
+        moduleRepository.delete(module);
     }
 
     /**
@@ -208,5 +217,24 @@ public class ModuleService {
             throw new NotFoundException("Module with id " + id + " has no questions");
         }
         return module.getQuestions();
+    }
+
+    /**
+     * Deletes all questions from a specific module.
+     *
+     * @param id The ID of the module to delete the questions for
+     * @throws NotFoundException If no module with the given ID exists
+     */
+    public void deleteQuestions(int id){
+        Module module = this.getModuleById(id);
+        if(module == null){
+            throw new NotFoundException("Module with id " + id + " not found");
+        }
+        for(Question question : module.getQuestions()){
+            questionOptionRepository.deleteAll(question.getQuestionOptions());
+            questionRepository.delete(question);
+        }
+        module.getQuestions().clear();
+        moduleRepository.save(module);
     }
 }
