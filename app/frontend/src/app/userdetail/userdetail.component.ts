@@ -89,13 +89,13 @@ export class UserdetailComponent {
   mapStatusToTranslationKey(status: string | null | undefined): string {
   switch (status) {
     case 'IN_PROGRESS':
-      return 'TRAINING_STATUS.IN_PROGRESS';
+      return 'USER_DETAIL.IN_PROGRESS';
     case 'NOT_STARTED':
-      return 'TRAINING_STATUS.NOT_STARTED';
+      return 'USER_DETAIL.NOT_STARTED';
     case 'COMPLETED':
-      return 'TRAINING_STATUS.COMPLETED';
+      return 'USER_DETAIL.COMPLETED';
     default:
-      return 'TRAINING_STATUS.NO_STATUS';
+      return 'USER_DETAIL.NO_STATUS';
   }
 }
 }

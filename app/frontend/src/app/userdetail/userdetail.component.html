@@ -71,21 +71,18 @@
                             <div class="certificate_detail">
                                 <ul>
                                     <li>
-                                        Certificate Status: {{userCertificateMap.get(detail.training.id)?.status}}
+                                        {{"USER_DETAIL.ISSUE_DATE" | translate}}: {{userCertificateMap.get(detail.training.id)?.issue_date | date:'d/MM/yyyy'}}
                                     </li>
                                     <li>
-                                        Issue Date: {{userCertificateMap.get(detail.training.id)?.issue_date | date:'d/MM/yyyy'}}
-                                    </li>
-                                    <li>
-                                        Expiry Date: {{userCertificateMap.get(detail.training.id)?.expiry_date | date:'d/MM/yyyy'}}
+                                        {{"USER_DETAIL.EXPIRY_DATE" | translate}}: {{userCertificateMap.get(detail.training.id)?.expiry_date | date:'d/MM/yyyy'}}
                                     </li>
                                 </ul>
 
-                                <button class="dl-certificate-btn" (click)="downloadPdf(userCertificateMap.get(detail.training.id)!.id)">Download Certificate</button>
+                                <button class="dl-certificate-btn" (click)="downloadPdf(userCertificateMap.get(detail.training.id)!.id)">{{"USER_DETAIL.DOWNLOAD_CERTIFICATE" | translate}}</button>
                             </div>
                         }
                         @else {
-                            <p>This user has no certificate for this training.</p>
+                            <p>{{"USER_DETAIL.NO_CERTIFIATE" | translate}}</p>
                         }
                     </div>
                 </div>

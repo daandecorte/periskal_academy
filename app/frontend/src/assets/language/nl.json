@@ -45,7 +45,13 @@
     "EXAM_STATUS": "Examenstatus",
     "TRAININGS_PROGRESS": "Voortgang van trainingen",
     "SEARCH_TRAININGS": "Zoek trainingen...",
-    "NO_TRAININGS_ASSIGNED": "Deze gebruiker heeft geen trainingen toegewezen."
+    "NO_TRAININGS_ASSIGNED": "Deze gebruiker heeft geen trainingen toegewezen.",
+    "NOT_STARTED": "Niet gestart",
+    "NO_STATUS": "Geen status",
+    "NO_CERTIFICATE": "Deze gebruiker heeft geen certificaat voor deze training.",
+    "ISSUE_DATE": "Uitgiftedatum",
+    "EXPIRY_DATE": "Vervaldatum",
+    "DOWNLOAD_CERTIFICATE": "Certificaat downloaden"
   },
 
   "ADMIN_EDIT_TRAININGS": {

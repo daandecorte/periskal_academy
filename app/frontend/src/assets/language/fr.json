@@ -35,6 +35,8 @@
     "ASSIGN_NEW_CERTIFICATE": "Attribuer un nouveau certificat",
     "ALL_STATUS": "Tous les statuts",
     "IN_PROGRESS": "En cours",
+    "NOT_STARTED": "Pas commencé",
+    "NO_STATUS": "Aucun statut",
     "COMPLETED": "Terminé",
     "OVERALL_PROGRESS": "Progression globale",
     "USER_DETAIL": "Détail de l'utilisateur",
@@ -45,7 +47,11 @@
     "EXAM_STATUS": "Statut de l'examen",
     "TRAININGS_PROGRESS": "Progression des formations",
     "SEARCH_TRAININGS": "Rechercher des formations...",
-    "NO_TRAININGS_ASSIGNED": "Aucune formation n'est attribuée à cet utilisateur."
+    "NO_TRAININGS_ASSIGNED": "Aucune formation n'est attribuée à cet utilisateur.",
+    "NO_CERTIFICATE": "Cet utilisateur n’a pas de certificat pour cette formation.",
+    "ISSUE_DATE": "Date de délivrance",
+    "EXPIRY_DATE": "Date d’expiration",
+    "DOWNLOAD_CERTIFICATE": "Télécharger le certificat"
   },
 
   "ADMIN_EDIT_TRAININGS": {
