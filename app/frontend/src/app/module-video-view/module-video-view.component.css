@@ -167,16 +167,20 @@
 }
 
 .content-picture {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
 }
 
 .content-picture img {
-  max-width: 100%;
   max-height: 100vh;
-  min-height: 100vh;
+  max-width: 100%;
+  width: auto;
   height: auto;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  aspect-ratio: attr(width) / attr(height);
 }
 
 .video-container {
@@ -200,10 +204,12 @@ video {
   z-index: 10;
 }
 .content-item {
+  max-width: 100%;
   margin-bottom: 2rem;
   padding: 1.5rem;
   background-color: #f8f9fa;
   border-radius: 8px;
+  box-sizing: border-box;
 }
 .modal {
   position: fixed;
