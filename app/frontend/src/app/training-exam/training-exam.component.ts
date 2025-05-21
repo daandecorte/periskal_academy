@@ -18,7 +18,7 @@ import { ExamResultComponent } from '../exam-result/exam-result.component';
 })
 export class TrainingExamComponent implements OnInit, OnDestroy {
   // Exam information
-  examId: number = 1;
+  examId: number = 0;
   exam?: Exam;
   examTitle: string = "";
   examDescription: string = "";
@@ -78,7 +78,8 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     this.route.params.subscribe(params => {
       const id = params['id'];
       if (id) {
-        this.examId = +id;
+        this.examId = +id; // Convert string to number
+        console.log('Exam ID from route:', this.examId); // Debug log
         
         // Get the question index from the URL
         if (params['questionIndex']) {
@@ -90,6 +91,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
         if (this.examId > 0) {
           this.loadExamData();
         } else {
+          console.error('Invalid exam ID:', this.examId); // Debug log
           this.examSubmissionError = 'Invalid exam ID';
           this.isLoading = false;
         }

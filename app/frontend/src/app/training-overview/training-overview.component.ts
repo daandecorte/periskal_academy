@@ -245,6 +245,7 @@ export class TrainingOverviewComponent implements OnInit {
   // TODO: if user has already passen exam, go to certificate download page
   goToCertificate(): void {
     // user is eligible for certificate
+    if (this.userTraining.eligible_for_certificate == true) {
       // Check if training has an exam - handle both possibilities from the model
       if (this.training) {
         let examId: number | undefined;
@@ -269,7 +270,7 @@ export class TrainingOverviewComponent implements OnInit {
         console.error('No exams available for this training');
         // TODO: handle error
       }
-    //}
+    }
   }
 
   getActionText(completed: boolean): string {
