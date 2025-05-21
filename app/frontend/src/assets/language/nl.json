@@ -51,7 +51,9 @@
     "NO_CERTIFICATE": "Deze gebruiker heeft geen certificaat voor deze training.",
     "ISSUE_DATE": "Uitgiftedatum",
     "EXPIRY_DATE": "Vervaldatum",
-    "DOWNLOAD_CERTIFICATE": "Certificaat downloaden"
+    "DOWNLOAD_CERTIFICATE": "Certificaat downloaden",
+    "CERTIFICATE": "Certificaat",
+    "SENDING": "Bezig met verzenden..."
   },
 
   "ADMIN_EDIT_TRAININGS": {

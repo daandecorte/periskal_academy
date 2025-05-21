@@ -51,7 +51,9 @@
     "NO_CERTIFICATE": "Dieser Benutzer hat kein Zertifikat für dieses Training.",
     "ISSUE_DATE": "Ausgabedatum",
     "EXPIRY_DATE": "Ablaufdatum",
-    "DOWNLOAD_CERTIFICATE": "Zertifikat herunterladen"
+    "DOWNLOAD_CERTIFICATE": "Zertifikat herunterladen",
+    "CERTIFICATE": "Zertifikat",
+    "SENDING": "Wird gesendet..."
   },
 
   "ADMIN_EDIT_TRAININGS": {

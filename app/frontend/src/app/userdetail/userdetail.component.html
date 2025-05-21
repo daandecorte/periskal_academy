@@ -66,7 +66,7 @@
                         }
                     </div>
                     <div class="exam-status">
-                        <h4>Certificate</h4>
+                        <h4>{{"USER_DETAIL.CERTIFICATE" | translate}}</h4>
                         @if(userCertificateMap.get(detail.training.id)!=null) {
                             <div class="certificate_detail">
                                 <ul>
@@ -82,7 +82,7 @@
                             </div>
                         }
                         @else {
-                            <p>{{"USER_DETAIL.NO_CERTIFIATE" | translate}}</p>
+                            <p>{{"USER_DETAIL.NO_CERTIFICATE" | translate}}</p>
                         }
                     </div>
                 </div>

@@ -67,6 +67,23 @@ export class CertificatesComponent {
               const errorText = await userTrainingPostResponse.text();
               console.error("failed to post usertraining " + errorText);
             }
+            else {
+              const refreshedUserTrainingGet = await fetch(`/api/user_trainings/training/${certificate.training.id}/user/${user.id}`);
+              const userTraining = await refreshedUserTrainingGet.json();
+
+              let trainingProgressResponse = await fetch(`/api/training_progress`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  Accept: 'application/json',
+                },
+                body: JSON.stringify({
+                  start_date_time: new Date().toISOString(),
+                  status: "NOT_STARTED",
+                  user_training_id: userTraining.id
+                })
+              })
+            }
           }
           else if(userTrainingGetResponse.status==200) {
             let userTraining = await userTrainingGetResponse.json();
@@ -88,6 +105,7 @@ export class CertificatesComponent {
           else {
             console.error("an error occured requesting this usertraining " + userTrainingGetResponse.status)
           }
+
         }
         catch(e) {
 

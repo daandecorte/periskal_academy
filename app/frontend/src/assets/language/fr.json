@@ -51,7 +51,9 @@
     "NO_CERTIFICATE": "Cet utilisateur n’a pas de certificat pour cette formation.",
     "ISSUE_DATE": "Date de délivrance",
     "EXPIRY_DATE": "Date d’expiration",
-    "DOWNLOAD_CERTIFICATE": "Télécharger le certificat"
+    "DOWNLOAD_CERTIFICATE": "Télécharger le certificat",
+    "CERTIFICATE": "Certificat",
+    "SENDING": "Envoi en cours..."
   },
 
   "ADMIN_EDIT_TRAININGS": {

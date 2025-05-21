@@ -125,7 +125,8 @@
     "NO_CERTIFICATE": "This user has no certificate for this training.",
     "ISSUE_DATE": "Issue Date",
     "EXPIRY_DATE": "Expiry Date",
-    "DOWNLOAD_CERTIFICATE":"Download Certificate"
+    "DOWNLOAD_CERTIFICATE":"Download Certificate",
+    "CERTIFICATE": "Certificate"
   },
 
   "TRAINING_OVERVIEW": {
@@ -275,7 +276,8 @@
     "READ_THE_TERMS_AND_CONDITIONS": "Read the terms and conditions.",
     "I_ACCEPT_TERMS": "I accept the terms and conditions",
     "INFO_SENT_SUCCESS": "Information sent successfully!",
-    "INFO_SENT_FAILED": "Failed to send information, try again or contact support."
+    "INFO_SENT_FAILED": "Failed to send information, try again or contact support.",
+    "SENDING": "Sending..."
   },
   "BILLING": {
     "ENTER_BILLING_DETAILS": "Enter Billing Details",
