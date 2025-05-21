@@ -53,16 +53,18 @@ export class AssignSailorComponent {
   async getUsers() {
     for (const id of this.userListPerId) {
       let result = await fetch(`api/users/periskal_id/${id}`);
-      let data: IUsers = await result.json();
-
-      let user: IUsers = {
-        id: data.id,
-        firstname: data.firstname,
-        lastname: data.lastname,
-        shipname: data.shipname,
-      };
-
-      this.userList.push(user);
+      if(result.status==200) {
+        let data: IUsers = await result.json();
+  
+        let user: IUsers = {
+          id: data.id,
+          firstname: data.firstname,
+          lastname: data.lastname,
+          shipname: data.shipname,
+        };
+  
+        this.userList.push(user);
+      }
     }
     this.filteredUsers=this.userList;
   }

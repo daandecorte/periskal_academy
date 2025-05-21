@@ -85,8 +85,7 @@ class TrainingProgressServiceTest {
         TrainingProgressDTO invalidDTO = new TrainingProgressDTO(
             LocalDateTime.now(), 
             LocalDateTime.now(), 
-            ProgressStatusType.IN_PROGRESS, 
-            null, 
+            ProgressStatusType.IN_PROGRESS,
             0
         );
         assertThrows(MissingArgumentException.class, () -> trainingProgressService.save(invalidDTO));
@@ -109,7 +108,7 @@ class TrainingProgressServiceTest {
         );
         Training training = trainingService.save(trainingDTO);
         
-        UserTrainingDTO userTrainingDTO = new UserTrainingDTO(null, training.getId(), user.getId(), false);
+        UserTrainingDTO userTrainingDTO = new UserTrainingDTO(training.getId(), user.getId(), false);
         userTrainingService.save(userTrainingDTO);
         
         // Find the created UserTraining to use its ID
@@ -121,8 +120,7 @@ class TrainingProgressServiceTest {
         TrainingProgressDTO trainingProgressDTO = new TrainingProgressDTO(
             LocalDateTime.now(), 
             LocalDateTime.now(), 
-            ProgressStatusType.IN_PROGRESS, 
-            null, 
+            ProgressStatusType.IN_PROGRESS,
             createdUserTraining.getId()
         );
         
@@ -159,7 +157,7 @@ class TrainingProgressServiceTest {
         );
         Training training = trainingService.save(trainingDTO);
         
-        UserTrainingDTO userTrainingDTO = new UserTrainingDTO(null, training.getId(), user.getId(), false);
+        UserTrainingDTO userTrainingDTO = new UserTrainingDTO(training.getId(), user.getId(), false);
         userTrainingService.save(userTrainingDTO);
         
         // Find the created UserTraining to use its ID
@@ -175,8 +173,7 @@ class TrainingProgressServiceTest {
         TrainingProgressDTO trainingProgressDTO = new TrainingProgressDTO(
             LocalDateTime.now(), 
             LocalDateTime.now(), 
-            ProgressStatusType.IN_PROGRESS, 
-            null, 
+            ProgressStatusType.IN_PROGRESS,
             createdUserTraining.getId()
         );
         trainingProgressService.save(trainingProgressDTO);
@@ -189,7 +186,6 @@ class TrainingProgressServiceTest {
             savedProgress.getStartDateTime(),
             LocalDateTime.now(),
             ProgressStatusType.COMPLETED,
-            null,
             createdUserTraining.getId()
         );
         
@@ -206,7 +202,6 @@ class TrainingProgressServiceTest {
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 ProgressStatusType.COMPLETED,
-                null,
                 1
             )
         ));
@@ -228,7 +223,7 @@ class TrainingProgressServiceTest {
         );
         Training training = trainingService.save(trainingDTO);
         
-        UserTrainingDTO userTrainingDTO = new UserTrainingDTO(null, training.getId(), user.getId(), false);
+        UserTrainingDTO userTrainingDTO = new UserTrainingDTO( training.getId(), user.getId(), false);
         userTrainingService.save(userTrainingDTO);
         
         // Find the created UserTraining
@@ -241,8 +236,7 @@ class TrainingProgressServiceTest {
         TrainingProgressDTO trainingProgressDTO = new TrainingProgressDTO(
             LocalDateTime.now(), 
             LocalDateTime.now(), 
-            ProgressStatusType.IN_PROGRESS, 
-            null, 
+            ProgressStatusType.IN_PROGRESS,
             createdUserTraining.getId()
         );
         trainingProgressService.save(trainingProgressDTO);
