@@ -18,7 +18,7 @@ import { ExamResultComponent } from '../exam-result/exam-result.component';
 })
 export class TrainingExamComponent implements OnInit, OnDestroy {
   // Exam information
-  examId: number = 0;
+  examId: number = 1;
   exam?: Exam;
   examTitle: string = "";
   examDescription: string = "";
@@ -76,20 +76,25 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     this.getCurrentLanguage();
     
     this.route.params.subscribe(params => {
-      this.examId = +params['id'] || 0;
-      
-      // Get the question index from the URL
-      if (params['questionIndex']) {
-        this.currentQuestionIndex = +params['questionIndex'];
+      const id = params['id'];
+      if (id) {
+        this.examId = +id;
+        
+        // Get the question index from the URL
+        if (params['questionIndex']) {
+          this.currentQuestionIndex = +params['questionIndex'];
+        } else {
+          this.currentQuestionIndex = 0;
+        }
+        
+        if (this.examId > 0) {
+          this.loadExamData();
+        } else {
+          this.examSubmissionError = 'Invalid exam ID';
+          this.isLoading = false;
+        }
       } else {
-        this.currentQuestionIndex = 0; // Default to first question
-      }
-      
-      //Load exam from id
-      if (this.examId > 0) {
-        this.loadExamData();
-      } else {
-        this.examSubmissionError = 'Invalid exam ID';
+        this.examSubmissionError = 'No exam ID provided';
         this.isLoading = false;
       }
     });
@@ -143,10 +148,16 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
         this.examTitle = this.getLocalizedContent(exam.titleLocalized);
         this.examDescription = this.getLocalizedContent(exam.descriptionLocalized);
         
-        // Get questions from exam
-        this.questions = [...exam.questions];
-        this.totalQuestions = this.questions.length;
-        
+         // Get questions from exam
+        if (exam.questions && exam.questions.length > 0) {
+          this.questions = [...exam.questions];
+          this.totalQuestions = this.questions.length;
+        } else {
+          this.examSubmissionError = 'This exam has no questions.';
+          this.isLoading = false;
+          return;
+        }
+
         // Validate currentQuestionIndex is in range
         if (this.currentQuestionIndex >= this.totalQuestions) {
           this.currentQuestionIndex = 0;
@@ -178,6 +189,12 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     if (this.currentQuestionIndex < this.questions.length) {
       // Get the current question
       const baseQuestion = this.questions[this.currentQuestionIndex];
+
+      if (!baseQuestion || !baseQuestion.questionOptions) {
+        console.error('Invalid question data:', baseQuestion);
+        this.examSubmissionError = 'Error loading question data.';
+        return;
+      }
       
       // Create a deep copy to avoid modifying the original question
       this.currentQuestion = {
@@ -194,10 +211,6 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     } else {
       this.isExamCompleted = true;
     }
-
-    console.log('Exam:', this.exam);
-    console.log('Questions:', this.questions);
-    console.log('Current Question:', this.currentQuestion);
   }
 
   // Calculate progress percentage based on current question index
@@ -207,7 +220,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   }
 
    // Update the number of answered questions
-   updateAnsweredQuestionsCount(): void {
+  updateAnsweredQuestionsCount(): void {
     this.answeredQuestions = this.userAnswers.size;
   }
 
