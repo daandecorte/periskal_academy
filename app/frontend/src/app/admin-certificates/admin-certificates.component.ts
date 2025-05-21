@@ -49,7 +49,7 @@ export class AdminCertificatesComponent {
   }
   async postSelection() {
     this.selectedCertificates.forEach( async c=> {
-      let response = await fetch("/api/user-certificates", {
+      let response = await fetch("/api/user_certificates", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
