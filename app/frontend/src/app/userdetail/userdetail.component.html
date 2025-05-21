@@ -60,7 +60,9 @@
                             @for(attempt of detail.exam_attempts; track $index) {
                                 <div>
                                     <p>{{'USER_DETAIL.ATTEMPT' | translate}} #{{$index+1}}: {{attempt.end_date_time}}</p>
-                                    <p class="exam-failed">{{attempt.exam_status_type}} {{attempt.score}}%</p>
+                                    <p [ngClass]="attempt.score < 50 ? 'exam-failed' : 'exam-passed'">
+                                        {{ attempt.exam_status_type }} {{ attempt.score }}%
+                                    </p>
                                 </div>
                             }
                         }
