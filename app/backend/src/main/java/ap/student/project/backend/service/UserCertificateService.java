@@ -6,6 +6,7 @@ import ap.student.project.backend.entity.Certificate;
 import ap.student.project.backend.entity.Training;
 import ap.student.project.backend.entity.User;
 import ap.student.project.backend.entity.UserCertificate;
+import ap.student.project.backend.exceptions.DuplicateException;
 import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.springframework.beans.BeanUtils;
@@ -55,6 +56,10 @@ public class UserCertificateService {
         }
         if(userCertificateDTO.certificate_id()==0) {
             throw new MissingArgumentException("certificate_id is missing");
+        }
+        //very important
+        if(this.userCertificateRepository.findByUserIdAndCertificateId(userCertificateDTO.user_id(), userCertificateDTO.certificate_id()).isPresent()) {
+            throw new DuplicateException("user certificate already exists");
         }
         userCertificate.setUser(userService.findById(userCertificateDTO.user_id()));
         userCertificate.setCertificate(certificateService.findById(userCertificateDTO.certificate_id()));
