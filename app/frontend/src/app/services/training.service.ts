@@ -42,11 +42,17 @@ export interface Training {
   titleLocalized?: LocalizedStrings;
   descriptionLocalized?: LocalizedStrings;
   modules?: Module[];
+  exam?: {
+    id: number;
+    passingScore: number;
+    maxAttempts: number;
+    time: number;
+    questionAmount: number;
+    questions?: Question[];
+  };
   exams?: any[];
   tips?: any[];
   isActive: boolean;
-  
-  // Fields not in backend but used in frontend
   moduleCount: number;
   progress?: number;
   hasCertificate: boolean;
@@ -84,65 +90,75 @@ export class TrainingService {
   }
 
   // Method to map backend data to Training interface
-  private mapBackendTrainings(backendTrainings: any[]): Training[] {
-    return backendTrainings.map(backendTraining => {
-      // Convert Language enum to string keys for titleLocalized and descriptionLocalized
-      const titleLocalized: LocalizedStrings = {};
-      const descriptionLocalized: LocalizedStrings = {};
-      
-      // Handle title mapping
-      if (backendTraining.title) {
-        Object.entries(backendTraining.title).forEach(([lang, value]) => {
-          // Convert Language enum to string
-          titleLocalized[this.convertLanguageToString(lang)] = value as string;
-        });
-      }
-      
-      // Handle description mapping
-      if (backendTraining.description) {
-        Object.entries(backendTraining.description).forEach(([lang, value]) => {
-          // Convert Language enum to string
-          descriptionLocalized[this.convertLanguageToString(lang)] = value as string;
-        });
-      }
-      
-      const titleKeys = Object.keys(titleLocalized);
-      const defaultTitle = titleKeys.length > 0 ? titleLocalized[titleKeys[0]] : 'Untitled Training';
-      
-      const descriptionKeys = Object.keys(descriptionLocalized);
-      const defaultDescription = descriptionKeys.length > 0 ? descriptionLocalized[descriptionKeys[0]] : 'No description available';
-      
-      // Create a Training object with required fields
-      const training: Training = {
-        id: backendTraining.id,
-        title: defaultTitle, // This will be overridden by getLocalizedTitle in components
-        description: defaultDescription, // This will be overridden by getLocalizedDescription in components
-        titleLocalized: titleLocalized,
-        descriptionLocalized: descriptionLocalized,
-        moduleCount: backendTraining.modules ? backendTraining.modules.length : 0,
-        hasCertificate: backendTraining.exams && backendTraining.exams.length > 0,
-        status: 'not_started', // Default status
-        isActive: backendTraining.isActive !== undefined ? backendTraining.isActive : true,
-        modules: this.processModules(backendTraining.modules),
-        exams: backendTraining.exams,
-        tips: backendTraining.tips
-      };
+private mapBackendTrainings(backendTrainings: any[]): Training[] {
+  return backendTrainings.map(backendTraining => {
+    // Convert Language enum to string keys for titleLocalized and descriptionLocalized
+    const titleLocalized: LocalizedStrings = {};
+    const descriptionLocalized: LocalizedStrings = {};
+    
+    // Handle title mapping
+    if (backendTraining.title) {
+      Object.entries(backendTraining.title).forEach(([lang, value]) => {
+        // Convert Language enum to string
+        titleLocalized[this.convertLanguageToString(lang)] = value as string;
+      });
+    }
+    
+    // Handle description mapping
+    if (backendTraining.description) {
+      Object.entries(backendTraining.description).forEach(([lang, value]) => {
+        // Convert Language enum to string
+        descriptionLocalized[this.convertLanguageToString(lang)] = value as string;
+      });
+    }
+    
+    const titleKeys = Object.keys(titleLocalized);
+    const defaultTitle = titleKeys.length > 0 ? titleLocalized[titleKeys[0]] : 'Untitled Training';
+    
+    const descriptionKeys = Object.keys(descriptionLocalized);
+    const defaultDescription = descriptionKeys.length > 0 ? descriptionLocalized[descriptionKeys[0]] : 'No description available';
+    
+    // Handle exam mapping - supporting both singular exam and exam array structures
+    let examData = null;
+    let hasCertificateFlag = false;
+    
+    if (backendTraining.exam) {
+      examData = backendTraining.exam;
+      hasCertificateFlag = true;
+    }
+    
+    // Create a Training object with required fields
+    const training: Training = {
+      id: backendTraining.id,
+      title: defaultTitle, // This will be overridden by getLocalizedTitle in components
+      description: defaultDescription, // This will be overridden by getLocalizedDescription in components
+      titleLocalized: titleLocalized,
+      descriptionLocalized: descriptionLocalized,
+      moduleCount: backendTraining.modules ? backendTraining.modules.length : 0,
+      exam: examData, // Add the exam data if available
+      exams: backendTraining.exams || [], // Keep for backward compatibility
+      hasCertificate: hasCertificateFlag || (backendTraining.exams && backendTraining.exams.length > 0),
+      status: 'not_started', // Default status
+      isActive: backendTraining.isActive !== undefined ? backendTraining.isActive : true,
+      modules: this.processModules(backendTraining.modules),
+      tips: backendTraining.tips
+    };
 
-      // Calculate available languages
-      if (backendTraining.title) {
-        training.languages = Object.keys(backendTraining.title).map(lang => 
-          this.convertLanguageToString(lang)
-        );
-      }
+    // Calculate available languages
+    if (backendTraining.title) {
+      training.languages = Object.keys(backendTraining.title).map(lang => 
+        this.convertLanguageToString(lang)
+      );
+    }
 
-      if (backendTraining.progress !== undefined) training.progress = backendTraining.progress;
-      if (backendTraining.assigned !== undefined) training.assigned = backendTraining.assigned;
-      if (backendTraining.assignedDate) training.assignedDate = backendTraining.assignedDate;
-      if (backendTraining.trainingType) training.trainingType = backendTraining.trainingType;
+    if (backendTraining.progress !== undefined) training.progress = backendTraining.progress;
+    if (backendTraining.assigned !== undefined) training.assigned = backendTraining.assigned;
+    if (backendTraining.assignedDate) training.assignedDate = backendTraining.assignedDate;
+    if (backendTraining.trainingType) training.trainingType = backendTraining.trainingType;
 
-      return training;
-    });
-  }
+    return training;
+  });
+}
 
   private processModules(modules: any[]): Module[] {
     if (!modules || modules.length === 0) return [];

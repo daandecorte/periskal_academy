@@ -117,7 +117,7 @@ export const routes: Routes = [
     component: ModuleQuestionsComponent,
   },
   { path: 'exams/:id/:questionIndex', component: TrainingExamComponent },
-  { path: 'exams/:id', redirectTo: 'exams/:id/0' },
+  { path: 'exams/:id', redirectTo: 'exams/:id/0'},
   { path: '', redirectTo: 'trainings', pathMatch: 'full' },
   { path: '**', redirectTo: 'trainings', pathMatch: 'full' },
 ];

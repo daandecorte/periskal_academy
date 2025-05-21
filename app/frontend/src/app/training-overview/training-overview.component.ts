@@ -242,11 +242,33 @@ export class TrainingOverviewComponent implements OnInit {
     this.router.navigate(['/trainings']);
   }
 
+  // TODO: if user has already passen exam, go to certificate download page
   goToCertificate(): void {
     // user is eligible for certificate
-    //if (this.userTraining.eligible_for_certificate == true) {
-      // Navigate to the exam page with the current training ID
-      this.router.navigate(['/exams', this.trainingId]);
+      // Check if training has an exam - handle both possibilities from the model
+      if (this.training) {
+        let examId: number | undefined;
+        
+        // Check if exam is directly available as a single object
+        if (this.training.exam && typeof this.training.exam === 'object' && this.training.exam.id) {
+          examId = this.training.exam.id;
+        } 
+        // Check if exams is an array
+        else if (this.training.exams && Array.isArray(this.training.exams) && this.training.exams.length > 0) {
+          examId = this.training.exams[0].id;
+        }
+        
+        if (examId) {
+          // Navigate to the exam page with the exam ID
+          this.router.navigate(['/exams', examId]);
+        } else {
+          console.error('No exam found for this training');
+          // TODO: handle error
+        }
+      } else {
+        console.error('No exams available for this training');
+        // TODO: handle error
+      }
     //}
   }
 
