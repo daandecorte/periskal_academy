@@ -81,7 +81,7 @@ class TrainingProgressServiceTest {
             LocalDateTime.now(), 
             LocalDateTime.now(), 
             ProgressStatusType.IN_PROGRESS,
-            0
+            0,1
         );
         assertThrows(MissingArgumentException.class, () -> trainingProgressService.save(invalidDTO));
     }
@@ -116,7 +116,7 @@ class TrainingProgressServiceTest {
             LocalDateTime.now(), 
             LocalDateTime.now(), 
             ProgressStatusType.IN_PROGRESS,
-            createdUserTraining.getId()
+            createdUserTraining.getId(),1
         );
         
         // Make sure UserTraining does not already have a TrainingProgress
@@ -169,7 +169,7 @@ class TrainingProgressServiceTest {
             LocalDateTime.now(), 
             LocalDateTime.now(), 
             ProgressStatusType.IN_PROGRESS,
-            createdUserTraining.getId()
+            createdUserTraining.getId(),1
         );
         trainingProgressService.save(trainingProgressDTO);
         
@@ -181,7 +181,7 @@ class TrainingProgressServiceTest {
             savedProgress.getStartDateTime(),
             LocalDateTime.now(),
             ProgressStatusType.COMPLETED,
-            createdUserTraining.getId()
+            createdUserTraining.getId(),1
         );
         
         trainingProgressService.update(savedProgress.getId(), updatedDTO);
@@ -197,7 +197,7 @@ class TrainingProgressServiceTest {
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 ProgressStatusType.COMPLETED,
-                1
+                1,1
             )
         ));
     }
@@ -232,7 +232,7 @@ class TrainingProgressServiceTest {
             LocalDateTime.now(), 
             LocalDateTime.now(), 
             ProgressStatusType.IN_PROGRESS,
-            createdUserTraining.getId()
+            createdUserTraining.getId(),1
         );
         trainingProgressService.save(trainingProgressDTO);
         
