@@ -31,8 +31,11 @@ export class RoleGuard {
     if (this.authService.hasAnyRole(requiredRoles)) {
       return true;
     }
+    if(this.authService.isAdmin()) {
+      return true
+    }
 
     // Redirect to an unauthorized page or home
-    return this.router.createUrlTree(['/unauthorized']);
+    return this.router.createUrlTree(['/login']);
   }
 }

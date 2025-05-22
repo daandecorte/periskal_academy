@@ -31,33 +31,33 @@ export const routes: Routes = [
   {
     path: 'trainings',
     component: TrainingsComponent,
-    //canActivate: [RoleGuard],
+    canActivate: [RoleGuard],
     data: {
-      roles: [Role.SKIPPER, Role.INSTALLER],
+      roles: [Role.SKIPPER, Role.INSTALLER, Role.FLEETMANAGER, Role.SUPPORT],
     },
   },
   {
     path: 'admin/trainings',
     component: AdminTrainingsComponent,
-    //canActivate: [RoleGuard],
+    canActivate: [RoleGuard],
     data: { roles: [Role.ADMIN] },
   },
   {
     path: 'certificates',
     component: CertificatesComponent,
-    //canActivate: [RoleGuard],
+    canActivate: [RoleGuard],
     data: { roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT, Role.FLEETMANAGER] },
   },
   {
     path: 'admin/certificates/:id',
     component: AdminCertificatesComponent,
-    //canActivate: [RoleGuard],
+    canActivate: [RoleGuard],
     data: { roles: [Role.ADMIN] },
   },
   {
     path: 'tips-and-tricks',
     component: TipsAndTricksComponent,
-    //canActivate: [RoleGuard],
+    canActivate: [RoleGuard],
     data: {
       roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT, Role.FLEETMANAGER],
     },
@@ -65,31 +65,31 @@ export const routes: Routes = [
   {
     path: 'user-management',
     component: UserManagementComponent,
-    //canActivate: [RoleGuard],
+    canActivate: [RoleGuard],
     data: { roles: [Role.ADMIN] },
   },
   {
     path: 'skippers',
     component: SkippersComponent,
-    //canActivate: [RoleGuard],
+    canActivate: [RoleGuard],
     data: { roles: [Role.FLEETMANAGER] },
   },
   {
     path: 'support',
     component: SupportComponent,
-    //canActivate: [RoleGuard],
+    canActivate: [RoleGuard],
     data: { roles: [Role.SUPPORT] },
   },
   {
     path: 'userdetail/:id',
     component: UserdetailComponent,
-    //canActivate: [RoleGuard],
+    canActivate: [RoleGuard],
     data: { roles: [Role.ADMIN, Role.SUPPORT] },
   },
   {
     path: 'add-training',
     component: AddTrainingComponent,
-    //canActivate: [RoleGuard],
+    canActivate: [RoleGuard],
     data: { roles: [Role.ADMIN] },
     children: [
       { path: '', redirectTo: 'basic-setup', pathMatch: 'full' },

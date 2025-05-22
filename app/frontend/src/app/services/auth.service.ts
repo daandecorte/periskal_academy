@@ -46,6 +46,13 @@ export class AuthService {
     const user = this.currentUserValue;
     return user !== null && roles.includes(user.Role.toUpperCase() as Role);
   }
+  isAdmin() {
+    const user = this.currentUserValue;
+    if(user?.Role.toLocaleUpperCase()=="ADMINISTRATOR") {
+      return true;
+    }
+    else return false;
+  }
 
   logout(): void {
     localStorage.removeItem('currentUser');
