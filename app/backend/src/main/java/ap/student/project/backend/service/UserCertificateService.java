@@ -107,6 +107,14 @@ public class UserCertificateService {
         }
         return userCertificate;
     }
+
+    /**
+     * Finds a UserCertifiate by a TrainingId and a UserId
+     *
+     * @param trainingId
+     * @param userId
+     * @return The found user certificate
+     */
     public UserCertificate findByTrainingIdAndUserId(int trainingId, int userId) {
         if(trainingId==0) {
             throw new MissingArgumentException("training_id is missing");

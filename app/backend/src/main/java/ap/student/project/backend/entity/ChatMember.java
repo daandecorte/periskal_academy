@@ -27,7 +27,7 @@ public class ChatMember {
     @JoinColumn(name="chat_id")
     @JsonIgnore
     private Chat chat;
-    @OneToMany(mappedBy = "chatMember", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "chatMember", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> messages = new ArrayList<>();
 
 

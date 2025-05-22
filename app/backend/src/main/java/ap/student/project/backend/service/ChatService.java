@@ -12,7 +12,9 @@ import ap.student.project.backend.entity.User;
 import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.springframework.beans.BeanUtils;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -205,5 +207,16 @@ public class ChatService {
         }
         chatMessages.stream().sorted(Comparator.comparing(ChatMessageDTO::dateTime)).toList();
         return chatMessages;
+    }
+
+    /**
+     * Deletes all messages older than a week at midnight
+     */
+    @Scheduled(cron = "0 0 0 * * ?")
+    @Transactional
+    public void deleteOldMessages() {
+        LocalDateTime oneWeekAgo = LocalDateTime.now().minusDays(7);
+        int deletedCount = messageRepository.deleteByDateTimeBefore(oneWeekAgo);
+        System.out.println("deleted: " + deletedCount + " messages");
     }
 }
