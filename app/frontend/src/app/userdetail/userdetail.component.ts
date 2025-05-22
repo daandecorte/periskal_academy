@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageService } from '../services/language.service';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Observable, Subscription } from 'rxjs';
 import { AuthService, Role } from '../services/auth.service';
 import { IUser } from '../types/user-info';
 import { FormsModule } from '@angular/forms';
@@ -23,9 +23,19 @@ export class UserdetailComponent {
   selectedStatus: string = 'ALL';
   searchQuery: string = '';
   user: User | undefined;
+  currentUser: Observable<IUser | null>;
+  role: String = "";
   userCertificateMap: Map<number, UserCertificate | null> = new Map<number, UserCertificate | null>();
 
   constructor(private route: ActivatedRoute, private languageService: LanguageService, public authService: AuthService) {
+    this.currentUser = this.authService.currentUser$;
+    this.currentUser.subscribe(user => {
+      if (user) {
+        this.role = user.Role; 
+      } else {
+        this.role = "";
+      }
+    });
   }
   async getUserInfo() {
     let user=await fetch(`/api/users/${this.userId}`)
