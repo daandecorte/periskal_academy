@@ -32,7 +32,7 @@ export class UserManagementComponent {
     this.userListRaw = await result.json();
     for (const el of this.userListRaw) {
       let trainingCount = await this.getUserTrainings(Number(el.id));
-      //let certificateCount = await this.getUserCertificates(Number(el.id));
+      let certificateCount = await this.getUserCertificates(Number(el.id));
 
       var temp: IUserFull = {
         id: el.id || '-1',
@@ -40,7 +40,7 @@ export class UserManagementComponent {
         lastname: el.lastname || 'invalid',
         shipname: el.shipname || 'invalid',
         products: `${trainingCount}`,
-        certificates: `-1`,
+        certificates: `${certificateCount}`,
       };
 
       console.log(temp);
@@ -57,8 +57,6 @@ export class UserManagementComponent {
   }
 
   async getUserCertificates(id: number) {
-    return `-1`;
-    // API is er nog NIET
     var res = await fetch(`api/users/${id}/certificates`);
     var certData: IData[] = await res.json();
     return certData.length;

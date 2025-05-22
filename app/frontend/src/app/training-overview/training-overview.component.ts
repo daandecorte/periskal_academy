@@ -275,8 +275,8 @@ export class TrainingOverviewComponent implements OnInit {
   }
 
   getProgressPercentage(): number {
-    if (this.totalTrainings === 0) return 0;
-    return (this.trainingsCompleted / this.totalTrainings) * 100;
+    if (this.totalTrainings === 0 || this.userTraining==undefined) return 0;
+    return (this.userTraining?.training_progress.modules_completed / this.moduleSections.length) * 100;
   }
 
   getLocalizedTitle(): string {

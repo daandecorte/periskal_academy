@@ -20,7 +20,7 @@
         <div class="progress-bar">
             {{"USER_DETAIL.OVERALL_PROGRESS"|translate}}
             <div class="overall-progress">
-                <div class="overall-progress-bar"></div>
+                <div [style.width.%]="overallProgress" class="overall-progress-bar"></div>
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
                         <div class="training-status status-completed">{{ mapStatusToTranslationKey(detail.training_progress?.status) | translate }}</div>
                     </div>
                     <div class="course-progress">
-                        <div class="course-progress-bar" style="width: 75%;"></div>
+                        <div class="course-progress-bar" [style.width.%]="(detail.training_progress.modules_completed/detail.training.modules.length)*100"></div>
                     </div>
                     <p>{{'USER_DETAIL.ASSIGNED_ON' | translate}}: {{ detail.training_progress?.start_date_time ? (detail.training_progress.start_date_time | date:'d/MM/yyyy, H:mm:ss') : 'N/A' }}</p>
                     <p>{{'USER_DETAIL.LAST_ACTIVITY' | translate}}: {{ detail.training_progress?.last_time_accessed ? (detail.training_progress.last_time_accessed | date:'d/MM/yyyy, H:mm:ss') : 'N/A' }}</p>

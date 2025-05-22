@@ -62,25 +62,26 @@
       }
     }
     </div>
-
-    <div class="training-progress">
-      <h3>{{ "TRAINING_OVERVIEW.MODULE_PROGRESS" | translate }}</h3>
-      <div class="progress-container">
-        <div class="progress-bar">
-          <div
-            class="progress-fill"
-            [style.width.%]="getProgressPercentage()"
-          ></div>
-        </div>
-        <div class="progress-text">
-          {{ trainingsCompleted }}
-          {{
-            "TRAINING_OVERVIEW.OF_COMPLETED"
-              | translate : { completed: totalTrainings }
-          }}
-        </div>
+@if(userTraining) {
+  <div class="training-progress">
+    <h3>{{ "TRAINING_OVERVIEW.MODULE_PROGRESS" | translate }}</h3>
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div
+          class="progress-fill"
+          [style.width.%]="(userTraining.training_progress.modules_completed / this.moduleSections.length) * 100"
+        ></div>
+      </div>
+      <div class="progress-text">
+        {{ userTraining.training_progress.modules_completed }}
+        {{
+          "TRAINING_OVERVIEW.OF_COMPLETED"
+            | translate : { completed: moduleSections.length}
+        }}
       </div>
     </div>
+  </div>
+}
 
     <div class="action-buttons">
       <button class="back-button" (click)="goBack()">

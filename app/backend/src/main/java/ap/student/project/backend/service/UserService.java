@@ -2,10 +2,7 @@ package ap.student.project.backend.service;
 
 import ap.student.project.backend.dao.UserRepository;
 import ap.student.project.backend.dto.UserDTO;
-import ap.student.project.backend.entity.ChatMember;
-import ap.student.project.backend.entity.ExamAttempt;
-import ap.student.project.backend.entity.User;
-import ap.student.project.backend.entity.UserTraining;
+import ap.student.project.backend.entity.*;
 import ap.student.project.backend.exceptions.DuplicateException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,6 +125,20 @@ public class UserService {
         List<UserTraining> userTrainings = user.getUserTrainings();
         if (userTrainings == null) throw new NotFoundException("user does not have any user trainings");
         return userTrainings;
+    }
+    /**
+     * Retrieves all UserCertificates associated with a specific user ID.
+     *
+     * @param id The ID of the User whose certificates to find
+     * @return A list of UserCertificates entities associated with the specified user
+     * @throws NotFoundException If the user with the given ID does not exist or has no training modules
+     */
+    public List<UserCertificate> getAllUserCertificates(int id) throws NotFoundException {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null) throw new NotFoundException("user not found");
+        List<UserCertificate> userCertificates = user.getUserCertificates();
+        if (userCertificates == null) throw new NotFoundException("user does not have any user certificates");
+        return userCertificates;
     }
 
     /**

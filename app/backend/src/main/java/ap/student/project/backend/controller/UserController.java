@@ -68,7 +68,7 @@ public class UserController {
     }
 
     /**
-     * Retrieves all trainings associated with a specific user.
+     * Retrieves all userTrainings associated with a specific user.
      * 
      * @param id The ID of the user to retrieve trainings for
      * @return ResponseEntity containing a list of user trainings with HTTP status 200 (OK)
@@ -77,6 +77,17 @@ public class UserController {
     public ResponseEntity getTrainings(@PathVariable("id") int id) {
         return ResponseEntity.ok(this.userService.getAllUserModules(id));
     }
+    /**
+     * Retrieves all userCertificates associated with a specific user.
+     *
+     * @param id The ID of the user to retrieve certificates for
+     * @return ResponseEntity containing a list of user certificates with HTTP status 200 (OK)
+     */
+    @GetMapping(value = "/users/{id}/certificates", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getUserCertificates(@PathVariable("id") int id) {
+        return ResponseEntity.ok(this.userService.getAllUserCertificates(id));
+    }
+
 
     /**
      * Retrieves all exam attempts for a specific user.
