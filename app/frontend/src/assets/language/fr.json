@@ -12,7 +12,7 @@
   "GERMAN": "Allemand",
   "TRAININGS": {
     "TITLE": "Formations",
-    "ASSIGNED_SECTION": "Assignés par le gestionnaire de flotte",
+    "ASSIGNED_SECTION": "Vos formations",
     "ALL_TRAININGS_SECTION": "Toutes les formations disponibles",
     "NO_ASSIGNED_TRAININGS": "Aucune formation attribuée ne correspond à votre recherche.",
     "NO_TRAININGS_FOUND": "Aucune formation ne correspond à votre recherche.",
@@ -27,7 +27,7 @@
     "LOADING": "Chargement..."
   },
   "ASSIGNED_TRAINING_CARD": {
-    "ASSIGNED_ON": "Assigné le {{date}}",
+    "ASSIGNED_ON": "Assigné le",
     "INVALID_DATE": "Date invalide",
     "START_NOW": "Commencer"
   },

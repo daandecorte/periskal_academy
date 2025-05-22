@@ -12,7 +12,7 @@
   "GERMAN": "German",
   "TRAININGS": {
     "TITLE": "Trainings",
-    "ASSIGNED_SECTION": "Assigned by Fleet Manager",
+    "ASSIGNED_SECTION": "Your Trainings",
     "ALL_TRAININGS_SECTION": "All Available Trainings",
     "NO_ASSIGNED_TRAININGS": "No assigned trainings match your search.",
     "NO_TRAININGS_FOUND": "No trainings match your search.",
@@ -27,7 +27,7 @@
     "LOADING": "Loading..."
   },
   "ASSIGNED_TRAINING_CARD": {
-    "ASSIGNED_ON": "Assigned on {{date}}",
+    "ASSIGNED_ON": "Assigned on",
     "INVALID_DATE": "Invalid Date",
     "START_NOW": "Start Now"
   },

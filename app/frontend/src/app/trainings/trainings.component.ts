@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { TraineeChatComponent } from '../trainee-chat/trainee-chat.component';
 import { LanguageService } from '../services/language.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-trainings',
@@ -17,16 +18,18 @@ import { LanguageService } from '../services/language.service';
 })
 export class TrainingsComponent implements OnInit {
   trainings: Training[] = [];
-  assignedTrainings: Training[] = [];
   allTrainings: Training[] = [];
   searchTerm: string = '';
   loading: boolean = true;
   error: string | null = null;
   currentLanguage: string = 'EN'; // Default language
+  userTrainings: any[] = []
+  filteredUserTrainings: any[] = []
 
   constructor(
     protected trainingService: TrainingService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +43,7 @@ export class TrainingsComponent implements OnInit {
     });
     
     this.loadTrainings();
+    this.loadAssignedTrainings();
   }
 
   mapLanguageCode(language: any): string {
@@ -58,7 +62,21 @@ export class TrainingsComponent implements OnInit {
     // Otherwise map the language name to code
     return languageMappings[language] || 'EN'; // Default to EN if mapping not found
   }
+  async loadAssignedTrainings() {
+    let periskalId = this.authService.currentUserValue?.ID
+    if(periskalId) {
+      let getUserResponse = await fetch(`/api/users/periskal_id/${periskalId}`);
+      let user = await getUserResponse.json()
+      if(user) {
+        let userId = await user.id;
+        let getUserTrainingsResponse = await fetch(`/api/users/${userId}/trainings`);
+        let userTrainigs = await getUserTrainingsResponse.json();
+        this.userTrainings = userTrainigs
+        this.filteredUserTrainings = this.userTrainings;
+      }
 
+    }
+  }
   loadTrainings(): void {
     this.loading = true;
     this.error = null;
@@ -94,7 +112,19 @@ export class TrainingsComponent implements OnInit {
       : this.allTrainings;
 
     this.trainings = filteredTrainings;
-    this.assignedTrainings = filteredTrainings.filter(training => training.assigned);
+    if(this.searchTerm) {
+      if(filteredTrainings.length>0) {
+        filteredTrainings.forEach(f=> {
+          this.filteredUserTrainings = this.userTrainings.filter(u=>
+            filteredTrainings.some(f => u.training.id === f.id)
+          );
+        })
+      }
+      else this.filteredUserTrainings = [];
+    }
+    else {
+      this.filteredUserTrainings = this.userTrainings;
+    }
   }
 
   onSearchChange(): void {

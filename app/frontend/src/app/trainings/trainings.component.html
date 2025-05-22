@@ -30,12 +30,11 @@
     </h2>
     <div
       class="assigned-trainings"
-      *ngIf="assignedTrainings.length > 0; else noAssignedTrainings"
+      *ngIf="filteredUserTrainings.length > 0; else noAssignedTrainings"
     >
-      @for (training of assignedTrainings; track training.id) {
+      @for (training of filteredUserTrainings; track training.training.id) {
       <app-assigned-training-card
         [training]="training"
-        [currentLanguage]="currentLanguage"
       ></app-assigned-training-card>
       }
     </div>

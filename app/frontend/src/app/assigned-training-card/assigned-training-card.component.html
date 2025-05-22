@@ -5,17 +5,9 @@
     </div>
   </div>
   <div class="info-section">
-    <div class="training-title">{{ getLocalizedTitle() }}</div>
+    <div class="training-title">{{ training.training.title[language.getLanguage()] }}</div>
     <div class="training-date">
-      {{
-        "ASSIGNED_TRAINING_CARD.ASSIGNED_ON"
-          | translate
-            : {
-                date:
-                  training.assignedDate ||
-                  ("ASSIGNED_TRAINING_CARD.INVALID_DATE" | translate)
-              }
-      }}
+      {{"ASSIGNED_TRAINING_CARD.ASSIGNED_ON" | translate}} {{training.training_progress.start_date_time |  date:'d/MM/yyyy'}}
     </div>
   </div>
   <div class="button-section">
