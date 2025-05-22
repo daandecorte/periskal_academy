@@ -1,7 +1,12 @@
 package ap.student.project.backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ExamAnswerDTO {
+    @JsonProperty("questionId")
     private int questionId;
+
+    @JsonProperty("optionId")
     private int optionId;
 
     public ExamAnswerDTO() {

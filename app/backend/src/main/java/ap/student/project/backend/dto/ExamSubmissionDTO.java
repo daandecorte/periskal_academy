@@ -1,10 +1,16 @@
 package ap.student.project.backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 public class ExamSubmissionDTO {
+    @JsonProperty("examId")
     private int examId;
+
+    @JsonProperty("userId")
     private int userId;
+
+    @JsonProperty("answers")
     private List<ExamAnswerDTO> answers;
 
     public ExamSubmissionDTO() {
