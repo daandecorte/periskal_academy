@@ -6,6 +6,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { faArrowLeft, faVideo } from '@fortawesome/free-solid-svg-icons';
 import { Module, Question, Training, TrainingService } from '../services/training.service';
 import { LanguageService } from '../services/language.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-module-questions',
@@ -37,6 +38,8 @@ export class ModuleQuestionsComponent implements OnInit {
   
   currentStep: number = 2;
   totalSteps: number = 10;
+
+  training: Training |undefined;
   
   faArrowLeft = faArrowLeft;
   faVideo = faVideo;
@@ -45,6 +48,7 @@ export class ModuleQuestionsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public languageService: LanguageService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -53,7 +57,12 @@ export class ModuleQuestionsComponent implements OnInit {
       this.moduleId = +params['sectionId'];
       
       this.loadQuestionData();
+      this.getTraining();
     });
+  }
+  async getTraining() {
+    let trainingResponse = await fetch(`/api/trainings/${this.trainingId}`);
+    this.training = await trainingResponse.json();
   }
 
   async loadQuestionData() {
@@ -107,8 +116,57 @@ export class ModuleQuestionsComponent implements OnInit {
       this.currentStep++;
       this.setCurrentQuestion();
       if(this.currentQuestionIndex>=this.module.questions.length) {
+        this.addModuleCompleted();
         this.isModuleCompleted = true;
       }
+    }
+  }
+
+  async addModuleCompleted() {
+    try {
+      const userPerId = this.authService.currentUserValue?.ID;
+      if (!userPerId) {
+        console.error("User Periskal ID not found.");
+        return;
+      }
+
+      const userIdResponse = await fetch(`/api/users/periskal_id/${userPerId}`);
+      if (!userIdResponse.ok) {
+        throw new Error(`Failed to fetch user by Periskal ID: ${userIdResponse.statusText}`);
+      }
+      const user = await userIdResponse.json();
+
+      const userId = user?.id;
+      if (!userId) {
+        throw new Error("User ID not found in response.");
+      }
+
+      const userTrainingResponse = await fetch(`/api/user_trainings/training/${this.trainingId}/user/${userId}`);
+      if (!userTrainingResponse.ok) {
+        throw new Error(`Failed to fetch user training: ${userTrainingResponse.statusText}`);
+      }
+      const userTraining = await userTrainingResponse.json();
+
+      if(this.training!=undefined) {
+        let moduleIndex = this.training.modules?.findIndex(m=>m.id==this.moduleId);
+        if(moduleIndex! < userTraining.training_progress.modules_completed) {
+          console.log("module alr made, not updating")
+          return
+        }
+      }
+
+      const trainingProgressId = userTraining?.training_progress?.id;
+      if (!trainingProgressId) {
+        throw new Error("Training progress ID not found.");
+      }
+
+      const addModuleCompletedResponse = await fetch(`/api/training_progress/${trainingProgressId}/complete_module`);
+      if (!addModuleCompletedResponse.ok) {
+        throw new Error(`Failed to complete module: ${addModuleCompletedResponse.statusText}`);
+      }
+      const response = await addModuleCompletedResponse.json();
+    } catch (error) {
+      console.error("Error in addModuleCompleted:", error);
     }
   }
 
@@ -129,11 +187,10 @@ export class ModuleQuestionsComponent implements OnInit {
   }
 
   async goToNextModule(){
-    let trainingResponse = await fetch(`/api/trainings/${this.trainingId}`);
-    let training: Training = await trainingResponse.json();
-    if(training.modules) {
-      let nextModuleIndex = training.modules.findIndex(m=>m.id==this.moduleId) + 1;
-      let nextModuleId = training.modules[nextModuleIndex]?.id;
+    if(this.training==undefined) return;
+    if(this.training.modules) {
+      let nextModuleIndex = this.training.modules.findIndex(m=>m.id==this.moduleId) + 1;
+      let nextModuleId = this.training.modules[nextModuleIndex]?.id;
       if(nextModuleId) {
         this.router.navigate(['/trainings', this.trainingId, 'module', nextModuleId]);
       }

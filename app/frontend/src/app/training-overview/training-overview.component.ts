@@ -43,7 +43,7 @@ export class TrainingOverviewComponent implements OnInit {
   totalTrainings: number = 0;
   currentLanguage: string = 'EN'; // Default language
   
-  userTraining: any={};
+  userTraining: UserTraining | undefined;
 
   // Font Awesome icons
   faPlayCircle = faPlayCircle;
@@ -77,7 +77,6 @@ export class TrainingOverviewComponent implements OnInit {
       this.trainingId = +params['id'];
       this.loadTrainingData();
     });
-    this.getUserTraining();
   }
   async getUserTraining() {
     let currentUser = await firstValueFrom(this.authService.currentUser$);
@@ -111,7 +110,7 @@ export class TrainingOverviewComponent implements OnInit {
       else if(userTrainingResponse.status==200) {
         let userTrainingJson = await userTrainingResponse.json();
         this.userTraining = await userTrainingJson;
-        if(this.userTraining.training_progress==null) {
+        if(this.userTraining?.training_progress==null) {
           let trainingProgressPostResponse = await fetch(`/api/training_progress`, {
             method: 'POST',
             headers: {
@@ -122,9 +121,12 @@ export class TrainingOverviewComponent implements OnInit {
               start_date_time: new Date().toISOString(),
               last_time_accessed: new Date().toISOString(),
               status: "IN_PROGRESS",
-              user_training_id: this.userTraining.id
+              user_training_id: this.userTraining?.id
             })
           })
+          if(trainingProgressPostResponse.status==201) {
+            this.getUserTraining();
+          }
         }
         else {
           let trainingProgressPostResponse = await fetch(`/api/training_progress/${this.userTraining.training_progress.id}`, {
@@ -136,7 +138,8 @@ export class TrainingOverviewComponent implements OnInit {
             body: JSON.stringify({
               start_date_time: this.userTraining.training_progress.start_date_time,
               last_time_accessed: new Date().toISOString(),
-              status: "IN_PROGRESS"
+              status: "IN_PROGRESS",
+              modules_completed: this.userTraining.training_progress.modules_completed
             })
           })
         }
@@ -167,7 +170,7 @@ export class TrainingOverviewComponent implements OnInit {
         if (training) {
           this.training = training;
           this.loadModuleSections();
-          this.calculateProgress();
+          this.getUserTraining();
         } else {
           // Handle training not found
           this.router.navigate(['/trainings']);
@@ -227,12 +230,6 @@ export class TrainingOverviewComponent implements OnInit {
     return values.length > 0 ? values[0] as string : '';
   }
 
-  calculateProgress(): void {
-    // Calculate completed trainings
-    this.trainingsCompleted = this.moduleSections.filter(section => section.completed).length;
-    this.totalTrainings = this.moduleSections.length;
-  }
-
   goToModule(sectionId: number): void {
     // Navigate to the specific module section
     this.router.navigate(['/trainings', this.trainingId, 'module', sectionId]);
@@ -245,7 +242,7 @@ export class TrainingOverviewComponent implements OnInit {
   // TODO: if user has already passen exam, go to certificate download page
   goToCertificate(): void {
     // user is eligible for certificate
-    if (this.userTraining.eligible_for_certificate == true) {
+    if (this.userTraining?.eligible_for_certificate == true) {
       // Check if training has an exam - handle both possibilities from the model
       if (this.training) {
         let examId: number | undefined;
@@ -301,4 +298,17 @@ export class TrainingOverviewComponent implements OnInit {
     
     return this.training.description;
   }
+}
+interface UserTraining {
+  id: number
+  training_progress: {
+    id: number
+    start_date_time: Date
+    last_time_accessed: Date
+    status: String
+    modules_completed: number
+  }
+  training: any
+  exam_attempts: any,
+  eligible_for_certificate: boolean
 }
