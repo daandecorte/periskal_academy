@@ -13,52 +13,44 @@ import {
   ITranslated,
   ContentType,
 } from './new-training.service';
+import { BasicSetupComponent } from './basic-setup/basic-setup.component';
+import { ModulesComponent } from './modules/modules.component';
+import { ExamComponent } from './exam/exam.component';
+import { PreviewComponent } from './preview/preview.component';
 
 @Component({
   selector: 'app-add-training',
-  imports: [RouterOutlet, CommonModule, TranslateModule],
+  imports: [
+    RouterOutlet,
+    CommonModule,
+    TranslateModule,
+    BasicSetupComponent,
+    ModulesComponent,
+    ExamComponent,
+    PreviewComponent,
+  ],
   templateUrl: './add-training.component.html',
   styleUrl: './add-training.component.css',
 })
 export class AddTrainingComponent {
-  steps = ['basic-setup', 'modules', 'exam', 'preview'];
-  currentStep: string = this.steps[0];
   private routerSubscription!: Subscription;
+
+  paths = ['basic-setup', 'modules', 'exam', 'preview'];
+  currentIndex: number = 0;
 
   ContentType = ContentType;
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private trainingService: NewTrainingService
   ) {}
 
-  ngOnInit() {
-    this.routerSubscription = this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe(() => {
-        const currentPath =
-          this.route.snapshot.firstChild?.url[0]?.path || this.steps[0];
-        if (this.steps.includes(currentPath)) {
-          this.currentStep = currentPath;
-        }
-      });
-  }
-
   goToNextStep() {
-    const currentIndex = this.steps.indexOf(this.currentStep);
-    if (currentIndex < this.steps.length - 1) {
-      this.currentStep = this.steps[currentIndex + 1];
-      this.router.navigate([`/add-training/${this.currentStep}`]);
-    }
+    this.currentIndex++;
   }
 
   goToPreviousStep() {
-    const currentIndex = this.steps.indexOf(this.currentStep);
-    if (currentIndex > 0) {
-      this.currentStep = this.steps[currentIndex - 1];
-      this.router.navigate([`/add-training/${this.currentStep}`]);
-    }
+    this.currentIndex--;
   }
 
   async publishTraining() {

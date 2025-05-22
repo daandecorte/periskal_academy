@@ -103,7 +103,11 @@
     "ADD_NEW_MODULE": "Add New Module",
     "CONTENT": "Content",
     "ENTER_CONTENT_TEXT": "Enter content text",
-    "UPLOADING_DATA": "Uploading data"
+    "UPLOADING_DATA": "Uploading data",
+    "BASIC_SETUP": "basic-setup",
+    "MODULES": "modules",
+    "EXAM": "exam",
+    "PREVIEW": "preview"
   },
   "USER_DETAIL": {
     "ASSIGN_NEW_CERTIFICATE": "Assign New Certificate",

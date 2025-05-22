@@ -3,49 +3,6 @@ h2 {
   font-weight: bold;
 }
 
-/* Steps Indicator */
-.steps {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  text-align: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.step {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  opacity: 0.5;
-}
-
-.step.active {
-  opacity: 1;
-}
-
-.circle {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: gray;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-}
-
-.step.active .circle {
-  background: #facc15;
-}
-
-.line {
-  width: 40px;
-  height: 2px;
-  background: gray;
-}
-
 .next-previous {
   display: flex;
   justify-content: space-between;
@@ -54,21 +11,19 @@ h2 {
   margin-right: 10px;
 }
 
-.prev-btn {
-  background: none;
-  border: none;
-  color: gray;
-  cursor: pointer;
-}
-
 .next-btn,
+.prev-btn,
 .publish-btn {
+  display: flex;
+  align-items: center;
   background-color: #fbbf24;
   color: black;
-  padding: 8px 12px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  padding: 12px 12px;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .modal-overlay {
@@ -122,4 +77,55 @@ h2 {
 .hidden {
   opacity: 0;
   pointer-events: none;
+}
+
+.progress-steps {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  position: relative;
+  padding: 0 100px;
+}
+
+.progress-line {
+  position: absolute;
+  top: 25px;
+  left: 170px;
+  right: 170px;
+  height: 2px;
+  background-color: #e0e0e0;
+  z-index: 1;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  flex: 1;
+}
+
+.step-number {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+  background-color: #e0e0e0;
+  color: #888;
+}
+
+.step.active .step-number {
+  background-color: #ffcc00;
+  color: #000;
+}
+
+.step-label {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
 }
