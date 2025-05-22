@@ -9,6 +9,7 @@ import { interval, Subscription } from 'rxjs';
 import { ExamService, Exam, ExamSubmission, ExamQuestionAnswer, ExamResult, QuestionOption, Question } from '../services/exam.service';
 import { AuthService } from '../services/auth.service';
 import { ExamResultComponent } from '../exam-result/exam-result.component';
+import { LanguageService } from '../services/language.service';
 
 @Component({
   selector: 'app-exam',
@@ -50,8 +51,9 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   faArrowLeft = faArrowLeft;
   faArrowRight = faArrowRight;
   
-  // Current language
-  currentLanguage: string = 'EN';
+  // Current language - now properly integrated with LanguageService
+  currentLanguage: string = 'ENGLISH';
+  private languageSubscription?: Subscription;
 
   // Exam results
   examScore?: number;
@@ -65,15 +67,24 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private examService: ExamService,
-    private authService: AuthService
+    private authService: AuthService,
+    private languageService: LanguageService // Add LanguageService
   ) {}
 
   ngOnInit(): void {
     // Get current user ID
     this.currentUserId = this.getCurrentUserId();
     
-    // Get current language preference
-    this.getCurrentLanguage();
+    // Subscribe to language changes
+    this.languageSubscription = this.languageService.currentLanguage$.subscribe(
+      (language: string) => {
+        this.currentLanguage = language;
+        // Update localized content when language changes
+        if (this.exam) {
+          this.updateLocalizedContent();
+        }
+      }
+    );
     
     this.route.params.subscribe(params => {
       const id = params['id'];
@@ -104,6 +115,9 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe();
     }
+    if (this.languageSubscription) {
+      this.languageSubscription.unsubscribe();
+    }
   }
 
   getCurrentUserId(): number {
@@ -112,8 +126,11 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     return 1; // Placeholder for demo
   }
 
-  getCurrentLanguage(): void {
-    this.currentLanguage = 'EN'; // Default to English
+  updateLocalizedContent(): void {
+    if (this.exam) {
+      this.examTitle = this.getLocalizedContent(this.exam.titleLocalized);
+      this.examDescription = this.getLocalizedContent(this.exam.descriptionLocalized);
+    }
   }
 
   startTimer(): void {
@@ -144,9 +161,8 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
       next: (exam) => {
         this.exam = exam;
         
-        // Set localized content
-        this.examTitle = this.getLocalizedContent(exam.titleLocalized);
-        this.examDescription = this.getLocalizedContent(exam.descriptionLocalized);
+        // Set localized content using the updated method
+        this.updateLocalizedContent();
         
          // Get questions from exam
         if (exam.questions && exam.questions.length > 0) {
@@ -233,16 +249,33 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     return options;
   }
 
+  // Updated localization method to work with your language service
   getLocalizedContent(contentMap: any): string {
     if (!contentMap) return '';
     if (typeof contentMap === 'string') return contentMap;
     
-    // Try current language first
+    // Try current language first (using the enum-style language)
     if (contentMap[this.currentLanguage]) {
       return contentMap[this.currentLanguage];
     }
     
+    // Convert language service format to string format for fallback
+    const languageStringMap: { [key: string]: string } = {
+      'ENGLISH': 'EN',
+      'FRENCH': 'FR',
+      'DUTCH': 'NL',
+      'GERMAN': 'DE'
+    };
+    
+    const stringLang = languageStringMap[this.currentLanguage];
+    if (stringLang && contentMap[stringLang]) {
+      return contentMap[stringLang];
+    }
+    
     // Fallback to English
+    if (contentMap['ENGLISH']) {
+      return contentMap['ENGLISH'];
+    }
     if (contentMap['EN']) {
       return contentMap['EN'];
     }

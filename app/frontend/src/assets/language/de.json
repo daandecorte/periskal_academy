@@ -12,7 +12,7 @@
   "GERMAN": "Deutsch",
   "TRAININGS": {
     "TITLE": "Schulungen",
-    "ASSIGNED_SECTION": "Zugewiesen vom Flottenmanager",
+    "ASSIGNED_SECTION": "Ihre Schulungen",
     "ALL_TRAININGS_SECTION": "Alle verfügbaren Schulungen",
     "NO_ASSIGNED_TRAININGS": "Keine zugewiesenen Schulungen entsprechen Ihrer Suche.",
     "NO_TRAININGS_FOUND": "Keine Schulungen entsprechen Ihrer Suche.",
@@ -27,7 +27,7 @@
     "LOADING": "Laden..."
   },
   "ASSIGNED_TRAINING_CARD": {
-    "ASSIGNED_ON": "Zugewiesen am {{date}}",
+    "ASSIGNED_ON": "Zugewiesen am",
     "INVALID_DATE": "Ungültiges Datum",
     "START_NOW": "Jetzt starten"
   },

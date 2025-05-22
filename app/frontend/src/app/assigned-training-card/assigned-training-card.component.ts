@@ -5,6 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import { TranslateModule } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { LanguageService } from '../services/language.service';
 
 @Component({
   selector: 'app-assigned-training-card',
@@ -14,18 +15,10 @@ import { Router } from '@angular/router';
   styleUrl: './assigned-training-card.component.css'
 })
 export class AssignedTrainingCardComponent {
-  @Input() training!: Training;
-  @Input() currentLanguage: string = 'EN';
+  @Input() training!: any;
   faLayerGroup = faLayerGroup;
   
-  constructor(private router: Router) {}
-  
-  getLocalizedTitle(): string {
-    if (this.training.titleLocalized && this.training.titleLocalized[this.currentLanguage]) {
-      return this.training.titleLocalized[this.currentLanguage];
-    }
-    return this.training.title || '';
-  }
+  constructor(private router: Router, public language: LanguageService) {}
   
   goToModuleOverview(): void {
     this.router.navigate(['/trainings', this.training.id]);

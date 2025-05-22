@@ -12,7 +12,7 @@
   "GERMAN": "Duits",
   "TRAININGS": {
     "TITLE": "Trainingen",
-    "ASSIGNED_SECTION": "Toegewezen door Fleet Manager",
+    "ASSIGNED_SECTION": "Uw Trainingen",
     "ALL_TRAININGS_SECTION": "Alle beschikbare trainingen",
     "NO_ASSIGNED_TRAININGS": "Geen toegewezen trainingen komen overeen met uw zoekopdracht.",
     "NO_TRAININGS_FOUND": "Geen trainingen komen overeen met uw zoekopdracht.",
@@ -27,7 +27,7 @@
     "LOADING": "Aan het laden..."
   },
   "ASSIGNED_TRAINING_CARD": {
-    "ASSIGNED_ON": "Toegewezen op {{date}}",
+    "ASSIGNED_ON": "Toegewezen op",
     "INVALID_DATE": "Ongeldige datum",
     "START_NOW": "Start nu"
   },
