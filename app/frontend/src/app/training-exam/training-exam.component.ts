@@ -79,7 +79,6 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
       const id = params['id'];
       if (id) {
         this.examId = +id; // Convert string to number
-        console.log('Exam ID from route:', this.examId); // Debug log
         
         // Get the question index from the URL
         if (params['questionIndex']) {
@@ -91,7 +90,6 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
         if (this.examId > 0) {
           this.loadExamData();
         } else {
-          console.error('Invalid exam ID:', this.examId); // Debug log
           this.examSubmissionError = 'Invalid exam ID';
           this.isLoading = false;
         }
@@ -141,7 +139,6 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
 
   loadExamData(): void {
     this.isLoading = true;
-    console.log('Exam ID upon loading exam:', this.examId); // debug log
     
     this.examService.getExamById(this.examId).subscribe({
       next: (exam) => {
@@ -278,8 +275,6 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     if (this.currentQuestionIndex < this.questions.length - 1) {
       this.currentQuestionIndex++;
       this.setCurrentQuestion();
-
-      console.log('Exam ID upon going to next question:', this.examId); // debug log
       
       // Update URL
       this.router.navigate(
@@ -296,8 +291,6 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     if (this.currentQuestionIndex > 0) {
       this.currentQuestionIndex--;
       this.setCurrentQuestion();
-
-      console.log('Exam ID upon going to previous question:', this.examId); // debug log
       
       // Update URL
       this.router.navigate(
@@ -314,8 +307,6 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   submitExam(): void {
     // Prevent multiple submissions
     if (this.isSubmitting) return;
-
-    console.log('Exam ID begin submitting:', this.examId); // debug log
     
     this.isSubmitting = true;
     this.isExamCompleted = true;
@@ -324,8 +315,6 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe();
     }
-
-    console.log('Exam ID after stopping timer before submission:', this.examId); // debug log
     
     // Prepare answers for submission
     const answers: ExamQuestionAnswer[] = [];
@@ -340,8 +329,6 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     if (answers.length < this.totalQuestions) {
       console.warn(`Not all questions were answered. Expected: ${this.totalQuestions}, Got: ${answers.length}`);
     }
-
-    console.log('Exam ID before making submission object:', this.examId); // debug log
     
     // Create submission object
     const examSubmission: ExamSubmission = {
@@ -349,21 +336,15 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
       userId: this.currentUserId,
       answers: answers,
     };
-
-    console.log('examSubmission:', examSubmission); // debug log
-
-    console.log('After making submission object:', this.examId); // debug log
     
     // Submit to backend
     this.examService.submitExam(examSubmission).subscribe({
       next: (result: ExamResult) => {
-        console.log('Exam ID on submission:', this.examId); // debug log
         this.examScore = result.score;
         this.examPassed = result.passed;
         this.isSubmitting = false;
       },
       error: (error) => {
-        console.log('Exam ID error:', examSubmission); // debug log
         console.error('Error submitting exam:', error);
         this.examSubmissionError = 'Exam submission failed, please check your internet connection.';
         this.isSubmitting = false;

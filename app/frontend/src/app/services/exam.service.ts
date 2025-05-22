@@ -91,7 +91,6 @@ export class ExamService {
 
   // Submit exam answers
   submitExam(submission: ExamSubmission): Observable<ExamResult> {
-    console.log('examSubmission exam service:', submission); // debug log
     return this.http.post<ExamResult>(`${this.apiUrl}/submit`, submission).pipe(
       catchError(error => {
         console.error('Error submitting exam:', error);
