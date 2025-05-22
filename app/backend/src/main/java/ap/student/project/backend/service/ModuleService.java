@@ -126,8 +126,17 @@ public class ModuleService {
         return module;
     }
 
+    /**
+     * Deletes a whole module.
+     *
+     * @param id The ID of the module to delete.
+     * @throws NotFoundException If no module with the given ID exists
+     */
     public void deleteModule(int id) {
         Module module = this.getModuleById(id);
+        if(module == null){
+            throw new NotFoundException("Module with id " + id + " not found");
+        }
         moduleRepository.delete(module);
     }
 
@@ -174,6 +183,24 @@ public class ModuleService {
         content.setReference(contentDTO.reference());
         contentRepository.save(content);
         return content;
+    }
+
+    /**
+     * Deletes content from an existing module.
+     *
+     * @param id The ID of the module to delete the content from
+     * @param idContent The ID of the content that we need to delete
+     */
+    public void deleteContent(int id, int idContent){
+        Module module = this.getModuleById(id);
+        if(module==null) {
+            throw new NotFoundException("Module with id " + id + " not found");
+        }
+        Content content = contentRepository.findById(idContent).orElse(null);
+        if(content==null) {
+            throw new NotFoundException("Content with id " + id + " not found");
+        }
+        contentRepository.delete(content);
     }
 
     /**

@@ -23,6 +23,7 @@
     [placeholder]="'ADMIN_EDIT_TRAININGS.ENTER_QUESTION' | translate"
     style="font-family: Arial, Helvetica, sans-serif"
     (input)="questionChange(questionIndex)"
+    maxlength="255"
   ></textarea>
 
   <label>{{ "ADMIN_EDIT_TRAININGS.ANSWER_OPTION" | translate }}</label>
@@ -44,6 +45,7 @@
       class="input"
       [placeholder]="'ADMIN_EDIT_TRAININGS.OPTION_PLACEHOLDER' | translate"
       (input)="answerChange(optionIndex, questionIndex)"
+      maxlength="255"
     />
     <button
       class="delete-btn"

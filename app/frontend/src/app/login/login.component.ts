@@ -200,7 +200,10 @@ export class LoginComponent {
 
       this.authService.setCurrentUser(userData);
       this.languageService.setLanguage(this.language);
-      this.router.navigate(['/trainings']);
+      if (userData.Role == 'Administrator') {
+        console.log('AAAH');
+        this.router.navigate(['/admin/trainings']);
+      } else this.router.navigate(['/trainings']);
     } else {
       // Handle specific error cases
       let errorMessage = 'Authentication failed.';

@@ -101,9 +101,22 @@ public class ModuleController {
      * @param contentDTO The content data transfer object containing content information
      * @return ResponseEntity containing the added content with HTTP status 201 (CREATED)
      */
-    @PutMapping(value = "/modules/{id}/content/{idContent}")
+    @PutMapping(value = "/modules/{id}/content/{idContent}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity updateContent(@PathVariable Integer id, @PathVariable Integer idContent,@RequestBody ContentDTO contentDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(moduleService.updateContent(id, idContent, contentDTO));
+    }
+
+    /**
+     * Deletes the content of a specific module.
+     *
+     * @param id The ID of the module to delete the content from
+     * @param idContent The ID of the content
+     * @return
+     */
+    @DeleteMapping(value = "/modules/{id}/content/{idContent}")
+    public ResponseEntity deleteContent(@PathVariable Integer id, @PathVariable Integer idContent) {
+        moduleService.deleteContent(id, idContent);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     /**

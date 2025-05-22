@@ -93,7 +93,7 @@
   "ADMIN_ADD_TRAININGS": {
     "EXAM_TITLE": "Prüfungseinstellungen",
     "TIME_LIMIT": "Zeitlimit (Minuten)",
-    "QUETIONS": "Fragen pro Prüfung",
+    "QUESTIONS_PER_EXAM": "Fragen pro Prüfung",
     "PASSING_SCORE": "Erforderliche Bestehensnote (%)",
     "MAX_ATTEMPTS": "Maximale Wiederholungsversuche",
     "MAX_ATTEMPTS_DESCRIPTION": "Unbegrenzte Versuche durch Eingabe von 0 festlegen",

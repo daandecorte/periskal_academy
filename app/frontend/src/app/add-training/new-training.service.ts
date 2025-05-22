@@ -47,6 +47,12 @@ export class NewTrainingService {
         price: 0,
       },
     };
+
+    this._editModuleIndex = -1;
+    this.imagePreviews = [];
+    this.videoPreviews = [];
+    this.removedContentsIndex = [];
+    this.removedModulesIndex = [];
   }
 
   public get newTraining() {
