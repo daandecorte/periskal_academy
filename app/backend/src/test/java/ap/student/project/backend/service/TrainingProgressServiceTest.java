@@ -1,6 +1,5 @@
 package ap.student.project.backend.service;
 
-import ap.student.project.backend.dao.ModuleProgressRepository;
 import ap.student.project.backend.dao.TrainingProgressRepository;
 import ap.student.project.backend.dao.TrainingRepository;
 import ap.student.project.backend.dao.UserRepository;
@@ -62,9 +61,6 @@ class TrainingProgressServiceTest {
     @Autowired
     private TrainingService trainingService;
 
-    @Autowired
-    private ModuleProgressRepository moduleProgressRepository;
-
     @BeforeEach
     void setUp() {
         cleanDatabase();
@@ -77,7 +73,6 @@ class TrainingProgressServiceTest {
 
     private void cleanDatabase() {
         trainingProgressRepository.deleteAll();
-        moduleProgressRepository.deleteAll();
     }
 
     @Test

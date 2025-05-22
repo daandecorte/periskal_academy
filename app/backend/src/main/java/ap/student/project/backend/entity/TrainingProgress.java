@@ -25,18 +25,18 @@ public class  TrainingProgress {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private ProgressStatusType status;
-    @OneToMany( mappedBy = "trainingProgress", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    private List<ModuleProgress> moduleProgresses;
+    @Column(name = "modules_completed")
+    private int modulesCompleted;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_training_id")
     @JsonIgnore
     private UserTraining userTraining;
 
-    public TrainingProgress(LocalDateTime startDateTime, LocalDateTime lastTimeAccessed, ProgressStatusType status, List<ModuleProgress> moduleProgresses, UserTraining userTraining) {
+    public TrainingProgress(LocalDateTime startDateTime, LocalDateTime lastTimeAccessed, ProgressStatusType status, int modulesCompleted, UserTraining userTraining) {
         this.startDateTime = startDateTime;
         this.lastTimeAccessed = lastTimeAccessed;
         this.status = status;
-        this.moduleProgresses = moduleProgresses;
+        this.modulesCompleted = modulesCompleted;
         this.userTraining = userTraining;
     }
 
@@ -47,7 +47,7 @@ public class  TrainingProgress {
                 ", startDateTime=" + startDateTime +
                 ", lastTimeAccessed=" + lastTimeAccessed +
                 ", status=" + status +
-                ", moduleProgresses=" + moduleProgresses +
+                ", modulesCompleted=" + modulesCompleted +
                 ", userTraining=" + userTraining +
                 '}';
     }
