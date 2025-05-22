@@ -84,7 +84,7 @@ export const routes: Routes = [
     path: 'userdetail/:id',
     component: UserdetailComponent,
     canActivate: [RoleGuard],
-    data: { roles: [Role.ADMIN, Role.SUPPORT] },
+    data: { roles: [Role.ADMIN, Role.SUPPORT, Role.FLEETMANAGER] },
   },
   {
     path: 'add-training',

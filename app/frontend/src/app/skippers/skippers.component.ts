@@ -43,16 +43,27 @@ export class SkippersComponent {
       if(result.status==200) {
         let temp: IUsers = await result.json();
   
-        let trainingCount = await this.getUserTrainings(Number(temp.id));
-        // let certificateCount = await this.getUserCertificates(Number(temp.id));
+        let userTrainings = await this.getUserTrainings(Number(temp.id));
+        let overallProgress=0;
+        if(userTrainings) {
+          let total=0;
+          userTrainings?.forEach(u=>{
+            if(u.training_progress.modules_completed!=0) {
+              total+=((u.training_progress.modules_completed/u.training.modules.length)*100)
+            }
+          })
+        overallProgress = total/userTrainings?.length;
+      }
+        let certificateCount = await this.getUserCertificates(Number(temp.id));
   
         let tempF: IUserFull = {
           id: temp.id,
           firstname: temp.firstname,
           lastname: temp.lastname,
           shipname: temp.shipname,
-          products: `${trainingCount}`,
-          certificates: `-1`,
+          products: `${userTrainings.length}`,
+          certificates: `${certificateCount}`,
+          module_completion: overallProgress
         };
   
         this.skippersList.push(tempF);
@@ -64,12 +75,11 @@ export class SkippersComponent {
 
   async getUserTrainings(id: number) {
     var res = await fetch(`api/users/${id}/trainings`);
-    var modData: IData[] = await res.json();
-    return modData.length;
+    var modData: any[] = await res.json();
+    return modData;
   }
 
   async getUserCertificates(id: number) {
-    // API is er nog NIET
     var res = await fetch(`api/users/${id}/certificates`);
     var certData: IData[] = await res.json();
     return certData.length;
@@ -125,6 +135,7 @@ interface IUserFull {
   shipname: string;
   products: string;
   certificates: string;
+  module_completion: number;
 }
 
 interface IData {
