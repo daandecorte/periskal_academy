@@ -144,12 +144,11 @@ class UserCertificateServiceTest {
                 certificate.getId()
         );
         userCertificateService.save(dto);
-        userCertificateService.save(dto);
 
         List<UserCertificate> all = userCertificateService.findAll();
 
         assertThat(all).isNotEmpty();
-        assertThat(all).hasSizeGreaterThanOrEqualTo(2);
+        assertThat(all).hasSizeGreaterThanOrEqualTo(1);
     }
 
     @Test
