@@ -62,6 +62,8 @@ export class AddTrainingComponent {
   }
 
   async publishTraining() {
+    this.showLoadingModal();
+
     if (this.trainingService.newTraining.id == -1) this.publishNewTraining();
     else this.publishEditedTraining();
 
@@ -320,8 +322,6 @@ export class AddTrainingComponent {
   }
 
   async publishNewTraining() {
-    this.showLoadingModal();
-    //Logic for uploading to database
     try {
       //POST Training
       let resultTraining = await fetch(`/api/trainings`, {
@@ -333,7 +333,7 @@ export class AddTrainingComponent {
         body: JSON.stringify({
           title: this.trainingService.newTraining.title,
           description: this.trainingService.newTraining.description,
-          isActive: this.trainingService.newTraining.active,
+          is_active: this.trainingService.newTraining.active,
         }),
       });
 

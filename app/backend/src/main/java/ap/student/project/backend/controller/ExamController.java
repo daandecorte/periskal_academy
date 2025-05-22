@@ -99,7 +99,7 @@ public class ExamController {
      * @param id The ID of the exam to delete a questions for
      * @return ResponseEntity containing nothing with HTTP status 200 (OK)
      */
-    @DeleteMapping(value="/exams/{id}/questions", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value="/exams/{id}/questions")
     public ResponseEntity deleteQuestion(@PathVariable int id) {
         this.examService.deleteQuestions(id);
         return ResponseEntity.status(HttpStatus.OK).body(id);

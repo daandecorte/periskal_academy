@@ -23,7 +23,7 @@ public class Question {
     @MapKeyColumn(name = "language")
     @Column(name = "text")
     private Map<Language, String> text;
-    @OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QuestionOption> questionOptions;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "exam_id")

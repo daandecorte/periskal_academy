@@ -68,7 +68,7 @@
   "ADMIN_ADD_TRAININGS": {
     "EXAM_TITLE": "Exam Settings",
     "TIME_LIMIT": "Time Limit (minutes)",
-    "QUETIONS": "Questions per Exam",
+    "QUESTIONS_PER_EXAM": "Questions per Exam",
     "PASSING_SCORE": "Required Passing Score (%)",
     "MAX_ATTEMPTS": "Maximum Retry Attempts",
     "MAX_ATTEMPTS_DESCRIPTION": "Set to unlimited attempts by entering 0",
@@ -125,7 +125,7 @@
     "NO_CERTIFICATE": "This user has no certificate for this training.",
     "ISSUE_DATE": "Issue Date",
     "EXPIRY_DATE": "Expiry Date",
-    "DOWNLOAD_CERTIFICATE":"Download Certificate",
+    "DOWNLOAD_CERTIFICATE": "Download Certificate",
     "CERTIFICATE": "Certificate"
   },
 

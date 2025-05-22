@@ -24,6 +24,7 @@
           [placeholder]="
             'ADMIN_EDIT_TRAININGS.ENTER_TRAINING_TITLE' | translate
           "
+          maxlength="50"
           (input)="titleChange()"
         />
 
@@ -33,6 +34,7 @@
           style="font-family: Arial, Helvetica, sans-serif"
           [placeholder]="'ADMIN_EDIT_TRAININGS.ENTER_DESCRIPTION' | translate"
           (input)="descriptionChange()"
+          maxlength="250"
         ></textarea>
       </div>
 
@@ -50,6 +52,7 @@
               value="1"
               min="1"
               (change)="periodChange()"
+              maxlength="7"
             />
           </div>
           <div class="input-box">
@@ -60,6 +63,7 @@
               value="0"
               min="0"
               (change)="priceChange()"
+              maxlength="7"
             />
           </div>
         </div>

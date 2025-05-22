@@ -93,7 +93,7 @@
   "ADMIN_ADD_TRAININGS": {
     "EXAM_TITLE": "Paramètres de l'examen",
     "TIME_LIMIT": "Limite de temps (minutes)",
-    "QUETIONS": "Questions par examen",
+    "QUESTIONS_PER_EXAM": "Questions par examen",
     "PASSING_SCORE": "Score requis pour réussir (%)",
     "MAX_ATTEMPTS": "Nombre maximal de tentatives",
     "MAX_ATTEMPTS_DESCRIPTION": "Définir un nombre illimité de tentatives en entrant 0",
