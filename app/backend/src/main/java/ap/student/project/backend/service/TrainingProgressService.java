@@ -59,6 +59,7 @@ public class TrainingProgressService {
         trainingProgress.setStartDateTime(trainingProgressDTO.startDateTime());
         trainingProgress.setLastTimeAccessed(trainingProgressDTO.lastTimeAccessed());
         trainingProgress.setStatus(trainingProgressDTO.status());
+        trainingProgress.setModulesCompleted(trainingProgressDTO.modulesCompleted());
         
         TrainingProgress savedProgress = trainingProgressRepository.save(trainingProgress);
         
@@ -85,7 +86,7 @@ public class TrainingProgressService {
         trainingProgress.setStartDateTime(trainingProgressDTO.startDateTime());
         trainingProgress.setLastTimeAccessed(trainingProgressDTO.lastTimeAccessed());
         trainingProgress.setStatus(trainingProgressDTO.status());
-        
+        trainingProgress.setModulesCompleted(trainingProgressDTO.modulesCompleted());
         return trainingProgressRepository.save(trainingProgress);
     }
 
@@ -118,5 +119,10 @@ public class TrainingProgressService {
      */
     public TrainingProgress findByUserTrainingId(int userTrainingId) {
         return trainingProgressRepository.findByUserTrainingId(userTrainingId);
+    }
+    public TrainingProgress addModuleCompleted(int trainingProgressId)  {
+        TrainingProgress trainingProgress = trainingProgressRepository.findById(trainingProgressId).orElseThrow(() -> new NotFoundException("Training progress with id \" + id + \" not found"));
+        trainingProgress.setModulesCompleted(trainingProgress.getModulesCompleted()+1);
+        return trainingProgressRepository.save(trainingProgress);
     }
 }

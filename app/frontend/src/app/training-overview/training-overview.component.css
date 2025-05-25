@@ -145,6 +145,10 @@
       }
     }
   }
+  .action-button:disabled {
+    background-color: lightgray;
+    cursor: not-allowed;
+  }
 }
 
 .training-progress {
@@ -278,4 +282,5 @@
     justify-content: space-between;
     padding: 1.5rem;
   }
+
 }

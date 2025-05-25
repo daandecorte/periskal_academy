@@ -1,6 +1,7 @@
 package ap.student.project.backend.controller;
 
 import ap.student.project.backend.dto.TrainingProgressDTO;
+import ap.student.project.backend.entity.TrainingProgress;
 import ap.student.project.backend.service.TrainingProgressService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -54,5 +55,10 @@ public class TrainingProgressController {
     public ResponseEntity updateModuleProgress(@PathVariable("id") int id, @RequestBody TrainingProgressDTO trainingProgressDTO) {
         this.trainingProgressService.update(id, trainingProgressDTO);
         return ResponseEntity.ok(trainingProgressDTO);
+    }
+    @GetMapping(value = "training_progress/{id}/complete_module", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity addModuleCompleted(@PathVariable("id") int id) {
+        TrainingProgress trainingProgress = this.trainingProgressService.addModuleCompleted(id);
+        return ResponseEntity.ok(trainingProgress);
     }
 }

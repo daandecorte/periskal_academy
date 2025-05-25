@@ -14,8 +14,8 @@
   <p class="training-description">{{ getLocalizedDescription() }}</p>
 
   <div class="training-stats">
-    <span class="status" [class.active]="training.isActive">
-      {{ training.isActive ? "Active" : "Draft" }}
+    <span class="status" [class.active]="training.active">
+      {{ training.active ? "Active" : "Draft" }}
     </span>
     <span class="module-count">{{ training.moduleCount }} modules</span>
   </div>

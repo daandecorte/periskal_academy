@@ -26,6 +26,7 @@ export class UserdetailComponent {
   currentUser: Observable<IUser | null>;
   role: String = "";
   userCertificateMap: Map<number, UserCertificate | null> = new Map<number, UserCertificate | null>();
+  overallProgress = 0;
 
   constructor(private route: ActivatedRoute, private languageService: LanguageService, public authService: AuthService) {
     this.currentUser = this.authService.currentUser$;
@@ -44,20 +45,33 @@ export class UserdetailComponent {
     this.userdetails = await modules.json();
     if(this.userdetails) {
       this.filteredUserDetails = await this.userdetails;
+      await this.getOverallProgress();
       for (const u of this.userdetails) {
         const cert = await this.getUserCertificate(u.training.id);
         this.userCertificateMap.set(u.training.id, cert);
       }
     }
   }
+  getOverallProgress() {
+    if(this.userdetails) {
+      let total=0;
+      this.userdetails?.forEach(u=>{
+        if(u.training_progress.modules_completed!=0) {
+          total+=((u.training_progress.modules_completed/u.training.modules.length)*100)
+        }
+      })
+      this.overallProgress = total/this.userdetails?.length;
+    }
+  }
   async getUserCertificate(trainingId:number) {
     let userCertificateResponse = await fetch(`/api/user_certificates/training/${trainingId}/user/${this.user?.id}`);
-    let userCertificate = await userCertificateResponse.json();
-    if(userCertificate) {
-      console.log(userCertificate);
-      return userCertificate;
+    if(userCertificateResponse.status==200) {
+      let userCertificate = await userCertificateResponse.json();
+      if(userCertificate) {
+        return userCertificate;
+      }
     }
-    else return null
+    return null
   }
     async downloadPdf(userCertificateId: number) {
     const response = await fetch(`/api/pdf/generate/${userCertificateId}`);
@@ -164,7 +178,7 @@ interface TrainingProgress {
     start_date_time: string | null,
     last_time_accessed: string | null,
     status: string | null,
-    module_progress: any
+    modules_completed: number
 }
 
 interface UserDetailResponse {

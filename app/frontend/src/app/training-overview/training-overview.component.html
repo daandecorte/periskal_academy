@@ -11,7 +11,7 @@
 
     <div class="module-sections">
       <h2>{{ "TRAINING_OVERVIEW.MODULES" | translate }}:</h2>
-
+@if(userTraining) {
       @for (section of moduleSections; track $index) {
       <div class="module-section">
         <div class="section-content">
@@ -41,8 +41,9 @@
         </div>
         <button
           class="action-button"
-          [class.review-button]="section.completed"
-          [class.start-button]="!section.completed"
+          [class.review-button]="$index<userTraining.training_progress.modules_completed"
+          [class.start-button]="$index==userTraining.training_progress.modules_completed"
+          [disabled]="$index>userTraining.training_progress.modules_completed"
           (click)="goToModule(section.id)"
         >
           @if (section.completed) {
@@ -50,34 +51,37 @@
           } @else {
           <fa-icon [icon]="faPlayCircle" class="button-icon"></fa-icon>
           }
-          {{
-            section.completed
-              ? ("TRAINING_OVERVIEW.REVIEW" | translate)
-              : ("TRAINING_OVERVIEW.START" | translate)
-          }}
+          <ng-container *ngIf="$index < userTraining.training_progress.modules_completed; else startText">
+            {{ 'TRAINING_OVERVIEW.REVIEW' | translate }}
+          </ng-container>
+          <ng-template #startText>
+            {{ 'TRAINING_OVERVIEW.START' | translate }}
+          </ng-template>
         </button>
       </div>
       }
+    }
     </div>
-
-    <div class="training-progress">
-      <h3>{{ "TRAINING_OVERVIEW.MODULE_PROGRESS" | translate }}</h3>
-      <div class="progress-container">
-        <div class="progress-bar">
-          <div
-            class="progress-fill"
-            [style.width.%]="getProgressPercentage()"
-          ></div>
-        </div>
-        <div class="progress-text">
-          {{ trainingsCompleted }}
-          {{
-            "TRAINING_OVERVIEW.OF_COMPLETED"
-              | translate : { completed: totalTrainings }
-          }}
-        </div>
+@if(userTraining) {
+  <div class="training-progress">
+    <h3>{{ "TRAINING_OVERVIEW.MODULE_PROGRESS" | translate }}</h3>
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div
+          class="progress-fill"
+          [style.width.%]="getProgressPercentage()"
+        ></div>
+      </div>
+      <div class="progress-text">
+        {{ userTraining.training_progress.modules_completed }}
+        {{
+          "TRAINING_OVERVIEW.OF_COMPLETED"
+            | translate : { completed: moduleSections.length}
+        }}
       </div>
     </div>
+  </div>
+}
 
     <div class="action-buttons">
       <button class="back-button" (click)="goBack()">
@@ -87,13 +91,13 @@
       <div class="tooltip-container">
         <button
           class="certificate-button"
-          [disabled]="userTraining.eligible_for_certificate == false"
+          [disabled]="userTraining?.eligible_for_certificate == false"
           (click)="goToCertificate()"
         >
           <fa-icon [icon]="faCertificate" class="button-icon"></fa-icon>
           {{ "TRAINING_OVERVIEW.GO_FOR_CERTIFICATE" | translate }}
         </button>
-        <div class="tooltip" *ngIf="userTraining.eligible_for_certificate == false">
+        <div class="tooltip" *ngIf="userTraining?.eligible_for_certificate == false">
           {{ "TRAINING_OVERVIEW.BUY_CERTIFICATE_FIRST" | translate }}
         </div>
       </div>

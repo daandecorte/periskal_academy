@@ -31,16 +31,27 @@ export class UserManagementComponent {
     let result = await fetch('api/users');
     this.userListRaw = await result.json();
     for (const el of this.userListRaw) {
-      let trainingCount = await this.getUserTrainings(Number(el.id));
-      //let certificateCount = await this.getUserCertificates(Number(el.id));
+      let userTrainings = await this.getUserTrainings(Number(el.id));
+      let overallProgress=0;
+      if(userTrainings) {
+        let total=0;
+        userTrainings?.forEach(u=>{
+          if(u.training_progress.modules_completed!=0) {
+            total+=((u.training_progress.modules_completed/u.training.modules.length)*100)
+          }
+        })
+        overallProgress = total/userTrainings?.length;
+      }
+      let certificateCount = await this.getUserCertificates(Number(el.id));
 
       var temp: IUserFull = {
         id: el.id || '-1',
         firstname: el.firstname || 'invalid',
         lastname: el.lastname || 'invalid',
         shipname: el.shipname || 'invalid',
-        products: `${trainingCount}`,
-        certificates: `-1`,
+        products: `${userTrainings.length}`,
+        certificates: `${certificateCount}`,
+        module_completion: overallProgress
       };
 
       console.log(temp);
@@ -52,13 +63,11 @@ export class UserManagementComponent {
 
   async getUserTrainings(id: number) {
     var res = await fetch(`api/users/${id}/trainings`);
-    var modData: IData[] = await res.json();
-    return modData.length;
+    var modData: any[] = await res.json();
+    return modData;
   }
 
   async getUserCertificates(id: number) {
-    return `-1`;
-    // API is er nog NIET
     var res = await fetch(`api/users/${id}/certificates`);
     var certData: IData[] = await res.json();
     return certData.length;
@@ -114,6 +123,7 @@ interface IUserFull {
   shipname: string;
   products: string;
   certificates: string;
+  module_completion: number
 }
 
 interface IData {
