@@ -58,6 +58,12 @@ public class PdfService {
         String imageTag = "<img src=\"data:image/png;base64," + base64 + "\" alt=\"\"/>";
         html = html.replace("<img src=\"periskalLogo.png\" alt=\"\"/>", imageTag);
 
+        imgStream = new ClassPathResource("handtekening.jpg").getInputStream();
+        imgBytes = imgStream.readAllBytes();
+        base64 = Base64.getEncoder().encodeToString(imgBytes);
+        imageTag = "<img src=\"data:image/png;base64," + base64 + "\" alt=\"\"/>";
+        html = html.replace("<img src=\"handtekening.jpg\" alt=\"\"/>", imageTag);
+
         System.out.println(html);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PdfRendererBuilder builder = new PdfRendererBuilder();

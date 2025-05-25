@@ -119,6 +119,16 @@
             max-width: 140mm;
             height: auto;
         }
+        .signature-img {
+            text-align: left;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        .signature-img img {
+            display: inline-block;
+            max-width: 50mm;
+            height: auto;
+        }
     </style>
 </head>
 <body>
@@ -144,10 +154,13 @@
         <div class="signature">${name}</div>
 
         <div class="signature-info">
-            <div><strong>Marc Persoons</strong><br/>(Authentication)</div>
-            <div class="signature-right">
-                Digitally signed by Marc Persoons<br/>
-                Date: ${date}
+            <div><strong>Marc Persoons</strong>
+                <div class="signature-img">
+                    <img src="handtekening.jpg" alt=""/>
+                </div>
+                <div class="signature-right">
+                    Date: ${date}
+                </div>
             </div>
         </div>
     </div>
