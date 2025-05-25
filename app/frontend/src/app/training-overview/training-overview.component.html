@@ -69,7 +69,7 @@
       <div class="progress-bar">
         <div
           class="progress-fill"
-          [style.width.%]="(userTraining.training_progress.modules_completed / this.moduleSections.length) * 100"
+          [style.width.%]="getProgressPercentage()"
         ></div>
       </div>
       <div class="progress-text">

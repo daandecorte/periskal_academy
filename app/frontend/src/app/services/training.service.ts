@@ -52,7 +52,7 @@ export interface Training {
   };
   exams?: any[];
   tips?: any[];
-  isActive: boolean;
+  active: boolean;
   moduleCount: number;
   progress?: number;
   hasCertificate: boolean;
@@ -139,7 +139,7 @@ private mapBackendTrainings(backendTrainings: any[]): Training[] {
       exams: backendTraining.exams || [], // Keep for backward compatibility
       hasCertificate: hasCertificateFlag || (backendTraining.exams && backendTraining.exams.length > 0),
       status: 'not_started', // Default status
-      isActive: backendTraining.isActive !== undefined ? backendTraining.isActive : true,
+      active: backendTraining.active !== undefined ? backendTraining.active : true,
       modules: this.processModules(backendTraining.modules),
       tips: backendTraining.tips
     };

@@ -39,11 +39,11 @@ export class TrainingOverviewComponent implements OnInit {
   trainingId: number = 0;
   training?: Training;
   moduleSections: ModuleSection[] = [];
-  trainingsCompleted: number = 0;
-  totalTrainings: number = 0;
+  modulesCompleted: number = 0;
   currentLanguage: string = 'EN'; // Default language
   
   userTraining: UserTraining | undefined;
+  trainingCompleted: boolean=false;
 
   // Font Awesome icons
   faPlayCircle = faPlayCircle;
@@ -129,19 +129,25 @@ export class TrainingOverviewComponent implements OnInit {
           }
         }
         else {
-          let trainingProgressPostResponse = await fetch(`/api/training_progress/${this.userTraining.training_progress.id}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              Accept: 'application/json',
-            },
-            body: JSON.stringify({
-              start_date_time: this.userTraining.training_progress.start_date_time,
-              last_time_accessed: new Date().toISOString(),
-              status: "IN_PROGRESS",
-              modules_completed: this.userTraining.training_progress.modules_completed
+          if(this.userTraining.training_progress.status!="COMPLETED") {
+            console.log("putting on in progress")
+            let trainingProgressPostResponse = await fetch(`/api/training_progress/${this.userTraining.training_progress.id}`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+              },
+              body: JSON.stringify({
+                start_date_time: this.userTraining.training_progress.start_date_time,
+                last_time_accessed: new Date().toISOString(),
+                status: "IN_PROGRESS",
+                modules_completed: this.userTraining.training_progress.modules_completed
+              })
             })
-          })
+          }
+          else {
+            this.trainingCompleted=true;
+          }
         }
       }
     }
@@ -275,8 +281,33 @@ export class TrainingOverviewComponent implements OnInit {
   }
 
   getProgressPercentage(): number {
-    if (this.totalTrainings === 0 || this.userTraining==undefined) return 0;
-    return (this.userTraining?.training_progress.modules_completed / this.moduleSections.length) * 100;
+    if (this.userTraining==undefined) return 0;
+    let percentage = (this.userTraining.training_progress.modules_completed / this.moduleSections.length) * 100;
+    
+    if(percentage==100 && !this.trainingCompleted) {
+      this.trainingCompleted=true;
+      this.putTrainingOnCompleted();
+    }
+    return percentage
+  }
+
+  async putTrainingOnCompleted() {
+    if(this.userTraining) {
+      console.log("putting on complete")
+      let trainingProgressPostResponse = await fetch(`/api/training_progress/${this.userTraining.training_progress.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          start_date_time: this.userTraining.training_progress.start_date_time,
+          last_time_accessed: new Date().toISOString(),
+          status: "COMPLETED",
+          modules_completed: this.userTraining.training_progress.modules_completed
+        })
+      })
+    }
   }
 
   getLocalizedTitle(): string {
