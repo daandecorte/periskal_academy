@@ -21,6 +21,6 @@ export class AssignedTrainingCardComponent {
   constructor(private router: Router, public language: LanguageService) {}
   
   goToModuleOverview(): void {
-    this.router.navigate(['/trainings', this.training.id]);
+    this.router.navigate(['/trainings', this.training.training.id]);
   }
 }
