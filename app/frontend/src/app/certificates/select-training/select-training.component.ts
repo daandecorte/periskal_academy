@@ -20,7 +20,8 @@ export class SelectTrainingComponent {
   }
   async init() {
     let certificateData = await fetch("/api/certificates")
-    this.certificates= await certificateData.json();
+    let certificates = await certificateData.json();
+    this.certificates= certificates.filter((c: Certificate)=>c.training.active);
     this.filteredCertificates = await this.certificates;
   }
   toggleCertificate(index: number) {
