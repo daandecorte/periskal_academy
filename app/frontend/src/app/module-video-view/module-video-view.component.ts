@@ -85,4 +85,7 @@ export class ModuleVideoViewComponent {
   continueToQuestions(): void {
     this.router.navigate(['/trainings', this.trainingId, 'module', this.moduleId, 'questions']);
   }
+  disableRightClick(event: MouseEvent): void {
+  event.preventDefault();
+}
 }

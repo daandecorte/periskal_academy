@@ -44,6 +44,7 @@
         <div class="video-container">
           <video
             #videoPlayer
+            (contextmenu)="disableRightClick($event)"
             [src]="content.reference[languageService.getLanguage()]"
             controls
           >
