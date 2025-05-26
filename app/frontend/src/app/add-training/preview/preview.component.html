@@ -43,9 +43,8 @@
           <label class="switch">
             <input
               type="checkbox"
-              [checked]="isActive"
               [disabled]="!allReady"
-              (change)="toggleActive($event)"
+              [(ngModel)]="trainingService.newTraining.active"
             />
             <span class="slider round"></span>
           </label>

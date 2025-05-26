@@ -3,10 +3,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { NewTrainingService, ITranslated } from '../new-training.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-preview',
-  imports: [TranslateModule, FontAwesomeModule],
+  imports: [TranslateModule, FontAwesomeModule, FormsModule],
   templateUrl: './preview.component.html',
   styleUrl: './preview.component.css',
 })
@@ -17,7 +18,7 @@ export class PreviewComponent {
   modulesReady: boolean = false;
   examReady: boolean = false;
 
-  constructor(private trainingService: NewTrainingService) {
+  constructor(public trainingService: NewTrainingService) {
     this.checkBasicTraining();
     this.checkModules();
     this.checkExam();
@@ -82,15 +83,5 @@ export class PreviewComponent {
 
   get allReady(): boolean {
     return this.basicTrainingReady && this.modulesReady && this.examReady;
-  }
-
-  toggleActive(event: Event) {
-    const input = event.target as HTMLInputElement;
-
-    if (this.allReady) {
-      this.isActive = input.checked;
-    } else {
-      input.checked = false;
-    }
   }
 }

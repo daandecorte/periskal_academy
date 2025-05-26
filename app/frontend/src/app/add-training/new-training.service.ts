@@ -25,7 +25,9 @@ export class NewTrainingService {
       price: 0,
     },
   };
-
+  setActiveState(state: boolean) {
+    this._newTraining.active=state;
+  }
   resetTraining() {
     this._newTraining = {
       id: -1,

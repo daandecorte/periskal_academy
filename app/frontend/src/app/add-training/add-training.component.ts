@@ -77,7 +77,7 @@ export class AddTrainingComponent {
           body: JSON.stringify({
             title: this.trainingService.newTraining.title,
             description: this.trainingService.newTraining.description,
-            isActive: this.trainingService.newTraining.active,
+            is_active: this.trainingService.newTraining.active,
           }),
         }
       );
