@@ -116,4 +116,18 @@ public class ExamController {
         ExamResultDTO result = this.examService.evaluateExam(submissionDTO);
         return ResponseEntity.ok(result);
     }
+
+    /**
+     * Starts an exam by its ID and returns a version of the exam with a randomized selection of questions, 
+     * limited to the number defined in the exam's configuration. 
+     * If the number of questions available is less than or equal to the desired 
+     * amount, all questions are returned.
+     *
+     * @param id the ID of the exam to start
+     * @return ResponseEntity containing the exam with randomly selected questions
+     */
+    @GetMapping(value = "/exams/{id}/start", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity startExam(@PathVariable int id) {
+        return ResponseEntity.ok(this.examService.startExam(id));
+    }
 }

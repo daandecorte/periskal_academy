@@ -18,6 +18,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -212,5 +214,51 @@ public class ExamService {
         boolean passed = score >= exam.getPassingScore();
         
         return new ExamResultDTO(score, passed);
+    }
+
+    /**
+     * Returns a copy of an exam that includes only randomly chosen questions. 
+     * If the total available questions are fewer than or equal to the configured amount, all questions are included.
+     *
+     * @param id the ID of the exam to start
+     * @return a copy of the Exam object with randomly selected questions
+     * @throws NotFoundException if no exam with the given ID is found
+     */
+    public Exam startExam(int id) throws NotFoundException {
+        Exam exam = findById(id);
+        
+        // Get all questions
+        List<Question> allQuestions = exam.getQuestions();
+        
+        // Determine how many questions to select
+        int questionsToSelect = Math.min(exam.getQuestionAmount(), allQuestions.size());
+        
+        // If all questions are needed or there is exactly the right amount, return as is
+        if (questionsToSelect >= allQuestions.size()) {
+            return exam;
+        }
+        
+        // Randomly select questions
+        List<Question> selectedQuestions = selectRandomQuestions(allQuestions, questionsToSelect);
+        
+        // Create a copy of the exam with only selected questions
+        Exam examCopy = new Exam();
+        BeanUtils.copyProperties(exam, examCopy);
+        examCopy.setQuestions(selectedQuestions);
+        
+        return examCopy;
+    }
+
+    /**
+     * Selects a random subset of questions from the provided list.
+     *
+     * @param allQuestions the full list of available questions
+     * @param count the number of questions to select
+     * @return a list containing randomly selected questions
+     */
+    private List<Question> selectRandomQuestions(List<Question> allQuestions, int count) {
+        List<Question> questionsCopy = new ArrayList<>(allQuestions);
+        Collections.shuffle(questionsCopy);
+        return questionsCopy.subList(0, count);
     }
 }
