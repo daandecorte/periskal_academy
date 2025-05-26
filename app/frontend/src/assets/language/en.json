@@ -315,5 +315,13 @@
     "YEARS": "Years",
     "CERTIFICATES": "Certificates",
     "ASSIGN_SELECTION": "Assign Selection"
+  },
+  "NAV": {
+    "TRAININGS": "Trainings",
+    "CERTIFICATES": "Certificates",
+    "TIPS_AND_TRICKS": "Tips and tricks",
+    "USER_MANAGEMENT": "User Management",
+    "SKIPPERS": "Skippers",
+    "SUPPORT": "Support"
   }
 }

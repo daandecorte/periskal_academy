@@ -2,10 +2,6 @@
   <nav>
     <div class="top-row">
       <h1>{{ "USER_MANAGEMENT.SKIPPERS" | translate }}</h1>
-      <button class="assign-btn">
-        <fa-icon [icon]="faCertificate" class="btn-icon"></fa-icon>
-        {{ "USER_MANAGEMENT.ASSIGN_CERTIFICATE" | translate }}
-      </button>
     </div>
     <div class="search-container">
       <select [(ngModel)]="selectedFilter" (change)="filterSkippers()">

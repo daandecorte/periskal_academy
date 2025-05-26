@@ -315,5 +315,13 @@
     "YEARS": "Jaren",
     "CERTIFICATES": "Certificaten",
     "ASSIGN_SELECTION": "Selectie toewijzen"
+  },
+  "NAV": {
+    "TRAININGS": "Opleidingen",
+    "CERTIFICATES": "Certificaten",
+    "TIPS_AND_TRICKS": "Tips en trucs",
+    "USER_MANAGEMENT": "Gebruikersbeheer",
+    "SKIPPERS": "Schippers",
+    "SUPPORT": "Ondersteuning"
   }
 }

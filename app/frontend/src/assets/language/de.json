@@ -315,5 +315,13 @@
     "YEARS": "Jahre",
     "CERTIFICATES": "Zertifikate",
     "ASSIGN_SELECTION": "Auswahl zuweisen"
+  },
+  "NAV": {
+    "TRAININGS": "Schulungen",
+    "CERTIFICATES": "Zertifikate",
+    "TIPS_AND_TRICKS": "Tipps und Tricks",
+    "USER_MANAGEMENT": "Benutzerverwaltung",
+    "SKIPPERS": "Skipper",
+    "SUPPORT": "Support"
   }
 }
