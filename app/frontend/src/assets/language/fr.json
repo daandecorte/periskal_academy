@@ -247,11 +247,11 @@
   },
   "EXAM_RESULT": {
     "CONGRATS": "Félicitations !",
-    "CONGRATS_MESSAGE_1": "Vous avez réussi l'examen de ",
-    "CONGRATS_MESSAGE_2": " !",
+    "CONGRATS_MESSAGE_1": "Vous avez réussi l'examen de",
+    "CONGRATS_MESSAGE_2": "!",
     "SCORE": "Votre score était de ",
-    "ISSUE_DATE": "Date d'émission : ",
-    "VALID_FOR": "Valide pendant ",
+    "ISSUE_DATE": "Date d'émission:",
+    "VALID_FOR": "Date d’expiration:",
     "FAIL": "Échec de l'examen",
     "FAIL_MESSAGE": "Malheureusement, vous n'avez pas obtenu la note minimale requise.",
     "FAIL_MESSAGE_REVIEW": "Vous devriez revoir le matériel avant de repasser l'examen.",
@@ -316,5 +316,18 @@
     "YEARS": "Années",
     "CERTIFICATES": "Certificats",
     "ASSIGN_SELECTION": "Attribuer la sélection"
+  },
+  "NAV": {
+    "TRAININGS": "Formations",
+    "CERTIFICATES": "Certificats",
+    "TIPS_AND_TRICKS": "Astuces",
+    "USER_MANAGEMENT": "Gestion des utilisateurs",
+    "SKIPPERS": "Skippers",
+    "SUPPORT": "Assistance"
+  },
+  "TRAINING_CARD": {
+    "CERTIFICATE": "Certificat",
+    "START_TRAINING": "Commencer la formation",
+    "MODULES": "Modules"
   }
 }

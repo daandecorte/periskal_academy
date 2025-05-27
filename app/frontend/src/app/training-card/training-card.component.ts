@@ -4,12 +4,13 @@ import { Training } from '../services/training.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faLayerGroup, faCertificate } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 
 //Elke trainingkaart bevat een titel, beschrijving, aantal moduleen, voortgangsindicator en een speciaal icoon voor certificeringstrainings
 
 @Component({
   selector: 'app-training-card',
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [CommonModule, FontAwesomeModule,TranslatePipe],
   templateUrl: './training-card.component.html',
   styleUrl: './training-card.component.css'
 })
@@ -22,10 +23,6 @@ export class TrainingCardComponent {
   faCertificate = faCertificate;
 
   constructor(private router: Router) {}
-
-  getButtonText(): string {
-    return this.training.status === 'not_started' ? 'Start Module' : 'Continue Module';
-  }
 
   goToModuleOverview(): void {
     this.router.navigate(['/trainings', this.training.id]);

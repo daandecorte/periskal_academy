@@ -208,11 +208,11 @@
   },
   "EXAM_RESULT": {
     "CONGRATS": "Gefeliciteerd!",
-    "CONGRATS_MESSAGE_1": "Je bent geslaagd voor het examen ",
+    "CONGRATS_MESSAGE_1": "Je bent geslaagd voor het examen",
     "CONGRATS_MESSAGE_2": "!",
     "SCORE": "Je score was ",
-    "ISSUE_DATE": "Uitgiftedatum: ",
-    "VALID_FOR": "Geldig voor ",
+    "ISSUE_DATE": "Uitgiftedatum:",
+    "VALID_FOR": "Geldig tot:",
     "FAIL": "Examen niet gehaald",
     "FAIL_MESSAGE": "Helaas heb je niet de vereiste score behaald.",
     "FAIL_MESSAGE_REVIEW": "Je zou het lesmateriaal opnieuw moeten bekijken voordat je het examen opnieuw doet.",
@@ -315,5 +315,18 @@
     "YEARS": "Jaren",
     "CERTIFICATES": "Certificaten",
     "ASSIGN_SELECTION": "Selectie toewijzen"
+  },
+  "NAV": {
+    "TRAININGS": "Opleidingen",
+    "CERTIFICATES": "Certificaten",
+    "TIPS_AND_TRICKS": "Tips en trucs",
+    "USER_MANAGEMENT": "Gebruikersbeheer",
+    "SKIPPERS": "Schippers",
+    "SUPPORT": "Ondersteuning"
+  },
+  "TRAINING_CARD": {
+    "CERTIFICATE": "Certificaat",
+    "START_TRAINING": "Start Training",
+    "MODULES": "Modules"
   }
 }

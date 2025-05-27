@@ -36,21 +36,20 @@ export class AddTrainingComponent {
   private routerSubscription!: Subscription;
 
   paths = ['basic-setup', 'modules', 'exam', 'preview'];
-  currentIndex: number = 0;
 
   ContentType = ContentType;
 
   constructor(
     private router: Router,
-    private trainingService: NewTrainingService
+    public trainingService: NewTrainingService
   ) {}
 
   goToNextStep() {
-    this.currentIndex++;
+    this.trainingService.currentIndex++;
   }
 
   goToPreviousStep() {
-    this.currentIndex--;
+    this.trainingService.currentIndex--;
   }
 
   async publishTraining() {
@@ -77,7 +76,7 @@ export class AddTrainingComponent {
           body: JSON.stringify({
             title: this.trainingService.newTraining.title,
             description: this.trainingService.newTraining.description,
-            isActive: this.trainingService.newTraining.active,
+            is_active: this.trainingService.newTraining.active,
           }),
         }
       );

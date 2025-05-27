@@ -36,11 +36,11 @@ export class ModuleFormComponent {
 
   saveModule() {
     this.trainingService.saveModule();
-    this.router.navigate(['/add-training/modules']);
+    this.router.navigate(['/add-training']);
   }
 
   cancelModule() {
     this.trainingService.resetModule();
-    this.router.navigate(['/add-training/modules']);
+    this.router.navigate(['/add-training']);
   }
 }

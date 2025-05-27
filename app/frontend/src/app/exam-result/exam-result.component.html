@@ -8,9 +8,7 @@
       {{ "EXAM_RESULT.CONGRATS" | translate }}
     </div>
     <div class="certificate-message">
-      {{ "EXAM_RESULT.CONGRATS_MESSAGE_1" | translate }}
-      Navigation Safety
-      {{ "EXAM_RESULT.CONGRATS_MESSAGE_2" | translate }}
+      {{ "EXAM_RESULT.CONGRATS_MESSAGE_1" | translate }} {{ "EXAM_RESULT.CONGRATS_MESSAGE_2" | translate }}
     </div>
     <div class="certificate-details">
       <div class="details-title">
@@ -21,14 +19,14 @@
           [icon]="faCalendar"
           style="color: #15803d; margin-right: 5px"
         ></fa-icon>
-        {{ "EXAM_RESULT.ISSUE_DATE" | translate }}19-12-2024
+        {{ "EXAM_RESULT.ISSUE_DATE" | translate }} {{userCertificate?.issue_date | date : 'dd-MM-yyyy'}}
       </div>
       <div class="detail-item">
         <fa-icon
           [icon]="faClock"
           style="color: #15803d; margin-right: 5px"
         ></fa-icon>
-        {{ "EXAM_RESULT.VALID_FOR" | translate }}1 year
+        {{ "EXAM_RESULT.VALID_FOR" | translate }} {{userCertificate?.expiry_date | date: 'dd-MM-yyyy'}}
       </div>
     </div>
     } @else {

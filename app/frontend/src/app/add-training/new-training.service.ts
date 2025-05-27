@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class NewTrainingService {
+  public currentIndex: number=0;
   private _newTraining: INewTraining = {
     id: -1,
     title: { ENGLISH: '', FRENCH: '', DUTCH: '', GERMAN: '' },
@@ -25,7 +26,9 @@ export class NewTrainingService {
       price: 0,
     },
   };
-
+  setActiveState(state: boolean) {
+    this._newTraining.active=state;
+  }
   resetTraining() {
     this._newTraining = {
       id: -1,

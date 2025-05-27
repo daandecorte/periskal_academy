@@ -245,11 +245,11 @@
   },
   "EXAM_RESULT": {
     "CONGRATS": "Congratulations!",
-    "CONGRATS_MESSAGE_1": "You have successfully passed the ",
-    "CONGRATS_MESSAGE_2": " exam!",
+    "CONGRATS_MESSAGE_1": "You have successfully passed the",
+    "CONGRATS_MESSAGE_2": "exam!",
     "SCORE": "Your score was ",
-    "ISSUE_DATE": "Issue Date: ",
-    "VALID_FOR": "Valid for ",
+    "ISSUE_DATE": "Issue Date:",
+    "VALID_FOR": "Expiry Date:",
     "FAIL": "Exam Failed",
     "FAIL_MESSAGE": "Unfortunately you did not achieve the required passing score.",
     "FAIL_MESSAGE_REVIEW": "You should review the material before attempting the exam again.",
@@ -315,5 +315,18 @@
     "YEARS": "Years",
     "CERTIFICATES": "Certificates",
     "ASSIGN_SELECTION": "Assign Selection"
+  },
+  "NAV": {
+    "TRAININGS": "Trainings",
+    "CERTIFICATES": "Certificates",
+    "TIPS_AND_TRICKS": "Tips and tricks",
+    "USER_MANAGEMENT": "User Management",
+    "SKIPPERS": "Skippers",
+    "SUPPORT": "Support"
+  },
+  "TRAINING_CARD": {
+    "CERTIFICATE": "Certificate",
+    "START_TRAINING": "Start Training",
+    "MODULES": "Modules"
   }
 }

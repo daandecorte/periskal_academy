@@ -208,11 +208,11 @@
   },
   "EXAM_RESULT": {
     "CONGRATS": "Herzlichen Glückwunsch!",
-    "CONGRATS_MESSAGE_1": "Sie haben die Prüfung ",
-    "CONGRATS_MESSAGE_2": " erfolgreich bestanden!",
+    "CONGRATS_MESSAGE_1": "Sie haben die Prüfung",
+    "CONGRATS_MESSAGE_2": "erfolgreich bestanden!",
     "SCORE": "Ihre Punktzahl war ",
-    "ISSUE_DATE": "Ausgabedatum: ",
-    "VALID_FOR": "Gültig für ",
+    "ISSUE_DATE": "Ausgabedatum:",
+    "VALID_FOR": "Ablaufdatum:",
     "FAIL": "Prüfung nicht bestanden",
     "FAIL_MESSAGE": "Leider haben Sie die erforderliche Punktzahl nicht erreicht.",
     "FAIL_MESSAGE_REVIEW": "Sie sollten das Material erneut durchgehen, bevor Sie die Prüfung wiederholen.",
@@ -315,5 +315,18 @@
     "YEARS": "Jahre",
     "CERTIFICATES": "Zertifikate",
     "ASSIGN_SELECTION": "Auswahl zuweisen"
+  },
+  "NAV": {
+    "TRAININGS": "Schulungen",
+    "CERTIFICATES": "Zertifikate",
+    "TIPS_AND_TRICKS": "Tipps und Tricks",
+    "USER_MANAGEMENT": "Benutzerverwaltung",
+    "SKIPPERS": "Skipper",
+    "SUPPORT": "Support"
+  },
+  "TRAINING_CARD": {
+    "CERTIFICATE": "Zertifikat",
+    "START_TRAINING": "Training starten",
+    "MODULES": "Module"
   }
 }

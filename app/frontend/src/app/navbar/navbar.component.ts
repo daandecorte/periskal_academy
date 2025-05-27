@@ -65,7 +65,7 @@ export class NavbarComponent {
     {
       path: 'trainings',
       icon: this.faLayerGroup,
-      label: 'Trainings',
+      label: 'NAV.TRAININGS',
       allowedRoles: [
         Role.SKIPPER,
         Role.INSTALLER,
@@ -78,13 +78,13 @@ export class NavbarComponent {
     {
       path: 'certificates',
       icon: this.faCertificate,
-      label: 'Certificates',
-      allowedRoles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT, Role.FLEETMANAGER],
+      label: 'NAV.CERTIFICATES',
+      allowedRoles: [Role.SKIPPER, Role.INSTALLER, Role.FLEETMANAGER],
     },
     {
       path: 'tips-and-tricks',
       icon: this.faLightbulb,
-      label: 'Tips and tricks',
+      label: 'NAV.TIPS_AND_TRICKS',
       allowedRoles: [
         Role.SKIPPER,
         Role.INSTALLER,
@@ -95,19 +95,19 @@ export class NavbarComponent {
     {
       path: 'user-management',
       icon: this.faUsers,
-      label: 'User Management',
+      label: 'NAV.USER_MANAGEMENT',
       allowedRoles: [Role.ADMIN],
     },
     {
       path: 'skippers',
       icon: this.faUsers,
-      label: 'Skippers',
+      label: 'NAV.SKIPPERS',
       allowedRoles: [Role.FLEETMANAGER],
     },
     {
       path: 'support',
       icon: this.faHeadset,
-      label: 'Support',
+      label: 'NAV.SUPPORT',
       allowedRoles: [Role.SUPPORT],
     },
   ];

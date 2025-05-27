@@ -44,11 +44,13 @@
       <Button id="login" (click)="login()">{{"LOGIN" | translate}}</Button>
 
       <!-- Debug toggle button -->
-      <div class="debug-toggle">
-        <button (click)="toggleDongleDebug()" id="toggleDebug">
-          Dongle Debug
-        </button>
-      </div>
+       
+        <div class="debug-toggle">
+          <button (click)="toggleDongleDebug()" id="toggleDebug">
+            Dongle Debug
+          </button>
+        </div>
+
 
       @if (showDongleDebug) {
       <div class="dongle-debug">

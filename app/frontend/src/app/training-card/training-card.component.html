@@ -3,11 +3,7 @@
     <div>
       <h2 class="training-title">
         {{ getLocalizedTitle() }}
-        @if (training.assigned) {
-        <span class="assigned-badge">Assigned</span>
-        }
       </h2>
-      <p class="training-subtitle">Module Training</p>
     </div>
   </div>
 
@@ -18,7 +14,7 @@
       <span class="icon">
         <fa-icon [icon]="faLayerGroup"></fa-icon>
       </span>
-      {{ training.moduleCount }} Modules
+      {{ training.moduleCount }} {{"TRAINING_CARD.MODULES" | translate}}
     </div>
 
     @if (training.hasCertificate) {
@@ -26,7 +22,7 @@
       <span class="icon">
         <fa-icon [icon]="faCertificate"></fa-icon>
       </span>
-      Certificate
+      {{"TRAINING_CARD.CERTIFICATE" | translate}}
     </div>
     }
   </div>
@@ -40,6 +36,6 @@
   }
 
   <button class="action-button" (click)="goToModuleOverview()">
-    {{ getButtonText() }}
+    {{ "TRAINING_CARD.START_TRAINING" | translate }}
   </button>
 </div>
