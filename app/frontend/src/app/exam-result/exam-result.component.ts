@@ -14,10 +14,11 @@ import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
 import { IUser } from '../types/user-info';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-exam-result',
-  imports: [FontAwesomeModule, TranslatePipe],
+  imports: [FontAwesomeModule, TranslatePipe, DatePipe],
   templateUrl: './exam-result.component.html',
   styleUrl: './exam-result.component.css',
 })
@@ -32,50 +33,28 @@ export class ExamResultComponent {
 
   @Input() passed: boolean = true;
   @Input() score: number = 0;
+  @Input() userCertificateId: number=1;
 
   currentUser$: Observable<IUser | null>;
   currentUser!: IUser;
-  //score!: number;
+  userCertificate: UserCertificate | undefined;
 
   constructor(private authService: AuthService, private router: Router) {
     this.currentUser$ = this.authService.currentUser$;
     this.currentUser$.subscribe((user) => {
       if (user != null) this.currentUser = user;
     });
+    this.getUserCertificate(this.userCertificateId);
   }
-
-  async getScore() {
-    let result = await fetch(`/api/users/${this.currentUser.ID}/exam_attempts`);
-    let data: IExamAttempt[] = await result.json();
-
-    const now = new Date();
-
-    let closestAttempt: IExamAttempt | null = null;
-    let closestDiff = Infinity;
-
-    for (let attempt of data) {
-      const endDate = new Date(attempt.endDateTime);
-      const diff = Math.abs(endDate.getTime() - now.getTime());
-
-      if (diff < closestDiff) {
-        closestDiff = diff;
-        closestAttempt = attempt;
-      }
-    }
-
-    if (
-      closestAttempt &&
-      (closestAttempt.examStatusType == 'PASSED' ||
-        closestAttempt.examStatusType == 'FAILED')
-    ) {
-      this.score = closestAttempt.score;
-    }
+  async getUserCertificate(userCertificateId: number) {
+    let userCertificateResponse = await fetch(`/api/user_certificates/${userCertificateId}`);
+    this.userCertificate = await userCertificateResponse.json();
   }
 
   primaryClicked() {
     if (this.passed) {
-      let userExamId = 1;
-      this.downloadPdf(userExamId);
+      let userCertificateId = 1;
+      this.downloadPdf(userCertificateId);
     }
     else this.router.navigate(['/trainings']);
   }
@@ -83,8 +62,8 @@ export class ExamResultComponent {
   secondaryClicked() {
     this.router.navigate(['/trainings']);
   }
-  async downloadPdf(userExamId: number) {
-    const response = await fetch(`/api/pdf/generate/${userExamId}`);
+  async downloadPdf(userCertificateId: number) {
+    const response = await fetch(`/api/pdf/generate/${userCertificateId}`);
   
     if (!response.ok) {
       throw new Error("Failed to fetch PDF");
@@ -95,7 +74,7 @@ export class ExamResultComponent {
   
     const a = document.createElement("a");
     a.href = url;
-    a.download = `certificate-${userExamId}.pdf`;
+    a.download = `certificate-${userCertificateId}.pdf`;
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -103,11 +82,9 @@ export class ExamResultComponent {
     window.URL.revokeObjectURL(url);
   }
 }
-
-interface IExamAttempt {
-  id: number;
-  startDateTime: string;
-  endDateTime: string;
-  examStatusType: string;
-  score: number;
+interface UserCertificate {
+  id: number,
+  issue_date: Date,
+  expiry_date: Date,
+  status: String,
 }
