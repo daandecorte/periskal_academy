@@ -323,5 +323,10 @@
     "USER_MANAGEMENT": "Benutzerverwaltung",
     "SKIPPERS": "Skipper",
     "SUPPORT": "Support"
+  },
+  "TRAINING_CARD": {
+    "CERTIFICATE": "Zertifikat",
+    "START_TRAINING": "Training starten",
+    "MODULES": "Module"
   }
 }

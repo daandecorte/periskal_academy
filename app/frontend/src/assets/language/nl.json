@@ -323,5 +323,10 @@
     "USER_MANAGEMENT": "Gebruikersbeheer",
     "SKIPPERS": "Schippers",
     "SUPPORT": "Ondersteuning"
+  },
+  "TRAINING_CARD": {
+    "CERTIFICATE": "Certificaat",
+    "START_TRAINING": "Start Training",
+    "MODULES": "Modules"
   }
 }
