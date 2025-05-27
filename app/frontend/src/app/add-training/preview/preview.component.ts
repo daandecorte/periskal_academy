@@ -18,10 +18,15 @@ export class PreviewComponent {
   modulesReady: boolean = false;
   examReady: boolean = false;
 
+  sliderActive: boolean= true;
+
   constructor(public trainingService: NewTrainingService) {
     this.checkBasicTraining();
     this.checkModules();
     this.checkExam();
+  }
+  ngOnInit() {
+    this.isActive();
   }
 
   checkBasicTraining() {
@@ -79,9 +84,14 @@ export class PreviewComponent {
     return Object.values(translated).every((value) => value.trim() !== '');
   }
 
-  isActive: boolean = false;
+  //isActive: boolean = false;
 
   get allReady(): boolean {
     return this.basicTrainingReady && this.modulesReady && this.examReady;
+  }
+  isActive() {
+    if(!this.allReady) {
+      this.trainingService.newTraining.active=false;
+    }
   }
 }

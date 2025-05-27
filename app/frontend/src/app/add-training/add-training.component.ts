@@ -36,21 +36,20 @@ export class AddTrainingComponent {
   private routerSubscription!: Subscription;
 
   paths = ['basic-setup', 'modules', 'exam', 'preview'];
-  currentIndex: number = 0;
 
   ContentType = ContentType;
 
   constructor(
     private router: Router,
-    private trainingService: NewTrainingService
+    public trainingService: NewTrainingService
   ) {}
 
   goToNextStep() {
-    this.currentIndex++;
+    this.trainingService.currentIndex++;
   }
 
   goToPreviousStep() {
-    this.currentIndex--;
+    this.trainingService.currentIndex--;
   }
 
   async publishTraining() {

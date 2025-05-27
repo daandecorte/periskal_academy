@@ -91,21 +91,6 @@ export const routes: Routes = [
     component: AddTrainingComponent,
     canActivate: [RoleGuard],
     data: { roles: [Role.ADMIN] },
-    children: [
-      { path: '', redirectTo: 'basic-setup', pathMatch: 'full' },
-      { path: 'basic-setup', component: BasicSetupComponent },
-      { path: 'modules', component: ModulesComponent },
-      { path: 'exam', component: ExamComponent },
-      { path: 'preview', component: PreviewComponent },
-      // {
-      //   path: 'modules/new',
-      //   component: ModuleFormComponent,
-      //   children: [
-      //     { path: 'content', component: ContentComponent },
-      //     { path: 'questions', component: QuestionsComponent },
-      //   ],
-      // },
-    ],
   },
   {
     path: 'add-training/modules/new',

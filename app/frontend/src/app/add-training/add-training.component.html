@@ -2,23 +2,23 @@
 <!-- Steps Indicator -->
 <div class="progress-steps">
   <div class="progress-line"></div>
-  <div class="step" [ngClass]="{ active: currentIndex === 0 }">
+  <div class="step" [ngClass]="{ active: trainingService.currentIndex === 0 }">
     <div class="step-number">1</div>
     <div class="step-label">
       {{ "ADMIN_ADD_TRAININGS.BASIC_SETUP" | translate }}
     </div>
   </div>
-  <div class="step" [ngClass]="{ active: currentIndex === 1 }">
+  <div class="step" [ngClass]="{ active: trainingService.currentIndex === 1 }">
     <div class="step-number">2</div>
     <div class="step-label">
       {{ "ADMIN_ADD_TRAININGS.MODULES" | translate }}
     </div>
   </div>
-  <div class="step" [ngClass]="{ active: currentIndex === 2 }">
+  <div class="step" [ngClass]="{ active: trainingService.currentIndex === 2 }">
     <div class="step-number">3</div>
     <div class="step-label">{{ "ADMIN_ADD_TRAININGS.EXAM" | translate }}</div>
   </div>
-  <div class="step" [ngClass]="{ active: currentIndex === 3 }">
+  <div class="step" [ngClass]="{ active: trainingService.currentIndex === 3 }">
     <div class="step-number">4</div>
     <div class="step-label">
       {{ "ADMIN_ADD_TRAININGS.PREVIEW" | translate }}
@@ -26,13 +26,13 @@
   </div>
 </div>
 
-@if(paths[currentIndex] == "basic-setup") {<app-basic-setup></app-basic-setup>}
-@if(paths[currentIndex] == "modules") {<app-modules></app-modules>}
-@if(paths[currentIndex] == "exam") {<app-exam></app-exam>}
-@if(paths[currentIndex] == "preview") {<app-preview></app-preview>}
+@if(paths[trainingService.currentIndex] == "basic-setup") {<app-basic-setup></app-basic-setup>}
+@if(paths[trainingService.currentIndex] == "modules") {<app-modules></app-modules>}
+@if(paths[trainingService.currentIndex] == "exam") {<app-exam></app-exam>}
+@if(paths[trainingService.currentIndex] == "preview") {<app-preview></app-preview>}
 
 <!-- NavButtons -->
-@if(paths[currentIndex] == 'basic-setup'){
+@if(paths[trainingService.currentIndex] == 'basic-setup'){
 <div class="next-previous" style="flex-direction: row-reverse">
   <button class="next-btn" (click)="goToNextStep()">
     {{ "ADMIN_ADD_TRAININGS.NEXT" | translate }}
@@ -72,7 +72,7 @@
     </svg>
     {{ "ADMIN_ADD_TRAININGS.PREVIOUS" | translate }}
   </button>
-  @if(paths[currentIndex] !== 'preview'){
+  @if(paths[trainingService.currentIndex] !== 'preview'){
   <button class="next-btn" (click)="goToNextStep()">
     {{ "ADMIN_ADD_TRAININGS.NEXT" | translate }}
     <svg
@@ -90,7 +90,7 @@
       <line x1="5" y1="12" x2="19" y2="12"></line>
       <polyline points="12 5 19 12 12 19"></polyline>
     </svg></button
-  >} @if(paths[currentIndex] === 'preview'){
+  >} @if(paths[trainingService.currentIndex] === 'preview'){
   <button class="publish-btn" (click)="publishTraining()">
     {{ "ADMIN_ADD_TRAININGS.PUBLISH" | translate }}</button
   >}
