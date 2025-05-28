@@ -85,7 +85,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
       }
     );
     
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe(async params => {
       const id = params['id'];
       if (id) {
         this.examId = +id; // Convert string to number
@@ -98,8 +98,8 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
         }
         
         if (this.examId > 0) {
-          // Get current user ID
-          this.currentUserId = this.getCurrentUserId();
+          // Get current user ID asynchronously
+          this.currentUserId = await this.getCurrentUserIdAsync();
           
           // Check if user ID is valid before proceeding
           if (this.currentUserId <= 0) {
@@ -130,8 +130,31 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   }
 
   getCurrentUserId(): number {
-    return 1;
+    const currentUser = this.authService.currentUserValue;
+    if (!currentUser || !currentUser.ID) {
+      return 0; // Return 0 to indicate no valid user
+    }
+    return 0; // This will be updated below
   }
+
+  private async getCurrentUserIdAsync(): Promise<number> {
+  const currentUser = this.authService.currentUserValue;
+  if (!currentUser || !currentUser.ID) {
+    return 0;
+  }
+  
+  try {
+    const response = await fetch(`/api/users/periskal_id/${currentUser.ID}`);
+    if (response.status === 200) {
+      const userData = await response.json();
+      return userData.id || 0;
+    }
+    return 0;
+  } catch (error) {
+    console.error('Error fetching user ID:', error);
+    return 0;
+  }
+}
 
   updateLocalizedContent(): void {
     if (this.exam) {
