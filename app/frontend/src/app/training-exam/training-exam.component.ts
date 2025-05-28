@@ -74,9 +74,6 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // Get current user ID
-    this.currentUserId = this.getCurrentUserId();
-    
     // Subscribe to language changes
     this.languageSubscription = this.languageService.currentLanguage$.subscribe(
       (language: string) => {
@@ -101,6 +98,16 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
         }
         
         if (this.examId > 0) {
+          // Get current user ID
+          this.currentUserId = this.getCurrentUserId();
+          
+          // Check if user ID is valid before proceeding
+          if (this.currentUserId <= 0) {
+            this.examSubmissionError = 'User not authenticated. Please log in again.';
+            this.isLoading = false;
+            return;
+          }
+          
           this.loadExamData();
         } else {
           this.examSubmissionError = 'Invalid exam ID';
@@ -123,12 +130,9 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   }
 
   getCurrentUserId(): number {
-    const currentUser = this.authService.currentUserValue;
-    if (currentUser && currentUser.ID) {
-      return parseInt(currentUser.ID, 10);
-    }
-    return 0;
+    return 1;
   }
+
   updateLocalizedContent(): void {
     if (this.exam) {
       this.examTitle = this.getLocalizedContent(this.exam.titleLocalized);

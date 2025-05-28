@@ -14,6 +14,7 @@ import ap.student.project.backend.dto.UserTrainingDTO;
 import ap.student.project.backend.entity.Certificate;
 import ap.student.project.backend.entity.CertificateStatus;
 import ap.student.project.backend.entity.Exam;
+import ap.student.project.backend.entity.ExamAttempt;
 import ap.student.project.backend.entity.ExamStatusType;
 import ap.student.project.backend.entity.QuestionOption;
 import ap.student.project.backend.entity.Training;
@@ -45,7 +46,6 @@ public class ExamService {
     private final TrainingService trainingService;
     private final QuestionOptionRepository questionOptionRepository;
     private final UserCertificateService userCertificateService;
-    private final CertificateService certificateService;
     private final UserService userService;
     private final ExamAttemptService examAttemptService;
     private final UserTrainingService userTrainingService;
@@ -61,13 +61,12 @@ public class ExamService {
      * @param certificateService Service for certificate-related operations
      * @param userService Service for user-related operations
      */
-    public ExamService(ExamRepository examRepository, QuestionRepository questionRepository, TrainingService trainingService, QuestionOptionRepository questionOptionRepository, UserCertificateService userCertificateService, UserCertificateService userCertificateService2, CertificateService certificateService, UserService userService, ExamAttemptService examAttemptService, UserTrainingService userTrainingService) {
+    public ExamService(ExamRepository examRepository, QuestionRepository questionRepository, TrainingService trainingService, QuestionOptionRepository questionOptionRepository, UserCertificateService userCertificateService, CertificateService certificateService, UserService userService, ExamAttemptService examAttemptService, UserTrainingService userTrainingService) {
         this.examRepository = examRepository;
         this.questionRepository = questionRepository;
         this.trainingService = trainingService;
         this.questionOptionRepository = questionOptionRepository;
         this.userCertificateService = userCertificateService;
-        this.certificateService = certificateService;
         this.userService = userService;
         this.examAttemptService = examAttemptService;
         this.userTrainingService = userTrainingService;
@@ -208,9 +207,7 @@ public class ExamService {
      */
     @Transactional
     public ExamResultDTO evaluateExam(ExamSubmissionDTO submissionDTO) throws NotFoundException {
-        //Get current time for exam attempt
-        LocalDateTime startTime = LocalDateTime.now();
-
+        System.out.println("Evaluating exam - ExamId: " + submissionDTO.getExamId() + ", UserId: " + submissionDTO.getUserId());
         // Find the exam
         Exam exam = findById(submissionDTO.getExamId());
         
@@ -244,48 +241,40 @@ public class ExamService {
         ExamResultDTO result = new ExamResultDTO(score, passed);
 
         // Create ExamAttempt
+        // Find or create UserTraining
+        Training training = exam.getTraining();
+        User user = userService.findById(submissionDTO.getUserId());
+        
+        UserTraining userTraining;
         try {
-            // Find or create UserTraining
-            Training training = exam.getTraining();
-            User user = userService.findById(submissionDTO.getUserId());
-            
-            UserTraining userTraining;
-            try {
-                userTraining = userTrainingService.findByTrainingIdAndUserId(training.getId(), user.getId());
-            } catch (NotFoundException e) {
-                // Create UserTraining if it doesn't exist
-                UserTrainingDTO userTrainingDTO = new UserTrainingDTO(
-                    user.getId(),
-                    training.getId(),
-                    true // eligibleForCertificate
-                );
-                userTrainingService.save(userTrainingDTO);
-                userTraining = userTrainingService.findByTrainingIdAndUserId(training.getId(), user.getId());
-            }
-            
-            // Create ExamAttempt
-            ExamAttemptDTO examAttemptDTO = new ExamAttemptDTO(
-                startTime, // start time
-                LocalDateTime.now(), // end time
-                passed ? ExamStatusType.PASSED : ExamStatusType.FAILED,
-                score,
-                userTraining.getId()
+            userTraining = userTrainingService.findByTrainingIdAndUserId(training.getId(), user.getId());
+        } catch (NotFoundException e) {
+            // Create UserTraining if it doesn't exist
+            UserTrainingDTO userTrainingDTO = new UserTrainingDTO(
+                training.getId(),
+                user.getId(),
+                true // eligibleForCertificate
             );
-            
-            examAttemptService.save(examAttemptDTO);
-            
-        } catch (Exception e) {
-            // Log the error but don't fail the exam result
-            System.err.println("Failed to create exam attempt record: " + e.getMessage());
-            e.printStackTrace();
+            userTrainingService.save(userTrainingDTO);
+            userTraining = userTrainingService.findByTrainingIdAndUserId(training.getId(), user.getId());
         }
+        
+        // Create ExamAttempt
+        ExamAttemptDTO examAttemptDTO = new ExamAttemptDTO(
+            LocalDateTime.now(), // start time
+            LocalDateTime.now(), // end time
+            passed ? ExamStatusType.PASSED : ExamStatusType.FAILED,
+            score,
+            userTraining.getId()
+        );
+        
+        ExamAttempt savedExamAttempt = examAttemptService.save(examAttemptDTO);
+        result.setAttemptId(savedExamAttempt.getId());
 
         // If exam is passed, create UserCertificate
         if (passed) {
             try {
                 // Get the exam to find the associated training
-                Exam examById = findById(submissionDTO.getExamId());
-                Training training = examById.getTraining();
                 Certificate certificate = training.getCertificate();
                 
                 if (certificate != null) {
