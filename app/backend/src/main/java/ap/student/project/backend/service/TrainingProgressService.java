@@ -6,8 +6,8 @@ import ap.student.project.backend.entity.TrainingProgress;
 import ap.student.project.backend.entity.UserTraining;
 import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -124,5 +124,25 @@ public class TrainingProgressService {
         TrainingProgress trainingProgress = trainingProgressRepository.findById(trainingProgressId).orElseThrow(() -> new NotFoundException("Training progress with id \" + id + \" not found"));
         trainingProgress.setModulesCompleted(trainingProgress.getModulesCompleted()+1);
         return trainingProgressRepository.save(trainingProgress);
+    }
+
+    /**
+     * Resets the training progress for a user by deleting their existing progress.
+     *
+     * @param userTrainingId The ID of the user training whose progress should be reset
+     */
+    @Transactional
+    public void resetTrainingProgress(int userTrainingId) {
+        TrainingProgress trainingProgress = trainingProgressRepository.findByUserTrainingId(userTrainingId);
+        if (trainingProgress != null) {
+            // Get the UserTraining to break the bidirectional relationship
+            UserTraining userTraining = trainingProgress.getUserTraining();
+            if (userTraining != null) {
+                userTraining.setTrainingProgress(null);
+            }
+            
+            // Delete the training progress
+            trainingProgressRepository.delete(trainingProgress);
+        }
     }
 }

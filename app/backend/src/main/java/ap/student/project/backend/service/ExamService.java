@@ -49,6 +49,7 @@ public class ExamService {
     private final UserService userService;
     private final ExamAttemptService examAttemptService;
     private final UserTrainingService userTrainingService;
+    private final TrainingProgressService trainingProgressService;
 
     /**
      * Constructs a new ExamService with the required repositories and services.
@@ -61,7 +62,7 @@ public class ExamService {
      * @param certificateService Service for certificate-related operations
      * @param userService Service for user-related operations
      */
-    public ExamService(ExamRepository examRepository, QuestionRepository questionRepository, TrainingService trainingService, QuestionOptionRepository questionOptionRepository, UserCertificateService userCertificateService, UserCertificateService userCertificateService2, CertificateService certificateService, UserService userService, ExamAttemptService examAttemptService, UserTrainingService userTrainingService) {
+    public ExamService(ExamRepository examRepository, QuestionRepository questionRepository, TrainingService trainingService, QuestionOptionRepository questionOptionRepository, UserCertificateService userCertificateService, UserCertificateService userCertificateService2, CertificateService certificateService, UserService userService, ExamAttemptService examAttemptService, UserTrainingService userTrainingService, TrainingProgressService trainingProgressService) {
         this.examRepository = examRepository;
         this.questionRepository = questionRepository;
         this.trainingService = trainingService;
@@ -71,6 +72,7 @@ public class ExamService {
         this.userService = userService;
         this.examAttemptService = examAttemptService;
         this.userTrainingService = userTrainingService;
+        this.trainingProgressService = trainingProgressService;
     }
 
     /**
@@ -327,20 +329,15 @@ public class ExamService {
     private void handleFailedExamAttempt(Exam exam, UserTraining userTraining) {
         try {
             // Count current failed attempts (including the one just created)
-            int failedAttempts = examAttemptService.countFailedAttemptsByUserTrainingId(userTraining.getId());
+            int failedAttempts = examAttemptService.countFailedAttemptsByUserTrainingId(userTraining.getId());            
             
             // Check if user has reached maximum attempts
-            if (failedAttempts >= exam.getMaxAttempts()) {
-                System.out.println("User " + userTraining.getUser().getId() + " has reached maximum attempts (" + 
-                                exam.getMaxAttempts() + ") for training " + userTraining.getTraining().getId());
-                
+            if (failedAttempts >= exam.getMaxAttempts()) {                
                 // Delete all failed exam attempts to reset the count
                 examAttemptService.deleteFailedAttemptsByUserTrainingId(userTraining.getId());
                 
                 // Reset the user's training progress
-                // TODO: userTrainingService.resetTrainingProgress(userTraining.getId());
-                
-                System.out.println("Training progress reset for user " + userTraining.getUser().getId());
+                trainingProgressService.resetTrainingProgress(userTraining.getId());                
             }
         } catch (Exception e) {
             System.err.println("Error handling failed exam attempt: " + e.getMessage());
