@@ -122,11 +122,12 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   }
 
   getCurrentUserId(): number {
-    // TODO: Implement based on auth system
-    //return this.authService.getCurrentUserId()
-    return 1; // Placeholder for demo
+    const currentUser = this.authService.currentUserValue;
+    if (currentUser && currentUser.ID) {
+      return parseInt(currentUser.ID, 10);
+    }
+    return 0;
   }
-
   updateLocalizedContent(): void {
     if (this.exam) {
       this.examTitle = this.getLocalizedContent(this.exam.titleLocalized);
