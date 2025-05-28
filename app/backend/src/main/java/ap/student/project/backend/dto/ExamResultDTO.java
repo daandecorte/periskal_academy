@@ -4,6 +4,7 @@ public class ExamResultDTO {
     private int score;
     private boolean passed;
     private Integer certificateId;
+    private Integer attemptId;
     
     public ExamResultDTO() {
     }
@@ -11,7 +12,6 @@ public class ExamResultDTO {
     public ExamResultDTO(int score, boolean passed) {
         this.score = score;
         this.passed = passed;
-        this.certificateId = certificateId;
     }
     
     public int getScore() {
@@ -36,5 +36,13 @@ public class ExamResultDTO {
 
     public void setCertificateId(Integer certificateId) {
         this.certificateId = certificateId;
+    }
+
+    public Integer getAttemptId() {
+        return attemptId;
+    }
+
+    public void setAttemptId(Integer attemptId) {
+        this.attemptId = attemptId;
     }
 }
