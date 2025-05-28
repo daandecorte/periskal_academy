@@ -51,6 +51,7 @@ export interface ExamSubmission {
   examId: number;
   userId: number;
   answers: ExamQuestionAnswer[];
+  startTime?: Date;
 }
 
 export interface ExamResult {

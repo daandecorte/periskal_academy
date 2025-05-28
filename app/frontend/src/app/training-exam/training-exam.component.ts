@@ -23,6 +23,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   exam?: Exam;
   examTitle: string = "";
   examDescription: string = "";
+  examStartTime?: Date;
   
   // Question handling
   currentQuestionIndex: number = 0;
@@ -162,6 +163,9 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     this.examService.getExamById(this.examId).subscribe({
       next: (exam) => {
         this.exam = exam;
+
+        // Set exam start time
+        this.examStartTime = new Date();
         
         // Set localized content using the updated method
         this.updateLocalizedContent();
@@ -370,6 +374,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
       examId: this.examId,
       userId: this.currentUserId,
       answers: answers,
+      startTime: this.examStartTime
     };
     
     // Submit to backend

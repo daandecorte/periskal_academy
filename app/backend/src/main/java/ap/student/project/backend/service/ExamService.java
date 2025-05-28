@@ -4,17 +4,22 @@ import ap.student.project.backend.dao.ExamRepository;
 import ap.student.project.backend.dao.QuestionOptionRepository;
 import ap.student.project.backend.dao.QuestionRepository;
 import ap.student.project.backend.dto.ExamAnswerDTO;
+import ap.student.project.backend.dto.ExamAttemptDTO;
 import ap.student.project.backend.dto.ExamDTO;
 import ap.student.project.backend.dto.ExamResultDTO;
 import ap.student.project.backend.dto.ExamSubmissionDTO;
 import ap.student.project.backend.dto.QuestionDTO;
 import ap.student.project.backend.dto.UserCertificateDTO;
+import ap.student.project.backend.dto.UserTrainingDTO;
 import ap.student.project.backend.entity.Certificate;
 import ap.student.project.backend.entity.CertificateStatus;
 import ap.student.project.backend.entity.Exam;
+import ap.student.project.backend.entity.ExamStatusType;
 import ap.student.project.backend.entity.QuestionOption;
 import ap.student.project.backend.entity.Training;
+import ap.student.project.backend.entity.User;
 import ap.student.project.backend.entity.UserCertificate;
+import ap.student.project.backend.entity.UserTraining;
 import ap.student.project.backend.entity.Question;
 import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
@@ -23,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -41,6 +47,8 @@ public class ExamService {
     private final UserCertificateService userCertificateService;
     private final CertificateService certificateService;
     private final UserService userService;
+    private final ExamAttemptService examAttemptService;
+    private final UserTrainingService userTrainingService;
 
     /**
      * Constructs a new ExamService with the required repositories and services.
@@ -53,7 +61,7 @@ public class ExamService {
      * @param certificateService Service for certificate-related operations
      * @param userService Service for user-related operations
      */
-    public ExamService(ExamRepository examRepository, QuestionRepository questionRepository, TrainingService trainingService, QuestionOptionRepository questionOptionRepository, UserCertificateService userCertificateService, UserCertificateService userCertificateService2, CertificateService certificateService, UserService userService) {
+    public ExamService(ExamRepository examRepository, QuestionRepository questionRepository, TrainingService trainingService, QuestionOptionRepository questionOptionRepository, UserCertificateService userCertificateService, UserCertificateService userCertificateService2, CertificateService certificateService, UserService userService, ExamAttemptService examAttemptService, UserTrainingService userTrainingService) {
         this.examRepository = examRepository;
         this.questionRepository = questionRepository;
         this.trainingService = trainingService;
@@ -61,6 +69,8 @@ public class ExamService {
         this.userCertificateService = userCertificateService;
         this.certificateService = certificateService;
         this.userService = userService;
+        this.examAttemptService = examAttemptService;
+        this.userTrainingService = userTrainingService;
     }
 
     /**
@@ -196,7 +206,11 @@ public class ExamService {
      * @return An ExamResultDTO containing the score and pass/fail status
      * @throws NotFoundException If the exam or any of its components are not found
      */
+    @Transactional
     public ExamResultDTO evaluateExam(ExamSubmissionDTO submissionDTO) throws NotFoundException {
+        //Get current time for exam attempt
+        LocalDateTime startTime = LocalDateTime.now();
+
         // Find the exam
         Exam exam = findById(submissionDTO.getExamId());
         
@@ -228,6 +242,34 @@ public class ExamService {
         boolean passed = score >= exam.getPassingScore();
         
         ExamResultDTO result = new ExamResultDTO(score, passed);
+
+        // Create ExamAttempt
+        try {
+            // Find UserTraining
+            Training training = exam.getTraining();
+            User user = userService.findById(submissionDTO.getUserId());
+            
+            UserTraining userTraining = userTrainingService.findByTrainingIdAndUserId(training.getId(), user.getId());
+            if (userTraining == null) {
+                // TODO: create UserTraining if it doesn't exist
+            }
+            
+            // Create ExamAttempt
+            ExamAttemptDTO examAttemptDTO = new ExamAttemptDTO(
+                startTime, // start time
+                LocalDateTime.now(), // end time
+                passed ? ExamStatusType.PASSED : ExamStatusType.FAILED,
+                score,
+                userTraining.getId()
+            );
+            
+            examAttemptService.save(examAttemptDTO);
+            
+        } catch (Exception e) {
+            // Log the error but don't fail the exam result
+            System.err.println("Failed to create exam attempt record: " + e.getMessage());
+            e.printStackTrace();
+        }
 
         // If exam is passed, create UserCertificate
         if (passed) {
