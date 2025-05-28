@@ -45,7 +45,11 @@ public class ExamAttemptService {
         }
         UserTraining userTraining = userTrainingService.findById(examAttemptDTO.userTrainingId());
         examAttempt.setUserTraining(userTraining);
-        BeanUtils.copyProperties(examAttemptDTO, examAttempt);
+        examAttempt.setStartDateTime(examAttemptDTO.startDateTime());
+        examAttempt.setEndDateTime(examAttemptDTO.endDateTime());
+        examAttempt.setExamStatusType(examAttemptDTO.examStatusType());
+        examAttempt.setScore(examAttemptDTO.score());
+        
         return examAttemptRepository.save(examAttempt);
     }
 
