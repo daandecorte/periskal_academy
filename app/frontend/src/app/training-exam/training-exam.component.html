@@ -101,7 +101,7 @@
       *ngIf="!isSubmitting && examScore !== undefined"
       [passed]="examPassed || false"
       [score]="examScore || 0"
-    >
+      [userCertificateId]="examCertificateId || 0">
     </app-exam-result>
 
     <!-- Error state in results -->

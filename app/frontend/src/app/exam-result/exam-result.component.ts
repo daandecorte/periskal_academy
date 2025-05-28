@@ -33,7 +33,7 @@ export class ExamResultComponent {
 
   @Input() passed: boolean = true;
   @Input() score: number = 0;
-  @Input() userCertificateId: number=1;
+  @Input() userCertificateId: number = 1;
 
   currentUser$: Observable<IUser | null>;
   currentUser!: IUser;
@@ -51,10 +51,15 @@ export class ExamResultComponent {
     this.userCertificate = await userCertificateResponse.json();
   }
 
+  ngOnInit() {
+    if (this.userCertificateId > 0) {
+      this.getUserCertificate(this.userCertificateId);
+    }
+  }
+
   primaryClicked() {
-    if (this.passed) {
-      let userCertificateId = 1;
-      this.downloadPdf(userCertificateId);
+    if (this.passed && this.userCertificateId > 1) {
+      this.downloadPdf(this.userCertificateId);
     }
     else this.router.navigate(['/trainings']);
   }

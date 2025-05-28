@@ -8,9 +8,13 @@ import ap.student.project.backend.dto.ExamDTO;
 import ap.student.project.backend.dto.ExamResultDTO;
 import ap.student.project.backend.dto.ExamSubmissionDTO;
 import ap.student.project.backend.dto.QuestionDTO;
+import ap.student.project.backend.dto.UserCertificateDTO;
+import ap.student.project.backend.entity.Certificate;
+import ap.student.project.backend.entity.CertificateStatus;
 import ap.student.project.backend.entity.Exam;
 import ap.student.project.backend.entity.QuestionOption;
 import ap.student.project.backend.entity.Training;
+import ap.student.project.backend.entity.UserCertificate;
 import ap.student.project.backend.entity.Question;
 import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
@@ -18,6 +22,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,6 +38,9 @@ public class ExamService {
     private final QuestionRepository questionRepository;
     private final TrainingService trainingService;
     private final QuestionOptionRepository questionOptionRepository;
+    private final UserCertificateService userCertificateService;
+    private final CertificateService certificateService;
+    private final UserService userService;
 
     /**
      * Constructs a new ExamService with the required repositories and services.
@@ -41,12 +49,18 @@ public class ExamService {
      * @param questionRepository Repository for Question entity operations
      * @param trainingService Service for training-related operations
      * @param questionOptionRepository Repository for QuestionOption entity operations
+     * @param userCertificateService Service for UserCertificate-related operations
+     * @param certificateService Service for certificate-related operations
+     * @param userService Service for user-related operations
      */
-    public ExamService(ExamRepository examRepository, QuestionRepository questionRepository, TrainingService trainingService, QuestionOptionRepository questionOptionRepository) {
+    public ExamService(ExamRepository examRepository, QuestionRepository questionRepository, TrainingService trainingService, QuestionOptionRepository questionOptionRepository, UserCertificateService userCertificateService, UserCertificateService userCertificateService2, CertificateService certificateService, UserService userService) {
         this.examRepository = examRepository;
         this.questionRepository = questionRepository;
         this.trainingService = trainingService;
         this.questionOptionRepository = questionOptionRepository;
+        this.userCertificateService = userCertificateService;
+        this.certificateService = certificateService;
+        this.userService = userService;
     }
 
     /**
@@ -213,7 +227,39 @@ public class ExamService {
         // Determine if passed
         boolean passed = score >= exam.getPassingScore();
         
-        return new ExamResultDTO(score, passed);
+        ExamResultDTO result = new ExamResultDTO(score, passed);
+
+        // If exam is passed, create UserCertificate
+        if (passed) {
+            try {
+                // Get the exam to find the associated training
+                Exam examById = findById(submissionDTO.getExamId());
+                Training training = examById.getTraining();
+                Certificate certificate = training.getCertificate();
+                
+                if (certificate != null) {
+                    // Create UserCertificate
+                    LocalDate issueDate = LocalDate.now();
+                    LocalDate expiryDate = issueDate.plusMonths(certificate.getValidityPeriod());
+                    
+                    UserCertificateDTO userCertificateDTO = new UserCertificateDTO(
+                        issueDate,
+                        expiryDate,
+                        CertificateStatus.VALID,
+                        submissionDTO.getUserId(),
+                        certificate.getId()
+                    );
+                    
+                    UserCertificate userCertificate = userCertificateService.save(userCertificateDTO);
+                    result.setCertificateId(userCertificate.getId());
+                }
+            } catch (Exception e) {
+                // Log the error but don't fail the exam result
+                System.err.println("Failed to create user certificate: " + e.getMessage());
+            }
+        }
+
+        return result;
     }
 
     /**

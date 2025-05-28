@@ -58,6 +58,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   // Exam results
   examScore?: number;
   examPassed?: boolean;
+  examCertificateId?: number;
   examSubmissionError: string = '';
 
   // User information
@@ -375,6 +376,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
       next: (result: ExamResult) => {
         this.examScore = result.score;
         this.examPassed = result.passed;
+        this.examCertificateId = result.certificateId;
         this.isSubmitting = false;
       },
       error: (error) => {

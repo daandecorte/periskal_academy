@@ -3,6 +3,7 @@ package ap.student.project.backend.dto;
 public class ExamResultDTO {
     private int score;
     private boolean passed;
+    private Integer certificateId;
     
     public ExamResultDTO() {
     }
@@ -10,6 +11,7 @@ public class ExamResultDTO {
     public ExamResultDTO(int score, boolean passed) {
         this.score = score;
         this.passed = passed;
+        this.certificateId = certificateId;
     }
     
     public int getScore() {
@@ -26,5 +28,13 @@ public class ExamResultDTO {
     
     public void setPassed(boolean passed) {
         this.passed = passed;
+    }
+
+    public Integer getCertificateId() {
+        return certificateId;
+    }
+
+    public void setCertificateId(Integer certificateId) {
+        this.certificateId = certificateId;
     }
 }
