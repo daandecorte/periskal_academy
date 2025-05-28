@@ -199,7 +199,7 @@ public class ExamService {
         }
     }
 
-     /**
+    /**
      * Evaluates an exam submission and calculates the score.
      *
      * @param submissionDTO Data transfer object containing the exam submission information
@@ -245,13 +245,22 @@ public class ExamService {
 
         // Create ExamAttempt
         try {
-            // Find UserTraining
+            // Find or create UserTraining
             Training training = exam.getTraining();
             User user = userService.findById(submissionDTO.getUserId());
             
-            UserTraining userTraining = userTrainingService.findByTrainingIdAndUserId(training.getId(), user.getId());
-            if (userTraining == null) {
-                // TODO: create UserTraining if it doesn't exist
+            UserTraining userTraining;
+            try {
+                userTraining = userTrainingService.findByTrainingIdAndUserId(training.getId(), user.getId());
+            } catch (NotFoundException e) {
+                // Create UserTraining if it doesn't exist
+                UserTrainingDTO userTrainingDTO = new UserTrainingDTO(
+                    user.getId(),
+                    training.getId(),
+                    true // eligibleForCertificate
+                );
+                userTrainingService.save(userTrainingDTO);
+                userTraining = userTrainingService.findByTrainingIdAndUserId(training.getId(), user.getId());
             }
             
             // Create ExamAttempt
@@ -300,7 +309,6 @@ public class ExamService {
                 System.err.println("Failed to create user certificate: " + e.getMessage());
             }
         }
-
         return result;
     }
 
