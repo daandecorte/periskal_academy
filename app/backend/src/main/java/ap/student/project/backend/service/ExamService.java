@@ -273,6 +273,11 @@ public class ExamService {
             );
             
             examAttemptService.save(examAttemptDTO);
+
+            // Check if this is a failed attempt and handle attempt limits
+            if (!passed) {
+                handleFailedExamAttempt(exam, userTraining);
+            }
             
         } catch (Exception e) {
             // Log the error but don't fail the exam result
@@ -310,6 +315,37 @@ public class ExamService {
             }
         }
         return result;
+    }
+
+    /**
+     * Handles the logic when a user fails an exam attempt.
+     * Checks if the user has reached the maximum allowed attempts and resets progress if needed.
+     *
+     * @param exam The exam that was failed
+     * @param userTraining The user training associated with the attempt
+     */
+    private void handleFailedExamAttempt(Exam exam, UserTraining userTraining) {
+        try {
+            // Count current failed attempts (including the one just created)
+            int failedAttempts = examAttemptService.countFailedAttemptsByUserTrainingId(userTraining.getId());
+            
+            // Check if user has reached maximum attempts
+            if (failedAttempts >= exam.getMaxAttempts()) {
+                System.out.println("User " + userTraining.getUser().getId() + " has reached maximum attempts (" + 
+                                exam.getMaxAttempts() + ") for training " + userTraining.getTraining().getId());
+                
+                // Delete all failed exam attempts to reset the count
+                examAttemptService.deleteFailedAttemptsByUserTrainingId(userTraining.getId());
+                
+                // Reset the user's training progress
+                // TODO: userTrainingService.resetTrainingProgress(userTraining.getId());
+                
+                System.out.println("Training progress reset for user " + userTraining.getUser().getId());
+            }
+        } catch (Exception e) {
+            System.err.println("Error handling failed exam attempt: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**

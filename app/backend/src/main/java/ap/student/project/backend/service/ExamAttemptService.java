@@ -49,12 +49,32 @@ public class ExamAttemptService {
         return examAttemptRepository.save(examAttempt);
     }
 
-     /**
+    /**
      * Retrieves all exam attempts in the system.
      *
      * @return A list of all ExamAttempt entities
      */
     public List<ExamAttempt> findAll() {
         return examAttemptRepository.findAll();
+    }
+
+    /**
+     * Counts the number of failed exam attempts for a specific user training.
+     *
+     * @param userTrainingId The ID of the user training
+     * @return The count of failed attempts
+     */
+    public int countFailedAttemptsByUserTrainingId(int userTrainingId) {
+        return examAttemptRepository.countFailedAttemptsByUserTrainingId(userTrainingId);
+    }
+
+    /**
+     * Deletes all failed exam attempts for a specific user training.
+     *
+     * @param userTrainingId The ID of the user training
+     */
+    public void deleteFailedAttemptsByUserTrainingId(int userTrainingId) {
+        List<ExamAttempt> failedAttempts = examAttemptRepository.findFailedAttemptsByUserTrainingId(userTrainingId);
+        examAttemptRepository.deleteAll(failedAttempts);
     }
 }
