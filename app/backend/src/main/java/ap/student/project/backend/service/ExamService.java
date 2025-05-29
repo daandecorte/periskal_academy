@@ -32,8 +32,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Service class for managing exam-related operations.
@@ -375,8 +377,28 @@ public class ExamService {
      * @return a list containing randomly selected questions
      */
     private List<Question> selectRandomQuestions(List<Question> allQuestions, int count) {
+        if (allQuestions.size() <= count) {
+            return new ArrayList<>(allQuestions);
+        }
+        
         List<Question> questionsCopy = new ArrayList<>(allQuestions);
         Collections.shuffle(questionsCopy);
-        return questionsCopy.subList(0, count);
+        
+        // Use a Set to track selected question IDs to prevent duplicates
+        Set<Integer> selectedIds = new HashSet<>();
+        List<Question> selectedQuestions = new ArrayList<>();
+        
+        for (Question question : questionsCopy) {
+            if (selectedQuestions.size() >= count) {
+                break;
+            }
+            
+            if (!selectedIds.contains(question.getId())) {
+                selectedIds.add(question.getId());
+                selectedQuestions.add(question);
+            }
+        }
+        
+        return selectedQuestions;
     }
 }
