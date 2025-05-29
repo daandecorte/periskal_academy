@@ -64,25 +64,21 @@ export class AddTrainingComponent {
 
   async publishEditedTraining() {
     try {
-      //PUT Training
-      let resultTraining = await fetch(
-        `/api/trainings/${this.trainingService.newTraining.id}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify({
-            title: this.trainingService.newTraining.title,
-            description: this.trainingService.newTraining.description,
-            is_active: this.trainingService.newTraining.active,
-          }),
-        }
-      );
+      let trainingId = this.trainingService.newTraining.id;
 
-      let dataTraining = await resultTraining.json();
-      let trainingId = dataTraining.id;
+      //PUT Training
+      await fetch(`/api/trainings/${trainingId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          title: this.trainingService.newTraining.title,
+          description: this.trainingService.newTraining.description,
+          is_active: this.trainingService.newTraining.active,
+        }),
+      });
 
       //PUT Exam
       let resultExam = await fetch(
