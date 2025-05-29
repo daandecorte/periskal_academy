@@ -114,7 +114,7 @@ public class ExamController {
      */
     @PostMapping(value = "/exams/submit", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity submitExam(@RequestBody ExamSubmissionDTO submissionDTO) {
-        System.out.println("Received submission - ExamId: " + submissionDTO.getExamId() + ", UserId: " + submissionDTO.getUserId());
+        System.out.println("Received submission - ExamId: " + submissionDTO.examId() + ", UserId: " + submissionDTO.userId());
         ExamResultDTO result = this.examService.evaluateExam(submissionDTO);
         return ResponseEntity.ok(result);
     }
