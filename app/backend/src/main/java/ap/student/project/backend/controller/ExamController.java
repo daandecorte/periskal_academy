@@ -6,6 +6,8 @@ import ap.student.project.backend.dto.ExamSubmissionDTO;
 import ap.student.project.backend.dto.QuestionDTO;
 import ap.student.project.backend.service.ExamService;
 
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -129,7 +131,13 @@ public class ExamController {
      * @return ResponseEntity containing the exam with randomly selected questions
      */
     @GetMapping(value = "/exams/{id}/start", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity startExam(@PathVariable int id) {
-        return ResponseEntity.ok(this.examService.startExam(id));
+    public ResponseEntity startExam(@PathVariable int id, @RequestParam int userId) {
+        return ResponseEntity.ok(this.examService.startExamWithTimer(id, userId));
+    }
+
+    @GetMapping(value = "/exams/{id}/time", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getRemainingTime(@PathVariable int id, @RequestParam int userId) {
+        int remainingSeconds = this.examService.getRemainingTimeInSeconds(id, userId);
+        return ResponseEntity.ok(Map.of("remainingSeconds", remainingSeconds));
     }
 }

@@ -139,23 +139,23 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   }
 
   private async getCurrentUserIdAsync(): Promise<number> {
-  const currentUser = this.authService.currentUserValue;
-  if (!currentUser || !currentUser.ID) {
-    return 0;
-  }
-  
-  try {
-    const response = await fetch(`/api/users/periskal_id/${currentUser.ID}`);
-    if (response.status === 200) {
-      const userData = await response.json();
-      return userData.id || 0;
+    const currentUser = this.authService.currentUserValue;
+    if (!currentUser || !currentUser.ID) {
+      return 0;
     }
-    return 0;
-  } catch (error) {
-    console.error('Error fetching user ID:', error);
-    return 0;
+    
+    try {
+      const response = await fetch(`/api/users/periskal_id/${currentUser.ID}`);
+      if (response.status === 200) {
+        const userData = await response.json();
+        return userData.id || 0;
+      }
+      return 0;
+    } catch (error) {
+      console.error('Error fetching user ID:', error);
+      return 0;
+    }
   }
-}
 
   updateLocalizedContent(): void {
     if (this.exam) {
@@ -169,9 +169,18 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
       this.timerSubscription.unsubscribe();
     }
     
+    let syncCounter = 0;
+    
     this.timerSubscription = interval(1000).subscribe(() => {
       if (this.timeRemainingInSeconds > 0) {
         this.timeRemainingInSeconds--;
+        
+        // Sync with backend every 30 seconds
+        syncCounter++;
+        if (syncCounter >= 30) {
+          this.syncTimeWithBackend();
+          syncCounter = 0;
+        }
       } else {
         // Time's up - submit exam automatically
         this.submitExam();
@@ -188,19 +197,17 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   loadExamData(): void {
     this.isLoading = true;
     
-    this.examService.startExam(this.examId).subscribe({
-      next: (exam) => {
-        this.exam = exam;
-
-        // Set exam start time
-        this.examStartTime = new Date();
+    this.examService.startExam(this.examId, this.currentUserId).subscribe({
+      next: (response) => {
+        this.exam = response.exam;
+        this.examStartTime = response.startTime;
         
         // Set localized content using the update method
         this.updateLocalizedContent();
         
         // Get questions from exam
-        if (exam.questions && exam.questions.length > 0) {
-          this.questions = [...exam.questions];
+        if (response.exam.questions && response.exam.questions.length > 0) {
+          this.questions = [...response.exam.questions];
           this.totalQuestions = this.questions.length;
         } else {
           this.examSubmissionError = 'This exam has no questions.';
@@ -213,8 +220,8 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
           this.currentQuestionIndex = 0;
         }
         
-        // Set timer based on exam time (convert minutes to seconds)
-        this.timeRemainingInSeconds = exam.time * 60;
+        // Get remaining time from backend
+        this.syncTimeWithBackend();
         
         // Initialize question display
         this.setCurrentQuestion();
@@ -434,5 +441,19 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   // Method for clearing cache when exam is completed:
   private clearQuestionCache(): void {
     this.shuffledQuestionsCache.clear();
+  }
+
+  // Method for syncing time with backend
+  private syncTimeWithBackend(): void {
+    this.examService.getRemainingTime(this.examId, this.currentUserId).subscribe({
+      next: (remainingSeconds) => {
+        this.timeRemainingInSeconds = remainingSeconds;
+      },
+      error: (err) => {
+        console.error('Error syncing time with server:', err);
+        // Fallback
+        this.timeRemainingInSeconds = this.exam!.time * 60;
+      }
+    });
   }
 }

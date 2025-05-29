@@ -7,6 +7,7 @@ import ap.student.project.backend.dto.ExamAnswerDTO;
 import ap.student.project.backend.dto.ExamAttemptDTO;
 import ap.student.project.backend.dto.ExamDTO;
 import ap.student.project.backend.dto.ExamResultDTO;
+import ap.student.project.backend.dto.ExamStartResponseDTO;
 import ap.student.project.backend.dto.ExamSubmissionDTO;
 import ap.student.project.backend.dto.QuestionDTO;
 import ap.student.project.backend.dto.UserCertificateDTO;
@@ -30,12 +31,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Service class for managing exam-related operations.
@@ -52,6 +56,7 @@ public class ExamService {
     private final ExamAttemptService examAttemptService;
     private final UserTrainingService userTrainingService;
     private final TrainingProgressService trainingProgressService;
+    private final Map<String, LocalDateTime> examStartTimes = new ConcurrentHashMap<>();
 
     /**
      * Constructs a new ExamService with the required repositories and services.
@@ -400,5 +405,33 @@ public class ExamService {
         }
         
         return selectedQuestions;
+    }
+
+    public ExamStartResponseDTO startExamWithTimer(int examId, int userId) throws NotFoundException {
+        Exam exam = startExam(examId);
+        
+        String sessionKey = examId + "_" + userId;
+        LocalDateTime startTime = LocalDateTime.now();
+        examStartTimes.put(sessionKey, startTime);
+        
+        return new ExamStartResponseDTO(exam, startTime);
+    }
+
+    public int getRemainingTimeInSeconds(int examId, int userId) {
+        String sessionKey = examId + "_" + userId;
+        LocalDateTime startTime = examStartTimes.get(sessionKey);
+        
+        if (startTime == null) {
+            return 0; // Session expired or not found
+        }
+        
+        long elapsedMinutes = ChronoUnit.MINUTES.between(startTime, LocalDateTime.now());
+        int remainingMinutes = Math.max(0, findById(examId).getTime() - (int)elapsedMinutes);
+        
+        return remainingMinutes * 60; // Convert to seconds
+    }
+
+    public boolean isExamTimeExpired(int examId, int userId) {
+        return getRemainingTimeInSeconds(examId, userId) <= 0;
     }
 }

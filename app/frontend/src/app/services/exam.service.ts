@@ -211,9 +211,12 @@ export class ExamService {
   }
 
   // Method for starting an exam
-  startExam(examId: number): Observable<Exam> {
-    return this.http.get<any>(`${this.apiUrl}/${examId}/start`).pipe(
-      map(backendExam => this.mapBackendExam(backendExam)),
+  startExam(examId: number, userId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${examId}/start?userId=${userId}`).pipe(
+      map(response => ({
+        exam: this.mapBackendExam(response.exam),
+        startTime: new Date(response.start_time)
+      })),
       catchError(error => {
         console.error(`Error starting exam with ID ${examId}:`, error);
         return throwError(() => error);
@@ -221,4 +224,10 @@ export class ExamService {
     );
   }
 
+  // Method to get remaining time from backend
+  getRemainingTime(examId: number, userId: number): Observable<number> {
+    return this.http.get<{remainingSeconds: number}>(`${this.apiUrl}/${examId}/time?userId=${userId}`).pipe(
+      map(response => response.remainingSeconds)
+    );
+  }
 }
