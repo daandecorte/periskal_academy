@@ -312,7 +312,7 @@ public class ExamService {
                         userCertificate = userCertificateService.save(userCertificateDTO);
                     }
                     catch(DuplicateException e) {
-                        userCertificate = userCertificateService.findByTrainingIdAndUserId(training.getId(), submissionDTO.getUserId());
+                        userCertificate = userCertificateService.findByTrainingIdAndUserId(training.getId(), submissionDTO.userId());
                         userCertificate.setIssueDate(issueDate);
                         userCertificate.setExpiryDate(expiryDate);
                         userCertificate.setStatus(CertificateStatus.VALID);
