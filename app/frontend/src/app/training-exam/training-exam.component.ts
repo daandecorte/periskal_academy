@@ -40,6 +40,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   isAnswerSubmitted: boolean = false;
   isExamCompleted: boolean = false;
   isSubmitting: boolean = false;
+  isTimerStarted: boolean = false;
   
   // Progress tracking - will be set based on actual questions loaded
   totalQuestions: number = 0;
@@ -109,7 +110,13 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
             return;
           }
           
-          this.loadExamData();
+          // Load exam data if timer hasn't started yet
+          // If timer is already running, just update the current question
+          if (!this.isTimerStarted) {
+            this.loadExamData();
+          } else {
+            this.setCurrentQuestion();
+          }
         } else {
           this.examSubmissionError = 'Invalid exam ID';
           this.isLoading = false;
@@ -165,11 +172,13 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   }
 
   startTimer(): void {
+    // Prevent multiple timer instances
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe();
     }
     
     let syncCounter = 0;
+    this.isTimerStarted = true;
     
     this.timerSubscription = interval(1000).subscribe(() => {
       if (this.timeRemainingInSeconds > 0) {
@@ -182,7 +191,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
           syncCounter = 0;
         }
       } else {
-        // Time's up - submit exam automatically
+        // If timer runs out, submit exam automatically
         this.submitExam();
       }
     });
@@ -227,7 +236,9 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
         this.setCurrentQuestion();
         
         // Start timer
-        this.startTimer();
+        if (!this.isTimerStarted) {
+          this.startTimer();
+        }
         
         this.isLoading = false;
       },
@@ -396,6 +407,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe();
     }
+    this.isTimerStarted = false;
 
     // Clear the question cache
     this.clearQuestionCache();
