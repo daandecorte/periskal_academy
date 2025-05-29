@@ -33,7 +33,7 @@ export class ExamResultComponent {
 
   @Input() passed: boolean = true;
   @Input() score: number = 0;
-  @Input() userCertificateId: number = 1;
+  @Input() userCertificateId: number = -1;
 
   currentUser$: Observable<IUser | null>;
   currentUser!: IUser;
@@ -58,7 +58,8 @@ export class ExamResultComponent {
   }
 
   primaryClicked() {
-    if (this.passed && this.userCertificateId > 1) {
+    console.log(this.userCertificateId);
+    if (this.passed && this.userCertificateId > 0) {
       this.downloadPdf(this.userCertificateId);
     }
     else this.router.navigate(['/trainings']);

@@ -57,7 +57,7 @@ export interface ExamSubmission {
 export interface ExamResult {
   score: number;
   passed: boolean;
-  certificateId?: number;
+  certificate_id?: number;
 }
 
 @Injectable({

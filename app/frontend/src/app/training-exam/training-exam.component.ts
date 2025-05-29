@@ -439,7 +439,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
       next: (result: ExamResult) => {
         this.examScore = result.score;
         this.examPassed = result.passed;
-        this.examCertificateId = result.certificateId;
+        this.examCertificateId = result.certificate_id;
         this.isSubmitting = false;
       },
       error: (error) => {
