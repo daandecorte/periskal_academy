@@ -30,6 +30,7 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   questions: Question[] = [];
   currentQuestion: Question | null = null;
   selectedOptionId: number | null = null;
+  shuffledQuestionsCache: Map<number, Question> = new Map();
   
   // Store user answers for each question
   userAnswers: Map<number, number> = new Map();
@@ -245,11 +246,18 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
         return;
       }
       
-      // Create a deep copy to avoid modifying the original question
-      this.currentQuestion = {
-        ...baseQuestion,
-        questionOptions: this.shuffleOptions([...baseQuestion.questionOptions])
-      };
+      // Check if there is a cached version of this question with shuffled options
+      if (this.shuffledQuestionsCache.has(this.currentQuestionIndex)) {
+        this.currentQuestion = this.shuffledQuestionsCache.get(this.currentQuestionIndex)!;
+      } else {
+        // Create a shuffled version and cache it
+        const shuffledQuestion = {
+          ...baseQuestion,
+          questionOptions: this.shuffleOptions([...baseQuestion.questionOptions])
+        };
+        this.shuffledQuestionsCache.set(this.currentQuestionIndex, shuffledQuestion);
+        this.currentQuestion = shuffledQuestion;
+      }
       
       // Restore previously selected answer if exists
       if (this.userAnswers.has(this.currentQuestion.id)) {
@@ -381,6 +389,9 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe();
     }
+
+    // Clear the question cache
+    this.clearQuestionCache();
     
     // Prepare answers for submission
     const answers: ExamQuestionAnswer[] = [];
@@ -418,5 +429,10 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
         this.isSubmitting = false;
       }
     });
+  }
+
+  // Method for clearing cache when exam is completed:
+  private clearQuestionCache(): void {
+    this.shuffledQuestionsCache.clear();
   }
 }
