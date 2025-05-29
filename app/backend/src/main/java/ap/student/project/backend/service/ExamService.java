@@ -211,21 +211,21 @@ public class ExamService {
      */
     @Transactional
     public ExamResultDTO evaluateExam(ExamSubmissionDTO submissionDTO) throws NotFoundException {
-        System.out.println("Evaluating exam - ExamId: " + submissionDTO.getExamId() + ", UserId: " + submissionDTO.getUserId());
+        System.out.println("Evaluating exam - ExamId: " + submissionDTO.examId() + ", UserId: " + submissionDTO.userId());
         // Find the exam
-        Exam exam = findById(submissionDTO.getExamId());
+        Exam exam = findById(submissionDTO.examId());
         
         // Count correct answers
         int correctAnswers = 0;
-        int totalQuestions = submissionDTO.getAnswers().size();
+        int totalQuestions = submissionDTO.answers().size();
         
-        for (ExamAnswerDTO answerDTO : submissionDTO.getAnswers()) {
-            Optional<Question> questionOptional = questionRepository.findById(answerDTO.getQuestionId());
+        for (ExamAnswerDTO answerDTO : submissionDTO.answers()) {
+            Optional<Question> questionOptional = questionRepository.findById(answerDTO.questionId());
             if (questionOptional.isEmpty()) {
                 continue; // Skip this answer if question not found
             }
             
-            Optional<QuestionOption> optionOptional = questionOptionRepository.findById(answerDTO.getOptionId());
+            Optional<QuestionOption> optionOptional = questionOptionRepository.findById(answerDTO.optionId());
             if (optionOptional.isEmpty()) {
                 continue; // Skip this answer if option not found
             }
@@ -247,7 +247,7 @@ public class ExamService {
         // Create ExamAttempt
         // Find or create UserTraining
         Training training = exam.getTraining();
-        User user = userService.findById(submissionDTO.getUserId());
+        User user = userService.findById(submissionDTO.userId());
         
         UserTraining userTraining;
         try {
@@ -295,7 +295,7 @@ public class ExamService {
                         issueDate,
                         expiryDate,
                         CertificateStatus.VALID,
-                        submissionDTO.getUserId(),
+                        submissionDTO.userId(),
                         certificate.getId()
                     );
                     
