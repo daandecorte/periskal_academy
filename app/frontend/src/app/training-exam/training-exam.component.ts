@@ -187,17 +187,17 @@ export class TrainingExamComponent implements OnInit, OnDestroy {
   loadExamData(): void {
     this.isLoading = true;
     
-    this.examService.getExamById(this.examId).subscribe({
+    this.examService.startExam(this.examId).subscribe({
       next: (exam) => {
         this.exam = exam;
 
         // Set exam start time
         this.examStartTime = new Date();
         
-        // Set localized content using the updated method
+        // Set localized content using the update method
         this.updateLocalizedContent();
         
-         // Get questions from exam
+        // Get questions from exam
         if (exam.questions && exam.questions.length > 0) {
           this.questions = [...exam.questions];
           this.totalQuestions = this.questions.length;

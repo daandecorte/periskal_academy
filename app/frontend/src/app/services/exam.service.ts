@@ -209,4 +209,16 @@ export class ExamService {
   getUserExamAttempts(userId: number, examId: number): Observable<any[]> {   
       return this.http.get<any[]>(`${this.apiUrl}/attempts/${examId}/user/${userId}`);    
   }
+
+  // Method for starting an exam
+  startExam(examId: number): Observable<Exam> {
+    return this.http.get<any>(`${this.apiUrl}/${examId}/start`).pipe(
+      map(backendExam => this.mapBackendExam(backendExam)),
+      catchError(error => {
+        console.error(`Error starting exam with ID ${examId}:`, error);
+        return throwError(() => error);
+      })
+    );
+  }
+
 }
