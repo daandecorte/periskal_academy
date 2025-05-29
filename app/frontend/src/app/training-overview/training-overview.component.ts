@@ -45,6 +45,8 @@ export class TrainingOverviewComponent implements OnInit {
   userTraining: UserTraining | undefined;
   trainingCompleted: boolean=false;
 
+  private currentUser: IUser | null | undefined;
+  public userCertificateId = -1;
   // Font Awesome icons
   faPlayCircle = faPlayCircle;
   faCheckCircle = faCheckCircle;
@@ -63,25 +65,48 @@ export class TrainingOverviewComponent implements OnInit {
     private authService: AuthService
   ) {}
 
-  ngOnInit(): void {
-    // Subscribe to language changes
+  async ngOnInit() {
+    this.currentUser = await firstValueFrom(this.authService.currentUser$);
     this.languageService.currentLanguage$.subscribe((language) => {
       this.currentLanguage = this.mapLanguageCode(language);
-      // Refresh content when language changes
-      if (this.training) {
-        this.loadModuleSections();
-      }
     });
-
+    
     this.route.params.subscribe(params => {
       this.trainingId = +params['id'];
       this.loadTrainingData();
     });
   }
+  async downloadCertificate() {
+    const response = await fetch(`/api/pdf/generate/${this.userCertificateId}`);
+  
+    if (!response.ok) {
+      throw new Error("Failed to fetch PDF");
+    }
+  
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+  
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `certificate-${this.userCertificateId}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  
+    window.URL.revokeObjectURL(url);
+  }
+  async getUserCertificate() {
+    if(this.currentUser) {
+      let userCertificateResponse = await fetch(`/api/user_certificates/training${this.trainingId}/user/${this.currentUser.ID}`);
+      if(userCertificateResponse.status==200) {
+        let userCertificate = await userCertificateResponse.json();
+        this.userCertificateId = await userCertificate.id;
+      }
+    }
+  }
   async getUserTraining() {
-    let currentUser = await firstValueFrom(this.authService.currentUser$);
-    if(currentUser) {
-      let userResponse = await fetch(`/api/users/periskal_id/${currentUser.ID}`);
+    if(this.currentUser) {
+      let userResponse = await fetch(`/api/users/periskal_id/${this.currentUser.ID}`);
       let user = await userResponse.json();
       let userTrainingResponse = await fetch(`/api/user_trainings/training/${this.trainingId}/user/${user.id}`);
       //check if userTraining exists
@@ -177,6 +202,7 @@ export class TrainingOverviewComponent implements OnInit {
           this.training = training;
           this.loadModuleSections();
           this.getUserTraining();
+          this.getUserCertificate();
         } else {
           // Handle training not found
           this.router.navigate(['/trainings']);

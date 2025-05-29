@@ -89,17 +89,28 @@
         {{ "TRAINING_OVERVIEW.BACK" | translate }}
       </button>
       <div class="tooltip-container">
-        <button
-          class="certificate-button"
-          [disabled]="userTraining?.eligible_for_certificate == false"
-          (click)="goToCertificate()"
-        >
-          <fa-icon [icon]="faCertificate" class="button-icon"></fa-icon>
-          {{ "TRAINING_OVERVIEW.GO_FOR_CERTIFICATE" | translate }}
-        </button>
-        <div class="tooltip" *ngIf="userTraining?.eligible_for_certificate == false">
-          {{ "TRAINING_OVERVIEW.BUY_CERTIFICATE_FIRST" | translate }}
-        </div>
+        @if(userCertificateId==-1) {
+          <button
+            class="certificate-button"
+            [disabled]="userTraining?.eligible_for_certificate == false"
+            (click)="goToCertificate()"
+          >
+            <fa-icon [icon]="faCertificate" class="button-icon"></fa-icon>
+            {{ "TRAINING_OVERVIEW.GO_FOR_CERTIFICATE" | translate }}
+          </button>
+          <div class="tooltip" *ngIf="userTraining?.eligible_for_certificate == false">
+            {{ "TRAINING_OVERVIEW.BUY_CERTIFICATE_FIRST" | translate }}
+          </div>
+        }
+        @else {
+          <button
+            class="certificate-button yellow"
+            (click)="downloadCertificate()"
+          >
+            <fa-icon [icon]="faCertificate" class="button-icon"></fa-icon>
+            {{ "TRAINING_OVERVIEW.DOWNLOAD_CERTIFICATE" | translate }}
+          </button>
+        }
       </div>
     </div>
   </div>

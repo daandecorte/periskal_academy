@@ -233,6 +233,9 @@
       cursor: not-allowed;
     }
   }
+  .certificate-button.yellow {
+    background-color: #ffdd00;
+  }
 
   .tooltip-container {
     position: relative;
