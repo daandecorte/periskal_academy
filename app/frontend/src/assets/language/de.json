@@ -147,7 +147,9 @@
     "START": "Starten",
     "REVIEW": "Wiederholen",
     "IMAGES": "Bild(er)",
-    "VIDEOS": "Video(s)"
+    "VIDEOS": "Video(s)",
+    "COMPLETE_TRAINING_FIRST": "Schließe alle Module ab, bevor du die Prüfung ablegst!",
+    "DOWNLOAD_CERTIFICATE": "Zertifikat herunterladen"
   },
   "TIPS_AND_TRICKS": {
     "TIPS_AND_TRICKS": "Tipps und Tricks",

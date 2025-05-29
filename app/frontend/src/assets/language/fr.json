@@ -147,7 +147,9 @@
     "START": "Commencer",
     "REVIEW": "Revoir",
     "IMAGES": "Image(s)",
-    "VIDEOS": "Vidéo(s)"
+    "VIDEOS": "Vidéo(s)",
+    "COMPLETE_TRAINING_FIRST": "Complétez tous les modules avant de passer l'examen !",
+    "DOWNLOAD_CERTIFICATE": "Télécharger le certificat"
   },
   "TIPS_AND_TRICKS": {
     "TIPS_AND_TRICKS": "Astuces et conseils",

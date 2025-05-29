@@ -92,7 +92,7 @@
         @if(userCertificateId==-1) {
           <button
             class="certificate-button"
-            [disabled]="userTraining?.eligible_for_certificate == false"
+            [disabled]="userTraining?.eligible_for_certificate == false || trainingCompleted==false"
             (click)="goToCertificate()"
           >
             <fa-icon [icon]="faCertificate" class="button-icon"></fa-icon>
@@ -100,6 +100,9 @@
           </button>
           <div class="tooltip" *ngIf="userTraining?.eligible_for_certificate == false">
             {{ "TRAINING_OVERVIEW.BUY_CERTIFICATE_FIRST" | translate }}
+          </div>
+          <div class="tooltip" *ngIf="userTraining?.eligible_for_certificate == true && trainingCompleted==false">
+            {{ "TRAINING_OVERVIEW.COMPLETE_TRAINING_FIRST" | translate }}
           </div>
         }
         @else {

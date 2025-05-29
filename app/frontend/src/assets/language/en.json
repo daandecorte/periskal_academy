@@ -141,6 +141,8 @@
     "BACK": "Back",
     "GO_FOR_CERTIFICATE": "Go for Certificate",
     "BUY_CERTIFICATE_FIRST": "You need to purchase the certificate to be eligible for the exam!",
+    "COMPLETE_TRAINING_FIRST": "Complete all modules before attempting the exam!",
+    "DOWNLOAD_CERTIFICATE": "Download Certificate",
     "COMPLETED": "completed",
     "QUESTIONS": "Questions",
     "START": "Start",
