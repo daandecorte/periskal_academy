@@ -45,7 +45,7 @@ export class TrainingOverviewComponent implements OnInit {
   userTraining: UserTraining | undefined;
   trainingCompleted: boolean=false;
 
-  private currentUser: IUser | null | undefined;
+  private currentUser: any;
   public userCertificateId = -1;
   // Font Awesome icons
   faPlayCircle = faPlayCircle;
@@ -66,7 +66,11 @@ export class TrainingOverviewComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.currentUser = await firstValueFrom(this.authService.currentUser$);
+    let currentUserLocal = await firstValueFrom(this.authService.currentUser$);
+    if(currentUserLocal) {
+      let userResponse = await fetch(`/api/users/periskal_id/${currentUserLocal.ID}`);
+      this.currentUser = await userResponse.json();
+    }
     this.languageService.currentLanguage$.subscribe((language) => {
       this.currentLanguage = this.mapLanguageCode(language);
     });
@@ -97,7 +101,7 @@ export class TrainingOverviewComponent implements OnInit {
   }
   async getUserCertificate() {
     if(this.currentUser) {
-      let userCertificateResponse = await fetch(`/api/user_certificates/training${this.trainingId}/user/${this.currentUser.ID}`);
+      let userCertificateResponse = await fetch(`/api/user_certificates/training/${this.trainingId}/user/${this.currentUser.id}`);
       if(userCertificateResponse.status==200) {
         let userCertificate = await userCertificateResponse.json();
         this.userCertificateId = await userCertificate.id;
@@ -106,9 +110,7 @@ export class TrainingOverviewComponent implements OnInit {
   }
   async getUserTraining() {
     if(this.currentUser) {
-      let userResponse = await fetch(`/api/users/periskal_id/${this.currentUser.ID}`);
-      let user = await userResponse.json();
-      let userTrainingResponse = await fetch(`/api/user_trainings/training/${this.trainingId}/user/${user.id}`);
+      let userTrainingResponse = await fetch(`/api/user_trainings/training/${this.trainingId}/user/${this.currentUser.id}`);
       //check if userTraining exists
       if(userTrainingResponse.status==404) {
         let userTrainingPostResponse = await fetch(`/api/user_trainings`, 
@@ -120,7 +122,7 @@ export class TrainingOverviewComponent implements OnInit {
             },
             body: JSON.stringify({
               training_id: this.trainingId,
-              user_id: user.id,
+              user_id: this.currentUser.id,
               eligible_for_certificate: false
             })
           }
