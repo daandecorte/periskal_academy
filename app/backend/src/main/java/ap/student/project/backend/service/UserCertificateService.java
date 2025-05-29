@@ -47,6 +47,7 @@ public class UserCertificateService {
      * @param userCertificateDTO The data transfer object containing the UserCertificate information
      * @return The newly created and saved UserCertificate entity
      * @throws MissingArgumentException If either user_id or certificate_id is missing from the DTO
+     * @throws DuplicateException If the combination of user id and certificate id already exists in a usercertificate.
      */
 
     public UserCertificate save(UserCertificateDTO userCertificateDTO) {

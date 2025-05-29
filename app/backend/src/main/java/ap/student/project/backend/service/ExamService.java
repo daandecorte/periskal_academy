@@ -3,6 +3,7 @@ package ap.student.project.backend.service;
 import ap.student.project.backend.dao.ExamRepository;
 import ap.student.project.backend.dao.QuestionOptionRepository;
 import ap.student.project.backend.dao.QuestionRepository;
+import ap.student.project.backend.dao.UserCertificateRepository;
 import ap.student.project.backend.dto.ExamAnswerDTO;
 import ap.student.project.backend.dto.ExamAttemptDTO;
 import ap.student.project.backend.dto.ExamDTO;
@@ -23,6 +24,7 @@ import ap.student.project.backend.entity.User;
 import ap.student.project.backend.entity.UserCertificate;
 import ap.student.project.backend.entity.UserTraining;
 import ap.student.project.backend.entity.Question;
+import ap.student.project.backend.exceptions.DuplicateException;
 import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.springframework.beans.BeanUtils;
@@ -56,6 +58,7 @@ public class ExamService {
     private final ExamAttemptService examAttemptService;
     private final UserTrainingService userTrainingService;
     private final TrainingProgressService trainingProgressService;
+    private final UserCertificateRepository userCertificateRepository;
     private final Map<String, LocalDateTime> examStartTimes = new ConcurrentHashMap<>();
 
     /**
@@ -69,7 +72,7 @@ public class ExamService {
      * @param certificateService Service for certificate-related operations
      * @param userService Service for user-related operations
      */
-    public ExamService(ExamRepository examRepository, QuestionRepository questionRepository, TrainingService trainingService, QuestionOptionRepository questionOptionRepository, UserCertificateService userCertificateService, CertificateService certificateService, UserService userService, ExamAttemptService examAttemptService, UserTrainingService userTrainingService, TrainingProgressService trainingProgressService) {
+    public ExamService(ExamRepository examRepository, QuestionRepository questionRepository, TrainingService trainingService, QuestionOptionRepository questionOptionRepository, UserCertificateService userCertificateService, CertificateService certificateService, UserService userService, ExamAttemptService examAttemptService, UserTrainingService userTrainingService, TrainingProgressService trainingProgressService, UserCertificateRepository userCertificateRepository) {
         this.examRepository = examRepository;
         this.questionRepository = questionRepository;
         this.trainingService = trainingService;
@@ -79,6 +82,7 @@ public class ExamService {
         this.examAttemptService = examAttemptService;
         this.userTrainingService = userTrainingService;
         this.trainingProgressService = trainingProgressService;
+        this.userCertificateRepository = userCertificateRepository;
     }
 
     /**
@@ -294,7 +298,7 @@ public class ExamService {
                 if (certificate != null) {
                     // Create UserCertificate
                     LocalDate issueDate = LocalDate.now();
-                    LocalDate expiryDate = issueDate.plusMonths(certificate.getValidityPeriod());
+                    LocalDate expiryDate = issueDate.plusYears(certificate.getValidityPeriod());
                     
                     UserCertificateDTO userCertificateDTO = new UserCertificateDTO(
                         issueDate,
@@ -303,8 +307,18 @@ public class ExamService {
                         submissionDTO.userId(),
                         certificate.getId()
                     );
-                    
-                    UserCertificate userCertificate = userCertificateService.save(userCertificateDTO);
+                    UserCertificate userCertificate;
+                    try {
+                        userCertificate = userCertificateService.save(userCertificateDTO);
+                    }
+                    catch(DuplicateException e) {
+                        userCertificate = userCertificateService.findByTrainingIdAndUserId(training.getId(), submissionDTO.getUserId());
+                        userCertificate.setIssueDate(issueDate);
+                        userCertificate.setExpiryDate(expiryDate);
+                        userCertificate.setStatus(CertificateStatus.VALID);
+                        userCertificateRepository.save(userCertificate);
+                    }
+
                     result.setCertificateId(userCertificate.getId());
                 }
             } catch (Exception e) {
