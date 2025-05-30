@@ -1,13 +1,13 @@
 .exam-settings {
   width: 90%;
   max-width: 900px;
-  margin: auto;
+  margin: 10px auto;
   margin-bottom: 15px;
   background: white;
   padding: 20px;
   padding-right: 37px;
   border-radius: 8px;
-  border: 2px solid #eee;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
 
 .exam-settings.title {
@@ -53,7 +53,7 @@
   padding: 20px;
   padding-right: 37px;
   border-radius: 8px;
-  border: 2px solid #eee;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
 
 .question-pool-container {

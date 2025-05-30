@@ -37,10 +37,12 @@ export class ModuleFormComponent {
   saveModule() {
     this.trainingService.saveModule();
     this.router.navigate(['/add-training']);
+    this.trainingService.currentIndex=1;
   }
-
+  
   cancelModule() {
     this.trainingService.resetModule();
     this.router.navigate(['/add-training']);
+    this.trainingService.currentIndex=1;
   }
 }

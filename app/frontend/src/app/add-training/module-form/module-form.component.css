@@ -9,10 +9,12 @@ body {
   width: 500px;
   background: white;
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
   font-family: Arial, sans-serif;
   padding-right: 35px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+  margin: 3px auto;
+  max-height: 90vh;
 }
 
 /* Header styling */

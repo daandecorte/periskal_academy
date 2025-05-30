@@ -494,6 +494,7 @@ export class AddTrainingComponent {
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe();
     }
+    this.trainingService.currentIndex=0;
   }
 
   async uploadVideo(files: ITranslated, indexM: number, indexC: number) {
