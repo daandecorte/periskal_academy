@@ -1,15 +1,30 @@
 package ap.student.project.backend.service;
 
+import ap.student.project.backend.dao.CertificateRepository;
+import ap.student.project.backend.dao.ExamAttemptRepository;
 import ap.student.project.backend.dao.ExamRepository;
+import ap.student.project.backend.dao.QuestionOptionRepository;
 import ap.student.project.backend.dao.QuestionRepository;
 import ap.student.project.backend.dao.TrainingRepository;
+import ap.student.project.backend.dao.UserRepository;
+import ap.student.project.backend.dao.UserTrainingRepository;
+import ap.student.project.backend.dto.ExamAnswerDTO;
+import ap.student.project.backend.dto.ExamAttemptDTO;
 import ap.student.project.backend.dto.ExamDTO;
+import ap.student.project.backend.dto.ExamResultDTO;
 import ap.student.project.backend.dto.ExamStartResponseDTO;
+import ap.student.project.backend.dto.ExamSubmissionDTO;
 import ap.student.project.backend.dto.QuestionDTO;
+import ap.student.project.backend.dto.UserTrainingDTO;
+import ap.student.project.backend.entity.Certificate;
 import ap.student.project.backend.entity.Exam;
+import ap.student.project.backend.entity.ExamStatusType;
 import ap.student.project.backend.entity.Language;
 import ap.student.project.backend.entity.Question;
+import ap.student.project.backend.entity.QuestionOption;
 import ap.student.project.backend.entity.Training;
+import ap.student.project.backend.entity.User;
+import ap.student.project.backend.entity.UserTraining;
 import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +35,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,23 +52,66 @@ class ExamServiceTest {
     private TrainingService trainingService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ExamAttemptService examAttemptService;
+
+    @Autowired
+    private UserTrainingService userTrainingService;
+
+    @Autowired
+    private UserCertificateService userCertificateService;
+
+    @Autowired
+    private TrainingProgressService trainingProgressService;
+
+    @Autowired
     private ExamRepository examRepository;
 
     @Autowired
     private QuestionRepository questionRepository;
 
     @Autowired
+    private QuestionOptionRepository questionOptionRepository;
+
+    @Autowired
     private TrainingRepository trainingRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private CertificateRepository certificateRepository;
+
+    @Autowired
+    private UserTrainingRepository userTrainingRepository;
+
+    @Autowired
+    private ExamAttemptRepository examAttemptRepository;
 
     private Training testTraining;
     private Exam testExam;
+    private User testUser;
+    private Certificate testCertificate;
 
     @BeforeEach
     void setUp() {
+        // Clean up all data
+        examAttemptRepository.deleteAll();
+        userTrainingRepository.deleteAll();
+        certificateRepository.deleteAll();
+        questionOptionRepository.deleteAll();
         questionRepository.deleteAll();
         examRepository.deleteAll();
         trainingRepository.deleteAll();
+        userRepository.deleteAll();
 
+        // Create test user
+        testUser = new User("TEST123", "John", "Doe", "Test Ship", Language.ENGLISH);
+        testUser = userRepository.save(testUser);
+
+        // Create test training
         Map<Language, String> title = new HashMap<>();
         title.put(Language.ENGLISH, "Test Training Title");
         title.put(Language.DUTCH, "Test Training Titel");
@@ -64,8 +123,18 @@ class ExamServiceTest {
         testTraining = new Training(title, description, true, null, null);
         testTraining = trainingRepository.save(testTraining);
 
+        // Create test certificate
+        testCertificate = new Certificate();
+        testCertificate.setValidityPeriod(2);
+        testCertificate.setTraining(testTraining);
+        testCertificate = certificateRepository.save(testCertificate);
+
+        // Update training to have certificate
+        testTraining.setCertificate(testCertificate);
+        testTraining = trainingRepository.save(testTraining);
+
         // Create and save an exam
-        testExam = new Exam(70, 3, 60, 2, new ArrayList<Question>(), testTraining); // passingScore, maxAttempts, time, questionAmount, training
+        testExam = new Exam(70, 3, 60, 2, new ArrayList<>(), testTraining);
         testExam = examRepository.save(testExam);
     }
 
@@ -132,32 +201,6 @@ class ExamServiceTest {
         assertEquals(1, questions.size());
     }
 
-    // These two tests still don't work, I think something goes wrong when adding the questions?
-    // TODO: either fix or remove these
-
-    /*@Test
-    void addQuestion_ShouldThrowException_WhenExamIsFull() {
-        // Add maximum allowed questions
-        for (int i = 0; i < testExam.getQuestionAmount(); i++) {
-            QuestionDTO questionDTO = new QuestionDTO(null, Collections.emptyList());
-            examService.addQuestion(testExam.getId(), questionDTO);
-        }
-
-        testExam = examRepository.findById(testExam.getId()).orElseThrow();
-
-        QuestionDTO extraQuestion = new QuestionDTO(null, Collections.emptyList());
-
-        assertThrows(ListFullException.class, () -> examService.addQuestion(testExam.getId(), extraQuestion));
-    }*/
-
-    /*@Test
-    void findAllQuestionsByExamId_ShouldReturnQuestions() {
-        QuestionDTO questionDTO = new QuestionDTO(null, Collections.emptyList());
-        examService.addQuestion(testExam.getId(), questionDTO);
-        testExam = examRepository.findById(testExam.getId()).orElseThrow();
-        List<Question> questions = examService.findAllQuestionsByExamId(testExam.getId());
-        assertEquals(1, questions.size());
-    }*/
 
     @Test
     void findAllQuestionsByExamId_ShouldThrowException_WhenExamNotFound() {
@@ -293,5 +336,160 @@ class ExamServiceTest {
     void addQuestion_ShouldThrowException_WhenExamNotFound() {
         QuestionDTO questionDTO = new QuestionDTO(null, Collections.emptyList());
         assertThrows(NotFoundException.class, () -> examService.addQuestion(9999, questionDTO));
+    }
+
+    @Test
+    void evaluateExam_ShouldCalculateCorrectScore_WithPartialCorrectAnswers() {
+        // Create questions with options
+        Question question1 = createTestQuestionWithOptions("Question 1", true, false);
+        Question question2 = createTestQuestionWithOptions("Question 2", false, true);
+        question1 = questionRepository.save(question1);
+        question2 = questionRepository.save(question2);
+
+        // Create submission with one correct and one incorrect answer
+        List<ExamAnswerDTO> answers = Arrays.asList(
+            new ExamAnswerDTO(question1.getId(), question1.getQuestionOptions().get(0).getId()), // Correct
+            new ExamAnswerDTO(question2.getId(), question2.getQuestionOptions().get(0).getId())  // Incorrect
+        );
+
+        ExamSubmissionDTO submission = new ExamSubmissionDTO(testExam.getId(), testUser.getId(), answers);
+
+        ExamResultDTO result = examService.evaluateExam(submission);
+
+        assertEquals(50, result.getScore()); // 1 out of 2 correct = 50%
+        assertFalse(result.isPassed()); // 50% < 70% passing score
+        assertNotNull(result.getAttemptId());
+    }
+
+    @Test
+    void evaluateExam_ShouldCreateUserCertificate_WhenExamPassed() {
+        // Create questions with options
+        Question question1 = createTestQuestionWithOptions("Question 1", true, false);
+        Question question2 = createTestQuestionWithOptions("Question 2", true, false);
+        question1 = questionRepository.save(question1);
+        question2 = questionRepository.save(question2);
+
+        // Create submission with all correct answers
+        List<ExamAnswerDTO> answers = Arrays.asList(
+            new ExamAnswerDTO(question1.getId(), question1.getQuestionOptions().get(0).getId()), // Correct
+            new ExamAnswerDTO(question2.getId(), question2.getQuestionOptions().get(0).getId())  // Correct
+        );
+
+        ExamSubmissionDTO submission = new ExamSubmissionDTO(testExam.getId(), testUser.getId(), answers);
+
+        ExamResultDTO result = examService.evaluateExam(submission);
+
+        assertEquals(100, result.getScore());
+        assertTrue(result.isPassed());
+        assertNotNull(result.getCertificateId());
+        assertNotNull(result.getAttemptId());
+    }
+
+    @Test
+    void evaluateExam_ShouldSkipInvalidQuestions_AndContinueEvaluation() {
+        // Create one valid question
+        Question validQuestion = createTestQuestionWithOptions("Valid Question", true, false);
+        validQuestion = questionRepository.save(validQuestion);
+
+        // Create submission with valid and invalid question IDs
+        List<ExamAnswerDTO> answers = Arrays.asList(
+            new ExamAnswerDTO(validQuestion.getId(), validQuestion.getQuestionOptions().get(0).getId()), // Valid
+            new ExamAnswerDTO(9999, 9999) // Invalid question/option IDs
+        );
+
+        ExamSubmissionDTO submission = new ExamSubmissionDTO(testExam.getId(), testUser.getId(), answers);
+
+        ExamResultDTO result = examService.evaluateExam(submission);
+
+        assertEquals(50, result.getScore()); // 1 correct out of 2 submitted = 50%
+        assertFalse(result.isPassed());
+    }
+
+    @Test
+    void evaluateExam_ShouldReturnZeroScore_WhenNoQuestionsProvided() {
+        ExamSubmissionDTO submission = new ExamSubmissionDTO(testExam.getId(), testUser.getId(), Collections.emptyList());
+
+        ExamResultDTO result = examService.evaluateExam(submission);
+
+        assertEquals(0, result.getScore());
+        assertFalse(result.isPassed());
+        assertNotNull(result.getAttemptId());
+    }
+
+    @Test
+    void evaluateExam_ShouldCreateUserTraining_WhenNotExists() {
+        // Create a question for evaluation
+        Question question = createTestQuestionWithOptions("Question", true, false);
+        question = questionRepository.save(question);
+
+        List<ExamAnswerDTO> answers = Arrays.asList(
+            new ExamAnswerDTO(question.getId(), question.getQuestionOptions().get(0).getId())
+        );
+
+        ExamSubmissionDTO submission = new ExamSubmissionDTO(testExam.getId(), testUser.getId(), answers);
+
+        // Verify no UserTraining exists initially
+        assertThrows(NotFoundException.class, () -> 
+            userTrainingService.findByTrainingIdAndUserId(testTraining.getId(), testUser.getId()));
+
+        ExamResultDTO result = examService.evaluateExam(submission);
+
+        // Verify UserTraining was created
+        assertNotNull(result.getAttemptId());
+        UserTraining createdUserTraining = userTrainingService.findByTrainingIdAndUserId(testTraining.getId(), testUser.getId());
+        assertNotNull(createdUserTraining);
+        assertTrue(createdUserTraining.isEligibleForCertificate());
+    }
+
+    @Test
+    void addQuestion_ShouldSaveQuestionWithOptions() {
+        Map<Language, String> questionText = new HashMap<>();
+        questionText.put(Language.ENGLISH, "Test Question");
+
+        Map<Language, String> option1Text = new HashMap<>();
+        option1Text.put(Language.ENGLISH, "Option 1");
+        
+        Map<Language, String> option2Text = new HashMap<>();
+        option2Text.put(Language.ENGLISH, "Option 2");
+
+        QuestionOption option1 = new QuestionOption(option1Text, true, null);
+        QuestionOption option2 = new QuestionOption(option2Text, false, null);
+
+        QuestionDTO questionDTO = new QuestionDTO(questionText, Arrays.asList(option1, option2));
+
+        examService.addQuestion(testExam.getId(), questionDTO);
+
+        List<Question> questions = questionRepository.findAll();
+        assertEquals(1, questions.size());
+        
+        Question savedQuestion = questions.get(0);
+        assertEquals(2, savedQuestion.getQuestionOptions().size());
+        assertEquals(testExam.getId(), savedQuestion.getExam().getId());
+        
+        // Verify options are properly linked
+        for (QuestionOption option : savedQuestion.getQuestionOptions()) {
+            assertEquals(savedQuestion.getId(), option.getQuestion().getId());
+        }
+    }
+    
+    //Helper method to create test question
+    private Question createTestQuestionWithOptions(String questionText, boolean firstCorrect, boolean secondCorrect) {
+        Map<Language, String> text = new HashMap<>();
+        text.put(Language.ENGLISH, questionText);
+
+        Map<Language, String> option1Text = new HashMap<>();
+        option1Text.put(Language.ENGLISH, "Option 1");
+        
+        Map<Language, String> option2Text = new HashMap<>();
+        option2Text.put(Language.ENGLISH, "Option 2");
+
+        Question question = new Question(text, new ArrayList<>(), testExam, null);
+        
+        QuestionOption option1 = new QuestionOption(option1Text, firstCorrect, question);
+        QuestionOption option2 = new QuestionOption(option2Text, secondCorrect, question);
+        
+        question.setQuestionOptions(Arrays.asList(option1, option2));
+        
+        return question;
     }
 }
