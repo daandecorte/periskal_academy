@@ -22,10 +22,10 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 /**
- * Unit tests for LoginController using mocks
+ * Tests for LoginController using mocks
  */
 @ExtendWith(MockitoExtension.class)
-class LoginControllerUnitTest {
+class LoginControllerTest {
 
     @Mock
     private UserService userService;
