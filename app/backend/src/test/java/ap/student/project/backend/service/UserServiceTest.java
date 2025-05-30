@@ -6,14 +6,13 @@ import ap.student.project.backend.entity.Language;
 import ap.student.project.backend.entity.User;
 import ap.student.project.backend.exceptions.DuplicateException;
 import ap.student.project.backend.exceptions.NotFoundException;
-import org.springframework.transaction.annotation.Transactional;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,7 +33,7 @@ class UserServiceTest {
     void setUp() {
         // Clean up database
         userRepository.deleteAll();
-        
+
         // Create test data
         userDTO = new UserDTO("testId", "John", "Doe", "Ship123", Language.ENGLISH);
     }
@@ -54,7 +53,7 @@ class UserServiceTest {
     @Test
     void save_ShouldSaveUser_WhenUserDoesNotExist() {
         User savedUser = userService.save(userDTO);
-        
+
         assertNotNull(savedUser);
         assertNotNull(savedUser.getId());
         assertEquals("testId", savedUser.getPeriskalId());
@@ -68,7 +67,7 @@ class UserServiceTest {
     void findById_ShouldReturnUser_WhenUserExists() {
         User savedUser = userService.save(userDTO);
         User foundUser = userService.findById(savedUser.getId());
-        
+
         assertNotNull(foundUser);
         assertEquals(savedUser.getId(), foundUser.getId());
         assertEquals("testId", foundUser.getPeriskalId());

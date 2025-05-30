@@ -18,13 +18,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class ChatController {
     private final ChatService chatService;
+
     public ChatController(ChatService chatService) {
         this.chatService = chatService;
     }
 
     /**
      * Retrieves all chats from the system.
-     * 
+     *
      * @return ResponseEntity containing a list of all chats with HTTP status 200 (OK)
      */
     @GetMapping(value = "/chat", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -32,9 +33,9 @@ public class ChatController {
         return ResponseEntity.ok(this.chatService.findAll());
     }
 
-     /**
+    /**
      * Creates a new chat in the system.
-     * 
+     *
      * @param chatDTO The chat data transfer object containing chat information
      * @return ResponseEntity containing the created chat with HTTP status 201 (CREATED)
      */
@@ -45,7 +46,7 @@ public class ChatController {
 
     /**
      * Adds a new message to a chat.
-     * 
+     *
      * @param messageDTO The message data transfer object containing message information
      * @return ResponseEntity containing the added message with HTTP status 201 (CREATED)
      */
@@ -57,8 +58,8 @@ public class ChatController {
 
     /**
      * Adds a new member to a specific chat.
-     * 
-     * @param id The ID of the chat to add a member to
+     *
+     * @param id            The ID of the chat to add a member to
      * @param chatMemberDTO The chat member data transfer object containing member information
      * @return ResponseEntity containing the added chat member with HTTP status 201 (CREATED)
      */
@@ -68,9 +69,9 @@ public class ChatController {
         return ResponseEntity.status(HttpStatus.CREATED).body(chatMemberDTO);
     }
 
-     /**
+    /**
      * Retrieves a specific chat by its ID.
-     * 
+     *
      * @param id The ID of the chat to retrieve
      * @return ResponseEntity containing the chat with HTTP status 200 (OK)
      */
@@ -79,9 +80,9 @@ public class ChatController {
         return ResponseEntity.ok(this.chatService.findById(id));
     }
 
-     /**
+    /**
      * Retrieves a chat member by its ID.
-     * 
+     *
      * @param id The ID of the chat member to retrieve
      * @return ResponseEntity containing the chat member with HTTP status 200 (OK)
      */
@@ -90,20 +91,20 @@ public class ChatController {
         return ResponseEntity.ok(this.chatService.findMemberById(id));
     }
 
-     /**
+    /**
      * Retrieves a chat associated with a specific member ID.
-     * 
+     *
      * @param id The member ID to find the chat for
      * @return ResponseEntity containing the chat with HTTP status 200 (OK)
      */
-    @GetMapping(value="/members/{id}/chat", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/members/{id}/chat", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getChatByChatMemberId(@PathVariable("id") int id) {
         return ResponseEntity.ok(this.chatService.findChatByMemberId(id));
     }
 
     /**
      * Retrieves all messages for a specific chat.
-     * 
+     *
      * @param id The ID of the chat to retrieve messages for
      * @return ResponseEntity containing a list of chat messages with HTTP status 200 (OK)
      */
@@ -114,8 +115,8 @@ public class ChatController {
 
     /**
      * Updates a specific chat with new information.
-     * 
-     * @param id The ID of the chat to update
+     *
+     * @param id      The ID of the chat to update
      * @param chatDTO The chat data transfer object containing updated chat information
      * @return ResponseEntity containing the updated chat with HTTP status 200 (OK)
      */

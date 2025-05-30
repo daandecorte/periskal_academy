@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "user_certificate")
@@ -19,7 +18,7 @@ public class UserCertificate {
     private int id;
     @Column(name = "issue_date")
     private LocalDate issueDate;
-    @Column(name="expiry_date")
+    @Column(name = "expiry_date")
     private LocalDate expiryDate;
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

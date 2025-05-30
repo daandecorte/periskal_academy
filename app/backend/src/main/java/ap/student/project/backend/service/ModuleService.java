@@ -7,8 +7,8 @@ import ap.student.project.backend.dao.QuestionRepository;
 import ap.student.project.backend.dto.ContentDTO;
 import ap.student.project.backend.dto.ModuleDTO;
 import ap.student.project.backend.dto.QuestionDTO;
-import ap.student.project.backend.entity.*;
 import ap.student.project.backend.entity.Module;
+import ap.student.project.backend.entity.*;
 import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.springframework.beans.BeanUtils;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Service class for managing training modules.
@@ -33,9 +32,9 @@ public class ModuleService {
     /**
      * Constructs a new ModuleService with the required repositories and services.
      *
-     * @param moduleRepository Repository for Module entity operations
-     * @param trainingService Service for training-related operations
-     * @param contentRepository Repository for Content entity operations
+     * @param moduleRepository   Repository for Module entity operations
+     * @param trainingService    Service for training-related operations
+     * @param contentRepository  Repository for Content entity operations
      * @param questionRepository Repository for Question entity operations
      */
     public ModuleService(ModuleRepository moduleRepository, TrainingService trainingService, ContentRepository contentRepository, QuestionRepository questionRepository, QuestionOptionRepository questionOptionRepository) {
@@ -55,17 +54,17 @@ public class ModuleService {
         return moduleRepository.findAll();
     }
 
-     /**
+    /**
      * Creates and saves a new module.
      *
      * @param moduleDTO Data transfer object containing module information
      * @return The saved Module entity
      * @throws MissingArgumentException If training_id is missing from the DTO
-     * @throws NotFoundException If the training is not found
+     * @throws NotFoundException        If the training is not found
      */
     public Module save(ModuleDTO moduleDTO) {
         Module module = new Module();
-        if(moduleDTO.trainingId()==0) {
+        if (moduleDTO.trainingId() == 0) {
             throw new MissingArgumentException("training_id is missing");
         }
         Training training = trainingService.findById(moduleDTO.trainingId());
@@ -94,7 +93,7 @@ public class ModuleService {
     /**
      * Updates an existing module with new information.
      *
-     * @param id The ID of the module to update
+     * @param id        The ID of the module to update
      * @param moduleDTO Data transfer object containing updated module information
      * @throws NotFoundException If no module with the given ID exists
      */
@@ -103,7 +102,7 @@ public class ModuleService {
         if (module == null) {
             throw new NotFoundException("Module with id " + id + " not found");
         }
-        
+
         // Initialize maps if they are null
         if (module.getTitle() == null) {
             module.setTitle(new HashMap<>());
@@ -111,7 +110,7 @@ public class ModuleService {
         if (module.getDescription() == null) {
             module.setDescription(new HashMap<>());
         }
-        
+
         // Update with the new values
         if (moduleDTO.title() != null) {
             module.getTitle().clear();
@@ -121,7 +120,7 @@ public class ModuleService {
             module.getDescription().clear();
             module.getDescription().putAll(moduleDTO.description());
         }
-        
+
         moduleRepository.save(module);
         return module;
     }
@@ -134,7 +133,7 @@ public class ModuleService {
      */
     public void deleteModule(int id) {
         Module module = this.getModuleById(id);
-        if(module == null){
+        if (module == null) {
             throw new NotFoundException("Module with id " + id + " not found");
         }
         moduleRepository.delete(module);
@@ -143,7 +142,7 @@ public class ModuleService {
     /**
      * Adds content to an existing module.
      *
-     * @param id The ID of the module to add content to
+     * @param id         The ID of the module to add content to
      * @param contentDTO Data transfer object containing content information
      * @return The saved Content entity
      * @throws NotFoundException If no module with the given ID exists
@@ -164,8 +163,8 @@ public class ModuleService {
     /**
      * Updates content from an existing module.
      *
-     * @param id The ID of the module to add content to
-     * @param idContent The ID of the content
+     * @param id         The ID of the module to add content to
+     * @param idContent  The ID of the content
      * @param contentDTO Data transfer object containing content information
      * @return The saved Content entity
      * @throws NotFoundException If no module or no content with the given ID exists
@@ -176,7 +175,7 @@ public class ModuleService {
             throw new NotFoundException("Module with id " + id + " not found");
         }
         Content content = contentRepository.findById(idContent).orElse(null);
-        if(content==null) {
+        if (content == null) {
             throw new NotFoundException("Content with id " + id + " not found");
         }
         content.setContentType(contentDTO.contentType());
@@ -188,16 +187,16 @@ public class ModuleService {
     /**
      * Deletes content from an existing module.
      *
-     * @param id The ID of the module to delete the content from
+     * @param id        The ID of the module to delete the content from
      * @param idContent The ID of the content that we need to delete
      */
-    public void deleteContent(int id, int idContent){
+    public void deleteContent(int id, int idContent) {
         Module module = this.getModuleById(id);
-        if(module==null) {
+        if (module == null) {
             throw new NotFoundException("Module with id " + id + " not found");
         }
         Content content = contentRepository.findById(idContent).orElse(null);
-        if(content==null) {
+        if (content == null) {
             throw new NotFoundException("Content with id " + id + " not found");
         }
         contentRepository.delete(content);
@@ -206,7 +205,7 @@ public class ModuleService {
     /**
      * Adds a question to an existing module.
      *
-     * @param id The ID of the module to add the question to
+     * @param id          The ID of the module to add the question to
      * @param questionDTO Data transfer object containing question information
      * @return The saved Question entity
      * @throws NotFoundException If no module with the given ID exists
@@ -219,7 +218,7 @@ public class ModuleService {
         Question question = new Question();
         question.setModule(module);
         List<QuestionOption> questionOptions = questionDTO.questionOptions();
-        for(QuestionOption questionOption : questionOptions) {
+        for (QuestionOption questionOption : questionOptions) {
             questionOption.setQuestion(question);
         }
         question.setQuestionOptions(questionOptions);
@@ -240,7 +239,7 @@ public class ModuleService {
         if (module == null) {
             throw new NotFoundException("Module with id " + id + " not found");
         }
-        if(module.getQuestions().isEmpty()) {
+        if (module.getQuestions().isEmpty()) {
             throw new NotFoundException("Module with id " + id + " has no questions");
         }
         return module.getQuestions();
@@ -252,12 +251,12 @@ public class ModuleService {
      * @param id The ID of the module to delete the questions for
      * @throws NotFoundException If no module with the given ID exists
      */
-    public void deleteQuestions(int id){
+    public void deleteQuestions(int id) {
         Module module = this.getModuleById(id);
-        if(module == null){
+        if (module == null) {
             throw new NotFoundException("Module with id " + id + " not found");
         }
-        for(Question question : module.getQuestions()){
+        for (Question question : module.getQuestions()) {
             questionOptionRepository.deleteAll(question.getQuestionOptions());
             questionRepository.delete(question);
         }

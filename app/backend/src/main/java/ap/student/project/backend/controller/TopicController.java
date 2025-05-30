@@ -24,7 +24,7 @@ public class TopicController {
 
     /**
      * Retrieves all topics from the system.
-     * 
+     *
      * @return ResponseEntity containing a list of all topics with HTTP status 200 (OK)
      */
     @GetMapping(value = "/topics", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -34,7 +34,7 @@ public class TopicController {
 
     /**
      * Retrieves a specific topic by its ID.
-     * 
+     *
      * @param id The ID of the topic to retrieve
      * @return ResponseEntity containing the topic with HTTP status 200 (OK)
      */
@@ -45,7 +45,7 @@ public class TopicController {
 
     /**
      * Creates a new topic in the system.
-     * 
+     *
      * @param topic The topic data transfer object containing topic information
      * @return ResponseEntity containing the created topic with HTTP status 201 (CREATED)
      */
@@ -56,8 +56,8 @@ public class TopicController {
 
     /**
      * Updates a specific topic with new information.
-     * 
-     * @param id The ID of the topic to update
+     *
+     * @param id    The ID of the topic to update
      * @param topic The topic data transfer object containing updated topic information
      * @return ResponseEntity containing the updated topic with HTTP status 200 (OK)
      */
@@ -68,7 +68,7 @@ public class TopicController {
 
     /**
      * Deletes a specific topic from the system.
-     * 
+     *
      * @param id The ID of the topic to delete
      * @return ResponseEntity with HTTP status 204 (NO_CONTENT) and a deletion confirmation message
      */

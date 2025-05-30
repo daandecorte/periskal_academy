@@ -9,6 +9,6 @@ public record ChatSummaryDTO(
         @JsonProperty("id") int id,
         @JsonProperty("chat_members") List<ChatMemberSummaryDTO> chatMembers,
         @JsonProperty("chat_status") ChatStatus chatStatus
-        ) {
+) {
 }
 

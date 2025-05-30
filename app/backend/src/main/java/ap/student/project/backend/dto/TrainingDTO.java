@@ -1,6 +1,7 @@
 package ap.student.project.backend.dto;
 
-import ap.student.project.backend.entity.*;
+import ap.student.project.backend.entity.Exam;
+import ap.student.project.backend.entity.Language;
 import ap.student.project.backend.entity.Module;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

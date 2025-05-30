@@ -24,7 +24,7 @@ public class CertificateController {
 
     /**
      * Retrieves all certificates from the system.
-     * 
+     *
      * @return ResponseEntity containing a list of all certificates with HTTP status 200 (OK)
      */
     @GetMapping(value = "/certificates", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -34,7 +34,7 @@ public class CertificateController {
 
     /**
      * Creates a new certificate in the system.
-     * 
+     *
      * @param certificateDTO The certificate data transfer object containing certificate information
      * @return ResponseEntity containing the created certificate with HTTP status 201 (CREATED)
      */
@@ -46,7 +46,7 @@ public class CertificateController {
 
     /**
      * Retrieves a specific certificate by its ID.
-     * 
+     *
      * @param id The ID of the certificate to retrieve
      * @return ResponseEntity containing the certificate with HTTP status 200 (OK)
      */
@@ -68,7 +68,7 @@ public class CertificateController {
 
     /**
      * Retrieves certificates associated with a specific training ID.
-     * 
+     *
      * @param id The training ID to find certificates for
      * @return ResponseEntity containing certificates associated with the training ID with HTTP status 200 (OK)
      */

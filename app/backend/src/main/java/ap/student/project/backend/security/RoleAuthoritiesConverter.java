@@ -1,11 +1,12 @@
 package ap.student.project.backend.security;
 
+import ap.student.project.backend.entity.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+
 import java.util.Collection;
 import java.util.Collections;
-import ap.student.project.backend.entity.Role;
 
 @Component
 public class RoleAuthoritiesConverter {

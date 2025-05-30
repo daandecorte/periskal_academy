@@ -10,12 +10,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -103,7 +100,7 @@ class ChatServiceTest {
         entityManager.refresh(savedMember);
         ChatMember member = testChat.getChatMembers().iterator().next();
 
-        MessageDTO dto = new MessageDTO("Hello world" ,member.getId());
+        MessageDTO dto = new MessageDTO("Hello world", member.getId());
         chatService.addMessage(dto);
         entityManager.flush();
         entityManager.refresh(testChat);

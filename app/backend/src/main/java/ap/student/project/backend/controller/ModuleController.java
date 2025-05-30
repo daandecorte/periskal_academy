@@ -3,8 +3,6 @@ package ap.student.project.backend.controller;
 import ap.student.project.backend.dto.ContentDTO;
 import ap.student.project.backend.dto.ModuleDTO;
 import ap.student.project.backend.dto.QuestionDTO;
-import ap.student.project.backend.exceptions.MissingArgumentException;
-import ap.student.project.backend.exceptions.NotFoundException;
 import ap.student.project.backend.service.ModuleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,7 +25,7 @@ public class ModuleController {
 
     /**
      * Retrieves all modules from the system.
-     * 
+     *
      * @return ResponseEntity containing a list of all modules with HTTP status 200 (OK)
      */
     @GetMapping(value = "/modules", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -37,7 +35,7 @@ public class ModuleController {
 
     /**
      * Creates a new module in the system.
-     * 
+     *
      * @param moduleDTO The module data transfer object containing module information
      * @return ResponseEntity containing the created module with HTTP status 201 (CREATED)
      */
@@ -48,7 +46,7 @@ public class ModuleController {
 
     /**
      * Retrieves a specific module by its ID.
-     * 
+     *
      * @param id The ID of the module to retrieve
      * @return ResponseEntity containing the module with HTTP status 200 (OK)
      */
@@ -59,8 +57,8 @@ public class ModuleController {
 
     /**
      * Updates a specific module with new information.
-     * 
-     * @param id The ID of the module to update
+     *
+     * @param id        The ID of the module to update
      * @param moduleDTO The module data transfer object containing updated module information
      * @return ResponseEntity containing the updated module with HTTP status 200 (OK)
      */
@@ -83,8 +81,8 @@ public class ModuleController {
 
     /**
      * Adds content to a specific module.
-     * 
-     * @param id The ID of the module to add content to
+     *
+     * @param id         The ID of the module to add content to
      * @param contentDTO The content data transfer object containing content information
      * @return ResponseEntity containing the added content with HTTP status 201 (CREATED)
      */
@@ -96,20 +94,20 @@ public class ModuleController {
     /**
      * Updates a specific content to a specific module.
      *
-     * @param id The ID of the module to add content to
-     * @param idContent The ID of the content
+     * @param id         The ID of the module to add content to
+     * @param idContent  The ID of the content
      * @param contentDTO The content data transfer object containing content information
      * @return ResponseEntity containing the added content with HTTP status 201 (CREATED)
      */
     @PutMapping(value = "/modules/{id}/content/{idContent}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity updateContent(@PathVariable Integer id, @PathVariable Integer idContent,@RequestBody ContentDTO contentDTO) {
+    public ResponseEntity updateContent(@PathVariable Integer id, @PathVariable Integer idContent, @RequestBody ContentDTO contentDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(moduleService.updateContent(id, idContent, contentDTO));
     }
 
     /**
      * Deletes the content of a specific module.
      *
-     * @param id The ID of the module to delete the content from
+     * @param id        The ID of the module to delete the content from
      * @param idContent The ID of the content
      * @return
      */
@@ -121,8 +119,8 @@ public class ModuleController {
 
     /**
      * Adds a question to a specific module.
-     * 
-     * @param id The ID of the module to add a question to
+     *
+     * @param id          The ID of the module to add a question to
      * @param questionDTO The question data transfer object containing question information
      * @return ResponseEntity containing the added question with HTTP status 201 (CREATED)
      */
@@ -133,7 +131,7 @@ public class ModuleController {
 
     /**
      * Retrieves all questions for a specific module.
-     * 
+     *
      * @param id The ID of the module to retrieve questions for
      * @return ResponseEntity containing a list of module questions with HTTP status 200 (OK)
      */

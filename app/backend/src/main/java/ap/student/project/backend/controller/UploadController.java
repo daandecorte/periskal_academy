@@ -19,22 +19,33 @@ import java.io.InputStream;
  */
 @RestController
 public class UploadController {
-    /** The hostname of the target FTP server */
+    /**
+     * The hostname of the target FTP server
+     */
     private static final String FTP_SERVER = "academyws.periskal.com";
-    /** The port number for the FTP connection */
+    /**
+     * The port number for the FTP connection
+     */
     private static final int FTP_PORT = 9910;
-    /** Username for FTP authentication */
+    /**
+     * Username for FTP authentication
+     */
     private static final String FTP_USER = "AcademyWS";
-    /** Password for FTP authentication */
+    /**
+     * Password for FTP authentication
+     */
     private static final String FTP_PASSWORD = "Pass4Academy2025!";
-    /** Target directory path on the FTP server where files will be stored */
+    /**
+     * Target directory path on the FTP server where files will be stored
+     */
     private static final String TARGET_DIRECTORY = "/groep7/";
 
     /**
      * Uploads a file to the FTP server.
+     *
      * @param file The file to be uploaded, provided as a MultipartFile in the request
      * @return A String containing either the public URL of the uploaded file if successful,
-     *         or an error message describing the failure reason
+     * or an error message describing the failure reason
      */
     @PostMapping("/upload")
     public String uploadToFTP(@RequestParam("file") MultipartFile file) {

@@ -22,9 +22,9 @@ public class TrainingProgressController {
         this.trainingProgressService = trainingProgressService;
     }
 
-/**
+    /**
      * Retrieves all training progress records from the system.
-     * 
+     *
      * @return ResponseEntity containing a list of all training progress records with HTTP status 200 (OK)
      */
     @GetMapping(value = "/training_progress", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -34,7 +34,7 @@ public class TrainingProgressController {
 
     /**
      * Creates a new training progress record in the system.
-     * 
+     *
      * @param trainingProgressDTO The training progress data transfer object containing progress information
      * @return ResponseEntity containing the created training progress record with HTTP status 201 (CREATED)
      */
@@ -46,8 +46,8 @@ public class TrainingProgressController {
 
     /**
      * Updates a specific training progress record with new information.
-     * 
-     * @param id The ID of the training progress record to update
+     *
+     * @param id                  The ID of the training progress record to update
      * @param trainingProgressDTO The training progress data transfer object containing updated progress information
      * @return ResponseEntity containing the updated training progress record with HTTP status 200 (OK)
      */
@@ -56,6 +56,7 @@ public class TrainingProgressController {
         this.trainingProgressService.update(id, trainingProgressDTO);
         return ResponseEntity.ok(trainingProgressDTO);
     }
+
     @GetMapping(value = "training_progress/{id}/complete_module", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addModuleCompleted(@PathVariable("id") int id) {
         TrainingProgress trainingProgress = this.trainingProgressService.addModuleCompleted(id);

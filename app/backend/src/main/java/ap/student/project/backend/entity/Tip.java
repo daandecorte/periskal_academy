@@ -8,7 +8,7 @@ import lombok.Setter;
 import java.util.Map;
 
 @Entity
-@Table(name="tip")
+@Table(name = "tip")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,7 +25,7 @@ public class Tip {
     @Column(name = "text")
     private Map<Language, String> text;
 
-    public Tip(Topic topic,Map<Language, String> text) {
+    public Tip(Topic topic, Map<Language, String> text) {
         this.topic = topic;
         this.text = text;
     }

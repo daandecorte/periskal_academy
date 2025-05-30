@@ -24,7 +24,7 @@ public class ChatMember {
     @JoinColumn(name = "user_id")
     private User user;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="chat_id")
+    @JoinColumn(name = "chat_id")
     @JsonIgnore
     private Chat chat;
     @OneToMany(mappedBy = "chatMember", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)

@@ -8,15 +8,9 @@ import ap.student.project.backend.dto.TrainingDTO;
 import ap.student.project.backend.dto.TrainingProgressDTO;
 import ap.student.project.backend.dto.UserDTO;
 import ap.student.project.backend.dto.UserTrainingDTO;
-import ap.student.project.backend.entity.Language;
-import ap.student.project.backend.entity.ProgressStatusType;
-import ap.student.project.backend.entity.Training;
-import ap.student.project.backend.entity.TrainingProgress;
-import ap.student.project.backend.entity.User;
-import ap.student.project.backend.entity.UserTraining;
+import ap.student.project.backend.entity.*;
 import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,7 +51,7 @@ class TrainingProgressServiceTest {
 
     @Autowired
     private UserService userService;
-    
+
     @Autowired
     private TrainingService trainingService;
 
@@ -78,10 +72,10 @@ class TrainingProgressServiceTest {
     @Test
     void save_ShouldThrowException_WhenUserTrainingIdIsZero() {
         TrainingProgressDTO invalidDTO = new TrainingProgressDTO(
-            LocalDateTime.now(), 
-            LocalDateTime.now(), 
-            ProgressStatusType.IN_PROGRESS,
-            0,1
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                ProgressStatusType.IN_PROGRESS,
+                0, 1
         );
         assertThrows(MissingArgumentException.class, () -> trainingProgressService.save(invalidDTO));
     }
@@ -93,41 +87,41 @@ class TrainingProgressServiceTest {
         String uniqueUserId = "testId-" + UUID.randomUUID().toString();
         UserDTO userDTO = new UserDTO(uniqueUserId, "John", "Doe", "Ship123", Language.ENGLISH);
         User user = userService.save(userDTO);
-        
+
         TrainingDTO trainingDTO = new TrainingDTO(
-            Collections.singletonMap(Language.ENGLISH, "Test Training"),
-            Collections.singletonMap(Language.ENGLISH, "Test Description"),
-            true, 
-            null, 
-            null
+                Collections.singletonMap(Language.ENGLISH, "Test Training"),
+                Collections.singletonMap(Language.ENGLISH, "Test Description"),
+                true,
+                null,
+                null
         );
         Training training = trainingService.save(trainingDTO);
-        
+
         UserTrainingDTO userTrainingDTO = new UserTrainingDTO(training.getId(), user.getId(), false);
         userTrainingService.save(userTrainingDTO);
-        
+
         // Find the created UserTraining to use its ID
         UserTraining createdUserTraining = userTrainingService.findAll().stream()
-            .filter(ut -> ut.getUser().getId() == user.getId() && ut.getTraining().getId() == training.getId())
-            .findFirst()
-            .orElseThrow(() -> new RuntimeException("UserTraining not found"));
-        
+                .filter(ut -> ut.getUser().getId() == user.getId() && ut.getTraining().getId() == training.getId())
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("UserTraining not found"));
+
         TrainingProgressDTO trainingProgressDTO = new TrainingProgressDTO(
-            LocalDateTime.now(), 
-            LocalDateTime.now(), 
-            ProgressStatusType.IN_PROGRESS,
-            createdUserTraining.getId(),1
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                ProgressStatusType.IN_PROGRESS,
+                createdUserTraining.getId(), 1
         );
-        
+
         // Make sure UserTraining does not already have a TrainingProgress
         assertNull(createdUserTraining.getTrainingProgress());
-        
+
         TrainingProgress savedProgress = trainingProgressService.save(trainingProgressDTO);
-        
+
         List<TrainingProgress> savedProgresses = trainingProgressRepository.findAll();
         assertFalse(savedProgresses.isEmpty());
         assertEquals(1, savedProgresses.size()); // Verify we have exactly one entry
-        
+
         TrainingProgress retrievedProgress = savedProgresses.get(0);
         // Compare the actual returned object with the one in the database
         assertEquals(savedProgress.getId(), retrievedProgress.getId());
@@ -142,63 +136,63 @@ class TrainingProgressServiceTest {
         String uniqueUserId = "testId-" + UUID.randomUUID().toString();
         UserDTO userDTO = new UserDTO(uniqueUserId, "John", "Doe", "Ship123", Language.ENGLISH);
         User user = userService.save(userDTO);
-        
+
         TrainingDTO trainingDTO = new TrainingDTO(
-            Collections.singletonMap(Language.ENGLISH, "Test Training"),
-            Collections.singletonMap(Language.ENGLISH, "Test Description"),
-            true, 
-            null, 
-            null
+                Collections.singletonMap(Language.ENGLISH, "Test Training"),
+                Collections.singletonMap(Language.ENGLISH, "Test Description"),
+                true,
+                null,
+                null
         );
         Training training = trainingService.save(trainingDTO);
-        
+
         UserTrainingDTO userTrainingDTO = new UserTrainingDTO(training.getId(), user.getId(), false);
         userTrainingService.save(userTrainingDTO);
-        
+
         // Find the created UserTraining to use its ID
         UserTraining createdUserTraining = userTrainingService.findAll().stream()
-            .filter(ut -> ut.getUser().getId() == user.getId() && ut.getTraining().getId() == training.getId())
-            .findFirst()
-            .orElseThrow(() -> new RuntimeException("UserTraining not found"));
-        
+                .filter(ut -> ut.getUser().getId() == user.getId() && ut.getTraining().getId() == training.getId())
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("UserTraining not found"));
+
         // Make sure UserTraining does not already have a TrainingProgress
         assertNull(createdUserTraining.getTrainingProgress());
-        
+
         // Create and save initial TrainingProgress
         TrainingProgressDTO trainingProgressDTO = new TrainingProgressDTO(
-            LocalDateTime.now(), 
-            LocalDateTime.now(), 
-            ProgressStatusType.IN_PROGRESS,
-            createdUserTraining.getId(),1
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                ProgressStatusType.IN_PROGRESS,
+                createdUserTraining.getId(), 1
         );
         trainingProgressService.save(trainingProgressDTO);
-        
+
         // Get the saved TrainingProgress
         TrainingProgress savedProgress = trainingProgressRepository.findAll().get(0);
-        
+
         // Create updated DTO with new status
         TrainingProgressDTO updatedDTO = new TrainingProgressDTO(
-            savedProgress.getStartDateTime(),
-            LocalDateTime.now(),
-            ProgressStatusType.COMPLETED,
-            createdUserTraining.getId(),1
+                savedProgress.getStartDateTime(),
+                LocalDateTime.now(),
+                ProgressStatusType.COMPLETED,
+                createdUserTraining.getId(), 1
         );
-        
+
         trainingProgressService.update(savedProgress.getId(), updatedDTO);
-        
+
         TrainingProgress updatedProgress = trainingProgressRepository.findById(savedProgress.getId()).orElseThrow();
         assertEquals(ProgressStatusType.COMPLETED, updatedProgress.getStatus());
     }
 
     @Test
     void update_ShouldThrowException_WhenTrainingProgressNotFound() {
-        assertThrows(NotFoundException.class, () -> trainingProgressService.update(9999, 
-            new TrainingProgressDTO(
-                LocalDateTime.now(),
-                LocalDateTime.now(),
-                ProgressStatusType.COMPLETED,
-                1,1
-            )
+        assertThrows(NotFoundException.class, () -> trainingProgressService.update(9999,
+                new TrainingProgressDTO(
+                        LocalDateTime.now(),
+                        LocalDateTime.now(),
+                        ProgressStatusType.COMPLETED,
+                        1, 1
+                )
         ));
     }
 
@@ -208,37 +202,37 @@ class TrainingProgressServiceTest {
         String uniqueUserId = "testId-" + UUID.randomUUID().toString();
         UserDTO userDTO = new UserDTO(uniqueUserId, "John", "Doe", "Ship123", Language.ENGLISH);
         User user = userService.save(userDTO);
-        
+
         TrainingDTO trainingDTO = new TrainingDTO(
-            Collections.singletonMap(Language.ENGLISH, "Test Training"),
-            Collections.singletonMap(Language.ENGLISH, "Test Description"),
-            true, 
-            null, 
-            null
+                Collections.singletonMap(Language.ENGLISH, "Test Training"),
+                Collections.singletonMap(Language.ENGLISH, "Test Description"),
+                true,
+                null,
+                null
         );
         Training training = trainingService.save(trainingDTO);
-        
-        UserTrainingDTO userTrainingDTO = new UserTrainingDTO( training.getId(), user.getId(), false);
+
+        UserTrainingDTO userTrainingDTO = new UserTrainingDTO(training.getId(), user.getId(), false);
         userTrainingService.save(userTrainingDTO);
-        
+
         // Find the created UserTraining
         UserTraining createdUserTraining = userTrainingService.findAll().stream()
-            .filter(ut -> ut.getUser().getId() == user.getId() && ut.getTraining().getId() == training.getId())
-            .findFirst()
-            .orElseThrow(() -> new RuntimeException("UserTraining not found"));
-        
+                .filter(ut -> ut.getUser().getId() == user.getId() && ut.getTraining().getId() == training.getId())
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("UserTraining not found"));
+
         // Create and save TrainingProgress
         TrainingProgressDTO trainingProgressDTO = new TrainingProgressDTO(
-            LocalDateTime.now(), 
-            LocalDateTime.now(), 
-            ProgressStatusType.IN_PROGRESS,
-            createdUserTraining.getId(),1
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                ProgressStatusType.IN_PROGRESS,
+                createdUserTraining.getId(), 1
         );
         trainingProgressService.save(trainingProgressDTO);
-        
+
         List<TrainingProgress> result = trainingProgressService.findAll();
-        
+
         assertFalse(result.isEmpty());
         assertEquals(1, result.size());
-    } 
+    }
 }

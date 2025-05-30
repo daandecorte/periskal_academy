@@ -23,7 +23,7 @@ public class TipService {
     /**
      * Constructs a new TipService with the required repositories.
      *
-     * @param tipRepository Repository for Tip entity operations
+     * @param tipRepository   Repository for Tip entity operations
      * @param topicRepository Repository for Topic entity operations
      */
     @Autowired
@@ -32,12 +32,14 @@ public class TipService {
         this.topicRepository = topicRepository;
     }
 
-     /**
+    /**
      * Retrieves all tips in the system.
      *
      * @return A list of all Tip entities
      */
-    public List<Tip> findAll() { return tipRepository.findAll(); }
+    public List<Tip> findAll() {
+        return tipRepository.findAll();
+    }
 
     /**
      * Finds a tip by its ID.
@@ -53,7 +55,7 @@ public class TipService {
         }
         return tip;
     }
-    
+
     /**
      * Creates and saves a new tip.
      *
@@ -61,11 +63,11 @@ public class TipService {
      * @return The saved Tip entity
      * @throws NotFoundException If the topic is not found or the topic_id is invalid
      */
-    public Tip save(TipDTO tipDTO){
+    public Tip save(TipDTO tipDTO) {
         Topic topic;
-        if(tipDTO.topic_id() >= 0){
+        if (tipDTO.topic_id() >= 0) {
             topic = topicRepository.findById(tipDTO.topic_id()).orElse(null);
-            if(topic == null){
+            if (topic == null) {
                 throw new NotFoundException("Topic with id " + tipDTO.topic_id() + " not found");
             }
         } else {
@@ -78,7 +80,7 @@ public class TipService {
     /**
      * Updates the text of an existing tip.
      *
-     * @param id The ID of the tip to update
+     * @param id     The ID of the tip to update
      * @param tipDTO Data transfer object containing the updated tip information
      * @throws NotFoundException If no tip with the given ID exists
      */

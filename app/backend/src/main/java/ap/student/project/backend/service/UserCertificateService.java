@@ -9,7 +9,6 @@ import ap.student.project.backend.entity.UserCertificate;
 import ap.student.project.backend.exceptions.DuplicateException;
 import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,8 +29,8 @@ public class UserCertificateService {
      * Constructs a new UserCertificateService with the necessary dependencies.
      *
      * @param userCertificateRepository The repository used for UserCertificate entity persistence operations
-     * @param userService The service used for User operations
-     * @param certificateService The service used for Certificate operations
+     * @param userService               The service used for User operations
+     * @param certificateService        The service used for Certificate operations
      */
     public UserCertificateService(UserCertificateRepository userCertificateRepository, UserService userService, CertificateService certificateService, TrainingService trainingService) {
         this.userCertificateRepository = userCertificateRepository;
@@ -47,19 +46,19 @@ public class UserCertificateService {
      * @param userCertificateDTO The data transfer object containing the UserCertificate information
      * @return The newly created and saved UserCertificate entity
      * @throws MissingArgumentException If either user_id or certificate_id is missing from the DTO
-     * @throws DuplicateException If the combination of user id and certificate id already exists in a usercertificate.
+     * @throws DuplicateException       If the combination of user id and certificate id already exists in a usercertificate.
      */
 
     public UserCertificate save(UserCertificateDTO userCertificateDTO) {
         UserCertificate userCertificate = new UserCertificate();
-        if(userCertificateDTO.user_id()==0) {
+        if (userCertificateDTO.user_id() == 0) {
             throw new MissingArgumentException("user_id is missing");
         }
-        if(userCertificateDTO.certificate_id()==0) {
+        if (userCertificateDTO.certificate_id() == 0) {
             throw new MissingArgumentException("certificate_id is missing");
         }
         //very important
-        if(this.userCertificateRepository.findByUserIdAndCertificateId(userCertificateDTO.user_id(), userCertificateDTO.certificate_id()).isPresent()) {
+        if (this.userCertificateRepository.findByUserIdAndCertificateId(userCertificateDTO.user_id(), userCertificateDTO.certificate_id()).isPresent()) {
             throw new DuplicateException("user certificate already exists");
         }
         userCertificate.setUser(userService.findById(userCertificateDTO.user_id()));
@@ -88,7 +87,7 @@ public class UserCertificateService {
      */
     public List<UserCertificate> findByUserId(int id) {
         User user = this.userService.findById(id);
-        if(user.getUserCertificates().isEmpty()) {
+        if (user.getUserCertificates().isEmpty()) {
             throw new NotFoundException("User with id " + id + " has no certificates");
         }
         return user.getUserCertificates();
@@ -103,7 +102,7 @@ public class UserCertificateService {
      */
     public UserCertificate findById(int id) {
         UserCertificate userCertificate = this.userCertificateRepository.findById(id).orElse(null);
-        if(userCertificate == null) {
+        if (userCertificate == null) {
             throw new NotFoundException("User Certificate with id " + id + " not found");
         }
         return userCertificate;
@@ -117,17 +116,17 @@ public class UserCertificateService {
      * @return The found user certificate
      */
     public UserCertificate findByTrainingIdAndUserId(int trainingId, int userId) {
-        if(trainingId==0) {
+        if (trainingId == 0) {
             throw new MissingArgumentException("training_id is missing");
         }
-        if(userId==0) {
+        if (userId == 0) {
             throw new MissingArgumentException("user_id is missing");
         }
         Training training = trainingService.findById(trainingId);
         Certificate certificate = training.getCertificate();
         UserCertificate userCertificate = this.userCertificateRepository.findByUserIdAndCertificateId(userId, certificate.getId()).orElse(null);
         if (userCertificate == null) {
-            throw new NotFoundException("User Certificate With CertificateId " + certificate.getId() + " And UserId "+ userId +" Not Found");
+            throw new NotFoundException("User Certificate With CertificateId " + certificate.getId() + " And UserId " + userId + " Not Found");
         }
         return userCertificate;
     }

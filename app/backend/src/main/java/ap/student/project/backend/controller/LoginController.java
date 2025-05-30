@@ -135,8 +135,9 @@ public class LoginController {
 
     /**
      * Authenticates a user with a hardware dongle code.
+     *
      * @param dongleCode the encrypted dongle code
-     * @param language the user's preferred language
+     * @param language   the user's preferred language
      * @return a JSON string containing the authentication result or an error message
      * @throws IOException if an error occurs during communication with the authentication service
      */
@@ -206,7 +207,8 @@ public class LoginController {
 
     /**
      * Converts XML response from the authentication service to JSON format.
-     * @param xml the XML string to convert
+     *
+     * @param xml            the XML string to convert
      * @param resultNodeName the name of the node containing the authentication result
      * @return a JSON string representation of the XML response
      * @throws Exception if the XML cannot be parsed or the result node is not found
@@ -258,6 +260,7 @@ public class LoginController {
 
     /**
      * Creates a SOAP request for username/password authentication.
+     *
      * @param encoded the Base64-encoded and encrypted username:password string
      * @return a SOAP request XML string
      */
@@ -276,6 +279,7 @@ public class LoginController {
 
     /**
      * Creates a SOAP request for dongle authentication.
+     *
      * @param dongleCode the encoded dongle code
      * @return a SOAP request XML string
      */
@@ -296,6 +300,7 @@ public class LoginController {
 
     /**
      * Encodes a username and password combination for authentication.
+     *
      * @param username the username to encode
      * @param password the password to encode
      * @return a Base64-encoded encrypted string

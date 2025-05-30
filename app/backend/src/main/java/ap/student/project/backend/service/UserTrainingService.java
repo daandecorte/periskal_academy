@@ -30,8 +30,8 @@ public class UserTrainingService {
      * Constructs a new UserTrainingService with the necessary dependencies.
      *
      * @param userTrainingRepository The repository used for UserTraining entity persistence operations
-     * @param userService The service used for User operations
-     * @param trainingService The service used for Training operations
+     * @param userService            The service used for User operations
+     * @param trainingService        The service used for Training operations
      */
     @Autowired
     public UserTrainingService(UserTrainingRepository userTrainingRepository, UserService userService, TrainingService trainingService) {
@@ -46,18 +46,18 @@ public class UserTrainingService {
      *
      * @param userTrainingDTO The data transfer object containing the UserTraining information
      * @throws MissingArgumentException If either user_id or training_id is missing from the DTO
-     * @throws DuplicateException If the combination of training and user already exists within this table
+     * @throws DuplicateException       If the combination of training and user already exists within this table
      */
     public void save(UserTrainingDTO userTrainingDTO) {
         UserTraining userTraining = new UserTraining();
-        if(userTrainingDTO.user_id()==0) {
+        if (userTrainingDTO.user_id() == 0) {
             throw new MissingArgumentException("user_id is missing");
         }
-        if(userTrainingDTO.training_id()==0) {
+        if (userTrainingDTO.training_id() == 0) {
             throw new MissingArgumentException("training_id is missing");
         }
-        if(this.userTrainingRepository.findByTrainingIdAndUserId(userTrainingDTO.training_id(),userTrainingDTO.user_id()).isPresent()) {
-            throw new DuplicateException("user training with user_id "+userTrainingDTO.user_id()+" and training id " + userTrainingDTO.training_id()+ " already exists");
+        if (this.userTrainingRepository.findByTrainingIdAndUserId(userTrainingDTO.training_id(), userTrainingDTO.user_id()).isPresent()) {
+            throw new DuplicateException("user training with user_id " + userTrainingDTO.user_id() + " and training id " + userTrainingDTO.training_id() + " already exists");
         }
         User user = userService.findById(userTrainingDTO.user_id());
         Training training = trainingService.findById(userTrainingDTO.training_id());
@@ -81,25 +81,27 @@ public class UserTrainingService {
         }
         return userTraining;
     }
+
     /**
      * Finds a UserTraining by a user ID and a training ID.
      *
      * @param trainingId The ID of the training
-     * @param userId The ID of the user
+     * @param userId     The ID of the user
      * @return The found UserTraining entity
      * @throws NotFoundException If no UserTraining with the given ID exists
      */
     public UserTraining findByTrainingIdAndUserId(int trainingId, int userId) throws NotFoundException {
         UserTraining userTraining = this.userTrainingRepository.findByTrainingIdAndUserId(trainingId, userId).orElse(null);
         if (userTraining == null) {
-            throw new NotFoundException("User Training With TrainingId " + trainingId + " And UserId "+ userId +" Not Found");
+            throw new NotFoundException("User Training With TrainingId " + trainingId + " And UserId " + userId + " Not Found");
         }
         return userTraining;
     }
+
     /**
      * Updates a UserTraining object.
      *
-     * @param id The ID of the userTraining
+     * @param id              The ID of the userTraining
      * @param userTrainingDTO The data transfer object containing the UserTraining information
      */
     public void update(int id, UserTrainingDTO userTrainingDTO) {
@@ -107,6 +109,7 @@ public class UserTrainingService {
         userTraining.setEligibleForCertificate(userTrainingDTO.eligibleForCertificate());
         userTrainingRepository.save(userTraining);
     }
+
     /**
      * Retrieves all UserTrainings from the database.
      *

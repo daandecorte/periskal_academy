@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -111,7 +110,7 @@ public class UserService {
     public List<User> findAll() {
         return userRepository.findAll();
     }
-    
+
     /**
      * Retrieves all UserTrainings associated with a specific user ID.
      *
@@ -126,6 +125,7 @@ public class UserService {
         if (userTrainings == null) throw new NotFoundException("user does not have any user trainings");
         return userTrainings;
     }
+
     /**
      * Retrieves all UserCertificates associated with a specific user ID.
      *

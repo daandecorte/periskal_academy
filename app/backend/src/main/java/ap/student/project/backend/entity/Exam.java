@@ -28,7 +28,7 @@ public class Exam {
     @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions;
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="training_id")
+    @JoinColumn(name = "training_id")
     @JsonIgnore
     private Training training;
 

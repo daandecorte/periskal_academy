@@ -7,5 +7,5 @@ import java.util.Map;
 
 public record TopicDTO(
         @JsonProperty("title") Map<Language, String> title
-        ) {
+) {
 }

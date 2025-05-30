@@ -22,7 +22,7 @@ public class ExamAttemptController {
 
     /**
      * Retrieves all exam attempts from the system.
-     * 
+     *
      * @return ResponseEntity containing a list of all exam attempts with HTTP status 200 (OK)
      */
     @GetMapping(value = "/exam_attempts", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -32,7 +32,7 @@ public class ExamAttemptController {
 
     /**
      * Creates a new exam attempt in the system.
-     * 
+     *
      * @param examAttemptDTO The exam attempt data transfer object containing attempt information
      * @return ResponseEntity containing the created exam attempt with HTTP status 201 (CREATED)
      */

@@ -47,7 +47,7 @@ public class TrainingService {
      */
     public Training findById(int id) {
         Training training = trainingRepository.findById(id).orElse(null);
-        if(training == null) {
+        if (training == null) {
             throw new NotFoundException("Training with id " + id + " not found");
         }
         return training;
@@ -56,13 +56,13 @@ public class TrainingService {
     /**
      * Updates an existing Training entity with new information from the provided DTO.
      *
-     * @param id The ID of the Training to update
+     * @param id          The ID of the Training to update
      * @param trainingDTO The data transfer object containing the updated Training information
      * @throws NotFoundException If no Training with the given ID exists
      */
     public void update(int id, TrainingDTO trainingDTO) {
         Training training = trainingRepository.findById(id).orElse(null);
-        if(training == null) {
+        if (training == null) {
             throw new NotFoundException("Training with id " + id + " not found");
         }
         BeanUtils.copyProperties(trainingDTO, training);

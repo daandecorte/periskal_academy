@@ -22,7 +22,7 @@ public class TrainingController {
 
     /**
      * Retrieves all trainings from the system.
-     * 
+     *
      * @return ResponseEntity containing a list of all trainings with HTTP status 200 (OK)
      */
     @GetMapping(value = "/trainings", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -32,7 +32,7 @@ public class TrainingController {
 
     /**
      * Retrieves a specific training by its ID.
-     * 
+     *
      * @param id The ID of the training to retrieve
      * @return ResponseEntity containing the training with HTTP status 200 (OK)
      */
@@ -43,7 +43,7 @@ public class TrainingController {
 
     /**
      * Creates a new training in the system.
-     * 
+     *
      * @param trainingDTO The training data transfer object containing training information
      * @return ResponseEntity containing the created training with HTTP status 201 (CREATED)
      */
@@ -54,8 +54,8 @@ public class TrainingController {
 
     /**
      * Updates a specific training with new information.
-     * 
-     * @param id The ID of the training to update
+     *
+     * @param id          The ID of the training to update
      * @param trainingDTO The training data transfer object containing updated training information
      * @return ResponseEntity containing the updated training with HTTP status 200 (OK)
      */

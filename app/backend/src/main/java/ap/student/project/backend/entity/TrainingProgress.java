@@ -7,14 +7,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "training_progress")
 @Getter
 @Setter
 @NoArgsConstructor
-public class  TrainingProgress {
+public class TrainingProgress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -28,7 +27,7 @@ public class  TrainingProgress {
     @Column(name = "modules_completed")
     private int modulesCompleted;
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="user_training_id")
+    @JoinColumn(name = "user_training_id")
     @JsonIgnore
     private UserTraining userTraining;
 

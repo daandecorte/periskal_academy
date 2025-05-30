@@ -17,12 +17,14 @@ import java.util.List;
 public class TopicService {
     private final TopicRepository topicRepository;
 
-     /**
+    /**
      * Constructs a new TopicService with the necessary dependencies.
      *
      * @param topicRepository The repository used for Topic entity persistence operations
      */
-    public TopicService(TopicRepository topicRepository) { this.topicRepository = topicRepository; }
+    public TopicService(TopicRepository topicRepository) {
+        this.topicRepository = topicRepository;
+    }
 
     /**
      * Retrieves all Topic entities from the database.
@@ -42,7 +44,7 @@ public class TopicService {
      */
     public Topic findById(int id) {
         Topic topic = topicRepository.findById(id).orElse(null);
-        if(topic == null) {
+        if (topic == null) {
             throw new NotFoundException("Topic with id " + id + " not found");
         }
         return topic;
@@ -63,21 +65,21 @@ public class TopicService {
     /**
      * Updates an existing Topic entity with new information from the provided DTO.
      *
-     * @param id The ID of the Topic to update
+     * @param id       The ID of the Topic to update
      * @param topicDTO The data transfer object containing the updated Topic information
      * @return The updated Topic entity
      * @throws NotFoundException If no Topic with the given ID exists
      */
     public Topic update(int id, TopicDTO topicDTO) {
         Topic topic = topicRepository.findById(id).orElse(null);
-        if(topic == null) {
+        if (topic == null) {
             throw new NotFoundException("Topic with id " + id + " not found");
         }
         topic.setTitle(topicDTO.title());
         return topicRepository.save(topic);
     }
 
-     /**
+    /**
      * Deletes a Topic entity by its ID.
      *
      * @param id The ID of the Topic to delete
@@ -85,7 +87,7 @@ public class TopicService {
      */
     public void delete(int id) {
         Topic topic = topicRepository.findById(id).orElse(null);
-        if(topic == null) {
+        if (topic == null) {
             throw new NotFoundException("Topic with id " + id + " not found");
         }
         topicRepository.delete(topic);

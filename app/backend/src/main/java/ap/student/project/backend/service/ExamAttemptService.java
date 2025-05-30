@@ -5,7 +5,6 @@ import ap.student.project.backend.dto.ExamAttemptDTO;
 import ap.student.project.backend.entity.ExamAttempt;
 import ap.student.project.backend.entity.UserTraining;
 import ap.student.project.backend.exceptions.MissingArgumentException;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class ExamAttemptService {
      * Constructs a new ExamAttemptService with the required repositories and services.
      *
      * @param examAttemptRepository Repository for ExamAttempt entity operations
-     * @param userTrainingService Service for user training-related operations
+     * @param userTrainingService   Service for user training-related operations
      */
     public ExamAttemptService(ExamAttemptRepository examAttemptRepository, UserTrainingService userTrainingService) {
         this.examAttemptRepository = examAttemptRepository;
@@ -36,11 +35,11 @@ public class ExamAttemptService {
      * @param examAttemptDTO Data transfer object containing exam attempt information
      * @return The saved ExamAttempt entity
      * @throws MissingArgumentException If user_training_id is missing from the DTO
-     * @throws NotFoundException If the user training is not found
+     * @throws NotFoundException        If the user training is not found
      */
     public ExamAttempt save(ExamAttemptDTO examAttemptDTO) {
         ExamAttempt examAttempt = new ExamAttempt();
-        if(examAttemptDTO.userTrainingId()==0) {
+        if (examAttemptDTO.userTrainingId() == 0) {
             throw new MissingArgumentException("user_training_id is missing");
         }
         UserTraining userTraining = userTrainingService.findById(examAttemptDTO.userTrainingId());
@@ -49,7 +48,7 @@ public class ExamAttemptService {
         examAttempt.setEndDateTime(examAttemptDTO.endDateTime());
         examAttempt.setExamStatusType(examAttemptDTO.examStatusType());
         examAttempt.setScore(examAttemptDTO.score());
-        
+
         return examAttemptRepository.save(examAttempt);
     }
 

@@ -26,7 +26,7 @@ public class UserTraining {
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
-    @OneToMany(mappedBy = "userTraining",fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "userTraining", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<ExamAttempt> examAttempts;
     @Column
     private boolean eligibleForCertificate;

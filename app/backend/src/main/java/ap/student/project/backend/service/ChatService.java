@@ -1,10 +1,8 @@
 package ap.student.project.backend.service;
 
-import ap.student.project.backend.controller.GlobalExceptionHandler;
 import ap.student.project.backend.dao.ChatMemberRepository;
 import ap.student.project.backend.dao.ChatRepository;
 import ap.student.project.backend.dao.MessageRepository;
-import ap.student.project.backend.dao.UserRepository;
 import ap.student.project.backend.dto.*;
 import ap.student.project.backend.entity.Chat;
 import ap.student.project.backend.entity.ChatMember;
@@ -24,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 
 /**
@@ -37,13 +34,14 @@ public class ChatService {
     private final ChatMemberRepository chatMemberRepository;
     private final UserService userService;
     private final Logger logger = LoggerFactory.getLogger(ChatService.class);
+
     /**
      * Constructs a new ChatService with the required repositories and services.
      *
-     * @param chatRepository Repository for Chat entity operations
-     * @param messageRepository Repository for Message entity operations
+     * @param chatRepository       Repository for Chat entity operations
+     * @param messageRepository    Repository for Message entity operations
      * @param chatMemberRepository Repository for ChatMember entity operations
-     * @param userService Service for user-related operations
+     * @param userService          Service for user-related operations
      */
     public ChatService(ChatRepository chatRepository, MessageRepository messageRepository, ChatMemberRepository chatMemberRepository, UserService userService) {
         this.chatRepository = chatRepository;
@@ -105,14 +103,14 @@ public class ChatService {
     /**
      * Adds a new member to an existing chat.
      *
-     * @param id The ID of the chat to add the member to
+     * @param id            The ID of the chat to add the member to
      * @param chatMemberDTO Data transfer object containing member information
      * @return The saved ChatMember entity
      * @throws MissingArgumentException If the user_id is missing from the DTO
-     * @throws NotFoundException If the chat or user is not found
+     * @throws NotFoundException        If the chat or user is not found
      */
     public ChatMember addChatMember(int id, ChatMemberDTO chatMemberDTO) {
-        if(chatMemberDTO.user_id()==0) {
+        if (chatMemberDTO.user_id() == 0) {
             throw new MissingArgumentException("user_id is missing");
         }
         Chat chat = this.findById(id);
@@ -128,14 +126,14 @@ public class ChatService {
      *
      * @param messageDTO Data transfer object containing message information
      * @throws MissingArgumentException If the chat_member_id is missing from the DTO
-     * @throws NotFoundException If the chat member is not found
+     * @throws NotFoundException        If the chat member is not found
      */
     public void addMessage(MessageDTO messageDTO) {
-        if(messageDTO.chat_member_id()==0) {
+        if (messageDTO.chat_member_id() == 0) {
             throw new MissingArgumentException("chat_member_id is missing");
         }
         ChatMember chatMember = this.chatMemberRepository.findById(messageDTO.chat_member_id()).orElse(null);
-        if(chatMember==null) {
+        if (chatMember == null) {
             throw new NotFoundException("chat member with id " + messageDTO.chat_member_id() + " not found");
         }
         Message message = new Message();
@@ -148,13 +146,13 @@ public class ChatService {
     /**
      * Updates an existing chat with new information.
      *
-     * @param id The ID of the chat to update
+     * @param id      The ID of the chat to update
      * @param chatDTO Data transfer object containing updated chat information
      * @throws NotFoundException If the chat is not found
      */
     public void updateChat(int id, ChatDTO chatDTO) {
         Chat chat = this.findById(id);
-        if(chat==null) {
+        if (chat == null) {
             throw new NotFoundException("Chat with id" + id + " not found");
         }
         BeanUtils.copyProperties(chatDTO, chat);
@@ -203,7 +201,7 @@ public class ChatService {
         List<ChatMessageDTO> chatMessages = new ArrayList<>();
         Set<ChatMember> chatMembers = chat.getChatMembers();
         for (ChatMember chatMember : chatMembers) {
-            for (Message message: chatMember.getMessages()) {
+            for (Message message : chatMember.getMessages()) {
                 ChatMessageDTO chatMessageDTO = new ChatMessageDTO(chatMember.getId(), message.getDateTime(), message.getTextContent());
                 chatMessages.add(chatMessageDTO);
             }

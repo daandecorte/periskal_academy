@@ -10,16 +10,9 @@ import ap.student.project.backend.exceptions.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -64,7 +57,7 @@ class CertificateServiceTest {
 
     @Test
     void testSaveCertificateMissingTrainingIdThrows() {
-        certificateDTO=new CertificateDTO(0, 0, 0);
+        certificateDTO = new CertificateDTO(0, 0, 0);
         assertThrows(MissingArgumentException.class, () -> certificateService.save(certificateDTO));
     }
 

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Entity
-@Table(name="topic")
+@Table(name = "topic")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,7 +23,7 @@ public class Topic {
     @MapKeyColumn(name = "language")
     @Column(name = "title")
     private Map<Language, String> title;
-    @OneToMany(mappedBy = "topic", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "topic", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Tip> tips;
 

@@ -24,7 +24,7 @@ public class TipController {
 
     /**
      * Retrieves all tips from the system.
-     * 
+     *
      * @return ResponseEntity containing a list of all tips with HTTP status 200 (OK)
      */
     @GetMapping(value = "/tips", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -34,7 +34,7 @@ public class TipController {
 
     /**
      * Retrieves a specific tip by its ID.
-     * 
+     *
      * @param id The ID of the tip to retrieve
      * @return ResponseEntity containing the tip with HTTP status 200 (OK)
      */
@@ -45,7 +45,7 @@ public class TipController {
 
     /**
      * Creates a new tip in the system.
-     * 
+     *
      * @param tip The tip data transfer object containing tip information
      * @return ResponseEntity containing the created tip with HTTP status 201 (CREATED)
      */
@@ -56,8 +56,8 @@ public class TipController {
 
     /**
      * Updates a specific tip with new information.
-     * 
-     * @param id The ID of the tip to update
+     *
+     * @param id     The ID of the tip to update
      * @param tipDTO The tip data transfer object containing updated tip information
      * @return ResponseEntity containing the updated tip with HTTP status 200 (OK)
      */
@@ -69,7 +69,7 @@ public class TipController {
 
     /**
      * Deletes a specific tip from the system.
-     * 
+     *
      * @param id The ID of the tip to delete
      * @return ResponseEntity with HTTP status 204 (NO_CONTENT)
      */

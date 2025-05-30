@@ -135,7 +135,7 @@ class TipServiceTest {
         TipDTO tipDTO = new TipDTO(testTopic.getId(), updatedTextMap);
 
         tipService.update(testTip.getId(), tipDTO);
-        
+
         Optional<Tip> fromDb = tipRepository.findById(testTip.getId());
         assertTrue(fromDb.isPresent());
         assertEquals(updatedTextMap, fromDb.get().getText());

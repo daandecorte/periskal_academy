@@ -5,27 +5,27 @@ public class ExamResultDTO {
     private boolean passed;
     private Integer certificateId;
     private Integer attemptId;
-    
+
     public ExamResultDTO() {
     }
-    
+
     public ExamResultDTO(int score, boolean passed) {
         this.score = score;
         this.passed = passed;
     }
-    
+
     public int getScore() {
         return score;
     }
-    
+
     public void setScore(int score) {
         this.score = score;
     }
-    
+
     public boolean isPassed() {
         return passed;
     }
-    
+
     public void setPassed(boolean passed) {
         this.passed = passed;
     }

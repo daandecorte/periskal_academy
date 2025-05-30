@@ -20,21 +20,25 @@ public class GlobalExceptionHandler {
         logger.error(e.getMessage());
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
+
     @ExceptionHandler({MissingArgumentException.class})
     public ResponseEntity<Object> handleMissingArgumentException(MissingArgumentException e) {
         logger.error(e.getMessage());
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler({DuplicateException.class})
     public ResponseEntity<Object> handleDuplicateException(DuplicateException e) {
         logger.error(e.getMessage());
         return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
     }
+
     @ExceptionHandler({ListFullException.class})
     public ResponseEntity<Object> handleListFullException(ListFullException e) {
         logger.error(e.getMessage());
         return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
     }
+
     @ExceptionHandler({IllegalArgumentException.class})
     public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException e) {
         logger.error(e.getMessage());

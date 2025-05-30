@@ -26,7 +26,7 @@ public class Training {
     @ElementCollection
     @CollectionTable(name = "training_descriptions", joinColumns = @JoinColumn(name = "training_id"))
     @MapKeyColumn(name = "language")
-    @Column(name="description")
+    @Column(name = "description")
     private Map<Language, String> description;
     @Column(name = "is_active")
     private boolean isActive = false;

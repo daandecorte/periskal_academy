@@ -1,9 +1,9 @@
 package ap.student.project.backend.security;
 
+import ap.student.project.backend.entity.Role;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import ap.student.project.backend.entity.Role;
 
 // THis is a placeholder class that will later be refactored into the authentication implementation (dongle or password authentication)
 

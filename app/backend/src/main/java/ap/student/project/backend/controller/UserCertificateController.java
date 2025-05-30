@@ -22,9 +22,9 @@ public class UserCertificateController {
         this.userCertificateService = userCertificateService;
     }
 
-/**
+    /**
      * Retrieves all user certificates from the system.
-     * 
+     *
      * @return ResponseEntity containing a list of all user certificates with HTTP status 200 (OK)
      */
     @GetMapping(value = "/user_certificates", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -34,7 +34,7 @@ public class UserCertificateController {
 
     /**
      * Retrieves a specific user certificate by its ID.
-     * 
+     *
      * @param id The ID of the user certificate to retrieve
      * @return ResponseEntity containing the user certificate with HTTP status 200 (OK)
      */
@@ -45,7 +45,7 @@ public class UserCertificateController {
 
     /**
      * Retrieves all user certificates for a specific user.
-     * 
+     *
      * @param id The user ID to find certificates for
      * @return ResponseEntity containing certificates associated with the user ID with HTTP status 200 (OK)
      */
@@ -56,7 +56,7 @@ public class UserCertificateController {
 
     /**
      * Creates a new user certificate in the system.
-     * 
+     *
      * @param userCertificateDTO The user certificate data transfer object containing certificate information
      * @return ResponseEntity containing the created user certificate with HTTP status 201 (CREATED)
      */
@@ -73,7 +73,7 @@ public class UserCertificateController {
      * @param userId
      * @return
      */
-    @GetMapping(value="/user_certificates/training/{trainingId}/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/user_certificates/training/{trainingId}/user/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getUserCertificate(@PathVariable("trainingId") int trainingId, @PathVariable("userId") int userId) {
         return ResponseEntity.ok(this.userCertificateService.findByTrainingIdAndUserId(trainingId, userId));
     }

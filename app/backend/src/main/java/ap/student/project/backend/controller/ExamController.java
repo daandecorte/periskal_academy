@@ -5,13 +5,12 @@ import ap.student.project.backend.dto.ExamResultDTO;
 import ap.student.project.backend.dto.ExamSubmissionDTO;
 import ap.student.project.backend.dto.QuestionDTO;
 import ap.student.project.backend.service.ExamService;
-
-import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * Controller responsible for handling exam-related HTTP requests.
@@ -29,7 +28,7 @@ public class ExamController {
 
     /**
      * Retrieves all exams from the system.
-     * 
+     *
      * @return ResponseEntity containing a list of all exams with HTTP status 200 (OK)
      */
     @GetMapping(value = "/exams", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,18 +38,18 @@ public class ExamController {
 
     /**
      * Creates a new exam in the system.
-     * 
+     *
      * @param examDTO The exam data transfer object containing exam information
      * @return ResponseEntity containing the created exam with HTTP status 201 (CREATED)
      */
     @PostMapping(value = "/exams", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addExam(@RequestBody ExamDTO examDTO) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(this.examService.save(examDTO));        
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.examService.save(examDTO));
     }
 
     /**
      * Retrieves a specific exam by its ID.
-     * 
+     *
      * @param id The ID of the exam to retrieve
      * @return ResponseEntity containing the exam with HTTP status 200 (OK)
      */
@@ -62,8 +61,8 @@ public class ExamController {
 
     /**
      * Updates a specific exam with new information.
-     * 
-     * @param id The ID of the exam to update
+     *
+     * @param id      The ID of the exam to update
      * @param examDTO The exam data transfer object containing updated exam information
      * @return ResponseEntity containing the updated exam with HTTP status 200 (OK)
      */
@@ -74,7 +73,7 @@ public class ExamController {
 
     /**
      * Retrieves all questions for a specific exam.
-     * 
+     *
      * @param id The ID of the exam to retrieve questions for
      * @return ResponseEntity containing a list of exam questions with HTTP status 200 (OK)
      */
@@ -85,12 +84,12 @@ public class ExamController {
 
     /**
      * Adds a new question to a specific exam.
-     * 
-     * @param id The ID of the exam to add a question to
+     *
+     * @param id          The ID of the exam to add a question to
      * @param questionDTO The question data transfer object containing question information
      * @return ResponseEntity containing the added question with HTTP status 201 (CREATED)
      */
-    @PostMapping(value="/exams/{id}/questions", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/exams/{id}/questions", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addQuestion(@PathVariable int id, @RequestBody QuestionDTO questionDTO) {
         this.examService.addQuestion(id, questionDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(questionDTO);
@@ -102,15 +101,15 @@ public class ExamController {
      * @param id The ID of the exam to delete a questions for
      * @return ResponseEntity containing nothing with HTTP status 200 (OK)
      */
-    @DeleteMapping(value="/exams/{id}/questions")
+    @DeleteMapping(value = "/exams/{id}/questions")
     public ResponseEntity deleteQuestion(@PathVariable int id) {
         this.examService.deleteQuestions(id);
         return ResponseEntity.status(HttpStatus.OK).body(id);
     }
 
-     /**
+    /**
      * Evaluates an exam submission and returns the result.
-     * 
+     *
      * @param submissionDTO The exam submission data transfer object containing submission information
      * @return ResponseEntity containing the exam result with HTTP status 200 (OK)
      */
@@ -121,9 +120,9 @@ public class ExamController {
     }
 
     /**
-     * Starts an exam by its ID and returns a version of the exam with a randomized selection of questions, 
-     * limited to the number defined in the exam's configuration. 
-     * If the number of questions available is less than or equal to the desired 
+     * Starts an exam by its ID and returns a version of the exam with a randomized selection of questions,
+     * limited to the number defined in the exam's configuration.
+     * If the number of questions available is less than or equal to the desired
      * amount, all questions are returned.
      *
      * @param id the ID of the exam to start

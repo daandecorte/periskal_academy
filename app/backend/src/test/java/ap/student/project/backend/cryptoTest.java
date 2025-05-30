@@ -1,15 +1,11 @@
 package ap.student.project.backend;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import ap.student.project.backend.authentication.crypto;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
-import org.junit.jupiter.api.Test;
-
-import ap.student.project.backend.authentication.crypto;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class cryptoTest {
     @Test
