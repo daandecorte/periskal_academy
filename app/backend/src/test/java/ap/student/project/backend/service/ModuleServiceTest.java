@@ -15,7 +15,6 @@ import ap.student.project.backend.entity.Module;
 import ap.student.project.backend.entity.Question;
 import ap.student.project.backend.entity.QuestionOption;
 import ap.student.project.backend.entity.Training;
-import ap.student.project.backend.entity.UserTraining;
 import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;

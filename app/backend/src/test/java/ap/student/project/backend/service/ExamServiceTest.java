@@ -9,16 +9,13 @@ import ap.student.project.backend.dao.TrainingRepository;
 import ap.student.project.backend.dao.UserRepository;
 import ap.student.project.backend.dao.UserTrainingRepository;
 import ap.student.project.backend.dto.ExamAnswerDTO;
-import ap.student.project.backend.dto.ExamAttemptDTO;
 import ap.student.project.backend.dto.ExamDTO;
 import ap.student.project.backend.dto.ExamResultDTO;
 import ap.student.project.backend.dto.ExamStartResponseDTO;
 import ap.student.project.backend.dto.ExamSubmissionDTO;
 import ap.student.project.backend.dto.QuestionDTO;
-import ap.student.project.backend.dto.UserTrainingDTO;
 import ap.student.project.backend.entity.Certificate;
 import ap.student.project.backend.entity.Exam;
-import ap.student.project.backend.entity.ExamStatusType;
 import ap.student.project.backend.entity.Language;
 import ap.student.project.backend.entity.Question;
 import ap.student.project.backend.entity.QuestionOption;
@@ -35,7 +32,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,23 +44,9 @@ class ExamServiceTest {
     @Autowired
     private ExamService examService;
 
-    @Autowired
-    private TrainingService trainingService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private ExamAttemptService examAttemptService;
 
     @Autowired
     private UserTrainingService userTrainingService;
-
-    @Autowired
-    private UserCertificateService userCertificateService;
-
-    @Autowired
-    private TrainingProgressService trainingProgressService;
 
     @Autowired
     private ExamRepository examRepository;
@@ -471,7 +453,7 @@ class ExamServiceTest {
             assertEquals(savedQuestion.getId(), option.getQuestion().getId());
         }
     }
-    
+
     //Helper method to create test question
     private Question createTestQuestionWithOptions(String questionText, boolean firstCorrect, boolean secondCorrect) {
         Map<Language, String> text = new HashMap<>();
