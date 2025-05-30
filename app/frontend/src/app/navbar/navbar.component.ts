@@ -145,7 +145,6 @@ export class NavbarComponent {
     this.languageService.setLanguage(this.language);
     const langCode = this.mapLanguage(this.language);
     this.translate.use(langCode);
-    console.log('lang: ' + langCode);
   }
 
   isLinkVisible(link: NavLink): boolean {

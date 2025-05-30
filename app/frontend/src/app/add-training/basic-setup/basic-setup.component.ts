@@ -64,7 +64,6 @@ export class BasicSetupComponent {
       ] as string) || '';
     this.periodRef.nativeElement.value = `${this.trainingService.newTraining.certificate.validity_period}`;
     this.priceRef.nativeElement.value = `${this.trainingService.newTraining.certificate.price}`;
-    console.log(this.trainingService.newTraining);
   }
 
   changeInputLanguage() {

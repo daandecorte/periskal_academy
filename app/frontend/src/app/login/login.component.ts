@@ -201,7 +201,6 @@ export class LoginComponent {
       this.authService.setCurrentUser(userData);
       this.languageService.setLanguage(this.language);
       if (userData.Role == 'Administrator') {
-        console.log('AAAH');
         this.router.navigate(['/admin/trainings']);
       } else this.router.navigate(['/trainings']);
     } else {

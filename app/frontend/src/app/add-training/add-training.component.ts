@@ -304,7 +304,7 @@ export class AddTrainingComponent {
 
       this.resetTraining();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 

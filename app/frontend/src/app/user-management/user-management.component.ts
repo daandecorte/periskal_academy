@@ -53,8 +53,6 @@ export class UserManagementComponent {
         certificates: `${certificateCount}`,
         module_completion: overallProgress
       };
-
-      console.log(temp);
       this.userList.push(temp);
     }
 

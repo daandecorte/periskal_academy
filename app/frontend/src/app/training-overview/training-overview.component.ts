@@ -157,7 +157,6 @@ export class TrainingOverviewComponent implements OnInit {
         }
         else {
           if(this.userTraining.training_progress.status!="COMPLETED") {
-            console.log("putting on in progress")
             let trainingProgressPostResponse = await fetch(`/api/training_progress/${this.userTraining.training_progress.id}`, {
               method: 'PUT',
               headers: {
@@ -321,7 +320,6 @@ export class TrainingOverviewComponent implements OnInit {
 
   async putTrainingOnCompleted() {
     if(this.userTraining) {
-      console.log("putting on complete")
       let trainingProgressPostResponse = await fetch(`/api/training_progress/${this.userTraining.training_progress.id}`, {
         method: 'PUT',
         headers: {

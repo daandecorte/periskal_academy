@@ -150,7 +150,6 @@ export class ModuleQuestionsComponent implements OnInit {
       if(this.training!=undefined) {
         let moduleIndex = this.training.modules?.findIndex(m=>m.id==this.moduleId);
         if(moduleIndex! < userTraining.training_progress.modules_completed) {
-          console.log("module alr made, not updating")
           return
         }
       }

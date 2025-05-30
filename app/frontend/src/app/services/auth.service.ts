@@ -59,10 +59,6 @@ export class AuthService {
 
     this.currentUserSubject.next(null);
 
-    console.log('User logged out');
-
-    // Additional logic for logging out here
-
     this.router.navigate(['/login']);
   }
 }

@@ -60,7 +60,7 @@ export class ModuleVideoViewComponent {
     let response = await fetch(`/api/modules/${this.moduleId}`);
     if(response.status!=200) {
       let errorText = await response.text
-      console.log("error fetching module" + errorText);
+      console.error("error fetching module" + errorText);
     }
     else {
       let json = await response.json();

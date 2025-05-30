@@ -58,7 +58,6 @@ export class ExamResultComponent {
   }
 
   primaryClicked() {
-    console.log(this.userCertificateId);
     if (this.passed && this.userCertificateId > 0) {
       this.downloadPdf(this.userCertificateId);
     }

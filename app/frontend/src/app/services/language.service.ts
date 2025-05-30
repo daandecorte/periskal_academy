@@ -35,7 +35,6 @@ export class LanguageService {
             language: lang
           })
         });
-        console.log(result);
       }
     }
     else {
