@@ -28,8 +28,16 @@
             @if(currentChat.status.toString()=='NOT_STARTED') {
                 <button class="claim-button" (click)="claimSupportTicket()">{{"SUPPORT_CHAT.CLAIM_TICKET" | translate}}</button>
             }
+            @else if(currentChat.status.toString()=='RESOLVED') {
+                <button class="resolve-button resolved">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    {{"SUPPORT_CHAT.RESOLVED" | translate}}
+                </button>
+            }
             @else if(currentChat.id!=0) {
-                <button class="resolve-button" [ngClass]="{ resolved: currentChat.status.toString() == 'RESOLVED' }" (click)="markAsResolved()">
+                <button class="resolve-button" (click)="markAsResolved()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
