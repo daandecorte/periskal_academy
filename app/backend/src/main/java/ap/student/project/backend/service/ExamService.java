@@ -220,7 +220,6 @@ public class ExamService {
      */
     @Transactional
     public ExamResultDTO evaluateExam(ExamSubmissionDTO submissionDTO) throws NotFoundException {
-        System.out.println("Evaluating exam - ExamId: " + submissionDTO.examId() + ", UserId: " + submissionDTO.userId());
         // Find the exam
         Exam exam = findById(submissionDTO.examId());
         

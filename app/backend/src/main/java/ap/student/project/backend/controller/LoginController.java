@@ -11,6 +11,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,6 +42,7 @@ import java.util.Base64;
 @RestController
 public class LoginController {
     public final UserService userService;
+    private final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     public LoginController(UserService userService) {
         this.userService = userService;
@@ -125,7 +128,7 @@ public class LoginController {
             }
 
         } else {
-            System.out.println("HTTP Error: " + responseCode);
+            logger.error("HTTP Error: " + responseCode);
             return "{\"text\": \"Authentication service error: " + responseCode + "\"}";
         }
     }
@@ -147,7 +150,7 @@ public class LoginController {
                 int dongleNumber = Integer.parseInt(plainDongleNumber);
                 processedDongleCode = crypto.encode(dongleNumber, null);
             } catch (Exception e) {
-                System.out.println("Error encrypting debug dongle code: " + e.getMessage());
+                logger.error("Error encrypting debug dongle code: " + e.getMessage());
                 return "{\"text\": \"Invalid dongle number format\"}";
             }
         } else {
@@ -192,11 +195,11 @@ public class LoginController {
                 addUser(persikalId, firstname, lastname, shipname, language);
                 return json.toString();
             } catch (Exception e) {
-                System.out.println("Error processing dongle authentication response: " + e.getMessage());
+                logger.error("Error processing dongle authentication response: " + e.getMessage());
                 return "{\"text\": \"Invalid dongle or processing error\"}";
             }
         } else {
-            System.out.println("HTTP Error: " + responseCode);
+            logger.error("HTTP Error: " + responseCode);
             return "{\"text\": \"Authentication service error: " + responseCode + "\"}";
         }
     }

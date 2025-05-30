@@ -1,5 +1,6 @@
 package ap.student.project.backend.service;
 
+import ap.student.project.backend.controller.GlobalExceptionHandler;
 import ap.student.project.backend.dao.ChatMemberRepository;
 import ap.student.project.backend.dao.ChatRepository;
 import ap.student.project.backend.dao.MessageRepository;
@@ -11,6 +12,8 @@ import ap.student.project.backend.entity.Message;
 import ap.student.project.backend.entity.User;
 import ap.student.project.backend.exceptions.MissingArgumentException;
 import ap.student.project.backend.exceptions.NotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -33,7 +36,7 @@ public class ChatService {
     private final MessageRepository messageRepository;
     private final ChatMemberRepository chatMemberRepository;
     private final UserService userService;
-
+    private final Logger logger = LoggerFactory.getLogger(ChatService.class);
     /**
      * Constructs a new ChatService with the required repositories and services.
      *
@@ -217,6 +220,6 @@ public class ChatService {
     public void deleteOldMessages() {
         LocalDateTime oneWeekAgo = LocalDateTime.now().minusDays(7);
         int deletedCount = messageRepository.deleteByDateTimeBefore(oneWeekAgo);
-        System.out.println("deleted: " + deletedCount + " messages");
+        logger.info("Deleted " + deletedCount + " messages");
     }
 }

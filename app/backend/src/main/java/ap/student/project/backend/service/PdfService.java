@@ -64,7 +64,6 @@ public class PdfService {
         imageTag = "<img src=\"data:image/png;base64," + base64 + "\" alt=\"\"/>";
         html = html.replace("<img src=\"handtekening.jpg\" alt=\"\"/>", imageTag);
 
-        System.out.println(html);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PdfRendererBuilder builder = new PdfRendererBuilder();
         builder.useFastMode();

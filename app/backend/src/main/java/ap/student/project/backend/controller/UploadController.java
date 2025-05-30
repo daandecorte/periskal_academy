@@ -56,8 +56,6 @@ public class UploadController {
                 return "Login failed.";
             }
 
-            System.out.println("Connected to FTP Server");
-
             ftp.setFileType(FTP.BINARY_FILE_TYPE);
             ftp.execPBSZ(0);
             ftp.execPROT("P");
