@@ -133,6 +133,13 @@ public class ExamController {
         return ResponseEntity.ok(this.examService.startExamWithTimer(id, userId));
     }
 
+    /**
+     * Retrieves the remaining time in seconds for a user to complete a specific exam.
+     *
+     * @param id     the ID of the exam
+     * @param userId the ID of the user
+     * @return ResponseEntity containing a JSON object with the remaining time in seconds
+     */
     @GetMapping(value = "/exams/{id}/time", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getRemainingTime(@PathVariable int id, @RequestParam int userId) {
         int remainingSeconds = this.examService.getRemainingTimeInSeconds(id, userId);

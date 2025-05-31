@@ -342,6 +342,12 @@ public class LoginController {
         return null;
     }
 
+    /**
+     * Derives a cryptographic key from a provided salt using PBKDF2 with HMAC-SHA1.
+     *
+     * @param salt the input salt string
+     * @return a derived key as a byte array
+     */
     private byte[] deriveKeyFromSalt(String salt) {
         try {
             byte[] saltBytes = salt.getBytes(StandardCharsets.UTF_8); // Ensure same UTF-8 encoding as C#
@@ -354,6 +360,16 @@ public class LoginController {
         return null;
     }
 
+    /**
+     * Adds a new user to the system if one does not already exist with the given Periskal ID.
+     *
+     * @param persikalId the unique Periskal ID of the user
+     * @param firstname  the first name of the user
+     * @param lastname   the last name of the user
+     * @param shipname   the name of the ship the user is associated with
+     * @param language   the preferred language as a string; must match a valid Language enum value
+     * @throws IllegalArgumentException if the provided language string does not match any {@link Language} value
+     */
     private void addUser(String persikalId, String firstname, String lastname, String shipname, String language) {
         if (!userService.existsByPeriskalId(persikalId)) {
             UserDTO userDTO = new UserDTO(persikalId, firstname, lastname, shipname, Language.valueOf(language));

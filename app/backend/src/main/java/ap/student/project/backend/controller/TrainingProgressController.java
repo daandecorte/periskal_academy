@@ -57,6 +57,12 @@ public class TrainingProgressController {
         return ResponseEntity.ok(trainingProgressDTO);
     }
 
+    /**
+     * Marks a training module as completed for a specific training progress record.
+     *
+     * @param id the ID of the training progress record to update
+     * @return ResponseEntity containing the updated rainingProgress object
+     */
     @GetMapping(value = "training_progress/{id}/complete_module", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addModuleCompleted(@PathVariable("id") int id) {
         TrainingProgress trainingProgress = this.trainingProgressService.addModuleCompleted(id);

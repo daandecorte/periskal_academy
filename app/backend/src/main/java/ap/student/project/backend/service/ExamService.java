@@ -394,6 +394,14 @@ public class ExamService {
         return selectedQuestions;
     }
 
+    /**
+     * Starts an exam for a specific user and records the start time.
+     *
+     * @param examId the ID of the exam to be started
+     * @param userId the ID of the user starting the exam
+     * @return ExamStartResponseDTO containing the exam details and the recorded start time
+     * @throws NotFoundException if the exam with the specified ID does not exist
+     */
     public ExamStartResponseDTO startExamWithTimer(int examId, int userId) throws NotFoundException {
         Exam exam = startExam(examId);
 
@@ -404,6 +412,13 @@ public class ExamService {
         return new ExamStartResponseDTO(exam, startTime);
     }
 
+    /**
+     * Calculates the remaining time in seconds for a user's active exam session.
+     *
+     * @param examId the ID of the exam
+     * @param userId the ID of the user
+     * @return the number of remaining seconds; returns 0 if no valid session is found
+     */
     public int getRemainingTimeInSeconds(int examId, int userId) {
         String sessionKey = examId + "_" + userId;
         LocalDateTime startTime = examStartTimes.get(sessionKey);
@@ -418,6 +433,13 @@ public class ExamService {
         return remainingMinutes * 60; // Convert to seconds
     }
 
+    /**
+     * Determines whether a user's exam time has expired.
+     * 
+     * @param examId the ID of the exam
+     * @param userId the ID of the user
+     * @return true if the exam time has expired or no session is found; false otherwise
+     */
     public boolean isExamTimeExpired(int examId, int userId) {
         return getRemainingTimeInSeconds(examId, userId) <= 0;
     }

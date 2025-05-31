@@ -11,10 +11,7 @@ import java.util.Collections;
 @Component
 public class RoleAuthoritiesConverter {
 
-    /**
-     * Converts a Role enum to to a Spring Security authority
-     * To be expanded later with permission logic
-     */
+    // Converts a Role enum to to a Spring Security authority
     public Collection<? extends GrantedAuthority> getAuthoritiesFromRole(Role role) {
         if (role == null) {
             return Collections.emptyList();

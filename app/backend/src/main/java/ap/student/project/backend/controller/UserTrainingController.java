@@ -54,6 +54,13 @@ public class UserTrainingController {
         return ResponseEntity.ok(this.userTrainingService.findByTrainingIdAndUserId(trainingId, userId));
     }
 
+    /**
+     * Updates an existing user training record.
+     *
+     * @param id              the ID of the user training record to update
+     * @param userTrainingDTO the updated training data for the user
+     * @return ResponseEntity containing the updated UserTrainingDTO
+     */
     @PutMapping(value = "/user_trainings/{id}")
     public ResponseEntity updateUserTraining(@PathVariable("id") int id, @RequestBody UserTrainingDTO userTrainingDTO) {
         this.userTrainingService.update(id, userTrainingDTO);
