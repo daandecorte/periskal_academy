@@ -18,13 +18,11 @@ import ap.student.project.backend.dto.ModuleDTO;
 import ap.student.project.backend.dto.QuestionDTO;
 import ap.student.project.backend.entity.Content;
 import ap.student.project.backend.entity.ContentType;
-import ap.student.project.backend.entity.Exam;
 import ap.student.project.backend.entity.Language;
 import ap.student.project.backend.entity.Module;
 import ap.student.project.backend.entity.Question;
 import ap.student.project.backend.service.ModuleService;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
