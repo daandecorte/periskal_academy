@@ -96,7 +96,7 @@ export class NavbarComponent {
       path: 'user-management',
       icon: this.faUsers,
       label: 'NAV.USER_MANAGEMENT',
-      allowedRoles: [Role.ADMIN],
+      allowedRoles: [Role.ADMIN, Role.SUPPORT],
     },
     {
       path: 'skippers',

@@ -52,7 +52,7 @@ export const routes: Routes = [
     path: 'admin/certificates/:id',
     component: AdminCertificatesComponent,
     canActivate: [RoleGuard],
-    data: { roles: [Role.ADMIN] },
+    data: { roles: [Role.ADMIN, Role.SUPPORT] },
   },
   {
     path: 'tips-and-tricks',
@@ -66,7 +66,7 @@ export const routes: Routes = [
     path: 'user-management',
     component: UserManagementComponent,
     canActivate: [RoleGuard],
-    data: { roles: [Role.ADMIN] },
+    data: { roles: [Role.ADMIN, Role.SUPPORT] },
   },
   {
     path: 'skippers',
