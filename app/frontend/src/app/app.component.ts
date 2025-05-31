@@ -2,12 +2,8 @@ import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { AuthService } from './services/auth.service';
 import { LanguageService } from './services/language.service';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -18,13 +14,16 @@ import { map } from 'rxjs';
     RouterLinkActive,
     NavbarComponent,
     TranslateModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  constructor(private translate: TranslateService, private languageService: LanguageService) {
+  constructor(
+    private translate: TranslateService,
+    private languageService: LanguageService
+  ) {
     this.translate.setDefaultLang('en');
     const userLang = this.languageService.getLanguage();
     translate.use(this.mapLanguage(userLang));
