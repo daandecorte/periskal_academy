@@ -33,7 +33,7 @@ export const routes: Routes = [
     component: TrainingsComponent,
     canActivate: [RoleGuard],
     data: {
-      roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT],
+      roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT, Role.FLEETMANAGER],
     },
   },
   {
