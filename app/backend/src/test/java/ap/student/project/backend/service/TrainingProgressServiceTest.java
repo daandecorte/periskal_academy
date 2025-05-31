@@ -1,9 +1,6 @@
 package ap.student.project.backend.service;
 
 import ap.student.project.backend.dao.TrainingProgressRepository;
-import ap.student.project.backend.dao.TrainingRepository;
-import ap.student.project.backend.dao.UserRepository;
-import ap.student.project.backend.dao.UserTrainingRepository;
 import ap.student.project.backend.dto.TrainingDTO;
 import ap.student.project.backend.dto.TrainingProgressDTO;
 import ap.student.project.backend.dto.UserDTO;
@@ -33,15 +30,6 @@ class TrainingProgressServiceTest {
 
     @Autowired
     private TrainingProgressRepository trainingProgressRepository;
-
-    @Autowired
-    private TrainingRepository trainingRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private UserTrainingRepository userTrainingRepository;
 
     @Autowired
     private UserTrainingService userTrainingService;
