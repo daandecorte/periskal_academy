@@ -31,6 +31,7 @@ public class UserCertificateService {
      * @param userCertificateRepository The repository used for UserCertificate entity persistence operations
      * @param userService               The service used for User operations
      * @param certificateService        The service used for Certificate operations
+     * @param trainingService           The service used for training operations
      */
     public UserCertificateService(UserCertificateRepository userCertificateRepository, UserService userService, CertificateService certificateService, TrainingService trainingService) {
         this.userCertificateRepository = userCertificateRepository;
