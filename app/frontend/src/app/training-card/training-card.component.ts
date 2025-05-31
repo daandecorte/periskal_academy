@@ -6,20 +6,17 @@ import { faLayerGroup, faCertificate } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 
-//Elke trainingkaart bevat een titel, beschrijving, aantal moduleen, voortgangsindicator en een speciaal icoon voor certificeringstrainings
-
 @Component({
   selector: 'app-training-card',
-  imports: [CommonModule, FontAwesomeModule,TranslatePipe],
+  imports: [CommonModule, FontAwesomeModule, TranslatePipe],
   templateUrl: './training-card.component.html',
-  styleUrl: './training-card.component.css'
+  styleUrl: './training-card.component.css',
 })
 export class TrainingCardComponent {
   @Input() training!: Training;
   @Input() currentLanguage: string = 'EN';
 
-  // Font Awesome icons
-  faLayerGroup = faLayerGroup;  
+  faLayerGroup = faLayerGroup;
   faCertificate = faCertificate;
 
   constructor(private router: Router) {}
@@ -29,14 +26,20 @@ export class TrainingCardComponent {
   }
 
   getLocalizedTitle(): string {
-    if (this.training.titleLocalized && this.training.titleLocalized[this.currentLanguage]) {
+    if (
+      this.training.titleLocalized &&
+      this.training.titleLocalized[this.currentLanguage]
+    ) {
       return this.training.titleLocalized[this.currentLanguage];
     }
     return this.training.title || '';
   }
 
   getLocalizedDescription(): string {
-    if (this.training.descriptionLocalized && this.training.descriptionLocalized[this.currentLanguage]) {
+    if (
+      this.training.descriptionLocalized &&
+      this.training.descriptionLocalized[this.currentLanguage]
+    ) {
       return this.training.descriptionLocalized[this.currentLanguage];
     }
     return this.training.description || '';

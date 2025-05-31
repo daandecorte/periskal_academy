@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { NewTrainingService, ITranslated } from '../new-training.service';
-TranslatePipe;
 
 @Component({
   selector: 'app-module-form',

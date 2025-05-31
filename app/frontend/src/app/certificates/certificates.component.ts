@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { SelectTrainingComponent } from './select-training/select-training.component';
-import { TraineeChatComponent } from '../trainee-chat/trainee-chat.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 import { AssignSailorComponent } from './assign-sailor/assign-sailor.component';
 import { AcceptTermsComponent } from './accept-terms/accept-terms.component';
 import { SendInfoComponent } from './send-info/send-info.component';
@@ -21,7 +19,6 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
     FormsModule,
     CommonModule,
     SelectTrainingComponent,
-    TraineeChatComponent,
     AssignSailorComponent,
     AcceptTermsComponent,
     SendInfoComponent,

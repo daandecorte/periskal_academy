@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ModuleVideoViewComponent } from './module-video-view.component';
 
 describe('ModuleVideoViewComponent', () => {
@@ -8,9 +7,8 @@ describe('ModuleVideoViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ModuleVideoViewComponent]
-    })
-    .compileComponents();
+      imports: [ModuleVideoViewComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ModuleVideoViewComponent);
     component = fixture.componentInstance;

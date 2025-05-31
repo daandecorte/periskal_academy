@@ -8,16 +8,11 @@ import { SupportComponent } from './support/support.component';
 import { LoginComponent } from './login/login.component';
 import { Role } from './services/auth.service';
 import { AddTrainingComponent } from './add-training/add-training.component';
-import { BasicSetupComponent } from './add-training/basic-setup/basic-setup.component';
-import { ModulesComponent } from './add-training/modules/modules.component';
-import { ExamComponent } from './add-training/exam/exam.component';
-import { PreviewComponent } from './add-training/preview/preview.component';
 import { AdminTrainingsComponent } from './admin-trainings/admin-trainings.component';
 import { RoleGuard } from './guards/role.guard';
 import { ModuleFormComponent } from './add-training/module-form/module-form.component';
 import { ContentComponent } from './add-training/module-form/content/content.component';
 import { QuestionsComponent } from './add-training/module-form/questions/questions.component';
-import { authGuard } from './auth.guard';
 import { UserdetailComponent } from './userdetail/userdetail.component';
 import { TrainingOverviewComponent } from './training-overview/training-overview.component';
 import { ModuleVideoViewComponent } from './module-video-view/module-video-view.component';
@@ -46,7 +41,9 @@ export const routes: Routes = [
     path: 'certificates',
     component: CertificatesComponent,
     canActivate: [RoleGuard],
-    data: { roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT, Role.FLEETMANAGER] },
+    data: {
+      roles: [Role.SKIPPER, Role.INSTALLER, Role.SUPPORT, Role.FLEETMANAGER],
+    },
   },
   {
     path: 'admin/certificates/:id',
@@ -112,7 +109,7 @@ export const routes: Routes = [
     component: ModuleQuestionsComponent,
   },
   { path: 'exams/:id/:questionIndex', component: TrainingExamComponent },
-  { path: 'exams/:id', redirectTo: 'exams/:id/0'},
+  { path: 'exams/:id', redirectTo: 'exams/:id/0' },
   { path: '', redirectTo: 'trainings', pathMatch: 'full' },
   { path: '**', redirectTo: 'trainings', pathMatch: 'full' },
 ];

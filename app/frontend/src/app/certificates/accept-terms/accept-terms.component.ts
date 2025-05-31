@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CertificatesComponent } from '../certificates.component';
 import { CertificateService } from '../../services/certificate.service';
 import { LanguageService } from '../../services/language.service';
 import { CurrencyPipe } from '@angular/common';
@@ -9,8 +8,8 @@ import { TranslatePipe } from '@ngx-translate/core';
   selector: 'app-accept-terms',
   templateUrl: './accept-terms.component.html',
   styleUrls: ['./accept-terms.component.css'],
-  imports: [CurrencyPipe, TranslatePipe], 
-  standalone: true
+  imports: [CurrencyPipe, TranslatePipe],
+  standalone: true,
 })
 export class AcceptTermsComponent {
   @Input() public accepted = false;
@@ -19,5 +18,8 @@ export class AcceptTermsComponent {
   acceptTerms() {
     this.accept.emit(!this.accepted);
   }
-  constructor(public service: CertificateService, public languageService: LanguageService) {}
+  constructor(
+    public service: CertificateService,
+    public languageService: LanguageService
+  ) {}
 }

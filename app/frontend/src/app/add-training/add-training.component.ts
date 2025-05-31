@@ -1,13 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import {
-  ActivatedRoute,
-  NavigationEnd,
-  Router,
-  RouterOutlet,
-} from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { filter, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import {
   NewTrainingService,
   ITranslated,
@@ -21,7 +16,6 @@ import { PreviewComponent } from './preview/preview.component';
 @Component({
   selector: 'app-add-training',
   imports: [
-    RouterOutlet,
     CommonModule,
     TranslateModule,
     BasicSetupComponent,

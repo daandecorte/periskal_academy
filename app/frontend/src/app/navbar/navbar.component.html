@@ -36,10 +36,10 @@
         ><fa-icon [icon]="faGlobe" class="yellow-icon"></fa-icon
       ></span>
       <select [(ngModel)]="language" (change)="onLanguageChange()">
-        <option value="ENGLISH">English</option>
-        <option value="DUTCH">Nederlands</option>
-        <option value="FRENCH">Français</option>
-        <option value="GERMAN">Deutsch</option>
+        <option value="ENGLISH">{{ "ENGLISH" | translate }}</option>
+        <option value="DUTCH">{{ "DUTCH" | translate }}</option>
+        <option value="FRENCH">{{ "FRENCH" | translate }}</option>
+        <option value="GERMAN">{{ "GERMAN" | translate }}</option>
       </select>
     </div>
     <a (click)="logout()" class="logout-button" style="cursor: pointer">

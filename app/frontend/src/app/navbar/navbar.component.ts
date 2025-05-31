@@ -18,11 +18,7 @@ import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { LanguageService } from '../services/language.service';
 import { FormsModule } from '@angular/forms';
-import {
-  TranslateModule,
-  TranslateService,
-  TranslatePipe,
-} from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 interface NavLink {
   path: string;
@@ -71,9 +67,9 @@ export class NavbarComponent {
         Role.INSTALLER,
         Role.SUPPORT,
         Role.FLEETMANAGER,
-        Role.ADMIN
+        Role.ADMIN,
       ],
-      adminPath: 'admin/trainings'
+      adminPath: 'admin/trainings',
     },
     {
       path: 'certificates',
